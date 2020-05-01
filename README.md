@@ -19,7 +19,7 @@ The WirtBot is written in [Rust](https://www.rust-lang.org/).
 - Automatic generation of WireGuard configurations, including keys, directly in the browser
 - Every configuration in the network is kept updated on changes
 - If configured, all configurations will automatically be sent to the [WirtBot](https://github.com/b-m-f/wirt/WirtBot)
-- Configuration will be automatically applied and gets reloaded in production
+- WirtBot then automatically apply the configuration and immediately activate it
 - Export and Import feature to keep track of multiple networks and generate Backups
 - Automatic state retention in local storage
 - Absolutely no tracking, each application is unique to a users browser
@@ -34,8 +34,8 @@ I also encourage you to ask questions! My goal is to document as many of those q
 
 Things that currently need help:
 
-- Documentation for beginners on what this application is, and how to set it up together with a WirtBot
-- Documentation on how to use WireGuard on your devices -> i.e. How to I connect an Android/iOS phone to the network
+- Improve beginners documentation on what this application is and how to set it all up
+- Documentation on how to use WireGuard on your devices -> i.e. How to connect an Android/iOS phone to the network
 - Documentation for services that can be added to the network -> i.e. sharing Samba drives, streaming Media
 - Testing of the DashBoard using [nightwatchjs](nightwatchjs.org/)
 - Generating Mesh networks (multiple servers), that can each have a multitude of devices -> needs a state change to allow for `[servers]`
@@ -45,6 +45,7 @@ Things that currently need help:
 - Testing the WirtBot using the hyper test helpers
 - Include developer documentation into the Dockerfile and serve at `/developer-docs`
 - anything you think can be better
+- Translate it into a language that you know
 
 Please check out the `developers-docs` directory for more details on the application.
 
