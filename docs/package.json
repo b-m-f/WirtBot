@@ -1,0 +1,26 @@
+{
+  "name": "wirt-documentation",
+  "version": "0.5.0",
+  "author": "b-m-f <max@ehlers.berlin>",
+  "description": "Documentation for https://wirt.network",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev:docs": "vuepress dev docs",
+    "build:docs": "vuepress build docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/b-m-f/wirt.git"
+  },
+  "license": "AGPL-3",
+  "bugs": {
+    "url": "https://github.com/b-m-f/wirt/issues"
+  },
+  "homepage": "https://github.com/b-m-f/wirt#readme",
+  "devDependencies": {
+    "vuepress": "^1.4.1"
+  }
+}

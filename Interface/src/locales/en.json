@@ -1,0 +1,235 @@
+{
+  "learnMore": "Learn more",
+  "app": {
+    "name": "Wirt"
+  },
+  "global": {
+    "navigation": {
+      "next": "Next",
+      "back": "Back"
+    }
+  },
+  "home": {
+    "one": {
+      "title": "Create a private network for all your devices.",
+      "subheader": "Connecting all your devices has never been easier, thanks to WireGuard®. Wirt simplifies the process of creating your own private network into 3 steps. No registration, no accounts - Just a network that belongs to you.",
+      "getStarted": "Get started"
+    },
+    "two": {
+      "hi": "Hi, I'm WirtBot®.",
+      "job": "I have one job and I do it well. I forward traffic at the highest speed, without compromising security."
+    },
+    "three": {
+      "title": "Enjoy all the benefits of a professional set-up, without the hassle.",
+      "browser": {
+        "title": "Browser based",
+        "text": "Wirt runs in your browser. No data leaves your computer, unless it is meant to configure your WirtBot. You can easily verify this with your browsers Developer tools."
+      },
+      "fast": {
+        "title": "Lightning fast",
+        "text": "Security does not have to mean slow. Using WireGuard makes your WirtBot perform at very high speed."
+      },
+      "secure": {
+        "title": "Secure",
+        "text": "Modern cryptography is used in the WirtUI and WirtBot to ensure that your network is secure."
+      },
+      "learnMore": "Learn more"
+    },
+    "four": {
+      "title": "We broke down the process so you dont have to.",
+      "one": {
+        "title": " Build a WirtBot",
+        "text": ""
+      },
+      "two": {
+        "title": "Configure your WirtBot using the WirtUI",
+        "text": ""
+      },
+      "three": {
+        "title": "Build your network",
+        "text": ""
+      }
+    },
+    "docs": {
+      "title": "Wirt works for you",
+      "atHome": {
+        "title": "At home",
+        "text": "Build a Cloud or Video streaming service that you own or whatever else you would like to bring online. From your home into your cloud.",
+        "link": "Learn more"
+      },
+      "atCompanies": {
+        "title": "For companies",
+        "text": "Secure monitoring, self-hosted Groupware or a development environment that can be accessed from anywhere in the world. WirtBot got you covered and keeps secure communication concerns out of your architecture.",
+        "link": "Learn more"
+      }
+    },
+    "ready": {
+      "title": "Ready to get started?",
+      "sub": "Build your own WirtBot today, for free! No registration required",
+      "link": "Get started"
+    }
+  },
+  "footer": {
+    "contact": "Contact me",
+    "about": "About",
+    "documentation": "Documentation",
+    "imprint": "Imprint",
+    "privacy": "Privacy & cookies"
+  },
+  "dashboard": {
+    "widgets": {
+      "settings": {
+        "title": "Settings",
+        "import": "Import Backup",
+        "export": "Create Backup",
+        "publicKey": "Public Key:",
+        "backup": "Backup"
+      },
+      "server": {
+        "title": "My server",
+        "name": "Server name (optional):",
+        "ip": "IP address:",
+        "port": "WireGuard is listening at Port:",
+        "edit": "Edit",
+        "stopEdit": "Stop editing",
+        "expert": "Expert",
+        "expertWarning": "You are in expert mode. Take care!",
+        "hostname": "Hostname:",
+        "subnet": "Subnet:",
+        "download": "Download config",
+        "connected": "Connected to WirtBot"
+      },
+      "devices": {
+        "title": "My devices",
+        "addDevice": "Add new device",
+        "expert": "Expert",
+        "expertWarning": "You are in expert mode. Take care!"
+      }
+    },
+    "messages": {
+      "regularBackup": {
+        "title": "Remember to regularly export your backups",
+        "text": "Because Wirt never reads or sends your configuration data to anyone (even we can not see that data), your are fully in charge of maintaining backups of your configurations. This is important as you will need these backups to continue work on another computer or restore your work in case something goes wrong.",
+        "link": "Learn more about backups"
+      },
+      "whyNoLogin": {
+        "title": "Why don't I need to login? ",
+        "text": "Your Wirt only runs on your computer. This allows you to access your private Dashboard in your browser without ever needing an external user account or registration.",
+        "link": "Learn more about Wirts authentication methods"
+      }
+    },
+    "title": "Dashboard",
+    "devices": "Devices",
+    "server": "Server",
+    "addDevice": "Add new device",
+    "download": "Download",
+    "downloadServer": "Download server config"
+  },
+  "device": {
+    "name": "Device name",
+    "ipInPrivateNetwork": "IP address",
+    "type": "Device Type",
+    "downloadConfig": "Config",
+    "add": "Add",
+    "delete": "Del",
+    "edit": "Edit",
+    "routeThroughInternet": "Routed",
+    "config": "Config"
+  },
+  "header": {
+    "dashboard": "Dashboard",
+    "tutorial": "Tutorial",
+    "documentation": "Documentation",
+    "settings": "Settings",
+    "getStarted": "Get started",
+    "about": "About"
+  },
+  "tutorial": {
+    "welcome": {
+      "title": "Welcome!",
+      "explainer": "We'll guide you through a few simple steps to set-up your own private network. If you are familiar with WireGuard® and already have your own server set up, you might want to skip straight to your {{dashboard}}.",
+      "start": "I'm Ready"
+    },
+    "server": {
+      "question": "Do you already have a WireGuard® Server?",
+      "title": "Server set-up",
+      "yes": "Yes",
+      "no": "No",
+      "notAvailable": "At the moment you will need to set up your own server to continue. Please check the documentation for more information.",
+      "documentationLink": "Go to documentation",
+      "tooltip": "The server is responsible for establishing secure communication channels between your devices.",
+      "ip": "What is your servers public IP address?",
+      "whatsAnIP": "What is a public IP address?",
+      "whatsAPort": "What is a Port?",
+      "port": "What is the port used for WireGuard®?",
+      "done": "Next..."
+    },
+    "noserver": {
+      "title": "Server set-up",
+      "needServer": "You will need a server to continue",
+      "optionInfo": "At the moment you will still have to do this setup yourself",
+      "selfSetup": {
+        "goToDocs": "Go to guide",
+        "returnHere": "Once your setup is finished return to the tutorial"
+      }
+    },
+    "devices": {
+      "done": "Done",
+      "header": "Add devices",
+      "description": "Great, your server is set up! Time to add devices to you want to connect to your network. Every device needs a name, an IP address where it can be found in the network, and the type of device it is.",
+      "next": "Next step",
+      "skip": "Skip this step",
+      "addDevice": "As soon as you save a device, a configuration will automatically be created and added to the table for you to download. There is no need to download everything right now, as you'll always be able to find them in your Dashboard.",
+      "save": "Save",
+      "finish": "Finish",
+      "finishEditHint": "You'll be able to edit or add more devices in your {{dashboard}}",
+      "firstDeviceAdded": "You've added your first device!"
+    },
+    "done": {
+      "congrats": "Congratulations! Your network is all set up.",
+      "info": "You can now view and edit your devices, or download your configuration files for use in the WireGuard® applications.",
+      "goToDashBoard": "Go to Dashboard"
+    }
+  },
+  "settings": {
+    "credits": "Made by <a href='https://ehlers.berlin'>Maximilian Ehlers</a>",
+    "header": "Settings",
+    "export": "Create backup",
+    "import": "Import backup",
+    "imported": "Your backup has been imported successfully!",
+    "generateKeys": "Generate Keys",
+    "regenerateKeys": "Regenerate Keys",
+    "confirmGeneratingKeys": "Are you sure you want to regenerate your keys?",
+    "confirmGeneratingKeysAgain": "Make absolutely sure you know what you are doing! This can lock you out of your server forever if you did not set it up yourself!",
+    "connectionEnabled": "Enabled",
+    "yourPublicKey": "Your public key",
+    "fileReaderApiNotSupported": "It seems that your browser does not support the FileReader API. Please continue using Wirt on another browser using your backup.",
+    "noFileSelected": "No file was selected to import.",
+    "serverHostname": "Server hostname"
+  },
+  "warnings": {
+    "deviceRemove": "Error when removing device: ",
+    "deviceUpdate": "Error when updating device: ",
+    "deviceAdd": "Error when adding device: ",
+    "deviceIpUsed": "Error when adding Device: The IP is already used in the network. Please choose another one.",
+    "deviceIpServer": "Error when adding Device: IP number 1 belongs to the server",
+    "serverUpdate": "Error when updating the server.",
+    "documentation": "Please check the documentation or contact us to find a solution.",
+    "keysGeneration": "Error when generating keys:",
+    "fileReaderApiNotSupported": "Your browser does not seem to support the FileReader API. Read more at https://developer.mozilla.org/en-US/docs/Web/API/File",
+    "noFileSelected": "Please select a file to import first.",
+    "noServer": "No server was configured.",
+    "wrongIPv6": "Not a correct IPv6 address"
+  },
+  "infos": {
+    "generatingKeys": "Keys are being generated"
+  },
+  "success": {
+    "deviceRemoved": "Device removed",
+    "keysGenerated": "Keys were generated successfully."
+  },
+  "errors": {
+    "backupNotCompatible": "The backup has a newer version than the app and is not comptaible",
+    "backupUpgradeTo1dot0": "Error when upgrading your backup from beta version to 1.0"
+  }
+}

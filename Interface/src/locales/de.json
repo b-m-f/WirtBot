@@ -1,0 +1,19 @@
+{
+  "app": {
+    "name": "Wirt"
+  },
+  "dashboard": {
+    "devices": "Geräte",
+    "server": "Server",
+    "addDevice": "Neues Geraet hinzufuegen"
+  },
+  "device": {
+    "name": "Name",
+    "ipInPrivateNetwork": "IP  im Privat-Netzwerk",
+    "deviceType": "Gerätetyp",
+    "downloadConfig": "Konfigurationsdatei herunterladen"
+  },
+  "header": {
+    "quickstart": "Schnellstart"
+  }
+}

@@ -1,0 +1,11 @@
+[Unit]
+Description=Automatic wireguard restarting script to be used as part of the WirtBot
+Documentation=https://wirt.network/docs/
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/wireguard-restarter.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
