@@ -1,5 +1,7 @@
 # Wirt
 
+![Wirt logo](Interface/public/logo.svg)
+
 Welcome to the documentation for [Wirt](https://wirt.network).
 
 This is the main repository for:
