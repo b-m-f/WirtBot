@@ -1,6 +1,5 @@
-# Wirt
-
 ![Wirt logo](Interface/public/logo.svg)
+# Wirt
 
 Welcome to the documentation for [Wirt](https://wirt.network).
 
