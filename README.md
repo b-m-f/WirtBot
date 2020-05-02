@@ -11,7 +11,7 @@ This is the main repository for:
 - Interface
 
 This web application is written with [VueJS](https://vuejs.org/) and [rustwasm](https://rustwasm.github.io/docs/book/) .
-All documentation is writting in markdown, using [vuepress](vuepress.vuejs.org/) to create the site
+All documentation is written in markdown, using [vuepress](vuepress.vuejs.org/) to create the site
 
 The WirtBot is written in [Rust](https://www.rust-lang.org/).
 
