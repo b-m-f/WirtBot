@@ -90,13 +90,6 @@ export default {
       return this.$store.state.websiteBeingViewedOnMobileDevice;
     }
   },
-  updated() {
-    if (this.activeIndex == 3) {
-      this.$nextTick(() => {
-        this.$refs.port.focus();
-      });
-    }
-  },
   methods: {
     updateIp({ ip, valid }) {
       if (valid) {
