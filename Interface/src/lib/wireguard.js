@@ -106,6 +106,13 @@ PublicKey = ${device.keys.public}`;
     }
   }
 
+  if (!devicesNeedV6 && !devicesNeedV4) {
+    return `[Interface]
+Address = ${subnet.v4}1
+ListenPort = ${port}
+PrivateKey = ${keys.private}`;
+  }
+
   if (!devicesNeedV6 && devicesNeedV4) {
     return `[Interface]
 Address = ${subnet.v4}1
