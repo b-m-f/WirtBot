@@ -25,18 +25,18 @@ RUN mkdir wasm &&  tar xvf wasm-pack.tar.gz -C wasm --strip-components 1 && mv w
 
 # build the app
 WORKDIR '/app'
-COPY app/package.json  .
-COPY app/package-lock.json .
+COPY Interface/package.json  .
+COPY Interface/package-lock.json .
 RUN npm install
 
-COPY app/wasm wasm
+COPY Interface/wasm wasm
 RUN npm run build:rust
 
-COPY app/src src 
-COPY app/public public
-COPY app/babel.config.js .
-COPY app/vue.config.js .
-COPY app/.env .
+COPY Interface/src src 
+COPY Interface/public public
+COPY Interface/babel.config.js .
+COPY Interface/vue.config.js .
+COPY Interface/.env .
 RUN npm run build
 
 # build the docs
