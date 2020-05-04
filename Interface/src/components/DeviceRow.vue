@@ -148,7 +148,6 @@ export default {
       let nextHighest = 2;
 
       let dev = this.devices.map(device => device.ip.v4).sort();
-      console.log(dev);
       dev.forEach(ip => {
         if (ip === nextHighest) {
           nextHighest = ip + 1;
