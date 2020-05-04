@@ -6,9 +6,9 @@ module.exports = {
 
     await browser.assert.urlEquals("http://localhost:8080/tutorial/server/");
   },
-  "Test show info on setup or buy server": async function(browser) {
+  "Test show info on setup": async function(browser) {
     await browser.click("#no > button");
-    await browser.assert.urlEquals("http://localhost:8080/tutorial/no-server");
+    await browser.assert.urlEquals("http://localhost:8080/tutorial/no-server/");
   },
   "Test link to IP input": async function(browser) {
     await browser.url("http://localhost:8080/tutorial/server/");
@@ -104,33 +104,27 @@ module.exports = {
       element.dispatchEvent(event);
     });
 
-    await browser.assert.urlEquals("http://localhost:8080/tutorial/devices/");
+    await browser.assert.urlEquals(
+      "http://localhost:8080/tutorial/devices/add"
+    );
   },
   "Test that device setup can be skipped": async function(browser) {
     await browser.click("a#skip");
 
     await browser.assert.urlEquals("http://localhost:8080/tutorial/done");
   },
-  "Test that device adding section starts": async function(browser) {
-    await browser.url("http://localhost:8080/tutorial/devices/");
-
-    await browser.waitForElementVisible("body");
-    await browser.click("#next > button");
-    await browser.assert.urlEquals(
-      "http://localhost:8080/tutorial/devices/add"
-    );
-  },
   "Test that IP must be at least 2": async function(browser) {
-    await browser.setValue("input[name='ip']", "1");
+    await browser.url("http://localhost:8080/tutorial/devices/add");
+    await browser.setValue("input[name='device-ipv4']", "1");
     await browser.execute(function() {
-      var element = document.querySelector("input[name='ip']");
+      var element = document.querySelector("input[name='device-ipv4']");
       var event = new Event("change");
       element.dispatchEvent(event);
     });
 
     await browser.executeAsync(
       function(done) {
-        var element = document.querySelector("input[name='ip']");
+        var element = document.querySelector("input[name='device-ipv4']");
         var valid = element.checkValidity();
         done(valid);
       },
@@ -140,16 +134,16 @@ module.exports = {
       }
     );
 
-    await browser.clearValue("input[name='ip']");
-    await browser.setValue("input[name='ip']", "2");
+    await browser.clearValue("input[name='device-ipv4']");
+    await browser.setValue("input[name='device-ipv4']", "2");
     await browser.execute(function() {
-      var element = document.querySelector("input[name='ip']");
+      var element = document.querySelector("input[name='device-ipv4']");
       var event = new Event("change");
       element.dispatchEvent(event);
     });
     await browser.executeAsync(
       function(done) {
-        var element = document.querySelector("input[name='ip']");
+        var element = document.querySelector("input[name='device-ipv4']");
         var valid = element.validity.valid;
         done(valid);
       },
@@ -159,10 +153,10 @@ module.exports = {
       }
     );
   },
-  "Test that you can no continue without specifying all data for a device": async function(
+  "Test that you can not continue without specifying all data for a device": async function(
     browser
   ) {
-    await browser.click("#save > button");
+    await browser.click("button#save");
     await browser.assert.not.urlEquals(
       "http://localhost:8080/tutorial/devices/success"
     );
@@ -171,16 +165,16 @@ module.exports = {
     );
   },
   "Test that name needs to specified": async function(browser) {
-    await browser.setValue("input[name='name']", "");
+    await browser.setValue("input[name='device-name']", "");
     await browser.execute(function() {
-      var element = document.querySelector("input[name='name']");
+      var element = document.querySelector("input[name='device-name']");
       var event = new Event("change");
       element.dispatchEvent(event);
     });
 
     await browser.executeAsync(
       function(done) {
-        var element = document.querySelector("input[name='name']");
+        var element = document.querySelector("input[name='device-name']");
         var valid = element.validity.valid;
         done(valid);
       },
@@ -190,16 +184,16 @@ module.exports = {
       }
     );
 
-    await browser.clearValue("input[name='name']");
-    await browser.setValue("input[name='name']", "test");
+    await browser.clearValue("input[name='device-name']");
+    await browser.setValue("input[name='device-name']", "test");
     await browser.execute(function() {
-      var element = document.querySelector("input[name='name']");
+      var element = document.querySelector("input[name='device-name']");
       var event = new Event("change");
       element.dispatchEvent(event);
     });
     await browser.executeAsync(
       function(done) {
-        var element = document.querySelector("input[name='name']");
+        var element = document.querySelector("input[name='device-name']");
         var valid = element.validity.valid;
         done(valid);
       },
@@ -219,7 +213,7 @@ module.exports = {
       element.dispatchEvent(event);
     });
 
-    await browser.click("#save > button");
+    await browser.click("button#save ");
     await browser.assert.urlEquals(
       "http://localhost:8080/tutorial/devices/success"
     );
