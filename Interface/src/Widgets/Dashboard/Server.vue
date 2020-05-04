@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="server-widget">
     <h1>{{ $t("dashboard.widgets.server.title") }}</h1>
     <div class="row">
       <label>{{ $t("dashboard.widgets.server.name") }}</label>
@@ -36,7 +36,7 @@
       <input
         type="checkbox"
         name="connected"
-        id
+        idj
         class="switch"
         :value="server.connected"
         @change="(e) => updateConnected(e.target.checked)"
@@ -60,7 +60,7 @@
       />
       <p v-else>{{ server.subnet.v4 }}</p>
     </div>
-    <Button id="download" @click="downloadConfig">
+    <Button id="download" @click="downloadConfig" v-if="server.config">
       {{
       $t("dashboard.widgets.server.download")
       }}
