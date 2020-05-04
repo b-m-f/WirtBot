@@ -16,7 +16,6 @@
       ref="ip-2"
       type="number"
       name="2"
-      id
       min="0"
       max="255"
       v-on:keyup.enter="() => focusNext(3)"
@@ -57,8 +56,8 @@ export default {
   props: {
     ip: {
       type: Array,
-      default: () => [undefined, undefined, undefined, undefined],
-    },
+      default: () => [undefined, undefined, undefined, undefined]
+    }
   },
   methods: {
     focusNext(next) {
@@ -96,8 +95,8 @@ export default {
         this.ip[3] > 0;
 
       this.$emit("change", { ip: this.ip, valid: ipComplete });
-    },
-  },
+    }
+  }
 };
 </script>
 
