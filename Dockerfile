@@ -47,7 +47,7 @@ COPY docs/package.json  .
 COPY docs/package-lock.json .
 RUN npm install
 
-COPY docs/docs .
+COPY docs/docs ./docs
 RUN npm run build:docs
 
 # Create small Nginx image with the production ready application
