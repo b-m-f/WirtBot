@@ -3,6 +3,7 @@ module.exports = {
   port: 9090,
   title: "Wirt documentation",
   themeConfig: {
+    logo: "/logo.svg",
     locales: {
       "/": {
         nav: [{ text: "Back to the App", link: "https://wirt.network" }],
