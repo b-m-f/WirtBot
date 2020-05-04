@@ -5,12 +5,11 @@ module.exports = {
     await browser.url("http://localhost:8080/dashboard");
     await browser.waitForElementVisible("body");
 
+    await browser.click("#add-device button");
     await browser.setValue("input[name='device-name']", "test1");
-    await browser.setValue("input[name='device-ip']", "3");
-    await browser.setValue("select.device-type", "Android");
-    await browser.setValue("input[name='internet-gateway']", "false");
-
-    await browser.click("button#add-device");
+    await browser.setValue("input[name='device-ipv4']", "4");
+    await browser.setValue("select.device-type", "Linux");
+    await browser.click("button#save");
 
     await browser.assert.visible("#alerts .warning");
 
@@ -19,54 +18,61 @@ module.exports = {
   "Test dashboard server button only appears when data is input": async function(
     browser
   ) {
-    await browser.assert.not.elementPresent("#download-server-config");
+    await browser.assert.not.elementPresent("#server-widget #download");
 
     await setServer(browser);
 
     await browser.url("http://localhost:8080/dashboard");
-    await browser.assert.visible("#download-server-config");
+    await browser.assert.visible("#server-widget #download");
   },
   "Test android devices have a QR code": async function(browser) {
-    await browser.setValue("input[name='device-name']", "test1");
-    await browser.setValue("input[name='device-ip']", "2");
-    await browser.setValue("select.device-type", "Android");
-    await browser.setValue("input[name='internet-gateway']", "false");
+    await browser.click("#add-device button");
 
-    await browser.click("button#add-device");
+    await browser.setValue("input[name='device-name']", "test1");
+    await browser.setValue("input[name='device-ipv4']", "2");
+    await browser.setValue("select.device-type", "Android");
+    await browser.click("button#save");
 
     browser.expect.elements("img.qr-code").count.to.equal(1);
   },
 
   "Test iOS devices have a QR code": async function(browser) {
-    await setServer(browser);
-    await browser.url("http://localhost:8080/dasboard");
+    await browser.url("http://localhost:8080/dashboard");
     await browser.waitForElementVisible("body");
+    await browser.click("#add-device button");
 
     await browser.setValue("input[name='device-name']", "test2");
-    await browser.clearValue("input[name='device-ip']");
-    await browser.setValue("input[name='device-ip']", "4");
+    await browser.clearValue("input[name='device-ipv4']");
+    await browser.setValue("input[name='device-ipv4']", "4");
     await browser.setValue("select.device-type", "iOS");
-    await browser.setValue("input[name='internet-gateway']", "false");
-
-    await browser.click("button#add-device");
+    await browser.click("button#save");
 
     browser.expect.elements("img.qr-code").count.to.equal(2);
   },
   "Test that ip is set to next big available ip": async function(browser) {
-    await browser.assert.value("input[name='device-ip']", "3");
+    await browser.click("#add-device button");
+    await browser.assert.attributeEquals(
+      "input[name='device-ipv4']",
+      "placeholder",
+      "3"
+    );
   },
   "Test that two devices can not have the same ip": async function(browser) {
-    browser.expect.elements("form .device").count.to.equal(2);
+    browser.expect
+      .elements("#device-widget form .device-overview")
+      .count.to.equal(2);
 
+    await browser.click("#add-device button");
     await browser.setValue("input[name='device-name']", "test3");
-    await browser.clearValue("input[name='device-ip']");
-    await browser.setValue("input[name='device-ip']", "4");
+    await browser.clearValue("input[name='device-ipv4']");
+    await browser.setValue("input[name='device-ipv4']", "5");
     await browser.setValue("select.device-type", "Android");
-    await browser.setValue("input[name='internet-gateway']", "true");
 
-    await browser.click("button#add-device");
+    await browser.click("button#save");
 
     await browser.assert.visible("#alerts .warning");
-    browser.expect.elements("form .device").count.to.equal(2);
+    browser.expect
+      .elements("#device-widget form .device-overview")
+      .count.to.equal(3);
   },
 };
