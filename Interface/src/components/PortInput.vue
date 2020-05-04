@@ -2,7 +2,7 @@
   <input
     ref="port"
     id="port"
-    :value="port"
+    :value="internalPort"
     type="number"
     name="port"
     min="1024"
@@ -15,7 +15,10 @@
 <script>
 export default {
   props: {
-    port: { type: Number, default: undefined },
+    port: { type: Number, default: undefined }
+  },
+  data() {
+    return { internalPort: this.$props.port };
   },
   methods: {
     updatePort(event) {
@@ -26,13 +29,13 @@ export default {
         return;
       }
       if (newValue >= 1024 && newValue <= 65535) {
-        this.port = newValue;
+        this.internalPort = newValue;
         this.$emit("change", { port: newValue, valid: true });
       } else {
         this.$emit("change", { port: newValue, valid: false });
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
