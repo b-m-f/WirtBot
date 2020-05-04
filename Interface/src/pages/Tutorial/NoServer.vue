@@ -2,7 +2,7 @@
   <div :class="{ mobile: isMobilePage }">
     <h1>{{ $t("tutorial.noserver.title") }}</h1>
     <slot></slot>
-    <Card id="server-setup">
+    <Card padded id="server-setup">
       <div v-if="activeIndex == 1" id="options">
         <h2>{{ $t("tutorial.noserver.needServer") }}</h2>
         <p id="option-info">{{ $t("tutorial.noserver.optionInfo") }}</p>
