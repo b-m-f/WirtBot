@@ -3,7 +3,14 @@
   <!-- This will allow the device table to wrap them correctly, and then use display: grid on the mobile table -->
   <tr v-if="editingMode" id="new-device" class="table-row">
     <td class="column-one">
-      <input type="text" name="name" id="name" v-model="internalName" required placeholder=" " />
+      <input
+        type="text"
+        name="device-name"
+        id="name"
+        v-model="internalName"
+        required
+        placeholder=" "
+      />
       <div v-if="expanded"></div>
     </td>
     <td class="column-two" id="ip-input">
@@ -11,7 +18,7 @@
         <p>{{ subnet.v4 }}</p>
         <input
           type="number"
-          name="ipv4"
+          name="device-ipv4"
           id="ip"
           min="2"
           max="255"
@@ -57,12 +64,12 @@
       <button @click="downloadConfig">Download</button>
     </td>
     <td class="column-five">
-      <button @click="save">Save</button>
+      <button id="save" @click="save">Save</button>
       <button @click="stopEditingMode">Stop</button>
     </td>
   </tr>
 
-  <tr v-else id="device-overview" class="table-row">
+  <tr v-else class="table-row device-overview">
     <td class="column-one">
       <p>{{ name }}</p>
     </td>
