@@ -59,6 +59,9 @@ export default {
     activeIndex() {
       return this.$route.meta.activeIndex;
     },
+    device() {
+      return this.$store.state.devices[0];
+    },
     isMobilePage() {
       return this.$store.state.websiteBeingViewedOnMobileDevice;
     },
@@ -83,7 +86,7 @@ export default {
   },
   methods: {
     checkDeviceExistsAndContinue() {
-      if (this.$store.state.devices[0]) {
+      if (this.device) {
         this.$router.push({ name: "tutorial-device-success" });
       } else {
         this.$refs["table"].reportValidity();
