@@ -30,4 +30,4 @@ jobs:
           TRIGGERTOKEN: ${{ secrets.TRIGGERTOKEN }}
           PROJECT_ID: ${{ secrets.PROJECT_ID }}
         run: |
-          docker build . -t release &&  docker push docker.pkg.github.com/b-m-f/wirt/wirt-interface:release
+          docker build . -t docker.pkg.github.com/b-m-f/wirt/wirt-interface:release &&  docker push docker.pkg.github.com/b-m-f/wirt/wirt-interface:release
