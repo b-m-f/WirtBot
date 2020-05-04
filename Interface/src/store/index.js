@@ -93,11 +93,7 @@ const store = new Vuex.Store({
     addDevice(state, device) {
       state.devices = [...state.devices, device];
     },
-    updateServerConfig(state) {
-      const config = generateServerConfig(
-        state.server,
-        state.devices.filter((device) => device.ip && device.keys)
-      );
+    updateServerConfig(state, config) {
       state.server = Object.assign({}, state.server, {
         config: config,
       });
@@ -170,17 +166,18 @@ const store = new Vuex.Store({
       commit("updateDevices", devices);
     },
     async updateServerConfig({ commit, state }) {
-      commit("updateServerConfig");
+      const config = generateServerConfig(
+        state.server,
+        state.devices.filter((device) => device.ip && device.keys)
+      );
+      commit("updateServerConfig", config);
       if (state.server.connected) {
         if (state.server.hostname) {
           updateServerViaApi(state.server.config, state.server.hostname);
         } else {
           // TODO: fix this call to send the correct data along
           // identify by public key etc.
-          updateServerViaApi(
-            state.server.config,
-            `https://api.wirt.network/updateServerConfig`
-          );
+          updateServerViaApi(state.server.config, state.server.ip.v4.join(""));
         }
       }
     },
