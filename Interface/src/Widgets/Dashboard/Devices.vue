@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="device-widget">
     <h1>{{ $t("dashboard.widgets.devices.title") }}</h1>
     <DeviceTable
       :devices="devices"
