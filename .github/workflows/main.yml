@@ -1,5 +1,3 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CI
 
 # Controls when the action will run. Triggers the workflow on push or pull request
@@ -12,22 +10,16 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-
-      # Runs a single command using the runners shell
       - name: Trigger release build
-        env: # Or as an environment variable
-          TRIGGERTOKEN: ${{ secrets.TRIGGERTOKEN }}
-          PROJECT_ID: ${{ secrets.PROJECT_ID }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          docker build . -t docker.pkg.github.com/b-m-f/wirt/wirt-interface:release &&  docker push docker.pkg.github.com/b-m-f/wirt/wirt-interface:release
+          docker login docker.pkg.github.com -u $GITHUB_ACTOR --password $GITHUB_TOKEN && docker build . -t docker.pkg.github.com/b-m-f/wirt/wirt-interface:release &&  docker push docker.pkg.github.com/b-m-f/wirt/wirt-interface:release
