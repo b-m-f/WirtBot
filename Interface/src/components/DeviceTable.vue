@@ -133,7 +133,7 @@ export default {
         name,
         type
       };
-      this.$store.dispatch("addDevice", device);
+      await this.$store.dispatch("addDevice", device);
       this.$emit("deviceSaved");
       return true;
     }
