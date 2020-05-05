@@ -27,6 +27,7 @@
             :edit="!device.id"
             :qr="device.qr"
             @change="save"
+            @cancelNewDevice="cancelNewDevice"
             :class="{ even: index % 2 == 0 }"
             :expanded="expanded"
           />
