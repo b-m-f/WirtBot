@@ -2,6 +2,8 @@
 
 # Wirt
 
+![Build status badge](https://github.com/b-m-f/Wirt/workflows/Wirt-Interface/badge.svg)
+
 Welcome to the documentation for [Wirt](https://wirt.network).
 
 This is the main repository for:
