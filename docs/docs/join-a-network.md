@@ -10,6 +10,26 @@ Follow the guide for your the operating system you use to join it.
 
 ## Windows
 
+**First download the WireGuard software from** [https://wireguard.com](https://wireguard.com)
+
+![](/img/windows1.jpg)
+
+**Now click on this button to import your config**
+
+![](/img/windows2.jpg)
+
+**Go to the folder where you downloaded your config file and select it**
+
+![](/img/windows3.jpg)
+
+**The config is now imported. Click activate to join the network**
+
+![](/img/windows4.jpg)
+
+**Congratulations, you are now connected!**
+
+![](/img/windows5.jpg)
+
 ## Android
 
 **First install the WireGuard app**
@@ -42,4 +62,4 @@ Follow the guide for your the operating system you use to join it.
 
 ## iOS
 
-I do not have a device yet. If you have got a few minutes please be so kind to add a few screenshots via https://github.com/b-m-f/wirt
+I do not have a device yet. If you have got a few minutes please be so kind to add a few screenshots via [https://github.com/b-m-f/wirt](https://github.com/b-m-f/wirt)
