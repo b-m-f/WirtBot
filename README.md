@@ -1,4 +1,5 @@
 ![Wirt logo](Interface/public/logo.svg)
+
 # Wirt
 
 Welcome to the documentation for [Wirt](https://wirt.network).
@@ -14,6 +15,8 @@ This web application is written with [VueJS](https://vuejs.org/) and [rustwasm](
 All documentation is written in markdown, using [vuepress](vuepress.vuejs.org/) to create the site
 
 The WirtBot is written in [Rust](https://www.rust-lang.org/).
+
+![Small video to demonstrate the Tutorial](media/wirt_tutorial.gif)
 
 ## Features
 
