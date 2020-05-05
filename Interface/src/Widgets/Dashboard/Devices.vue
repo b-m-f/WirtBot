@@ -32,7 +32,7 @@ export default {
   computed: {
     devices() {
       if (this.newDevice) {
-        return [this.newDevice, ...this.$store.state.devices];
+        return [this.newDevice, ...this.$store.state.devices].reverse();
       } else {
         return [...this.$store.state.devices].reverse();
       }
