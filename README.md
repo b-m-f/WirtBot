@@ -59,4 +59,4 @@ Please check out the `developers-docs` directory for more details on the applica
 
 The WirtBot and Interface are licensed with `GNU Affero General Public License v3.0`
 
-The documentation is provided under `Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)`
+The documentation and Wirt logo are provided under `Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)`
