@@ -33,7 +33,7 @@ This can be achieved with the following steps:
 
 - Download a release from https://github.com/b-m-f/wirt/releases and place it into `/usr/bin/wirtbot`
 - Get the public key of your WirtUI from the [settings section](https://wirt.network/dashboard) on the Dashboard
-- Copy https://github.com/b-m-f/Wirt/blob/master/WirtBot/wirtbot.service to `/etc/system/systemd/wirtbot.service`
+- Copy https://github.com/b-m-f/Wirt/blob/master/WirtBot/wirtbot.service to `/etc/systemd/system/wirtbot.service`
   - **Make sure to change the variables in that file**!
   - PUBLIC_KEY: this is the public key from the WirtUI
   - SSL_PEM_CERT: this is the location of your SSL certificate
