@@ -16,6 +16,6 @@ During the WirtBot setup they are linked using cryptogrpahic keys whch ensures t
 Because of this there is no reason to have an account with any backend on the internet.
 By opening [wirt.network](https://wirt.network) you are using your personalized version already.
 
-## Mutliple networks
+## Multiple networks
 
 If you have multiple networks that you need to manage, simply save them as different backups and reimport them whenever you want to continue configuring them.

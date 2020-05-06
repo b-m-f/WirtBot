@@ -33,7 +33,7 @@ The WirtBot is written in [Rust](https://www.rust-lang.org/).
 
 ## Contributing
 
-You want to help out making the frontend better, or add new features? **AWESOME**!.
+You want to help out making Wirt better? **AWESOME**!.
 
 Please feel free to open up an issue here in Github to discuss what you would want to do, and what kind of help we can give you.
 I also encourage you to ask questions! My goal is to document as many of those questions as I can, to allow more people to understand what is going on in the code.
