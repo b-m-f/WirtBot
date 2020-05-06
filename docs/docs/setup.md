@@ -31,7 +31,8 @@ Finishing up the setup requires the [WirtBot executable](https://github.com/b-m-
 
 This can be achieved with the following steps:
 
-- Download a release from https://github.com/b-m-f/wirt/releases and place it into `/usr/bin/wirtbot`
+- Download a release from https://github.com/b-m-f/wirt/releases and place it into `/usr/bin/`
+- `sudo chmod +x /usr/bin/wirtbot` to make it executable
 - Get the public key of your WirtUI from the [settings section](https://wirt.network/dashboard) on the Dashboard
 - Copy https://github.com/b-m-f/Wirt/blob/master/WirtBot/wirtbot.service to `/etc/systemd/system/wirtbot.service`
   - **Make sure to change the variables in that file**!
