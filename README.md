@@ -25,7 +25,7 @@ The WirtBot is written in [Rust](https://www.rust-lang.org/).
 - Automatic generation of WireGuard configurations, including keys, directly in the browser
 - Every configuration in the network is kept updated on changes
 - If configured, all configurations will automatically be sent to the [WirtBot](https://github.com/b-m-f/wirt/WirtBot)
-- WirtBot then automatically apply the configuration and immediately activate it
+- WirtBot then automatically applies the configuration and immediately activates it
 - Export and Import feature to keep track of multiple networks and generate Backups
 - Automatic state retention in local storage
 - Absolutely no tracking, each application is unique to a users browser
