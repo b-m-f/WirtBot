@@ -5,14 +5,15 @@
 ![Build status badge](https://github.com/b-m-f/Wirt/workflows/Wirt-Interface/badge.svg)
 
 Welcome to the [Wirt](https://wirt.network) repository.
-This is the main repository for:
+What can you find here?:
 
 - Wirt documentation
 - Wirt developer documentation
 - WirtBot
 - Interface
 
-This web application is written with [VueJS](https://vuejs.org/) and [rustwasm](https://rustwasm.github.io/docs/book/) .
+This Interface is written with [VueJS](https://vuejs.org/) and [rustwasm](https://rustwasm.github.io/docs/book/).
+
 All documentation is written in markdown, using [vuepress](vuepress.vuejs.org/) to create the site
 
 The WirtBot is written in [Rust](https://www.rust-lang.org/).
