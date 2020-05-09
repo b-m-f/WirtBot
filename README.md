@@ -51,3 +51,9 @@ Please check out the `developers-docs` directory for more details on the applica
 The WirtBot and Interface are licensed with `GNU Affero General Public License v3.0`
 
 The documentation and Wirt logo are provided under `Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)`
+
+## Donate
+
+Would you like to contribute a bit to the server costs? ~10$ a month.
+
+You can easily do so to the Ethereum address: `0x39DF85776c626117B945afECF08C4DD262817522`
