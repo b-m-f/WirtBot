@@ -74,7 +74,8 @@
     "about": "About",
     "documentation": "Documentation",
     "imprint": "Imprint",
-    "privacy": "Privacy & cookies"
+    "privacy": "Privacy & cookies",
+    "donation": "Donations for the server costs of Wirt are appreciated and accepted via <a target='_blank' rel='noopener noreferrer' href='https://ethereum.org/' >Ethereum</a> address {{address}}"
   },
   "dashboard": {
     "widgets": {

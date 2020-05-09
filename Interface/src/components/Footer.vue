@@ -1,28 +1,43 @@
 <template>
   <footer :class="{mobile: isMobilePage}">
-    <div>
-      <Button @click.prevent="contact" empty>{{ $t("footer.contact") }}</Button>
+    <div class="button-and-links">
+      <div>
+        <Button @click.prevent="contact" empty>{{ $t("footer.contact") }}</Button>
+      </div>
+      <div>
+        <ul>
+          <li>
+            <a href="/about">{{ $t("footer.about") }}</a>
+          </li>
+          <li>
+            <a
+              href="/docs"
+              target="_blank"
+              rel="noopener noreferrer"
+            >{{ $t("footer.documentation") }}</a>
+          </li>
+        </ul>
+      </div>
     </div>
-    <div>
-      <ul>
-        <li>
-          <a href="/about">{{ $t("footer.about") }}</a>
-        </li>
-        <li>
-          <a href="/docs" target="_blank" rel="noopener noreferrer">{{ $t("footer.documentation") }}</a>
-        </li>
-      </ul>
-    </div>
+    <p id="donation" v-html="donationMessage"></p>
   </footer>
 </template>
 
 <script>
 import Button from "./Button";
+import { getTranslationWithVariables } from "../lib/helpers";
 export default {
   components: { Button },
   computed: {
     isMobilePage() {
       return this.$store.state.websiteBeingViewedOnMobileDevice;
+    },
+    donationMessage() {
+      return getTranslationWithVariables(
+        "footer.donation",
+        "address",
+        "<pre>0x39DF85776c626117B945afECF08C4DD262817522</pre>"
+      );
     }
   },
   methods: {
@@ -36,32 +51,41 @@ export default {
 <style lang="scss" scoped>
 footer {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
   margin-top: $spacing-large;
   padding: $spacing-large 0;
-  & ul {
-    margin-left: $spacing-medium;
+
+  & .button-and-links {
     display: flex;
-    flex-direction: column;
-  }
+    justify-content: center;
+    align-items: center;
+    &.mobile {
+      flex-direction: column;
+    }
+    & ul {
+      margin-left: $spacing-medium;
+      display: flex;
+      flex-direction: column;
+    }
 
-  & li {
-    color: $primary;
-
-    & a {
-      text-decoration: none;
+    & li {
       color: $primary;
-      line-height: 1.6;
+
+      & a {
+        text-decoration: none;
+        color: $primary;
+        line-height: 1.6;
+      }
+    }
+
+    & .button {
+      max-width: 20rem;
     }
   }
 
-  & .button {
-    max-width: 20rem;
-  }
-
-  &.mobile {
-    flex-direction: column;
+  & p#donation {
+    color: $primary;
+    text-align: center;
   }
 }
 </style>
