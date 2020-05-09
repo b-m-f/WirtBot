@@ -55,13 +55,18 @@ footer {
   margin-top: $spacing-large;
   padding: $spacing-large 0;
 
+  &.mobile {
+    & .button-and-links {
+      & .button {
+        max-width: 10rem;
+      }
+    }
+  }
+
   & .button-and-links {
     display: flex;
     justify-content: center;
     align-items: center;
-    &.mobile {
-      flex-direction: column;
-    }
     & ul {
       margin-left: $spacing-medium;
       display: flex;
