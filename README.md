@@ -54,6 +54,6 @@ The documentation and Wirt logo are provided under `Attribution-ShareAlike 4.0 I
 
 ## Donate
 
-Would you like to contribute a bit to the server costs? 
+Would you like to contribute a bit to the server costs? ~10$ a month.
 
 You can easily do so to the Ethereum address: `0x39DF85776c626117B945afECF08C4DD262817522`
