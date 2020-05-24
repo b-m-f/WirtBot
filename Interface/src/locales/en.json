@@ -98,7 +98,7 @@
         "hostname": "Hostname:",
         "subnet": "Subnet:",
         "download": "Download config",
-        "connected": "Connected to WirtBot"
+        "connected": "WirtBot installed"
       },
       "devices": {
         "title": "My devices",
