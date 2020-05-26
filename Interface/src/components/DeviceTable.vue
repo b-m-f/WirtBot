@@ -146,7 +146,6 @@ export default {
 #device-table {
   & table {
     width: calc(100% - #{$spacing-medium * 2}); // removing the padding
-    height: 100%;
     & thead {
       width: 100%;
       height: 100%;
