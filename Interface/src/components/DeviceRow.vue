@@ -57,13 +57,19 @@
       </select>
     </td>
     <td class="column-four">
+      <input
+        type="checkbox"
+        v-model="internalRouted"
+      >
+    </td>
+    <td class="column-five">
       <div v-if="qr">
         <img class="qr-code" :src="qr" alt="QR Code for config of mobile devices" />
       </div>
 
       <button @click="downloadConfig">Download</button>
     </td>
-    <td class="column-five">
+    <td class="column-six">
       <button id="save" @click="save">Save</button>
       <button @click="stopEditingMode">Stop</button>
     </td>
@@ -84,12 +90,15 @@
       <p>{{ type }}</p>
     </td>
     <td class="column-four">
+      <p>{{ routed ? $t('global.words.yes') : $t('global.words.no') }}</p>
+    </td>
+    <td class="column-five">
       <div v-if="qr">
         <img class="qr-code" :src="qr" alt="QR Code for config of mobile devices" />
       </div>
       <button @click="downloadConfig">Download</button>
     </td>
-    <td class="column-five">
+    <td class="column-six">
       <button @click="activateEditingMode">Edit</button>
       <button @click="deleteDevice">Delete</button>
     </td>
@@ -107,7 +116,8 @@ export default {
     type: String,
     id: String,
     qr: String,
-    expanded: Boolean
+    expanded: Boolean,
+    routed: Boolean
   },
   data() {
     return {
@@ -116,7 +126,8 @@ export default {
       internalType: this.$props.type || "Linux",
       internalId: this.$props.id,
       selectTouched: false,
-      internalEdit: this.$props.edit
+      internalEdit: this.$props.edit,
+      internalRouted: this.$props.routed || false
     };
   },
   computed: {
@@ -266,7 +277,8 @@ export default {
         id: this.internalId,
         name: this.internalName,
         type: this.internalType,
-        ip: this.internalIP
+        ip: this.internalIP,
+        routed: this.internalRouted
       });
     }
   }

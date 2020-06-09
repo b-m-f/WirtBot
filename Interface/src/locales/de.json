@@ -2,6 +2,12 @@
   "app": {
     "name": "Wirt"
   },
+  "global": {
+    "words": {
+      "no": "nein",
+      "yes": "ja"
+    }
+  },
   "dashboard": {
     "devices": "Geräte",
     "server": "Server",
