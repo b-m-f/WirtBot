@@ -7,6 +7,10 @@
     "navigation": {
       "next": "Next",
       "back": "Back"
+    },
+    "words": {
+      "no": "no",
+      "yes": "yes"
     }
   },
   "home": {
