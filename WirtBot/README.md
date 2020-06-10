@@ -67,7 +67,7 @@ For bigger changes, lets discuss these in an issue first.
 
 ## Development
 
-To start development with a fake public key simply run `make dev`.
+To start development with a fake public key simply run `PUBLIC_KEY=WIRTUI_PUBLIC_KEY make dev`.
 
 ### Allow localhost in CORS
 
