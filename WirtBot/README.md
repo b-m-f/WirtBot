@@ -67,7 +67,8 @@ For bigger changes, lets discuss these in an issue first.
 
 ## Development
 
-To start development with a fake public key simply run `PUBLIC_KEY=WIRTUI_PUBLIC_KEY make dev`.
+In order to develop the WirtBot you need [docker](https://docs.docker.com/get-docker/) installed.
+The docker container has all necessary setup already done, allowing you to focus on the actual task you want to do.
 
 ### Allow localhost in CORS
 
