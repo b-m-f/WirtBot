@@ -112,7 +112,17 @@ const store = new Vuex.Store({
   },
   actions: {
     async generateKeys({ commit }) {
-      commit("setKeys", await generateSigningKeys());
+      const keys = await generateSigningKeys();
+
+      if (
+        process.env.NODE_ENV === "development" &&
+        process.env.VUE_APP_DEVELOPMENT_PUBLIC_KEY &&
+        process.env.VUE_APP_DEVELOPMENT_PRIVATE_KEY
+      ) {
+        keys.public_key = process.env.VUE_APP_DEVELOPMENT_PUBLIC_KEY;
+        keys.private_key = process.env.VUE_APP_DEVELOPMENT_PRIVATE_KEY;
+      }
+      commit("setKeys", keys);
     },
     async disableFirstUse({ commit }) {
       commit("disableFirstUse");

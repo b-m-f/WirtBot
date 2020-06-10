@@ -1,6 +1,5 @@
-dev: export ALLOWED_ORIGIN=http://localhost:8080
 dev:
-	cargo watch -x run
+	docker-compose -f compose/dev.yml up --build
 test:
 	cargo test
 test-dev:
