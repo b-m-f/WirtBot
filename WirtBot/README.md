@@ -67,7 +67,7 @@ For bigger changes, lets discuss these in an issue first.
 
 ## Development
 
-Always run the server with a supplied public key. You can generate a fake one with `wg genkey` or simply use `wKcOYzxjaQV03gIy0uBov+WgeR1U20XY8o63r1ljuUc=`.
+To start development with a fake public key simply run `make dev`.
 
 ### Allow localhost in CORS
 
@@ -75,9 +75,13 @@ Make sure to send requests with the origin set to `https://wirt.network`.
 
 For example in curl: `curl -H "origin: https://wirt.network"`
 
+### Testing
+
+Run `make test`
+
 ### Continuous Testing
 
-Run `cargo watch -x test`
+Run `make test-dev`
 
 ### Logging
 
