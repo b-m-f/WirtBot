@@ -67,7 +67,7 @@ For bigger changes, lets discuss these in an issue first.
 
 ## Development
 
-In order to develop the WirtBot you need [docker](https://docs.docker.com/get-docker/) installed.
+In order to develop the WirtBot you need [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/) installed.
 The docker container has all necessary setup already done, allowing you to focus on the actual task you want to do.
 
 ### Allow localhost in CORS
