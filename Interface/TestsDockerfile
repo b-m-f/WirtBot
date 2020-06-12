@@ -1,0 +1,27 @@
+# APP
+FROM rust:alpine 
+RUN apk update
+RUN apk add nodejs npm  build-base openssl-dev clang
+
+# Reuse this one when dependencies are fixed
+RUN cargo install wasm-pack
+
+
+
+# build the app
+WORKDIR '/app'
+COPY package.json  .
+COPY package-lock.json .
+RUN npm install
+
+COPY wasm wasm
+COPY src src 
+COPY babel.config.js .
+COPY vue.config.js .
+COPY public public
+COPY .env .
+RUN npm run build
+
+COPY tests tests
+COPY nightwatch.conf.js .
+CMD ["npm", "run", "test"]

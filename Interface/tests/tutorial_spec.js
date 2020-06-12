@@ -1,19 +1,25 @@
 module.exports = {
   "Test links to server": async function(browser) {
-    await browser.url("http://localhost:8080/tutorial");
+    await browser.url(`http://${process.env.TEST_URL}/tutorial`);
     await browser.waitForElementVisible("body");
     await browser.click("#start > button");
 
-    await browser.assert.urlEquals("http://localhost:8080/tutorial/server/");
+    await browser.assert.urlEquals(
+      `http://${process.env.TEST_URL}/tutorial/server/`
+    );
   },
   "Test show info on setup": async function(browser) {
     await browser.click("#no > button");
-    await browser.assert.urlEquals("http://localhost:8080/tutorial/no-server/");
+    await browser.assert.urlEquals(
+      `http://${process.env.TEST_URL}/tutorial/no-server/`
+    );
   },
   "Test link to IP input": async function(browser) {
-    await browser.url("http://localhost:8080/tutorial/server/");
+    await browser.url(`http://${process.env.TEST_URL}/tutorial/server/`);
     await browser.click("#yes > button");
-    await browser.assert.urlEquals("http://localhost:8080/tutorial/server/ip");
+    await browser.assert.urlEquals(
+      `http://${process.env.TEST_URL}/tutorial/server/ip`
+    );
     await browser.assert.visible("input[name='1']");
     await browser.assert.visible("input[name='2']");
     await browser.assert.visible("input[name='3']");
@@ -22,7 +28,9 @@ module.exports = {
   "Test have to input correct ip values to get to port": async function(
     browser
   ) {
-    await browser.assert.urlEquals("http://localhost:8080/tutorial/server/ip");
+    await browser.assert.urlEquals(
+      `http://${process.env.TEST_URL}/tutorial/server/ip`
+    );
 
     await browser.setValue("input[name='1']", "0");
     await browser.execute(function() {
@@ -52,7 +60,9 @@ module.exports = {
       element.dispatchEvent(event);
     });
 
-    await browser.assert.urlEquals("http://localhost:8080/tutorial/server/ip");
+    await browser.assert.urlEquals(
+      `http://${process.env.TEST_URL}/tutorial/server/ip`
+    );
 
     await browser.clearValue("input[name='1']");
     await browser.setValue("input[name='1']", "1");
@@ -61,7 +71,9 @@ module.exports = {
       var event = new Event("change");
       element.dispatchEvent(event);
     });
-    await browser.assert.urlEquals("http://localhost:8080/tutorial/server/ip");
+    await browser.assert.urlEquals(
+      `http://${process.env.TEST_URL}/tutorial/server/ip`
+    );
 
     await browser.clearValue("input[name='4']");
     await browser.setValue("input[name='4']", "1");
@@ -71,14 +83,14 @@ module.exports = {
       element.dispatchEvent(event);
     });
     await browser.assert.urlEquals(
-      "http://localhost:8080/tutorial/server/port"
+      `http://${process.env.TEST_URL}/tutorial/server/port`
     );
   },
   "Test have to input correct port values to get to devices": async function(
     browser
   ) {
     await browser.assert.urlEquals(
-      "http://localhost:8080/tutorial/server/port"
+      `http://${process.env.TEST_URL}/tutorial/server/port`
     );
 
     await browser.setValue("input[name='port']", "1");
@@ -105,16 +117,18 @@ module.exports = {
     });
 
     await browser.assert.urlEquals(
-      "http://localhost:8080/tutorial/devices/add"
+      `http://${process.env.TEST_URL}/tutorial/devices/add`
     );
   },
   "Test that device setup can be skipped": async function(browser) {
     await browser.click("a#skip");
 
-    await browser.assert.urlEquals("http://localhost:8080/tutorial/done");
+    await browser.assert.urlEquals(
+      `http://${process.env.TEST_URL}/tutorial/done`
+    );
   },
   "Test that IP must be at least 2": async function(browser) {
-    await browser.url("http://localhost:8080/tutorial/devices/add");
+    await browser.url(`http://${process.env.TEST_URL}/tutorial/devices/add`);
     await browser.setValue("input[name='device-ipv4']", "1");
     await browser.execute(function() {
       var element = document.querySelector("input[name='device-ipv4']");
@@ -158,10 +172,10 @@ module.exports = {
   ) {
     await browser.click("button#save");
     await browser.assert.not.urlEquals(
-      "http://localhost:8080/tutorial/devices/success"
+      `http://${process.env.TEST_URL}/tutorial/devices/success`
     );
     await browser.assert.urlEquals(
-      "http://localhost:8080/tutorial/devices/add"
+      `http://${process.env.TEST_URL}/tutorial/devices/add`
     );
   },
   "Test that name needs to specified": async function(browser) {
@@ -215,14 +229,16 @@ module.exports = {
 
     await browser.click("button#save ");
     await browser.assert.urlEquals(
-      "http://localhost:8080/tutorial/devices/success"
+      `http://${process.env.TEST_URL}/tutorial/devices/success`
     );
   },
 
   "Test that config can be downloaded": async function(browser) {},
   "Test that last step is reached": async function(browser) {
     await browser.click("#finish > button");
-    await browser.assert.urlEquals("http://localhost:8080/tutorial/done");
+    await browser.assert.urlEquals(
+      `http://${process.env.TEST_URL}/tutorial/done`
+    );
   },
 
   //   "Test links to server": async function(browser) {},

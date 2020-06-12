@@ -4,18 +4,17 @@ module.exports = {
   src_folders: ["tests"],
   exclude: ["tests/helpers"],
 
-  webdriver: {
-    start_process: true,
-    port: 4444,
-    server_path: require("geckodriver").path,
-    cli_args: [
-      // very verbose geckodriver logs
-      // '-vv'
-    ]
-  },
-
   test_settings: {
     default: {
+      webdriver: {
+        start_process: true,
+        port: 4444,
+        server_path: require("geckodriver").path,
+        cli_args: [
+          // very verbose geckodriver logs
+          // '-vv'
+        ],
+      },
       launch_url: "http://localhost:8080",
       desiredCapabilities: {
         browserName: "firefox",
@@ -23,23 +22,30 @@ module.exports = {
           // Enable this if you encounter unexpected SSL certificate errors in Firefox
           // acceptInsecureCerts: true,
           "moz:firefoxOptions": {
-            args: ["-verbose"]
-          }
-        }
-      }
+            args: ["-verbose"],
+          },
+        },
+      },
     },
     integration: {
-      launch_url: "http://localhost:8080",
-
+      launch_url: "http://test-server:8080",
+      webdriver: {
+        start_process: false,
+      },
+      selenium: {
+        host: "firefox",
+        port: "4444",
+      },
       desiredCapabilities: {
+        browserName: "firefox",
         alwaysMatch: {
           // Enable this if you encounter unexpected SSL certificate errors in Firefox
           // acceptInsecureCerts: true,
           "moz:firefoxOptions": {
-            args: ["-headless"]
-          }
-        }
-      }
-    }
-  }
+            args: ["-headless"],
+          },
+        },
+      },
+    },
+  },
 };
