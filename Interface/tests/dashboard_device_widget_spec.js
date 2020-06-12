@@ -2,7 +2,7 @@ const { setServer } = require("./helpers/dataFillers");
 
 module.exports = {
   "Test cant add device without server": async function(browser) {
-    await browser.url("http://localhost:8080/dashboard");
+    await browser.url(`http://${process.env.TEST_URL}/dashboard`);
     await browser.waitForElementVisible("body");
 
     await browser.click("#add-device button");
@@ -22,7 +22,7 @@ module.exports = {
 
     await setServer(browser);
 
-    await browser.url("http://localhost:8080/dashboard");
+    await browser.url(`http://${process.env.TEST_URL}/dashboard`);
     await browser.assert.visible("#server-widget #download");
   },
   "Test android devices have a QR code": async function(browser) {
@@ -37,7 +37,7 @@ module.exports = {
   },
 
   "Test iOS devices have a QR code": async function(browser) {
-    await browser.url("http://localhost:8080/dashboard");
+    await browser.url(`http://${process.env.TEST_URL}/dashboard`);
     await browser.waitForElementVisible("body");
     await browser.click("#add-device button");
 

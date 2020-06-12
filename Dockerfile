@@ -1,27 +1,8 @@
 # APP
-FROM archlinux as app
-
-# install rust
-RUN pacman -Sy  --noconfirm \
-    curl \
-    git \
-    clang \
-    nodejs \
-    npm \
-    python3 \
-    make \
-    gcc \
-    libffi \
-    pkg-config \
-    openssl
-RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
-ENV PATH="/root/.cargo/bin:${PATH}"
-
-# Install wasm-pack from binary until fixed dependencies
-RUN curl https://github.com/rustwasm/wasm-pack/releases/download/v0.9.1/wasm-pack-v0.9.1-x86_64-unknown-linux-musl.tar.gz -L --output wasm-pack.tar.gz
-RUN mkdir wasm &&  tar xvf wasm-pack.tar.gz -C wasm --strip-components 1 && mv wasm/* ~/.cargo/bin/
-# Reuse this one when dependencies are fixed
-# RUN cargo install wasm-pack
+FROM rust:alpine  as app
+RUN apk update
+RUN apk add nodejs npm  build-base openssl-dev clang
+RUN cargo install wasm-pack
 
 # build the app
 WORKDIR '/app'

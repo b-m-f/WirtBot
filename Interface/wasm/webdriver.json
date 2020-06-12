@@ -1,0 +1,12 @@
+{
+    "moz:firefoxOptions": {
+        "prefs": {},
+        "args": []
+    },
+    "goog:chromeOptions": {
+        "hostname": "localhost",
+        "args": [
+            "--whitelisted-ips"
+        ]
+    }
+}
