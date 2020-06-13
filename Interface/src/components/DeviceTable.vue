@@ -240,11 +240,6 @@ export default {
           padding-right: 0;
           padding-top: $spacing-small;
         }
-        & .column-six {
-          flex-direction: row;
-          padding-right: 0;
-          padding-top: $spacing-small;
-        }
         &.even {
           background-color: $grey-light;
         }
