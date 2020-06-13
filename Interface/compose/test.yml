@@ -1,0 +1,20 @@
+version: "3"
+services:
+  test-container:
+    build:
+      context: ..
+      dockerfile: TestsDockerfile
+    container_name: test-container
+    command: ["npm", "run", "test:ci"]
+    depends_on: ["firefox", "chrome", "test-server"]
+  test-server:
+    build:
+      context: ../..
+      dockerfile: Dockerfile
+    container_name: test-server
+  chrome:
+    image: selenium/standalone-chrome
+    container_name: chrome
+  firefox:
+    image: selenium/standalone-firefox
+    container_name: firefox
