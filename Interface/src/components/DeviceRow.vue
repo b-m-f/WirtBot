@@ -59,8 +59,10 @@
     <td class="column-four">
       <input
         type="checkbox"
+        id="routed"
         v-model="internalRouted"
       >
+      <label for="routed">{{ $t("dashboard.widgets.devices.labels.routed") }}</label>
     </td>
     <td class="column-five">
       <div v-if="qr">

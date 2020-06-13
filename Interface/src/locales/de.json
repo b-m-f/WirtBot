@@ -9,7 +9,14 @@
     }
   },
   "dashboard": {
-    "devices": "Geräte",
+    "widgets": {
+      "devices": {
+        "title": "Geräte",
+        "labels": {
+          "routed": "Ganzen Traffic durch wireguard tunneln"
+        }
+      }
+    },
     "server": "Server",
     "addDevice": "Neues Geraet hinzufuegen"
   },
