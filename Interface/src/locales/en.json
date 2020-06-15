@@ -110,7 +110,7 @@
         "expert": "Expert",
         "expertWarning": "You are in expert mode. Take care!",
         "labels": {
-          "routed": "Route all traffic through wireguard"
+          "routed": "Route all traffic through WireGuard"
         }
       }
     },
