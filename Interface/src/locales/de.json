@@ -13,7 +13,7 @@
       "devices": {
         "title": "Geräte",
         "labels": {
-          "routed": "Ganzen Traffic durch wireguard tunneln"
+          "routed": "Ganzen Traffic durch WireGuard tunneln"
         }
       }
     },
