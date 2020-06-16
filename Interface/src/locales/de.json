@@ -2,8 +2,21 @@
   "app": {
     "name": "Wirt"
   },
+  "global": {
+    "words": {
+      "no": "nein",
+      "yes": "ja"
+    }
+  },
   "dashboard": {
-    "devices": "Geräte",
+    "widgets": {
+      "devices": {
+        "title": "Geräte",
+        "labels": {
+          "routed": "Ganzen Traffic durch WireGuard tunneln"
+        }
+      }
+    },
     "server": "Server",
     "addDevice": "Neues Geraet hinzufuegen"
   },

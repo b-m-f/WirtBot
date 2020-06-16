@@ -7,6 +7,10 @@
     "navigation": {
       "next": "Next",
       "back": "Back"
+    },
+    "words": {
+      "no": "no",
+      "yes": "yes"
     }
   },
   "home": {
@@ -104,7 +108,10 @@
         "title": "My devices",
         "addDevice": "Add new device",
         "expert": "Expert",
-        "expertWarning": "You are in expert mode. Take care!"
+        "expertWarning": "You are in expert mode. Take care!",
+        "labels": {
+          "routed": "Route all traffic through WireGuard"
+        }
       }
     },
     "messages": {

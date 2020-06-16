@@ -13,6 +13,9 @@
             <p>{{ $t("device.type") }}:</p>
           </th>
           <th class="header-four">
+            <p>{{ $t("device.routeThroughInternet") }}:</p>
+          </th>
+          <th class="header-five">
             <p>{{ $t("device.downloadConfig") }}:</p>
           </th>
         </thead>
@@ -24,6 +27,7 @@
             :ip="device.ip"
             :type="device.type"
             :name="device.name"
+            :routed="device.routed"
             :edit="!device.id"
             :qr="device.qr"
             @change="save"
@@ -43,6 +47,7 @@
           :ip="device.ip"
           :type="device.type"
           :name="device.name"
+          :routed="device.routed"
           :edit="!device.id"
           @change="save"
           @cancelNewDevice="cancelNewDevice"
@@ -83,18 +88,19 @@ export default {
         return false;
       }
     },
-    async save({ type, id, ip, name }) {
+    async save({ type, id, ip, name, routed }) {
       await this.saveDevice({
         ip,
         type,
         name,
-        id
+        id,
+        routed
       });
     },
     reportValidity() {
       this.$refs.form.reportValidity();
     },
-    async saveDevice({ ip, name, type, id }) {
+    async saveDevice({ ip, name, type, id, routed }) {
       if (!name || !type || (!ip.v4 && !ip.v6)) {
         // TODO: this is calling a method on the child directly, to trigger its form validation
         // Something that should generally be avoided
@@ -102,7 +108,7 @@ export default {
         return false;
       }
       if (id) {
-        return await this.updateDevice({ ip, name, type, id });
+        return await this.updateDevice({ ip, name, type, id, routed });
       }
       // https://stackoverflow.com/questions/6860853/generate-random-string-for-div-id/6860916#6860916
       function guidGenerator() {
@@ -132,7 +138,8 @@ export default {
         id: newId,
         ip,
         name,
-        type
+        type,
+        routed
       };
       await this.$store.dispatch("addDevice", device);
       this.$emit("deviceSaved");
@@ -151,10 +158,10 @@ export default {
       height: 100%;
       display: grid;
       grid-gap: $spacing-medium;
-      grid-template-areas: "header-one header-two header-three header-four";
+      grid-template-areas: "header-one header-two header-three header-four header-five";
       grid-template-columns:
-        calc(20% - #{$spacing-medium}) calc(20% - #{$spacing-medium})
-        calc(20% - #{$spacing-medium}) calc(40% - #{$spacing-medium});
+        calc(16.6% - #{$spacing-medium}) calc(16.6% - #{$spacing-medium})
+        calc(16.6% - #{$spacing-medium}) calc(16.6% - #{$spacing-medium});
       margin-bottom: $spacing-medium;
     }
     & tr {
@@ -162,11 +169,11 @@ export default {
       height: 100%;
       display: grid;
       grid-gap: $spacing-medium;
-      grid-template-areas: "one two three four five";
+      grid-template-areas: "one two three four five six";
       grid-template-columns:
-        calc(20% - #{$spacing-medium}) calc(20% - #{$spacing-medium})
-        calc(20% - #{$spacing-medium}) calc(20% - #{$spacing-medium})
-        calc(20% - #{$spacing-medium});
+        calc(16.6% - #{$spacing-medium}) calc(16.6% - #{$spacing-medium})
+        calc(16.6% - #{$spacing-medium}) calc(16.6% - #{$spacing-medium})
+        calc(16.6% - #{$spacing-medium}) calc(16.6% - #{$spacing-medium});
       padding-top: $spacing-medium;
       padding-bottom: $spacing-medium;
       &.even {
@@ -212,6 +219,7 @@ export default {
           }
         }
         & .column-two {
+          flex-direction: row;
           padding-top: $spacing-small;
         }
         & .column-three {
@@ -223,6 +231,11 @@ export default {
           flex-direction: row;
         }
         & .column-five {
+          flex-direction: row;
+          padding-right: 0;
+          padding-top: $spacing-small;
+        }
+        & .column-six {
           flex-direction: row;
           padding-right: 0;
           padding-top: $spacing-small;
@@ -244,6 +257,9 @@ export default {
   }
   & .header-four {
     grid-area: header-four;
+  }
+  & .header-five {
+    grid-area: header-five;
   }
 
   & .column-one {
@@ -277,6 +293,13 @@ export default {
     justify-content: flex-start;
     flex-direction: column;
     grid-area: five;
+  }
+  & .column-six {
+    padding-right: $spacing-medium;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    grid-area: six;
   }
 }
 </style>
