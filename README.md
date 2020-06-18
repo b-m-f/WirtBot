@@ -2,7 +2,9 @@
 
 # Wirt
 
-![Build status badge](https://github.com/b-m-f/Wirt/workflows/Wirt-Interface/badge.svg)
+![Interface Tests](https://github.com/b-m-f/Wirt/workflows/run%20Interface%20tests/badge.svg)
+![WirtBot Tests](https://github.com/b-m-f/Wirt/workflows/run%20WirtBot%20tests/badge.svg)
+![Build on master](https://github.com/b-m-f/Wirt/workflows/build%20and%20push%20interface/badge.svg)
 
 Welcome to the [Wirt](https://wirt.network) repository.
 What can you find here?:
