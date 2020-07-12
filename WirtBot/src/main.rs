@@ -11,6 +11,8 @@ use warp::{reject, Filter, Rejection, Reply};
 
 use pretty_env_logger;
 
+mod managed_dns;
+
 #[macro_use]
 extern crate log;
 
@@ -42,6 +44,10 @@ struct Message {
 #[derive(Debug)]
 struct IncorrectSignature;
 impl reject::Reject for IncorrectSignature {}
+
+#[derive(Debug)]
+struct FeatureDisabled;
+impl reject::Reject for FeatureDisabled {}
 
 #[derive(Debug)]
 struct FailWritingConfig;
@@ -164,6 +170,43 @@ fn update(
         .map(|_| format!("Config updated"))
 }
 
+fn update_devices(
+    public_key: PublicKey,
+) -> impl Filter<Extract = (String,), Error = warp::Rejection> + Copy {
+    warp::post()
+        .and(warp::path("update-devices"))
+        .and(warp::body::json())
+        // Drop out early if the MANAGED_DNS feature is not enabled
+        .and_then(|message: Message| async move {
+            if managed_dns::enabled() {
+                Ok(message)
+            } else {
+                Err(reject::custom(FeatureDisabled))
+            }
+        })
+        // TODO: try to extract the signature verification into its own Filter
+        .and(warp::any().map(move || public_key.clone()))
+        .and_then(|message: Message, public_key: PublicKey| async move {
+            let signature = decode_signature_base64(message.signature);
+            let message_as_bytes = message.message.as_bytes();
+            if public_key.verify(&message_as_bytes, &signature).is_ok() {
+                Ok(message.message)
+            } else {
+                Err(reject::custom(IncorrectSignature))
+            }
+        })
+        .and_then(|device_list: String| async {
+            match managed_dns::write_device_file(device_list) {
+                Ok(_) => return Ok(()),
+                Err(e) => {
+                    error!("{}", e);
+                    return Err(reject::custom(FailWritingConfig));
+                }
+            }
+        })
+        .map(|_| format!("Updated {} with new devices", managed_dns::get_device_file_path()))
+}
+
 #[tokio::main]
 async fn main() {
     let public_key_base64 = get_key();
@@ -186,6 +229,7 @@ async fn main() {
     let routes = ok()
         .or(update(public_key))
         .or(update_options)
+        .or(update_devices(public_key))
         .with(log)
         .with(cors)
         .recover(handle_rejection);
