@@ -1,4 +1,4 @@
-name: run tests
+name: run WirtBot tests
 
 on:
   pull_request:
