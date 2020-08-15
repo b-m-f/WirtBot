@@ -79,3 +79,16 @@ export async function updateServerConfig(config, host) {
     return false;
   }
 }
+
+export async function updateDNSConfig(config, host) {
+  try {
+    const messageWithSignature = await sign(config);
+    console.log(process.env.VUE_APP_HTTP_MODE);
+    const http = process.env.VUE_APP_HTTP_MODE === "true" ? "http" : "https";
+    await post(`${http}://${host}:3030/update-device-dns-entries`, messageWithSignature);
+    return true;
+  } catch (e) {
+    console.error(e);
+    return false;
+  }
+}

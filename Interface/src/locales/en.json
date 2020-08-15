@@ -82,7 +82,13 @@
     "donation": "Donations for the server costs of Wirt are appreciated and accepted via <a target='_blank' rel='noopener noreferrer' href='https://ethereum.org/' >Ethereum</a> address {{address}}"
   },
   "dashboard": {
+    "edit": "Edit",
+    "stopEdit": "Stop editing",
     "widgets": {
+      "network": {
+        "title": "Network settings",
+        "dnsName": "DNS name to access services in network via their name"
+      },
       "settings": {
         "title": "Settings",
         "import": "Import Backup",
@@ -96,8 +102,6 @@
         "name": "Server name (optional):",
         "ip": "IP address:",
         "port": "WireGuard is listening at Port:",
-        "edit": "Edit",
-        "stopEdit": "Stop editing",
         "expert": "Expert",
         "expertWarning": "You are in expert mode. Take care!",
         "hostname": "Hostname:",
