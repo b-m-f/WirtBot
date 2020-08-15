@@ -21,6 +21,12 @@
         >{{ $t("dashboard.widgets.settings.import") }}</Button>
       </div>
     </div>
+    <div class="row">
+        <Button
+          @click.prevent="updateUi"
+          id="update-ui"
+        >{{ $t("dashboard.widgets.settings.updateUi") }}</Button>
+    </div>
   </div>
 </template>
 
@@ -66,6 +72,17 @@ export default {
       element.click();
 
       document.body.removeChild(element);
+    },
+    updateUi(){
+      try {
+      const settings = window.localStorage.getItem("vuex")
+      const backup = upgradeBackup(settings);
+      window.localStorage.setItem("vuex", backup);
+      this.$store.replaceState(JSON.parse(backup));
+      this.$forceUpdate();
+      } catch (error){
+        this.$store.dispatch("alerts/addWarning", error);
+      }
     },
     importBackup() {
       if (!this.file) {

@@ -2,6 +2,9 @@
 
 ## Interface
 When the Interface has a new version it will automatically be on [https://wirt.network](https://wirt.network). 
+
+To update use the `Update the UI` button in the **Settings** on the [Dashboard](https://wirt.network/dashboard).
+
 If things you are expecting to see are missing try to export and reimport your settings. This should apply all necessary changes to your configuration and show the expected things.
 
 If this did not yet help, clear your cache and reimport the settings again.

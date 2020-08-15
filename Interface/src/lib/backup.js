@@ -28,6 +28,21 @@ function betaTo1(backup) {
   }
 }
 
+function oneToOneDotOne(backup) {
+  try {
+    backup.version = 1.1;
+    backup.network = {
+      dnsName: "wirt.internal"
+    }
+    backup.dashboard.widgets = ["network", ...backup.dashboard.widgets];
+    return backup;
+  } catch (error) {
+    console.error(error);
+    throw Error(i18n.t("errors.backupUpgradeTo1dot1"));
+  }
+
+}
+
 // Returns upgraded Backup as JSON string
 export function upgradeBackup(backupAsJSONString) {
   const backup = JSON.parse(backupAsJSONString);
@@ -37,18 +52,17 @@ export function upgradeBackup(backupAsJSONString) {
   let updatedBackup = backup;
 
   if (
-    (backup.version == 1 || backupVersion < appVersion) &&
-    !backup.server.ip.v4
+    !backup.version
   ) {
+    console.log("hi here beta")
     updatedBackup = betaTo1(updatedBackup);
-  } else {
-    if (appVersion == backupVersion) {
-      return backupAsJSONString;
-    }
-
-    if (appVersion < backupVersion) {
-      throw Error(i18n.t("errors.backupNotCompatible"));
-    }
+  }
+  if (updatedBackup.version == 1.0) {
+    console.log("hi here ione")
+    updatedBackup = oneToOneDotOne(updatedBackup)
+  }
+  if (appVersion < backupVersion) {
+    throw Error(i18n.t("errors.backupNotCompatible"));
   }
 
   return JSON.stringify(updatedBackup);

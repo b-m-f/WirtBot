@@ -88,7 +88,8 @@
         "import": "Import Backup",
         "export": "Create Backup",
         "publicKey": "Public Key:",
-        "backup": "Backup"
+        "backup": "Backup",
+        "updateUi": "Update the UI"
       },
       "server": {
         "title": "My server",
