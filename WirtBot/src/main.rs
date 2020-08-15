@@ -174,7 +174,7 @@ fn update_device_dns_entries(
     public_key: PublicKey,
 ) -> impl Filter<Extract = (String,), Error = warp::Rejection> + Copy {
     warp::post()
-        .and(warp::path("update_device_dns_entries"))
+        .and(warp::path("update-device-dns-entries"))
         .and(warp::body::json())
         // Drop out early if the MANAGED_DNS feature is not enabled
         .and_then(|message: Message| async move {
