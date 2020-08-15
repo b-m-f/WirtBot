@@ -105,7 +105,7 @@ const store = new Vuex.Store({
       state.devices = devices;
     },
     updateDNSName(state, name) {
-      state.network.name = name;
+      state.network.dnsName = name;
     },
     updateDashboard(state, { messages, widgets }) {
       if (messages) {
