@@ -16,7 +16,8 @@ What can you find here?:
 
 This Interface is written with [VueJS](https://vuejs.org/) and [rustwasm](https://rustwasm.github.io/docs/book/).
 
-All documentation is written in markdown, using [vuepress](vuepress.vuejs.org/) to create the site
+All documentation is written in markdown, using [vuepress](vuepress.vuejs.org/) to create the site.
+Read it at [wirt.network/docs](https://wirt.network). 
 
 The WirtBot is written in [Rust](https://www.rust-lang.org/).
 
