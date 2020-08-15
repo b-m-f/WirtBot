@@ -225,11 +225,13 @@ async fn main() {
         .allow_header("content-type");
 
     let update_options = warp::options().and(warp::path("update")).map(warp::reply);
+    let update_dns_options = warp::options().and(warp::path("update-device-dns-entries")).map(warp::reply);
 
     let routes = ok()
         .or(update(public_key))
         .or(update_options)
         .or(update_device_dns_entries(public_key))
+        .or(update_dns_options)
         .with(log)
         .with(cors)
         .recover(handle_rejection);
