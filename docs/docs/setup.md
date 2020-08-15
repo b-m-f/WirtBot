@@ -6,6 +6,25 @@ If you want to run your own WirtBot you will need the following things:
 
 - A machine with a public IP on the internet
 - Root access on this machine
+- A Domain that points to your machine
+
+### Automated
+
+To get up an running quickly, clone or download the [Wirt repository](https://github.com/b-m-f/wirt) and update the values in `ansible/values.yml`. 
+When you are done run `make setup-wirtbot` in the root of the repository and wait until the setup is done.
+
+Thats it. 
+
+Your WirtBot will have a valid certificate from LetsEncrypt and will be ready to securely manage your network, complete with all functionality that the Wirt system has to offer.
+
+#### Updating
+
+To update simply rerun `make setup-wirtbot`. It will take care of updating WirtBot to the latest version every time, and apply any other changes that might be necessary.
+
+### Manual
+
+If you want to do the manual setup you need
+
 - WireGuard® already installed
 - A valid SSL certificate for your machine
 - Port 3030 opened in your firewall
@@ -57,6 +76,14 @@ For verification you can always try to ping the WirtBot. Its IP in the network i
 ### Using a different interface name
 
 If you would like to use i.e. `wg0` instead of `server`for the interface name make sure to change this in the `wireguard-restarter` and add the `CONFIG_PATH` environment variable to your `wirtbot` service.
+
+### Enabling DNS
+
+First update your `wirtbot.service` file to include `MANAGED_DNS_ENABLED: 1` as an environment variable.
+
+Now install [https://coredns.io/](https://coredns.io/) and create a config that will use port 53 and in its config uses the [file plugin](https://coredns.io/plugins/file/) to point to the DNS file at `/etc/wirt_devices` (you can change the path by providing `MANAGED_DNS_DEVICE_FILE` to the WirtBot).
+
+Start `CoreDNS` and that should be it.
 
 ## WirtUI
 
