@@ -9,6 +9,7 @@ services:
     environment:
       "PUBLIC_KEY": "1lLU3VhXsrSGMxESmqfY4m2oEVkpfEHyKlCQU6MMPsI="
       "ALLOWED_ORIGIN": "http://localhost:8080"
-      "RUST_LOG": "info"
+      "RUST_LOG": "debug"
+      "MANAGED_DNS_ENABLED": 1
     container_name: development_wirtbot
     command: ["cargo", "watch", "-x", "run"]
