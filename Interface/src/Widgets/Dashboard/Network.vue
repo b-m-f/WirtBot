@@ -3,8 +3,8 @@
     <h1>{{ $t("dashboard.widgets.network.title") }}</h1>
     <div class="row">
       <label>{{ $t("dashboard.widgets.network.dnsName") }}</label>
-      <input v-if="!network.dnsName || edit" type="text" name="dnsName" :value="network.dnsName" @change="(e) => updateDNSName(e.target.value)"/>
-      <p v-else>{{ network.dnsName }}</p>
+      <input v-if="!network.dns.name || edit" type="text" name="dns-name" :value="network.dns.name" @change="(e) => updateDNSName(e.target.value)"/>
+      <p v-else>{{ network.dns.name }}</p>
     </div>
     <button id="edit" @click="toggleEdit">
       <span v-if="edit">{{ $t("dashboard.stopEdit") }}</span>
