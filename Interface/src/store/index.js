@@ -54,6 +54,9 @@ const store = new Vuex.Store({
     ],
     deviceTypes: ["Android", "Windows", "MacOS", "iOS", "Linux", "FreeBSD"],
     websiteBeingViewedOnMobileDevice: undefined,
+    network: {
+      dnsName: "wirt.internal"
+    },
     dashboard: {
       // Messages have to be defined in pages/Dashboard/messages.js
       messages: [],
@@ -101,6 +104,9 @@ const store = new Vuex.Store({
     updateDevices(state, devices) {
       state.devices = devices;
     },
+    updateDNSName(state, name) {
+      state.network.name = name;
+    },
     updateDashboard(state, { messages, widgets }) {
       if (messages) {
         state.dashboard.messages = messages;
@@ -126,6 +132,10 @@ const store = new Vuex.Store({
     },
     async disableFirstUse({ commit }) {
       commit("disableFirstUse");
+    },
+    async updateDNSName({ commit }, name) {
+      // TODO: some kind of check that the DNS name is correct
+      commit("updateDNSName", name);
     },
     async addDashboardMessage({ state, commit }, message) {
       commit("updateDashboard", {
@@ -185,8 +195,7 @@ const store = new Vuex.Store({
         if (state.server.hostname) {
           updateServerViaApi(state.server.config, state.server.hostname);
         } else {
-          // TODO: fix this call to send the correct data along
-          // identify by public key etc.
+          // In most cases this will throw CORS errors, since HTTPS is enforced
           updateServerViaApi(state.server.config, state.server.ip.v4.join(""));
         }
       }
