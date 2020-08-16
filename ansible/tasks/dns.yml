@@ -22,7 +22,7 @@
 - name: Copy coredns config to machine
   template:
     src: "templates/coredns.config.j2"
-    dest: "/home/{{ maintainer_username }}/coredns/Corefile"
+    dest: "/home/{{ maintainer_username }}/coredns/data/Corefile"
     owner: "{{ maintainer_username }}"
     group: "{{ maintainer_username }}"
     mode: 0640

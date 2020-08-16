@@ -9,14 +9,14 @@ services:
     restart: "unless-stopped"
     network_mode: "host"
     volumes:
-      - "../letsencrypt/data/live/{{domain_name}}:/certs"
+      - "../letsencrypt/data/:/certs/:ro"
       - /etc/wireguard:/wireguard
       - ../coredns/data:/dns
     environment:
       - "PUBLIC_KEY={{ wirtui_public_key }}"
       - "PORT=3030"
-      - "SSL_KEY=/certs/privkey.pem"
-      - "SSL_PEM_CERT=/certs/fullchain.pam"
+      - "SSL_KEY=/certs/live/{{domain_name}}/privkey.pem"
+      - "SSL_PEM_CERT=/certs/live/{{domain_name}}/fullchain.pem"
       - "MANAGED_DNS_ENABLED=1"
       - "MANAGED_DNS_DEVICE_FILE=/dns/wirt_devices"
       - "CONFIG_PATH=/wireguard/server.conf"

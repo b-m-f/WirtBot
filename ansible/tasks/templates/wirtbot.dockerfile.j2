@@ -1,19 +1,21 @@
-FROM debian:buster-slim as downloader
+FROM rust:slim as builder
 
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get upgrade
-RUN apt-get install -yy curl 
+RUN apt-get install -yy git
 
-RUN curl -s https://github.com/b-m-f/wirt/releases/latest/download/wirtbot > /usr/bin/wirtbot
-RUN chmod +x /usr/bin/wirtbot
+RUN git clone https://github.com/b-m-f/Wirt.git /builder
+WORKDIR /builder/WirtBot
+RUN cargo build --release --target-dir /builder/artifact
 
 
 
-FROM alpine:latest  
-RUN apk update && apk upgrade
+FROM debian:buster-slim
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt update && apt upgrade
 
 WORKDIR /app
-COPY --from=downloader /usr/bin/wirtbot .
+COPY --from=builder /builder/artifact/WirtBot ./wirtbot
 
 EXPOSE 3030
 
