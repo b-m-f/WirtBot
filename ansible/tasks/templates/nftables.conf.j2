@@ -1,0 +1,32 @@
+#!/usr/bin/nft -f
+
+flush ruleset
+
+table inet filter {
+        chain input {
+                type filter hook input priority 0; policy drop;
+
+                iif lo accept comment "Accept any localhost traffic"
+                iifname server accept comment "Accept Wireguard traffic"
+
+                ct state invalid drop comment "Drop invalid connections"
+                ct state established,related accept comment "Accept traffic originated from us"
+
+                tcp dport ssh accept comment "Accept SSH on port 22"
+                tcp dport http accept comment "Accept http on port 80 for letsencrypt"
+                tcp dport https accept comment "Accept https on port 443 for letsencrypt"
+                tcp dport 3030 accept comment "Accept Wirt adapter traffic"
+                udp dport 10101 accept comment "Accept WireGuard connection establishment" 
+        }
+
+        chain forward {
+                type filter hook forward priority 0; policy drop;
+
+                iifname server accept comment "Accept forwarding WireGuard traffic"
+                oifname server tcp flags syn tcp option maxseg size set rt mtu comment "Clamp the MTU so that clients talk with same package size"
+        }
+
+        chain output {
+                type filter hook output priority 0; policy accept;
+        }
+}

@@ -1,0 +1,12 @@
+version: "3"
+services:
+  coredns:
+    image: coredns/coredns
+    ports:
+      - "10.10.0.1:53:53/udp"
+    restart: "unless-stopped"
+    network_mode: "host"
+    working_dir: /v
+    volumes:
+      - ./:/v
+

@@ -1,0 +1,3 @@
+- name: Reboot server and end playbook
+  command: reboot
+  ignore_errors: "yes"

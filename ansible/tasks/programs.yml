@@ -1,0 +1,7 @@
+- name: Install vim
+  apt:
+    name:
+      - vim
+      - docker.io
+      - docker-compose
+    state: present

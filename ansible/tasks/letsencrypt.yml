@@ -1,0 +1,29 @@
+- name: Create a directory for letsencrypt
+  file:
+    path: "/home/{{ maintainer_username }}/{{ item }}"
+    owner: "{{ maintainer_username }}"
+    group: "{{ maintainer_username }}"
+    state: directory
+    mode: '0750'
+  loop:
+   - letsencrypt
+
+- name: Copy docker-compose file to machine
+  template:
+    src: "templates/{{ item }}.docker-compose.yml.j2"
+    dest: "/home/{{ maintainer_username }}/{{ item }}/docker-compose.yml"
+    owner: "{{ maintainer_username }}"
+    group: "{{ maintainer_username }}"
+    mode: 0640
+  loop:
+    - letsencrypt
+  
+- name: Start letsencrypt docker service
+  command: "docker-compose -f /home/{{ maintainer_username }}/letsencrypt/docker-compose.yml run certbot"
+
+- name: Schedule renewal for letsencrypt with cron
+  cron:
+    name: "Renew certificates"
+    minute: "0"
+    hour: "2"
+    job: "docker-compose -f /home/{{ maintainer_username }}/letsencrypt/docker-compose.yml renew"

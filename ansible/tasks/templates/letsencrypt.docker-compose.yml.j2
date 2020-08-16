@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+ certbot:
+    container_name: certbot
+    hostname: certbot
+    ports:
+        - "80:80"
+    image: certbot/certbot
+    network_mode: "host"
+    volumes:
+        - ./data:/etc/letsencrypt
+    command: certonly --dry-run --standalone -d {{domain_name}}  --non-interactive --agree-tos  --email {{letsencrypt_email}} --staging
+ renew:
+    container_name: certbot-renew
+    hostname: certbot
+    ports:
+        - "80:80"
+    network_mode: "host"
+    image: certbot/certbot
+    volumes:
+        - ./data:/etc/letsencrypt
+    command: renew

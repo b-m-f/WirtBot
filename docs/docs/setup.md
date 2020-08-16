@@ -9,8 +9,19 @@ If you want to run your own WirtBot you will need the following things:
 - A Domain that points to your machine
 
 ### Automated
+> This assumes you have a fresh Debian10 server or VPS with root access!
 
-To get up an running quickly, clone or download the [Wirt repository](https://github.com/b-m-f/wirt) and update the values in `ansible/values.yml`. 
+First thing to do is to make sure that you have an SSH key. 
+If you do not have one yet you can follow [this tutorial]().
+You will need the content of the `.pub` file that will be created in the next step.
+
+Now clone or download the [Wirt repository](https://github.com/b-m-f/wirt) and update the values in `ansible/main.yml`.
+
+Time to install:
+- ansible
+- ansible-playbook
+- sshpass (necessary to login via SSH to your servers root user via password for the setup)
+
 When you are done run `make setup-wirtbot` in the root of the repository and wait until the setup is done.
 
 Thats it. 
