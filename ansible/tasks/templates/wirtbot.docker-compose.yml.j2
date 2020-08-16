@@ -18,6 +18,6 @@ services:
       - "SSL_KEY=/certs/live/{{domain_name}}/privkey.pem"
       - "SSL_PEM_CERT=/certs/live/{{domain_name}}/fullchain.pem"
       - "MANAGED_DNS_ENABLED=1"
-      - "MANAGED_DNS_DEVICE_FILE=/dns/wirt_devices"
+      - "MANAGED_DNS_DEVICE_FILE=/dns/Corefile"
       - "CONFIG_PATH=/wireguard/server.conf"
 
