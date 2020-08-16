@@ -67,8 +67,8 @@
     </Button>
 
     <button id="edit" @click="toggleEdit">
-      <span v-if="edit">{{ $t("dashboard.widgets.server.stopEdit") }}</span>
-      <span v-else>{{ $t("dashboard.widgets.server.edit") }}</span>
+      <span v-if="edit">{{ $t("dashboard.stopEdit") }}</span>
+      <span v-else>{{ $t("dashboard.edit") }}</span>
     </button>
   </div>
 </template>

@@ -14,3 +14,5 @@ Here are a few key ideas:
 - Access the global state through the store using `computed` variables in your component
 - For changing the state, dispatch an action with the correct data onto the store, this will tell it what to do ie. (`this.$store.dispatch(ACTION_NAME, DATA)`)
 - Mutations are not supposed to be called directly, instead write a corresponding action that will take the data and then call the mutation via `commit(MUTATION_NAME)`
+## Steps to check when modifying the store
+- Will backups still work?  Make sure to use the versioning system to provide backup upgrades

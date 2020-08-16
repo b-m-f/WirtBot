@@ -6,6 +6,38 @@ If you want to run your own WirtBot you will need the following things:
 
 - A machine with a public IP on the internet
 - Root access on this machine
+- A Domain that points to your machine
+
+### Automated (highly encouraged to use this!)
+> This assumes you have a fresh Debian10 server or VPS with root access!
+
+First thing to do is to make sure that you have an SSH key. 
+If you do not have one yet you can follow [this tutorial](https://www.ssh.com/ssh/keygen/).
+You will need the content of the `.pub` file that will be created in the next step.
+
+Now clone or download the [Wirt repository](https://github.com/b-m-f/wirt) and update the values in `ansible/main.yml`.
+
+Time to install:
+- ansible
+- ansible-playbook
+- sshpass (necessary to login via SSH to your servers root user via password for the setup)
+
+<!-- TODO: WirtBot still compiled from source? -->
+When you are done run `make setup-wirtbot` in the root of the repository and wait until the setup is done, this can take up to **30 min** since the WirtBot is compiled from source at the moment, this will change in the future.
+
+Thats it. 
+
+Your WirtBot will have a valid certificate from LetsEncrypt and will be ready to securely manage your network, complete with all functionality that the Wirt system has to offer.
+
+#### Updating
+
+To update simply update the repository run `make update-wirtbot`. It will take care of updating WirtBot and the server to the latest state.
+You can also simply reinstall the whole server and run `make setup-wirtbot` again.
+
+### Manual
+
+If you want to do the manual setup you need
+
 - WireGuard® already installed
 - A valid SSL certificate for your machine
 - Port 3030 opened in your firewall
@@ -57,6 +89,14 @@ For verification you can always try to ping the WirtBot. Its IP in the network i
 ### Using a different interface name
 
 If you would like to use i.e. `wg0` instead of `server`for the interface name make sure to change this in the `wireguard-restarter` and add the `CONFIG_PATH` environment variable to your `wirtbot` service.
+
+### Enabling DNS
+
+First update your `wirtbot.service` file to include `MANAGED_DNS_ENABLED: 1` as an environment variable.
+
+Now install [https://coredns.io/](https://coredns.io/) and create a config that will listen to reloads useing the [reload plugin](https://coredns.io/plugins/reload/). Now update you `wirtbot.service` to point DNS changes to this file (you can change the path by providing `MANAGED_DNS_DEVICE_FILE` to the WirtBot via environment values).
+
+Start `CoreDNS` and that should be it.
 
 ## WirtUI
 

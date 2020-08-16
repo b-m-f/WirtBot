@@ -13,6 +13,7 @@ describe("WireGuard device generation", () => {
       `[Interface]
 Address = 10.10.10.2
 PrivateKey = test
+DNS = 10.10.10.1
 
 [Peer]
 Endpoint = 1.1.1.1:11111
@@ -35,6 +36,7 @@ PersistentKeepalive = 25`
       `[Interface]
 Address = 10.10.10.2
 PrivateKey = test
+DNS = 10.10.10.1
 
 [Peer]
 Endpoint = [FFFF:1010]:11111
@@ -60,6 +62,7 @@ PersistentKeepalive = 25`
       `[Interface]
 Address = 1010:1010:1010:1010:0002
 PrivateKey = test
+DNS = 1010:1010:1010:1010:1
 
 [Peer]
 Endpoint = 1.1.1.1:11111
@@ -85,6 +88,7 @@ PersistentKeepalive = 25`
       `[Interface]
 Address = 1010:1010:1010:1010:0002
 PrivateKey = test
+DNS = 1010:1010:1010:1010:1
 
 [Peer]
 Endpoint = [FFFF:1010]:11111
@@ -111,6 +115,7 @@ PersistentKeepalive = 25`
       `[Interface]
 Address = 10.10.10.2, 1010:1010:1010:1010:0002
 PrivateKey = test
+DNS = 10.10.10.1
 
 [Peer]
 Endpoint = [FFFF:1010]:11111
@@ -206,6 +211,7 @@ describe("WireGuard edge cases", () => {
       `[Interface]
 Address = 10.10.10.2
 PrivateKey = test
+DNS = 10.10.10.1
 
 [Peer]
 Endpoint = test:11111

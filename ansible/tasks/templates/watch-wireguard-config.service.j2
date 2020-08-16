@@ -1,0 +1,11 @@
+[Unit]
+Description=automatic wireguard restarting script to be used with wirt-adapter
+Documentation=https://wirt.network/docs/server
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/usr/bin/watch-wireguard-config.sh
+
+[Install]
+WantedBy=multi-user.target

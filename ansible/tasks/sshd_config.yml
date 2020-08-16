@@ -1,0 +1,22 @@
+- name: Disable root login
+  replace:
+    dest: "/etc/ssh/sshd_config"
+    regexp: "PermitRootLogin yes"
+    replace: "PermitRootLogin no"
+
+- name: do not allow Pass Auth
+  replace:
+    dest: "/etc/ssh/sshd_config"
+    regexp: "PasswordAuthentication yes"
+    replace: "PasswordAuthentication no"
+
+- name: only allow maintainer to ssh in
+  lineinfile:
+    dest: "/etc/ssh/sshd_config"
+    state: present
+    line: "AllowUsers {{ maintainer_username }}"
+
+- name: restart sshd service
+  service:
+    name: sshd
+    state: restarted

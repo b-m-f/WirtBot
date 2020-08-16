@@ -41,11 +41,13 @@ import { downloadText } from "../../lib/download";
 import AccentedCard from "../../components/AccentedCard";
 import Card from "../../components/Card";
 import { WHY_NO_LOGIN, REGULAR_BACKUP } from "../../lib/messages";
+import NetworkWidget from "../../Widgets/Dashboard/Network";
 import ServerWidget from "../../Widgets/Dashboard/Server";
 import DeviceWidget from "../../Widgets/Dashboard/Devices";
 import SettingsWidget from "../../Widgets/Dashboard/Settings";
 
 const availableWidgets = {
+  network: NetworkWidget,
   server: ServerWidget,
   devices: DeviceWidget,
   settings: SettingsWidget

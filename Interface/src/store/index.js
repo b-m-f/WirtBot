@@ -5,7 +5,8 @@ import QRCode from "qrcode";
 import i18n from "../i18n";
 import { getKeys } from "../lib/wireguard";
 import { generateSigningKeys } from "../lib/cryptography";
-import { updateServerConfig as updateServerViaApi } from "../api";
+import { generateDNSFile } from "../lib/dns";
+import { updateServerConfig as updateServerViaApi, updateDNSConfig as updateDNSConfigViaApi } from "../api";
 
 import { generateDeviceConfig, generateServerConfig } from "../lib/wireguard";
 
@@ -38,7 +39,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   modules: { alerts },
   state: {
-    version: 1.0,
+    version: 1.1,
     keys: undefined,
     server: {
       ip: { v4: [undefined, undefined, undefined, undefined], v6: "" },
@@ -54,6 +55,9 @@ const store = new Vuex.Store({
     ],
     deviceTypes: ["Android", "Windows", "MacOS", "iOS", "Linux", "FreeBSD"],
     websiteBeingViewedOnMobileDevice: undefined,
+    network: {
+      dns: { name: "wirt.internal", config: "" }
+    },
     dashboard: {
       // Messages have to be defined in pages/Dashboard/messages.js
       messages: [],
@@ -101,6 +105,12 @@ const store = new Vuex.Store({
     updateDevices(state, devices) {
       state.devices = devices;
     },
+    updateDNSName(state, name) {
+      state.network.dns.name = name;
+    },
+    updateDNSConfig(state, config) {
+      state.network.dns.config = config;
+    },
     updateDashboard(state, { messages, widgets }) {
       if (messages) {
         state.dashboard.messages = messages;
@@ -126,6 +136,11 @@ const store = new Vuex.Store({
     },
     async disableFirstUse({ commit }) {
       commit("disableFirstUse");
+    },
+    async updateDNSName({ commit, dispatch }, name) {
+      // TODO: some kind of check that the DNS name is correct
+      commit("updateDNSName", name);
+      dispatch("updateDNS");
     },
     async addDashboardMessage({ state, commit }, message) {
       commit("updateDashboard", {
@@ -175,18 +190,34 @@ const store = new Vuex.Store({
       );
       commit("updateDevices", devices);
     },
-    async updateServerConfig({ commit, state }) {
+    async updateServerConfig({ commit, state, dispatch }) {
       const config = generateServerConfig(
         state.server,
         state.devices.filter((device) => device.ip && device.keys)
       );
       commit("updateServerConfig", config);
+      // Since the server config gets updated with every device change, this is a place to trigger remote updates 
+      // on the WirtBot
+      dispatch("sendConfigUpdatesToAPI");
+      dispatch("updateDNS");
+    },
+    async updateDNS({ state, commit }) {
+      commit("updateDNSConfig", generateDNSFile(state.server, state.devices, state.network));
+      if (state.server.connected) {
+        if (state.server.hostname) {
+          updateDNSConfigViaApi(state.network.dns.config, state.server.hostname);
+        } else {
+          // In most cases this will throw CORS errors, since HTTPS is enforced
+          updateDNSConfigViaApi(state.network.dns.config, state.server.ip.v4.join(""));
+        }
+      }
+    },
+    async sendConfigUpdatesToAPI({ state }) {
       if (state.server.connected) {
         if (state.server.hostname) {
           updateServerViaApi(state.server.config, state.server.hostname);
         } else {
-          // TODO: fix this call to send the correct data along
-          // identify by public key etc.
+          // In most cases this will throw CORS errors, since HTTPS is enforced
           updateServerViaApi(state.server.config, state.server.ip.v4.join(""));
         }
       }
@@ -266,5 +297,6 @@ const store = new Vuex.Store({
 
   plugins: [createPersistedState({})],
 });
+
 
 export default store;
