@@ -17,7 +17,7 @@ services:
     image: certbot/certbot
     volumes:
         - ./data:/etc/letsencrypt
-    command: certonly --dry-run --standalone -d {{domain_name}}  --non-interactive --agree-tos  --email {{letsencrypt_email}}
+    command: certonly  --standalone -d {{domain_name}}  --non-interactive --agree-tos  --email {{letsencrypt_email}}
  renew:
     container_name: certbot-renew
     hostname: certbot
