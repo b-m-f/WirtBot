@@ -6,9 +6,13 @@ describe("Correctly generates a valid DNS master file", () => {
             subnet: { v4: "10.10.10." },
         };
         const device = { ip: { v4: 2 }, name: "test" };
-        expect(generateDNSFile(server, [device], { dnsName: "wirt.test" })).toBe(`$ORIGIN wirt.test
-wirtbot IN A 10.10.10.1
-test IN A 10.10.10.2`
+        expect(generateDNSFile(server, [device], { dnsName: "wirt.test" })).toBe(`wirt.test {
+    reload
+    hosts {
+        10.10.10.1 wirtbot.wirt.test
+        10.10.10.2 test.wirt.test
+    }
+}`
         )
     })
     it("for IPv6", () => {
@@ -16,9 +20,15 @@ test IN A 10.10.10.2`
             subnet: { v6: "1001::" },
         };
         const device = { ip: { v6: 2 }, name: "test" };
-        expect(generateDNSFile(server, [device], { dnsName: "wirt.test" })).toBe(`$ORIGIN wirt.test
-wirtbot IN AAAA 1001::1
-test IN AAAA 1001::2`
+        expect(generateDNSFile(server, [device], { dnsName: "wirt.test" })).toBe(`wirt.test {
+    reload
+    hosts {
+        1001::1 wirtbot.wirt.test
+        1001::2 test.wirt.test
+    }
+}`
+
+
         )
 
     })
@@ -30,13 +40,18 @@ test IN AAAA 1001::2`
             { ip: { v6: 2, v4: 2 }, name: "test" },
             { ip: { v6: 3, v4: 3 }, name: "test2" }
         ]
-        expect(generateDNSFile(server, devices, { dnsName: "wirt.test" })).toBe(`$ORIGIN wirt.test
-wirtbot IN A 10.10.10.1
-wirtbot IN AAAA 1001::1
-test IN A 10.10.10.2
-test IN AAAA 1001::2
-test2 IN A 10.10.10.3
-test2 IN AAAA 1001::3`
+        expect(generateDNSFile(server, devices, { dnsName: "wirt.test" })).toBe(`wirt.test {
+    reload
+    hosts {
+        10.10.10.1 wirtbot.wirt.test
+        1001::1 wirtbot.wirt.test
+        10.10.10.2 test.wirt.test
+        1001::2 test.wirt.test
+        10.10.10.3 test2.wirt.test
+        1001::3 test2.wirt.test
+    }
+}`
+
         )
 
 
@@ -49,11 +64,15 @@ test2 IN AAAA 1001::3`
             { ip: { v4: 2 }, name: "test" },
             { ip: { v6: 3 }, name: "test2" }
         ]
-        expect(generateDNSFile(server, devices, { dnsName: "wirt.test" })).toBe(`$ORIGIN wirt.test
-wirtbot IN A 10.10.10.1
-wirtbot IN AAAA 1001::1
-test IN A 10.10.10.2
-test2 IN AAAA 1001::3`
+        expect(generateDNSFile(server, devices, { dnsName: "wirt.test" })).toBe(`wirt.test {
+    reload
+    hosts {
+        10.10.10.1 wirtbot.wirt.test
+        1001::1 wirtbot.wirt.test
+        10.10.10.2 test.wirt.test
+        1001::3 test2.wirt.test
+    }
+}`
         )
 
 
