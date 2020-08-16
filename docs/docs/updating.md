@@ -12,4 +12,4 @@ If this did not yet help, clear your cache and reimport the settings again.
 ## WirtBot
 Simply download the latest executable, put it in the right place and restart your `systemd` service with `systemctl restart wirtbot`.
 
-If you have used the [ansible playbook](/setup#ansible) to install the server, simply use it again and eveything should be done automatically.
+If you have used the [ansible playbook](/setup#ansible) to install the server, simply download the latest version of the repositort and run `make update-wirtbot`.

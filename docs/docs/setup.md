@@ -8,11 +8,11 @@ If you want to run your own WirtBot you will need the following things:
 - Root access on this machine
 - A Domain that points to your machine
 
-### Automated
+### Automated (highly encouraged to use this!)
 > This assumes you have a fresh Debian10 server or VPS with root access!
 
 First thing to do is to make sure that you have an SSH key. 
-If you do not have one yet you can follow [this tutorial]().
+If you do not have one yet you can follow [this tutorial](https://www.ssh.com/ssh/keygen/).
 You will need the content of the `.pub` file that will be created in the next step.
 
 Now clone or download the [Wirt repository](https://github.com/b-m-f/wirt) and update the values in `ansible/main.yml`.
@@ -30,7 +30,8 @@ Your WirtBot will have a valid certificate from LetsEncrypt and will be ready to
 
 #### Updating
 
-To update simply rerun `make setup-wirtbot`. It will take care of updating WirtBot to the latest version every time, and apply any other changes that might be necessary.
+To update simply update the repository run `make update-wirtbot`. It will take care of updating WirtBot and the server to the latest state.
+You can also simply reinstall the whole server and run `make setup-wirtbot` again.
 
 ### Manual
 
@@ -92,7 +93,7 @@ If you would like to use i.e. `wg0` instead of `server`for the interface name ma
 
 First update your `wirtbot.service` file to include `MANAGED_DNS_ENABLED: 1` as an environment variable.
 
-Now install [https://coredns.io/](https://coredns.io/) and create a config that will use port 53 and in its config uses the [file plugin](https://coredns.io/plugins/file/) to point to the DNS file at `/etc/wirt_devices` (you can change the path by providing `MANAGED_DNS_DEVICE_FILE` to the WirtBot).
+Now install [https://coredns.io/](https://coredns.io/) and create a config that will listen to reloads useing the [reload plugin](https://coredns.io/plugins/reload/). Now update you `wirtbot.service` to point DNS changes to this file (you can change the path by providing `MANAGED_DNS_DEVICE_FILE` to the WirtBot via environment values).
 
 Start `CoreDNS` and that should be it.
 
