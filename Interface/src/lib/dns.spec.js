@@ -6,7 +6,7 @@ describe("Correctly generates a valid DNS master file", () => {
             subnet: { v4: "10.10.10." },
         };
         const device = { ip: { v4: 2 }, name: "test" };
-        expect(generateDNSFile(server, [device], { dns: { name: "wirt.test" } })).toBe(`wirt.test {
+        expect(generateDNSFile(server, [device], { dns: { name: "wirt.test" } })).toBe(`. {
     reload
     forward . tls://1.1.1.1 tls://1.0.0.1 {
        except wirt.test
@@ -26,7 +26,7 @@ describe("Correctly generates a valid DNS master file", () => {
             subnet: { v6: "1001::" },
         };
         const device = { ip: { v6: 2 }, name: "test" };
-        expect(generateDNSFile(server, [device], { dns: { name: "wirt.test" } })).toBe(`wirt.test {
+        expect(generateDNSFile(server, [device], { dns: { name: "wirt.test" } })).toBe(`. {
     reload
     forward . tls://1.1.1.1 tls://1.0.0.1 {
        except wirt.test
@@ -52,7 +52,7 @@ describe("Correctly generates a valid DNS master file", () => {
             { ip: { v6: 2, v4: 2 }, name: "test" },
             { ip: { v6: 3, v4: 3 }, name: "test2" }
         ]
-        expect(generateDNSFile(server, devices, { dns: { name: "wirt.test" } })).toBe(`wirt.test {
+        expect(generateDNSFile(server, devices, { dns: { name: "wirt.test" } })).toBe(`. {
     reload
     forward . tls://1.1.1.1 tls://1.0.0.1 {
        except wirt.test
@@ -82,7 +82,7 @@ describe("Correctly generates a valid DNS master file", () => {
             { ip: { v4: 2 }, name: "test" },
             { ip: { v6: 3 }, name: "test2" }
         ]
-        expect(generateDNSFile(server, devices, { dns: { name: "wirt.test" } })).toBe(`wirt.test {
+        expect(generateDNSFile(server, devices, { dns: { name: "wirt.test" } })).toBe(`. {
     reload
     forward . tls://1.1.1.1 tls://1.0.0.1 {
        except wirt.test

@@ -24,7 +24,7 @@ export function generateDNSFile(server, clients, network) {
             return `${server.subnet.v4 + "1"} wirtbot.${network.dns.name}`
         }
     }
-    const masterFile = `${network.dns.name} {
+    const masterFile = `. {
     reload
     forward . tls://1.1.1.1 tls://1.0.0.1 {
        except ${network.dns.name}
