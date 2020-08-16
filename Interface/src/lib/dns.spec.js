@@ -14,6 +14,8 @@ describe("Correctly generates a valid DNS master file", () => {
        health_check 5s
     }
     cache 30
+}
+wirt.test {
     hosts {
         10.10.10.1 wirtbot.wirt.test
         10.10.10.2 test.wirt.test
@@ -34,6 +36,8 @@ describe("Correctly generates a valid DNS master file", () => {
        health_check 5s
     }
     cache 30
+}
+wirt.test {
     hosts {
         1001::1 wirtbot.wirt.test
         1001::2 test.wirt.test
@@ -60,6 +64,8 @@ describe("Correctly generates a valid DNS master file", () => {
        health_check 5s
     }
     cache 30
+}
+wirt.test {
     hosts {
         10.10.10.1 wirtbot.wirt.test
         1001::1 wirtbot.wirt.test
@@ -90,6 +96,8 @@ describe("Correctly generates a valid DNS master file", () => {
        health_check 5s
     }
     cache 30
+}
+wirt.test {
     hosts {
         10.10.10.1 wirtbot.wirt.test
         1001::1 wirtbot.wirt.test
@@ -98,8 +106,5 @@ describe("Correctly generates a valid DNS master file", () => {
     }
 }`
         )
-
-
     })
-
 })

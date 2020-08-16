@@ -1,13 +1,19 @@
 version: "3.4"
+networks:
+  dockernet:
+    external: true
+
 services:
   wirtbot:
     build:
       context: .
       network: host
+    networks:
+      dockernet:
+        ipv4_address: 172.10.17.30
     ports:
       - 3030:3030
     restart: "unless-stopped"
-    network_mode: "host"
     volumes:
       - "../letsencrypt/data/:/certs/:ro"
       - /etc/wireguard:/wireguard

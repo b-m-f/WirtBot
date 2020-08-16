@@ -15,7 +15,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt update && apt upgrade
 
 WORKDIR /app
-COPY --from=builder /builder/artifact/WirtBot ./wirtbot
+COPY --from=builder /builder/artifact/release/wirtbot ./wirtbot
 
 EXPOSE 3030
 

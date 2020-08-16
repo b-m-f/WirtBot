@@ -32,6 +32,8 @@ export function generateDNSFile(server, clients, network) {
        health_check 5s
     }
     cache 30
+}
+${network.dns.name} {
     hosts {
         ${serverName()}
         ${deviceNames.join("\n        ")}

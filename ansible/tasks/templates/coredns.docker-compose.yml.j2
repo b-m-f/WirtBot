@@ -1,16 +1,17 @@
 version: "3"
+networks:
+  dockernet:
+    external: true
+
 services:
   coredns:
+    # run this on the host network since it might receive a lot of requests
+    # Firewall will only allow it on the internal network and block on all other interfaces
+    network_mode: host
     image: coredns/coredns
     ports:
-      - "10.10.0.1:53:53/udp"
-      - "10.10.0.1:5300:5300/udp"
+      - 53:53/udp
     restart: "unless-stopped"
-    network_mode: "host"
     working_dir: /v
     volumes:
       - ./data:/v
-    dns:
-      - 1.1.1.1
-
-
