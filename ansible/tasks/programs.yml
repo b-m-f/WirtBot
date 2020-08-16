@@ -5,3 +5,15 @@
       - docker.io
       - docker-compose
     state: present
+
+
+- name: Copy docker-daemon config to machine
+  template:
+    src: "templates/docker-daemon.json.j2"
+    dest: "/etc/docker/daemon.json"
+    mode: 0640
+
+- name: Restart docker to lead daemon config
+  systemd:
+    state: restarted
+    name: docker

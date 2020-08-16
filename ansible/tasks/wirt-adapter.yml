@@ -1,22 +1,32 @@
-- name: Download wirt-adapter
-  get_url:
-    url: https://github.com/b-m-f/wirt/releases/latest
-    dest: /usr/bin/wirt-adapter
-    mode: 0755
 
-- name: create wirt-adapter service
+- name: Create directories for wirtbot
+  file:
+    path: "/home/{{ maintainer_username }}/wirtbot"
+    owner: "{{ maintainer_username }}"
+    group: "{{ maintainer_username }}"
+    state: directory
+    mode: '0750'
+
+- name: Copy docker-compose file to machine
   template:
-    src: templates/wirt-adapter.service.j2
-    dest: /etc/systemd/system/wirt-adapter.service
-    owner: root
-    group: root
-    mode: 0644
+    src: "templates/wirtbot.docker-compose.yml.j2"
+    dest: "/home/{{ maintainer_username }}/wirtbot/docker-compose.yml"
+    owner: "{{ maintainer_username }}"
+    group: "{{ maintainer_username }}"
+    mode: 0640
 
-- name: enable wirt-adapter
-  systemd:
-    name: wirt-adapter
-    state: started
-    enabled: yes
+- name: Copy Dockerfile file to machine
+  template:
+    src: "templates/wirtbot.dockerfile.j2"
+    dest: "/home/{{ maintainer_username }}/wirtbot/Dockerfile"
+    owner: "{{ maintainer_username }}"
+    group: "{{ maintainer_username }}"
+    mode: 0640
+  
+- name: Start wirtbot docker service
+  docker_compose:
+    project_src: "/home/{{ maintainer_username }}/wirtbot"
+    build: yes
 
 - name: install inotifywait via inotify-tools
   apt:

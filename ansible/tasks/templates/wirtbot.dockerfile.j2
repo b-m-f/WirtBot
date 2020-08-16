@@ -1,0 +1,20 @@
+FROM debian:buster-slim as downloader
+
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt-get update && apt-get upgrade
+RUN apt-get install -yy curl 
+
+RUN curl -s https://github.com/b-m-f/wirt/releases/latest/download/wirtbot > /usr/bin/wirtbot
+RUN chmod +x /usr/bin/wirtbot
+
+
+
+FROM alpine:latest  
+RUN apk update && apk upgrade
+
+WORKDIR /app
+COPY --from=downloader /usr/bin/wirtbot .
+
+EXPOSE 3030
+
+CMD ["./wirtbot"]
