@@ -14,7 +14,6 @@ table inet filter {
 
                 tcp dport ssh accept comment "Accept SSH on port 22"
                 tcp dport http accept comment "Accept http on port 80 for letsencrypt"
-                tcp dport https accept comment "Accept https on port 443 for letsencrypt"
                 tcp dport 3030 accept comment "Accept Wirt adapter traffic"
                 udp dport 10101 accept comment "Accept WireGuard connection establishment" 
         }
