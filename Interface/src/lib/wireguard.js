@@ -37,6 +37,7 @@ export function generateDeviceConfig({ ip, keys, routed }, server) {
     return `[Interface]
 Address = ${server.subnet.v4}${ip.v4}
 PrivateKey = ${keys.private}
+DNS = ${server.subnet.v4}1
 
 [Peer]
 Endpoint = ${endpoint}
@@ -50,6 +51,7 @@ PersistentKeepalive = 25`;
     return `[Interface]
 Address = ${server.subnet.v6}${ip.v6}
 PrivateKey = ${keys.private}
+DNS = ${server.subnet.v6}1
 
 [Peer]
 Endpoint = ${endpoint}
@@ -63,6 +65,7 @@ PersistentKeepalive = 25`;
     return `[Interface]
 Address = ${server.subnet.v4}${ip.v4}, ${server.subnet.v6}${ip.v6}
 PrivateKey = ${keys.private}
+DNS = ${server.subnet.v4}1
 
 [Peer]
 Endpoint = ${endpoint}

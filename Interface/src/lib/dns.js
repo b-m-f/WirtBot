@@ -26,6 +26,12 @@ export function generateDNSFile(server, clients, network) {
     }
     const masterFile = `${network.dns.name} {
     reload
+    forward . tls://1.1.1.1 tls://1.0.0.1 {
+       except ${network.dns.name}
+       tls_servername cloudflare-dns.com
+       health_check 5s
+    }
+    cache 30
     hosts {
         ${serverName()}
         ${deviceNames.join("\n        ")}
