@@ -21,6 +21,7 @@
 - name: Check for docker network
   shell: docker network list | grep dockernet
   register: network_exists
+  ignore_errors: yes
 
 - name: Create docker network to have control over it with firewall
   command: docker network create --subnet=172.10.17.0/24 dockernet
