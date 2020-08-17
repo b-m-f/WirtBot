@@ -5,7 +5,7 @@
       <div id="expert-mode">
         <h2 v-if="expertMode">{{ $t("dashboard.widgets.devices.expertWarning") }}</h2>
         <label for="expert">{{ $t("dashboard.widgets.server.expert") }}</label>
-        <input type="checkbox" class="switch" name="expert" id="expert" v-model="expertMode" />
+        <input type="checkbox" class="switch" name="expert" id="expert" v-model="expertMode" @change="(e) => updateExpertMode(e.target.checked)" />
       </div>
     </div>
     <AccentedCard
@@ -56,7 +56,7 @@ const availableWidgets = {
 export default {
   components: { AccentedCard, Card },
   data() {
-    return { expertMode: false };
+    return { };
   },
   computed: {
     devices() {
@@ -78,7 +78,10 @@ export default {
     },
     isFirstUse() {
       return this.$store.state.dashboard.firstUse;
-    }
+    },
+    expertMode() {
+      return this.$store.state.dashboard.expertMode;
+    },
   },
   methods: {
     downloadConfig(config) {
@@ -86,7 +89,10 @@ export default {
     },
     async removeMessage(message) {
       await this.$store.dispatch("removeDashboardMessage", message);
-    }
+    },
+    async updateExpertMode(enabled){
+      await this.$store.dispatch("updateExpertMode", enabled);
+    },
   },
   mounted() {
     if (this.isFirstUse) {

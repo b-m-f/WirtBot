@@ -3,7 +3,14 @@
     <h1>{{ $t("dashboard.widgets.server.title") }}</h1>
     <div class="row">
       <label>{{ $t("dashboard.widgets.server.name") }}</label>
-      <input v-if="!server.name || edit" type="text" name="name" />
+      <input
+        v-if="!server.name || edit"
+        type="text"
+        name="name"
+        @change="(e) => updateName(e.target.value)"
+        :value="server.name"
+      
+       />
       <p v-else>{{ server.name }}</p>
     </div>
     <div class="row">
@@ -38,7 +45,7 @@
         name="connected"
         idj
         class="switch"
-        :value="server.connected"
+        :checked="server.connected"
         @change="(e) => updateConnected(e.target.checked)"
       />
     </div>
@@ -108,10 +115,14 @@ export default {
       this.$store.dispatch("updateServer", { hostname });
     },
     updateConnected(connected) {
+      console.log(connected)
       this.$store.dispatch("updateServer", { connected });
     },
     updateSubnet(subnet) {
       this.$store.dispatch("updateServer", { subnet });
+    },
+    updateName(name) {
+      this.$store.dispatch("updateServer", { name });
     },
     updateIp({ ip, valid }) {
       if (valid) {

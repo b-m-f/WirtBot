@@ -63,6 +63,7 @@ const store = new Vuex.Store({
       messages: [],
       widgets: [],
       firstUse: true,
+      expertMode: false
     },
   },
   mutations: {
@@ -82,6 +83,7 @@ const store = new Vuex.Store({
       state.websiteBeingViewedOnMobileDevice = false;
     },
     updateServer(state, server) {
+      console.log(server)
       Object.keys(server).forEach((key) => {
         if (server[key] !== undefined && server[key] !== null) {
           state.server[key] = server[key];
@@ -110,6 +112,9 @@ const store = new Vuex.Store({
     },
     updateDNSConfig(state, config) {
       state.network.dns.config = config;
+    },
+    updateExpertMode(state, enabled) {
+      state.dashboard.expertMode = enabled;
     },
     updateDashboard(state, { messages, widgets }) {
       if (messages) {
@@ -189,6 +194,9 @@ const store = new Vuex.Store({
         })
       );
       commit("updateDevices", devices);
+    },
+    async updateExpertMode({ commit }, enabled) {
+      commit("updateExpertMode", enabled);
     },
     async updateServerConfig({ commit, state, dispatch }) {
       const config = generateServerConfig(
