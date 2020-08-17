@@ -12,53 +12,53 @@ Follow the guide for your the operating system you use to join it.
 
 **First download the WireGuard software from** [https://wireguard.com](https://wireguard.com)
 
-![](/img/windows1.jpg)
+![](./images/windows1.jpg)
 
 **Now click on this button to import your config**
 
-![](/img/windows2.jpg)
+![](./images/windows2.jpg)
 
 **Go to the folder where you downloaded your config file and select it**
 
-![](/img/windows3.jpg)
+![](./images/windows3.jpg)
 
 **The config is now imported. Click activate to join the network**
 
-![](/img/windows4.jpg)
+![](./images/windows4.jpg)
 
 **Congratulations, you are now connected!**
 
-![](/img/windows5.jpg)
+![](./images/windows5.jpg)
 
 ## Android
 
 **First install the WireGuard app**
 
-![](/img/android1.jpg)
+![](./images/android1.jpg)
 
 **Now open it up and click the blue button to add a config**
 
-![](/img/android2.jpg)
+![](./images/android2.jpg)
 
 **You can choose between different ways to add a config, the easiest way is to simply scan a QR code**
 
-![](/img/android3.jpg)
+![](./images/android3.jpg)
 
 **Point your camera at the QR code**
 
-![](/img/android4.jpg)
+![](./images/android4.jpg)
 
 **Give a name for the network**
 
-![](/img/android5.jpg)
+![](./images/android5.jpg)
 
 **Your network is now set up, but not connected. Toggle the switch to get in**
 
-![](/img/android6.jpg)
+![](./images/android6.jpg)
 
 **All done! You are now connected to the network**
 
-![](/img/android7.jpg)
+![](./images/android7.jpg)
 
 ## iOS
 
