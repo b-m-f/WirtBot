@@ -115,7 +115,6 @@ export default {
       this.$store.dispatch("updateServer", { hostname });
     },
     updateConnected(connected) {
-      console.log(connected)
       this.$store.dispatch("updateServer", { connected });
     },
     updateSubnet(subnet) {
