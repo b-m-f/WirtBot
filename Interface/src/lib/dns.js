@@ -2,6 +2,10 @@
 export function generateDNSFile(server, clients, network) {
     const deviceNames = clients.map(client => {
         client.name = client.name.split(' ').join('-');
+        if (!server.name) {
+            server.name = "wirtbot";
+        }
+
         if (client.ip.v6 && client.ip.v4) {
             return `${server.subnet.v4 + client.ip.v4} ${client.name}.${network.dns.name}
         ${server.subnet.v6 + client.ip.v6} ${client.name}.${network.dns.name}`
@@ -15,14 +19,14 @@ export function generateDNSFile(server, clients, network) {
     })
     const serverName = () => {
         if (server.subnet.v6 && server.subnet.v4) {
-            return `${server.subnet.v4 + '1'} wirtbot.${network.dns.name}
-        ${server.subnet.v6 + '1'} wirtbot.${network.dns.name}`
+            return `${server.subnet.v4 + '1'} ${server.name}.${network.dns.name}
+        ${server.subnet.v6 + '1'} ${server.name}.${network.dns.name}`
         }
         if (server.subnet.v6 && !server.subnet.v4) {
-            return `${server.subnet.v6 + "1"} wirtbot.${network.dns.name}`
+            return `${server.subnet.v6 + "1"} ${server.name}.${network.dns.name}`
         }
         if (!server.subnet.v6 && server.subnet.v4) {
-            return `${server.subnet.v4 + "1"} wirtbot.${network.dns.name}`
+            return `${server.subnet.v4 + "1"} ${server.name}.${network.dns.name}`
         }
     }
     const masterFile = `. {
