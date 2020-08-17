@@ -1,6 +1,7 @@
 // This function creates an RFC 1035 DNS master file
 export function generateDNSFile(server, clients, network) {
     const deviceNames = clients.map(client => {
+        client.name = client.name.split(' ').join('-');
         if (client.ip.v6 && client.ip.v4) {
             return `${server.subnet.v4 + client.ip.v4} ${client.name}.${network.dns.name}
         ${server.subnet.v6 + client.ip.v6} ${client.name}.${network.dns.name}`

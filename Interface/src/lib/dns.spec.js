@@ -107,4 +107,26 @@ wirt.test {
 }`
         )
     })
+    it("for devices that have spaces or special characters in their name", () => {
+        const server = {
+            subnet: { v4: "10.10.10." },
+        };
+        const device = { ip: { v4: 2 }, name: "test me" };
+        expect(generateDNSFile(server, [device], { dns: { name: "wirt.test" } })).toBe(`. {
+    reload
+    forward . tls://1.1.1.1 tls://1.0.0.1 {
+       except wirt.test
+       tls_servername cloudflare-dns.com
+       health_check 5s
+    }
+    cache 30
+}
+wirt.test {
+    hosts {
+        10.10.10.1 wirtbot.wirt.test
+        10.10.10.2 test-me.wirt.test
+    }
+}`
+        )
+    })
 })
