@@ -83,7 +83,6 @@ const store = new Vuex.Store({
       state.websiteBeingViewedOnMobileDevice = false;
     },
     updateServer(state, server) {
-      console.log(server)
       Object.keys(server).forEach((key) => {
         if (server[key] !== undefined && server[key] !== null) {
           state.server[key] = server[key];
