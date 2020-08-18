@@ -1,7 +1,9 @@
 ![Wirt logo](Interface/public/logo.svg)
 
 # Wirt
-Easily and securely extend your network into the cloud 
+**Easily and securely extend your network into the cloud!**
+
+<br/>
 
 ![Interface Tests](https://github.com/b-m-f/Wirt/workflows/run%20Interface%20tests/badge.svg)
 ![WirtBot Tests](https://github.com/b-m-f/Wirt/workflows/run%20WirtBot%20tests/badge.svg)
@@ -16,7 +18,7 @@ What can you find here?:
 - WirtBot
 - Interface
 
-Read the documentation at [wirt.network/docs](https://wirt.network) and get your own network running with 1 command on the terminal and a few clicks in your browser.
+Read the documentation at [wirt.network/docs](https://wirt.network) and get your own network running with **1 command on the terminal** and a **few clicks in your browser**.
 
 
 ![Small video to demonstrate the Tutorial](media/wirt_tutorial.gif)
