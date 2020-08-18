@@ -1,6 +1,7 @@
 ![Wirt logo](Interface/public/logo.svg)
 
 # Wirt
+Easily and securely extend your network into the cloud 
 
 ![Interface Tests](https://github.com/b-m-f/Wirt/workflows/run%20Interface%20tests/badge.svg)
 ![WirtBot Tests](https://github.com/b-m-f/Wirt/workflows/run%20WirtBot%20tests/badge.svg)
@@ -9,17 +10,14 @@
 Welcome to the [Wirt](https://wirt.network) repository.
 What can you find here?:
 
+- Setup scripts
 - Wirt documentation
 - Wirt developer documentation
 - WirtBot
 - Interface
 
-This Interface is written with [VueJS](https://vuejs.org/) and [rustwasm](https://rustwasm.github.io/docs/book/).
+Read the documentation at [wirt.network/docs](https://wirt.network) and get your own network running with 1 command on the terminal and a few clicks in your browser.
 
-All documentation is written in markdown, using [vuepress](vuepress.vuejs.org/) to create the site.
-Read it at [wirt.network/docs](https://wirt.network). 
-
-The WirtBot is written in [Rust](https://www.rust-lang.org/).
 
 ![Small video to demonstrate the Tutorial](media/wirt_tutorial.gif)
 
