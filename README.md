@@ -24,15 +24,10 @@ Read the documentation at [wirt.network/docs](https://wirt.network) and get your
 ![Small video to demonstrate the Tutorial](media/wirt_tutorial.gif)
 
 ## Features
-
-- Automatic generation of WireGuard configurations, including keys, directly in the browser
+- Find all your devices by their name! DNS is included
 - Every configuration in the network is kept updated on changes
-- If configured, all configurations will automatically be sent to the [WirtBot](https://github.com/b-m-f/wirt/WirtBot)
-- WirtBot then automatically applies the configuration and immediately activates it
 - Export and Import feature to keep track of multiple networks and generate Backups
-- Automatic state retention in local storage
-- Absolutely no tracking, each application is unique to a users browser
-- Communication is guaranteed to only be between linked Interface and WirtBot by cryptographic signatures
+- Absolutely no tracking + everything is uniquely tied to your browser!
 
 ## Contributing
 
