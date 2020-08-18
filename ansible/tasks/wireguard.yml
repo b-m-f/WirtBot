@@ -55,6 +55,7 @@
     owner: root
     group: wirt-editors
     mode: 0660
+    force: no
 
 - name: enable wireguard
   systemd:

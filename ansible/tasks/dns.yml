@@ -26,6 +26,7 @@
     owner: "{{ maintainer_username }}"
     group: "{{ maintainer_username }}"
     mode: 0640
+    force: no
 
   
 - name: Start coredns docker service
