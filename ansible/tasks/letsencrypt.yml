@@ -26,4 +26,4 @@
     name: "Renew certificates"
     minute: "0"
     hour: "2"
-    job: "docker-compose -f /home/{{ maintainer_username }}/letsencrypt/docker-compose.yml renew"
+    job: "/usr/bin/docker-compose -f /home/{{ maintainer_username }}/letsencrypt/docker-compose.yml renew"
