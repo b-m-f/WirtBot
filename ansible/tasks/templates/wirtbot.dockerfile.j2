@@ -6,6 +6,7 @@ RUN apt-get install -yy git
 
 RUN git clone https://github.com/b-m-f/Wirt.git /builder
 WORKDIR /builder/WirtBot
+RUN git pull
 RUN cargo build --release --target-dir /builder/artifact
 
 
