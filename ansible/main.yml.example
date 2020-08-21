@@ -21,12 +21,12 @@
     - import_tasks: tasks/apt-configuration.yml
     - import_tasks: tasks/programs.yml
     - import_tasks: tasks/users.yml
-    - import_tasks: tasks/fail2ban.yml
+    - import_tasks: tasks/firewall.yml
     - import_tasks: tasks/wireguard.yml
     - import_tasks: tasks/letsencrypt.yml
     - import_tasks: tasks/wirt-adapter.yml
     - import_tasks: tasks/dns.yml
     - import_tasks: tasks/sshd_config.yml
-    - import_tasks: tasks/firewall.yml
+    - import_tasks: tasks/fail2ban.yml
     - import_tasks: tasks/disable_root.yml
     - import_tasks: tasks/restart_server.yml
