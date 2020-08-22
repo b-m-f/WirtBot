@@ -25,11 +25,11 @@ Read the documentation at [wirt.network/docs](https://wirt.network) and get your
 ![Small video to demonstrate the Tutorial](media/wirt_tutorial.gif)
 
 ## Features
-- Find all your devices by their name! DNS is included
-- Every configuration in the network is kept updated on changes
-- Export and Import feature to keep track of multiple networks and generate Backups
-- Absolutely no tracking + everything is uniquely tied to your browser!
-- Configuration over code. Leverage existing tooling and provide a clean interface for configuring it correctly
+- Find all your devices by their name! **DNS** is included
+- Every configuration in the network is kept **up to date** on changes
+- **Export and Import** feature to keep track of multiple networks and generate Backups
+- **Absolutely no tracking** + everything is uniquely tied to your browser!
+- **Configuration over code**. Leverage existing tooling and provide a clean interface for configuring it correctly
 
 ## Contributing
 
