@@ -9,7 +9,7 @@ services:
     image: test-interface
     container_name: test-interface
   test-server:
-    image: docker.pkg.github.com/b-m-f/wirt/WirtBot:release
+    image: docker.pkg.github.com/b-m-f/wirt/wirtbot:release
     container_name: test-server
     environment:
       "PUBLIC_KEY": "1lLU3VhXsrSGMxESmqfY4m2oEVkpfEHyKlCQU6MMPsI="
