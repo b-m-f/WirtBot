@@ -12,3 +12,7 @@ Adds HTTPS support
 ## 1.3
 
 Allow configuring of the config path
+
+## 1.4
+
+Add support for saving Corefile to disk for CoreDNS. Uses the same auth mechanism

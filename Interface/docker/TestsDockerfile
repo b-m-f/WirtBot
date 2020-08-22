@@ -24,4 +24,4 @@ RUN npm run build
 
 COPY tests tests
 COPY nightwatch.conf.js .
-CMD ["npm", "run", "test"]
+CMD ["npm", "run", "dev"]
