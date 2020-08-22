@@ -13,8 +13,8 @@
 Welcome to the [Wirt](https://wirt.network) repository.
 **Wirt** is a system that is designed after the UNIX philosophy. 
 Many small parts that do a job and do it well.
-Everything is controlled via a UI that focusses on ease of use and all is glued together using Infrastructure as code.
-If you set it up you can rest assured that it is done **properly**.
+Everything is controlled via a UI that focusses on **ease of use** and all is glued together using Infrastructure as code.
+If you set it up you can rest assured that it is done properly.
 
 Ready to get started?
 
