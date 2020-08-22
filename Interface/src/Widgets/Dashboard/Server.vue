@@ -34,21 +34,6 @@
       <p v-else>{{ server.hostname }}</p>
     </div>
     <div class="row">
-      <label for="connected">
-        {{
-        $t("dashboard.widgets.server.connected")
-        }}
-      </label>
-      <input
-        type="checkbox"
-        name="connected"
-        idj
-        class="switch"
-        :checked="server.connected"
-        @change="(e) => updateConnected(e.target.checked)"
-      />
-    </div>
-    <div class="row">
       <label>{{ $t("dashboard.widgets.server.port") }}</label>
       <PortInput v-if="edit" :port="server.port" @change="updatePort" />
       <p v-else>{{ server.port }}</p>
@@ -112,9 +97,6 @@ export default {
     },
     updateHostname(hostname) {
       this.$store.dispatch("updateServer", { hostname });
-    },
-    updateConnected(connected) {
-      this.$store.dispatch("updateServer", { connected });
     },
     updateSubnet(subnet) {
       this.$store.dispatch("updateServer", { subnet });

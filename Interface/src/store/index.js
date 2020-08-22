@@ -47,7 +47,6 @@ const store = new Vuex.Store({
       keys: undefined,
       config: "",
       subnet: { v4: "10.10.0.", v6: "1010:1010:1010:1010:" },
-      connected: false,
       hostname: "",
     },
     devices: [
@@ -210,23 +209,19 @@ const store = new Vuex.Store({
     },
     async updateDNS({ state, commit }) {
       commit("updateDNSConfig", generateDNSFile(state.server, state.devices, state.network));
-      if (state.server.connected) {
-        if (state.server.hostname) {
-          updateDNSConfigViaApi(state.network.dns.config, state.server.hostname);
-        } else {
-          // In most cases this will throw CORS errors, since HTTPS is enforced
-          updateDNSConfigViaApi(state.network.dns.config, state.server.ip.v4.join(""));
-        }
+      if (state.server.hostname) {
+        updateDNSConfigViaApi(state.network.dns.config, state.server.hostname);
+      } else {
+        // In most cases this will throw CORS errors, since HTTPS is enforced
+        updateDNSConfigViaApi(state.network.dns.config, state.server.ip.v4.join(""));
       }
     },
     async sendConfigUpdatesToAPI({ state }) {
-      if (state.server.connected) {
-        if (state.server.hostname) {
-          updateServerViaApi(state.server.config, state.server.hostname);
-        } else {
-          // In most cases this will throw CORS errors, since HTTPS is enforced
-          updateServerViaApi(state.server.config, state.server.ip.v4.join(""));
-        }
+      if (state.server.hostname) {
+        updateServerViaApi(state.server.config, state.server.hostname);
+      } else {
+        // In most cases this will throw CORS errors, since HTTPS is enforced
+        updateServerViaApi(state.server.config, state.server.ip.v4.join(""));
       }
     },
     async addDevice(
