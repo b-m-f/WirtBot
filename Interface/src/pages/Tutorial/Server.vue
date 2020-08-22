@@ -22,7 +22,7 @@
                 }}
               </Button>
             </router-link>
-            <router-link :to="{ name: 'tutorial-server-ip' }">
+            <router-link :to="{ name: 'tutorial-server-hostname' }">
               <Button id="yes" empty uppercase tabindex="1">
                 {{
                 $t("tutorial.server.yes")
@@ -74,7 +74,7 @@ export default {
       steps: {
         0: "tutorial-welcome",
         1: "tutorial-server-questionaire",
-        2: "tutorial-server-ip",
+        2: "tutorial-server-hostname",
         3: "tutorial-server-port",
         4: "tutorial-device-form",
       },
@@ -100,6 +100,7 @@ export default {
     },
     updateHostname(hostname) {
       this.$store.dispatch("updateServer", { hostname });
+      this.$router.push({ name: "tutorial-server-port" });
     },
   },
 };

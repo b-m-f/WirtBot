@@ -47,9 +47,9 @@ const routes = [
             meta: { activeIndex: 1 },
           },
           {
-            path: "ip",
+            path: "hostname",
             component: TutorialServer,
-            name: "tutorial-server-ip",
+            name: "tutorial-server-hostname",
             meta: { activeIndex: 2 },
           },
           {
