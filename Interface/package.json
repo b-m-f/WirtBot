@@ -10,7 +10,7 @@
     "test:rust": "wasm-pack test wasm --node",
     "test:e2e": "TEST_URL=localhost:8080 nightwatch",
     "test:e2e:headless": "TEST_URL=localhost:8080 nightwatch --env integration",
-    "test:e2e:ci": "TEST_URL=test-server nightwatch --env integration",
+    "test:e2e:ci": "TEST_URL=test-interface nightwatch --env integration",
     "run-server-for-e2e": "http-server dist",
     "test:ci": "npm run test:unit && npm run test:rust && npm run test:e2e:ci",
     "test": "npm run test:unit && npm run test:rust && npm run test:e2e",
