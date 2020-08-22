@@ -15,14 +15,6 @@
     group: "{{ maintainer_username }}"
     mode: 0640
 
-- name: Copy Dockerfile file to machine
-  template:
-    src: "templates/wirtbot.dockerfile.j2"
-    dest: "/home/{{ maintainer_username }}/wirtbot/Dockerfile"
-    owner: "{{ maintainer_username }}"
-    group: "{{ maintainer_username }}"
-    mode: 0640
-  
 - name: Start wirtbot docker service
   docker_compose:
     project_src: "/home/{{ maintainer_username }}/wirtbot"
