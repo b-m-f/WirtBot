@@ -18,7 +18,7 @@ If you set it up you can rest assured that it is done properly.
 
 Ready to get started?
 
-Read the documentation at [wirt.network/docs](https://wirt.network) and get your own network running with **1 command on the terminal** and a **few clicks in your browser**!
+Read the setup documentation at [wirt.network/docs/setup](https://wirt.network/docs/setup) and get your own network running with **1 command on the terminal** and a **few clicks in your browser**!
 
 
 ![Small video to demonstrate the Tutorial](media/wirt_tutorial.gif)
