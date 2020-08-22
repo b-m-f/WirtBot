@@ -8,7 +8,7 @@ If you want to run your own WirtBot you will need the following things:
 - Root access on this machine
 - A Domain that points to your machine
 
-### Automated (highly encouraged to use this!)
+### Automated (you are highly encouraged to use this!)
 > This assumes you have a fresh Debian10 server or VPS with root access!
 
 First thing to do is to make sure that you have an SSH key. 
@@ -34,7 +34,7 @@ Your WirtBot will have a valid certificate from LetsEncrypt and will be ready to
 To update simply update the repository run `make update-wirtbot`. It will take care of updating WirtBot and the server to the latest state.
 You can also simply reinstall the whole server and run `make setup-wirtbot` again.
 
-### Manual
+### Manual (You need to know what you are doing for this!)
 
 If you want to do the manual setup you need
 
@@ -42,20 +42,16 @@ If you want to do the manual setup you need
 - A valid SSL certificate for your machine
 - Port 3030 opened in your firewall
 - Your system is managed with [systemd](https://en.wikipedia.org/wiki/Systemd)
-- Your WireGuard configuration should be at `/etc/wireguard/server.conf`.
+- Your WireGuard configuration should be at `/etc/wireguard/server.conf`
+- Docker installed
 
 Having these things is the first **80%** of finishing your WirtBot and you should find plenty of documentation about these things on the internet.
 Here are a few links:
 
-- [What is Linux?](https://www.linux.com/what-is-linux/)
-- [Initial Server Setup with Ubuntu](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04)
 - [nftables as a firewall](https://wiki.debian.org/nftables)
 - [HTTPS with LetsEncrypt](https://letsencrypt.org/about/)
 - [systemd](https://wiki.archlinux.org/index.php/Systemd)
 - [WireGuard installation](https://www.wireguard.com/install)
-
-If you come across a good tutorial, or have vast knowledge about these topics, contributions to make this documentation easier are highly encouraged!
-Just contact me for info on how to help out or send a PR on this [repo](https://github.com/b-m-f/wirt/docs/) if you know what that is.
 
 But what about the last **20%**?
 
@@ -94,7 +90,7 @@ If you would like to use i.e. `wg0` instead of `server`for the interface name ma
 
 First update your `wirtbot.service` file to include `MANAGED_DNS_ENABLED: 1` as an environment variable.
 
-Now install [https://coredns.io/](https://coredns.io/) and create a config that will listen to reloads useing the [reload plugin](https://coredns.io/plugins/reload/). Now update you `wirtbot.service` to point DNS changes to this file (you can change the path by providing `MANAGED_DNS_DEVICE_FILE` to the WirtBot via environment values).
+Now install [https://coredns.io/](https://coredns.io/) and create a config that will listen to reloads using the [reload plugin](https://coredns.io/plugins/reload/). Now update you `wirtbot.service` to point DNS changes to this file (you can change the path by providing `MANAGED_DNS_DEVICE_FILE` to the WirtBot via environment values).
 
 Start `CoreDNS` and that should be it.
 
