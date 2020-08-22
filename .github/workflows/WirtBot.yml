@@ -22,5 +22,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          docker login docker.pkg.github.com -u $GITHUB_ACTOR --password $GITHUB_TOKEN && docker build WirtBot -t docker.pkg.github.com/b-m-f/wirt/WirtBot:release &&  docker push docker.pkg.github.com/b-m-f/wirt/WirtBot:release
+          docker login docker.pkg.github.com -u $GITHUB_ACTOR --password $GITHUB_TOKEN && docker build WirtBot -f WirtBot/docker -t docker.pkg.github.com/b-m-f/wirt/WirtBot:release &&  docker push docker.pkg.github.com/b-m-f/wirt/WirtBot:release
 
