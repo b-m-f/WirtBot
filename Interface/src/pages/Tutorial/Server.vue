@@ -32,14 +32,15 @@
           </div>
         </div>
 
-        <div v-if="activeIndex == 2" id="ip">
-          <h2>{{ $t("tutorial.server.ip") }}</h2>
-          <IPInput @change="updateIp" />
-          <a
-            href="/docs/faq"
-            target="_blank"
-            rel="noopener noreferrer"
-          >{{ $t("tutorial.server.whatsAnIP") }}</a>
+        <div v-if="activeIndex == 2" id="hostname">
+          <h2>{{ $t("tutorial.server.hostname") }}</h2>
+          <input
+            type="text"
+            name="hostname"
+            id="hostname"
+            :value="server.hostname"
+            @change="(e) => updateHostname(e.target.value)"
+          />
         </div>
         <div v-if="activeIndex == 3" id="port">
           <h2>{{ $t("tutorial.server.port") }}</h2>
@@ -64,22 +65,19 @@
 <script>
 import Button from "../../components/Button";
 import Card from "../../components/Card";
-import IPInput from "../../components/IPInput";
 import PortInput from "../../components/PortInput";
 
 export default {
-  components: { Button, Card, IPInput, PortInput },
+  components: { Button, Card, PortInput },
   data() {
     return {
-      ip: [undefined, undefined, undefined, undefined],
-      port: undefined,
       steps: {
         0: "tutorial-welcome",
         1: "tutorial-server-questionaire",
         2: "tutorial-server-ip",
         3: "tutorial-server-port",
-        4: "tutorial-device-form"
-      }
+        4: "tutorial-device-form",
+      },
     };
   },
   computed: {
@@ -88,33 +86,22 @@ export default {
     },
     isMobilePage() {
       return this.$store.state.websiteBeingViewedOnMobileDevice;
-    }
+    },
+    server() {
+      return this.$store.state.server;
+    },
   },
   methods: {
-    updateIp({ ip, valid }) {
-      if (valid) {
-        this.ip = ip;
-        this.save();
-        this.$router.push({ name: "tutorial-server-port" });
-      }
-    },
     updatePort({ port, valid }) {
       if (valid) {
-        this.port = port;
-        this.save();
+        this.$store.dispatch("updateServer", { port });
         this.$router.push({ name: "tutorial-device-form" });
       }
     },
-    save() {
-      // Checks for existence have already been done in the udpate methods
-      const server = {
-        ip: { v4: this.ip },
-        port: this.port
-      };
-
-      this.$store.dispatch("updateServer", server);
-    }
-  }
+    updateHostname(hostname) {
+      this.$store.dispatch("updateServer", { hostname });
+    },
+  },
 };
 </script>
 
@@ -191,18 +178,15 @@ h1 {
   }
 }
 
-#ip {
+#hostname {
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  & #ip-inputs {
-    display: inline-flex;
-
-    & input {
-      min-width: 0;
-      max-width: 5rem;
-    }
+  & input {
+    flex-grow: 0;
+    margin-top: $spacing-large;
+    min-width: 10rem;
   }
 
   a {

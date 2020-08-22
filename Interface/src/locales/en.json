@@ -172,7 +172,7 @@
       "documentationLink": "Go to documentation",
       "tooltip": "The server is responsible for establishing secure communication channels between your devices.",
       "ip": "What is your servers public IP address?",
-      "whatsAnIP": "What is a public IP address?",
+      "hostname": "Please enter the hostname where your WirtBot® can be reached:",
       "whatsAPort": "What is a Port?",
       "port": "What is the port used for WireGuard®?",
       "done": "Next..."
