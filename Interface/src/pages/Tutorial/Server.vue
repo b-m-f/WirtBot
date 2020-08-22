@@ -44,7 +44,7 @@
         </div>
         <div v-if="activeIndex == 3" id="port">
           <h2>{{ $t("tutorial.server.port") }}</h2>
-          <PortInput @change="updatePort" />
+          <PortInput @change="updatePort" :placeholder="$t('tutorial.server.defaultPort')" />
           <a
             href="/docs/faq"
             target="_blank"

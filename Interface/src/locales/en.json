@@ -175,6 +175,7 @@
       "hostname": "Please enter the hostname where your WirtBot® can be reached:",
       "whatsAPort": "What is a Port?",
       "port": "What is the port used for WireGuard®?",
+      "defaultPort": "Auto installation uses 10101",
       "done": "Next..."
     },
     "noserver": {
