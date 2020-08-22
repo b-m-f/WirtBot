@@ -6,7 +6,7 @@ services:
     command: ["npm", "run", "test:ci"]
     depends_on: ["firefox", "chrome", "test-server"]
   test-server:
-    image: test-server
+    image: docker.pkg.github.com/b-m-f/wirt/WirtBot:release
     container_name: test-server
   chrome:
     image: selenium/standalone-chrome

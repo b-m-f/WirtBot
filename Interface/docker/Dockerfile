@@ -36,4 +36,4 @@ FROM nginx:alpine
 
 COPY --from=app /app/dist /app
 COPY --from=app /docs/docs/.vuepress/dist /app/docs
-COPY nginx/nginx.conf /etc/nginx/nginx.conf
+COPY Interface/docker/nginx/nginx.conf /etc/nginx/nginx.conf
