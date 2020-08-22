@@ -3,8 +3,8 @@ version: "3"
 services:
   test_wirtbot:
     build: 
-      context: ..
-      dockerfile: DevDockerfile
+      context: ../..
+      dockerfile: docker/DevDockerfile
     ports: [3030:3030]
     restart: always
     volumes: ["..:/app"]
