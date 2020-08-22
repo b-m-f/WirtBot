@@ -2,7 +2,8 @@ use std::env;
 
 const MANAGED_DNS_FEATURE_FLAG :&str = "MANAGED_DNS_ENABLED";
 const MANAGED_DNS_DEVICE_FILE_VAR :&str = "MANAGED_DNS_DEVICE_FILE";
-const DEFAULT_DEVICES_FILE :&str = "/etc/wirt_devices";
+// CoreDNS is the DNS server that is being used
+const DEFAULT_DEVICES_FILE :&str = "/etc/coredns/Corefile";
 
 pub fn enabled() -> bool {
     match env::var(MANAGED_DNS_FEATURE_FLAG) {
