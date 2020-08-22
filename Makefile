@@ -1,5 +1,9 @@
-test: 
-	docker-compose -f Interface/compose/test.yml up --build --remove-orphans --abort-on-container-exit
+test-interface: 
+	if [[ "$(docker images -q test-server 2> /dev/null)" == "" ]]; then
+    	docker build WirtBot -t test-server
+	fi
+    docker build Interface -t test-interface
+	docker-compose -f compose/test.yml up --remove-orphans --abort-on-container-exit
 
 dev: dev-server dev-client
 
