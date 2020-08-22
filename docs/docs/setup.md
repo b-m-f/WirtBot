@@ -22,8 +22,7 @@ Time to install:
 - ansible-playbook
 - sshpass (necessary to login via SSH to your servers root user via password for the setup)
 
-<!-- TODO: WirtBot still compiled from source? -->
-When you are done run `make setup-wirtbot` in the root of the repository and wait until the setup is done, this can take up to **30 min** since the WirtBot is compiled from source at the moment, this will change in the future.
+When you are done run `make setup-wirtbot` in the root of the repository and wait until the setup is done, this can take up to **20 minutes** so just be patient.
 
 Thats it. 
 

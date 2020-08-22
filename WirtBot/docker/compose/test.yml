@@ -1,15 +1,17 @@
 version: "3"
 
 services:
-  wirtbot:
-    build: ..
+  test_wirtbot:
+    build: 
+      context: ../..
+      dockerfile: docker/DevDockerfile
     ports: [3030:3030]
     restart: always
-    volumes: ["..:/app"]
+    volumes: ["../..:/app"]
     environment:
       "PUBLIC_KEY": "1lLU3VhXsrSGMxESmqfY4m2oEVkpfEHyKlCQU6MMPsI="
       "ALLOWED_ORIGIN": "http://localhost:8080"
       "RUST_LOG": "debug"
       "MANAGED_DNS_ENABLED": 1
-    container_name: development_wirtbot
-    command: ["cargo", "watch", "-x", "run"]
+    container_name: test_wirtbot
+    command: ["cargo", "test"]

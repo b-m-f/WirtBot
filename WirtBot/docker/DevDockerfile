@@ -7,7 +7,9 @@ EXPOSE 3030
 
 WORKDIR /app
 RUN mkdir /etc/wireguard
+RUN mkdir /etc/coredns/
 RUN touch /etc/wireguard/server.conf
+RUN touch /etc/coredns/Corefile.conf
 COPY src/ .
 COPY Cargo.toml .
 COPY Cargo.lock .
