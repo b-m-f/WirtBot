@@ -25,6 +25,7 @@ Read the documentation at [wirt.network/docs](https://wirt.network) and get your
 ![Small video to demonstrate the Tutorial](media/wirt_tutorial.gif)
 
 ## Features
+- Based on WireGuard for **security** and **speed**
 - Find all your devices by their name! **DNS** is included
 - Every configuration in the network is kept **up to date** on changes
 - **Export and Import** feature to keep track of multiple networks and generate Backups
