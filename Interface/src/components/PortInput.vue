@@ -7,7 +7,7 @@
     name="port"
     min="1024"
     max="65636"
-    placeholder="1024-65636"
+    :placeholder="$props.placeholder"
     @change="updatePort"
   />
 </template>
@@ -15,7 +15,8 @@
 <script>
 export default {
   props: {
-    port: { type: Number, default: undefined }
+    port: { type: Number, default: undefined },
+    placeholder: { type: String, default: "1024-65636" },
   },
   data() {
     return { internalPort: this.$props.port };
@@ -34,8 +35,8 @@ export default {
       } else {
         this.$emit("change", { port: newValue, valid: false });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

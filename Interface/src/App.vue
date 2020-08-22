@@ -78,9 +78,9 @@ export default {
 
 #alerts {
   position: fixed;
-  top: 0rem;
-  width: 100vw;
-  padding-top: $spacing-small;
+  top: $spacing-small;
+  right: $spacing-small;
+  width: 30vw;
 }
 
 .mobile {

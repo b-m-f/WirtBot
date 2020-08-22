@@ -1,16 +1,12 @@
 version: "3"
 services:
   test-container:
-    build:
-      context: ..
-      dockerfile: TestsDockerfile
+    image: test-interface
     container_name: test-container
     command: ["npm", "run", "test:ci"]
     depends_on: ["firefox", "chrome", "test-server"]
   test-server:
-    build:
-      context: ../..
-      dockerfile: Dockerfile
+    image: test-server
     container_name: test-server
   chrome:
     image: selenium/standalone-chrome

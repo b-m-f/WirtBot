@@ -9,11 +9,10 @@
         name="name"
         @change="(e) => updateName(e.target.value)"
         :value="server.name"
-      
-       />
+      />
       <p v-else>{{ server.name }}</p>
     </div>
-    <div class="row">
+    <div class="row" v-if="expertMode">
       <label>{{ $t("dashboard.widgets.server.ip") }}</label>
       <IPInput
         v-if="edit"
@@ -22,7 +21,7 @@
       />
       <p v-else>{{ server.ip.v4.join(".") }}</p>
     </div>
-    <div class="row" v-if="expertMode">
+    <div class="row">
       <label>{{ $t("dashboard.widgets.server.hostname") }}</label>
       <input
         v-if="edit"
@@ -33,21 +32,6 @@
         @change="(e) => updateHostname(e.target.value)"
       />
       <p v-else>{{ server.hostname }}</p>
-    </div>
-    <div class="row">
-      <label for="connected">
-        {{
-        $t("dashboard.widgets.server.connected")
-        }}
-      </label>
-      <input
-        type="checkbox"
-        name="connected"
-        idj
-        class="switch"
-        :checked="server.connected"
-        @change="(e) => updateConnected(e.target.checked)"
-      />
     </div>
     <div class="row">
       <label>{{ $t("dashboard.widgets.server.port") }}</label>
@@ -90,16 +74,16 @@ export default {
   components: { PortInput, IPInput, Button },
   data() {
     return {
-      edit: false
+      edit: false,
     };
   },
   props: {
-    expertMode: Boolean
+    expertMode: Boolean,
   },
   computed: {
     server() {
       return this.$store.state.server;
-    }
+    },
   },
   methods: {
     downloadConfig() {
@@ -113,9 +97,6 @@ export default {
     },
     updateHostname(hostname) {
       this.$store.dispatch("updateServer", { hostname });
-    },
-    updateConnected(connected) {
-      this.$store.dispatch("updateServer", { connected });
     },
     updateSubnet(subnet) {
       this.$store.dispatch("updateServer", { subnet });
@@ -138,9 +119,9 @@ export default {
       } else {
         this.blocked = true;
       }
-    }
+    },
     // updateName(name) {},
-  }
+  },
 };
 </script>
 
