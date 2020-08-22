@@ -12,6 +12,7 @@ Environment="SSL_PEM_CERT=$PATH_TO_YOUR_CERT"
 Environment="SSL_KEY=$PATH_TO_YOUR_KEY"
 Environment="PORT=3030"
 Environment="HOST=0.0.0.0"
+Environment="MANAGED_DNS_ENABLED=1"
 # change the path below depending on where you placed the executable
 ExecStart=/usr/bin/wirtbot
 
