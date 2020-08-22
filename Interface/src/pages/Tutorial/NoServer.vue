@@ -16,7 +16,13 @@
               </Button>
             </a>
             <ul class="option-infos">
-              <li>{{ $t("tutorial.noserver.selfSetup.returnHere") }}</li>
+              <li>
+                <p>{{$t("tutorial.noserver.selfSetup.key") + ": "}}</p>
+                <code @click="copyToClipBoard">{{key}}</code>
+              </li>
+              <li>
+                <p>{{$t("tutorial.noserver.selfSetup.returnHere") }}</p>
+              </li>
             </ul>
           </div>
         </div>
@@ -34,7 +40,7 @@ export default {
   data() {
     return {
       ip: [undefined, undefined, undefined, undefined],
-      port: undefined
+      port: undefined,
     };
   },
   computed: {
@@ -43,8 +49,32 @@ export default {
     },
     isMobilePage() {
       return this.$store.state.websiteBeingViewedOnMobileDevice;
-    }
-  }
+    },
+    key() {
+      if (this.$store.state.keys) {
+        return this.$store.state.keys["public_key"];
+      } else {
+        this.$store.dispatch("generateKeys");
+        return "";
+      }
+    },
+  },
+  methods: {
+    async copyToClipBoard() {
+      try {
+        await navigator.clipboard.writeText(this.key);
+        this.$store.dispatch(
+          "alerts/addSuccess",
+          `${this.$t("success.copyToClipBoard")}`
+        );
+      } catch (error) {
+        this.$store.dispatch(
+          "alerts/addError",
+          `${this.$t("errors.copyFailed")}`
+        );
+      }
+    },
+  },
 };
 </script>
 
@@ -65,6 +95,14 @@ h1 {
         & li {
           list-style-type: disc;
           list-style-position: inside;
+          & p {
+            display: inline;
+          }
+
+          & code {
+            cursor: copy;
+            background-color: $grey-light;
+          }
 
           &::marker {
             color: $secondary;

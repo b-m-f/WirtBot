@@ -106,7 +106,7 @@
         "expertWarning": "You are in expert mode. Take care!",
         "hostname": "Hostname:",
         "subnet": "Subnet:",
-        "download": "Download config",
+        "download": "Download config"
       },
       "devices": {
         "title": "My devices",
@@ -183,7 +183,8 @@
       "optionInfo": "At the moment you will still have to do this setup yourself",
       "selfSetup": {
         "goToDocs": "Go to guide",
-        "returnHere": "Once your setup is finished return to the tutorial"
+        "returnHere": "Once your setup is finished return to the tutorial",
+        "key": "Key to use"
       }
     },
     "devices": {
@@ -239,10 +240,12 @@
   },
   "success": {
     "deviceRemoved": "Device removed",
-    "keysGenerated": "Keys were generated successfully."
+    "keysGenerated": "Keys were generated successfully.",
+    "copyToClipBoard": "Copied"
   },
   "errors": {
     "backupNotCompatible": "The backup has a newer version than the app and is not comptaible",
-    "backupUpgradeTo1dot0": "Error when upgrading your backup from beta version to 1.0"
+    "backupUpgradeTo1dot0": "Error when upgrading your backup from beta version to 1.0",
+    "copyFailed": "Could not copy, please do it manually."
   }
 }
