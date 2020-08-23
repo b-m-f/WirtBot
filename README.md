@@ -7,27 +7,29 @@
 
 ![Interface Tests](https://github.com/b-m-f/Wirt/workflows/run%20Interface%20tests/badge.svg)
 ![WirtBot Tests](https://github.com/b-m-f/Wirt/workflows/run%20WirtBot%20tests/badge.svg)
-![Build on master](https://github.com/b-m-f/Wirt/workflows/build%20and%20push%20interface/badge.svg)
+![Interface release](https://github.com/b-m-f/Wirt/workflows/build%20and%20push%20interface/badge.svg)
+![WirtBot release](https://github.com/b-m-f/Wirt/workflows/build%20and%20push%20WirtBot/badge.svg)
 
 Welcome to the [Wirt](https://wirt.network) repository.
-What can you find here?:
+**Wirt** is a system that is designed after the UNIX philosophy. 
+Many small parts that do a job and do it well.
+Everything is controlled via a UI that focusses on **ease of use** and all is glued together using Infrastructure as code.
+If you set it up you can rest assured that it is done properly.
 
-- Setup scripts
-- Wirt documentation
-- Wirt developer documentation
-- WirtBot
-- Interface
+Ready to get started?
 
-Read the documentation at [wirt.network/docs](https://wirt.network) and get your own network running with **1 command on the terminal** and a **few clicks in your browser**.
+Read the setup documentation at [wirt.network/docs/setup](https://wirt.network/docs/setup) and get your own cloud network with **1 command on the terminal** and a **few clicks in your browser**!
 
 
 ![Small video to demonstrate the Tutorial](media/wirt_tutorial.gif)
 
 ## Features
-- Find all your devices by their name! DNS is included
-- Every configuration in the network is kept updated on changes
-- Export and Import feature to keep track of multiple networks and generate Backups
-- Absolutely no tracking + everything is uniquely tied to your browser!
+- Based on WireGuard for **security** and **speed**
+- Find all your devices by their name! **DNS** is included
+- Every configuration in the network is kept **up to date** on changes
+- **Export and Import** feature to keep track of multiple networks and generate Backups
+- **Absolutely no tracking** + everything is uniquely tied to your browser!
+- **Configuration over code**. Leverage existing tooling and provide a clean interface for configuring it correctly
 
 ## Contributing
 

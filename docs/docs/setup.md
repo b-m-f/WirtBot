@@ -13,9 +13,9 @@ If you want to run your own WirtBot you will need the following things:
 
 First thing to do is to make sure that you have an SSH key. 
 If you do not have one yet you can follow [this tutorial](https://www.ssh.com/ssh/keygen/).
-You will need the content of the `.pub` file that will be created in the next step.
+You will need the content of the `.pub` file that will be created for the next step.
 
-Now clone or download the [Wirt repository](https://github.com/b-m-f/wirt) and update the values in `ansible/main.yml`.
+Now clone or download the [Wirt repository](https://github.com/b-m-f/wirt), rename `ansible/main.yml.expamle` to `ansible/main.yml` and update it with the correct values.
 
 Time to install:
 - ansible
