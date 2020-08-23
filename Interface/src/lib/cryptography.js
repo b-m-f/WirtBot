@@ -7,7 +7,7 @@ export async function generateSigningKeys() {
     return pair;
   } catch (error) {
     console.error(error);
-    throw "WebAssembly key generation";
+    throw `WebAssembly key generation: ${error}`;
   }
 }
 
@@ -20,6 +20,6 @@ export async function sign(message) {
     return { signature, message };
   } catch (error) {
     console.error(error);
-    throw "Error when signing message";
+    throw `Error when signing message: ${error}`;
   }
 }

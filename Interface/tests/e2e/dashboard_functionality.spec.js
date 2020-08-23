@@ -1,9 +1,9 @@
 const { setServer } = require("./helpers/dataFillers");
 
 module.exports = {
-  "Test cant add device without server": async function(browser) {
+  "Test cant add device without server": async function (browser) {
     await browser.url(`http://${process.env.TEST_URL}/dashboard`);
-    await browser.waitForElementVisible("body");
+    await browser.waitForElementVisible(".app");
 
     await browser.click("#add-device button");
     await browser.setValue("input[name='device-name']", "test1");
@@ -15,7 +15,7 @@ module.exports = {
 
     browser.expect.elements(".device").count.to.equal(0);
   },
-  "Test dashboard server button only appears when data is input": async function(
+  "Test dashboard server button only appears when data is input": async function (
     browser
   ) {
     await browser.assert.not.elementPresent("#server-widget #download");
@@ -25,7 +25,7 @@ module.exports = {
     await browser.url(`http://${process.env.TEST_URL}/dashboard`);
     await browser.assert.visible("#server-widget #download");
   },
-  "Test android devices have a QR code": async function(browser) {
+  "Test android devices have a QR code": async function (browser) {
     await browser.click("#add-device button");
 
     await browser.setValue("input[name='device-name']", "test1");
@@ -36,7 +36,7 @@ module.exports = {
     browser.expect.elements("img.qr-code").count.to.equal(1);
   },
 
-  "Test iOS devices have a QR code": async function(browser) {
+  "Test iOS devices have a QR code": async function (browser) {
     await browser.url(`http://${process.env.TEST_URL}/dashboard`);
     await browser.waitForElementVisible("body");
     await browser.click("#add-device button");
@@ -49,7 +49,7 @@ module.exports = {
 
     browser.expect.elements("img.qr-code").count.to.equal(2);
   },
-  "Test that ip is set to next big available ip": async function(browser) {
+  "Test that ip is set to next big available ip": async function (browser) {
     await browser.click("#add-device button");
     await browser.assert.attributeEquals(
       "input[name='device-ipv4']",
@@ -57,7 +57,7 @@ module.exports = {
       "3"
     );
   },
-  "Test that two devices can not have the same ip": async function(browser) {
+  "Test that two devices can not have the same ip": async function (browser) {
     browser.expect
       .elements("#device-widget form .device-overview")
       .count.to.equal(2);

@@ -16,10 +16,6 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Trigger tests
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run test suite for the interface
         run: |
-          docker login docker.pkg.github.com -u $GITHUB_ACTOR --password $GITHUB_TOKEN && cd Interface && make test-ci
+         cd Interface && make test-ci

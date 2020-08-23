@@ -1,7 +1,7 @@
 module.exports = {
   "Test links to server": async function (browser) {
     await browser.url(`http://${process.env.TEST_URL}/tutorial`);
-    await browser.waitForElementVisible("body");
+    await browser.waitForElementVisible(".app");
     await browser.click("#start > button");
 
     await browser.assert.urlEquals(
@@ -193,6 +193,6 @@ module.exports = {
       `http://${process.env.TEST_URL}/tutorial/done`
     );
   },
-
   //   "Test links to server": async function(browser) {},
 };
+

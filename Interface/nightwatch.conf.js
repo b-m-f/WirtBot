@@ -1,8 +1,8 @@
 module.exports = {
   // An array of folders (excluding subfolders) where your tests are located;
   // if this is not specified, the test source must be passed as the second argument to the test runner.
-  src_folders: ["tests"],
-  exclude: ["tests/helpers"],
+  src_folders: ["tests/e2e"],
+  exclude: ["tests/e2e/helpers"],
 
   test_settings: {
     default: {
@@ -43,6 +43,10 @@ module.exports = {
           // acceptInsecureCerts: true,
           "moz:firefoxOptions": {
             args: ["-headless"],
+            "prefs": {
+              "media.navigator.streams.fake": true,
+              "media.navigator.permission.disabled": true
+            },
           },
         },
       },

@@ -57,11 +57,7 @@
       </select>
     </td>
     <td class="column-four">
-      <input
-        type="checkbox"
-        id="routed"
-        v-model="internalRouted"
-      >
+      <input type="checkbox" id="routed" name="routed" v-model="internalRouted" />
       <label for="routed">{{ $t("dashboard.widgets.devices.labels.routed") }}</label>
     </td>
     <td class="column-five">
@@ -119,7 +115,7 @@ export default {
     id: String,
     qr: String,
     expanded: Boolean,
-    routed: Boolean
+    routed: Boolean,
   },
   data() {
     return {
@@ -129,7 +125,7 @@ export default {
       internalId: this.$props.id,
       selectTouched: false,
       internalEdit: this.$props.edit,
-      internalRouted: this.$props.routed || false
+      internalRouted: this.$props.routed || false,
     };
   },
   computed: {
@@ -144,14 +140,14 @@ export default {
     },
     editingMode() {
       return this.edit || this.internalEdit;
-    }
+    },
   },
   mounted() {},
   methods: {
     downloadConfig() {
-      const config = this.devices.find(device => device.id === this.internalId)[
-        "config"
-      ];
+      const config = this.devices.find(
+        (device) => device.id === this.internalId
+      )["config"];
       downloadText(config, `${this.internalName}.conf`);
     },
     activateEditingMode() {
@@ -167,8 +163,8 @@ export default {
     getNextHighestIPv4() {
       let nextHighest = 2;
 
-      let dev = this.devices.map(device => device.ip.v4).sort();
-      dev.forEach(ip => {
+      let dev = this.devices.map((device) => device.ip.v4).sort();
+      dev.forEach((ip) => {
         if (ip === nextHighest) {
           nextHighest = ip + 1;
         }
@@ -280,10 +276,10 @@ export default {
         name: this.internalName,
         type: this.internalType,
         ip: this.internalIP,
-        routed: this.internalRouted
+        routed: this.internalRouted,
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

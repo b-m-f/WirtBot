@@ -3,13 +3,15 @@ services:
   test-container:
     image: test-interface
     container_name: test-runner
-    command: ["npm", "run", "test:ci"]
+    command: ["sh", "/app/wait-for.sh", "firefox:4444", "--", "npm", "run", "test:ci"]
     depends_on: ["firefox", "chrome", "test-server", "test-interface"]
+    volumes:
+      - ./download_folder:/Downloads/
   test-interface:
     image: test-interface
     container_name: test-interface
   test-server:
-    image: docker.pkg.github.com/b-m-f/wirt/wirtbot:release
+    image: bmff/wirtbot:release
     container_name: test-server
     environment:
       "PUBLIC_KEY": "1lLU3VhXsrSGMxESmqfY4m2oEVkpfEHyKlCQU6MMPsI="
@@ -22,3 +24,5 @@ services:
   firefox:
     image: selenium/standalone-firefox
     container_name: firefox
+    volumes:
+      - ./download_folder:/root/Downloads/

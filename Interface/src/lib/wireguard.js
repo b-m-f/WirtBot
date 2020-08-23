@@ -146,7 +146,6 @@ export async function getKeys() {
     const pair = JSON.parse(generateKeypair());
     return { private: pair.private_key, public: pair.public_key };
   } catch (error) {
-    console.error(error);
-    throw "WebAssembly key generation";
+    throw `WebAssembly key generation: ${error}`;
   }
 }
