@@ -13,6 +13,12 @@ Make sure to test failures as you main objective! For example ensuring that addi
 Usually code is developed for the best case flow, these tests are what makes things safe and correct!
 
 ## Execution
+
+First make sure that you have the following installed:
+
+- docker
+- docker-compose
+
 For unit tests run `npm run test:unit`.
 
 To start the e2e test use `make test-e2e`. This will simulate a whole environment to run in and watch the test directory. This will also run on the CI in a similar fashion. The initial setup might take a bit, but it is the recommended way.
