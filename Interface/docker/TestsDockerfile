@@ -27,6 +27,7 @@ RUN npm run build
 
 COPY tests tests
 COPY nightwatch.conf.js .
+COPY jest.config.js jest.config.js
 COPY docker/nginx/test.conf /etc/nginx/nginx.conf
 
 RUN mkdir -p /run/nginx
