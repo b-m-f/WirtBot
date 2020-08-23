@@ -10,7 +10,7 @@ RUN cargo install wasm-pack
 
 # build the app
 WORKDIR '/app'
-COPY wait-for.sh wait-for.sh
+COPY docker/wait-for.sh wait-for.sh
 RUN chmod +x wait-for.sh
 COPY package.json  .
 COPY package-lock.json .
