@@ -3,7 +3,7 @@ services:
   test-container:
     image: test-interface
     container_name: test-runner
-    command: ["./wait-for-it.sh", "firefox:4444", "--", "npm", "run", "test:ci"]
+    command: ["sh", "/app/wait-for.sh", "firefox:4444", "--", "npm", "run", "test:ci"]
     depends_on: ["firefox", "chrome", "test-server", "test-interface"]
     volumes:
       - ./download_folder:/Downloads/
