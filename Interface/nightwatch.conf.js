@@ -43,6 +43,10 @@ module.exports = {
           // acceptInsecureCerts: true,
           "moz:firefoxOptions": {
             args: ["-headless"],
+            "prefs": {
+              "media.navigator.streams.fake": true,
+              "media.navigator.permission.disabled": true
+            },
           },
         },
       },

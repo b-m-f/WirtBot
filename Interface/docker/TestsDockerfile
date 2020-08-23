@@ -1,7 +1,7 @@
 # APP
 FROM rust:alpine 
 RUN apk update
-RUN apk add nodejs npm  build-base openssl-dev clang
+RUN apk add nodejs npm  build-base openssl-dev clang curl nginx entr
 
 # Reuse this one when dependencies are fixed
 RUN cargo install wasm-pack
@@ -10,6 +10,7 @@ RUN cargo install wasm-pack
 
 # build the app
 WORKDIR '/app'
+RUN curl https://raw.githubusercontent.com/eficode/wait-for/master/wait-for > wait-for.sh && chmod +x wait-for.sh
 COPY package.json  .
 COPY package-lock.json .
 RUN npm install
@@ -22,6 +23,11 @@ COPY public public
 COPY .env .
 RUN npm run build
 
+
 COPY tests tests
 COPY nightwatch.conf.js .
-CMD ["npm", "run", "dev"]
+COPY docker/nginx/test.conf /etc/nginx/nginx.conf
+
+RUN mkdir -p /run/nginx
+
+CMD ["nginx", "-g", "daemon off;"]

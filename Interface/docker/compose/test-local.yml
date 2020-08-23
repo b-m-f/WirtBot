@@ -3,10 +3,11 @@ services:
   test-container:
     image: test-interface
     container_name: test-runner
-    command: ["./wait-for-it.sh", "firefox:4444", "--", "npm", "run", "test:ci"]
+    command: ["sh", "/app/wait-for.sh", "firefox:4444", "--", "npm", "run", "test:e2e:headless:watch"]
     depends_on: ["firefox", "chrome", "test-server", "test-interface"]
     volumes:
       - ./download_folder:/Downloads/
+      - ../../tests:/app/tests
   test-interface:
     image: test-interface
     container_name: test-interface
@@ -19,10 +20,10 @@ services:
       "RUST_LOG": "debug"
       "MANAGED_DNS_ENABLED": 1
   chrome:
-    image: selenium/standalone-chrome
+    image: selenium/standalone-chrome:latest
     container_name: chrome
   firefox:
-    image: selenium/standalone-firefox
+    image: selenium/standalone-firefox:latest
     container_name: firefox
     volumes:
       - ./download_folder:/root/Downloads/
