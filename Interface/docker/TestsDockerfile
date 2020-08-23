@@ -10,7 +10,8 @@ RUN cargo install wasm-pack
 
 # build the app
 WORKDIR '/app'
-RUN curl https://raw.githubusercontent.com/eficode/wait-for/master/wait-for > wait-for.sh && chmod +x wait-for.sh
+COPY wait-for.sh wait-for.sh
+RUN chmod +x wait-for.sh
 COPY package.json  .
 COPY package-lock.json .
 RUN npm install
