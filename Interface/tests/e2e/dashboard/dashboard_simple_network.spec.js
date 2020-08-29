@@ -1,4 +1,8 @@
 const fs = require("fs")
+const assert = require('assert')
+const util = require('util');
+const readFile = util.promisify(fs.readFile);
+const readDir = util.promisify(fs.readdir);
 
 module.exports = {
     "Add server": async function (browser) {
@@ -43,14 +47,11 @@ module.exports = {
         await browser.click("button#save");
     },
     "Download and verify server configuration": async function (browser) {
-        // await browser.click("#server-widget #download");
-        // function checkDownload() {
-        //     fs.readFile('/Downloads/server.conf', (err, data) => {
-        //         if (err) throw err;
-        //         console.log(data);
-        //     });
-
-        // }
-        // await setTimeout(checkDownload, 1500);
-    },
+        await browser.click("#server-widget #download");
+        await readFile('/tmp/WirtTestDownloads/server.conf', (err, data) => {
+            // if (err) throw err;
+            // throw data;
+            browser.expect(data).to.equal('test')
+        });
+    }
 };

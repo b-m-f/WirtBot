@@ -8,6 +8,7 @@
     "build:rust": "wasm-pack build wasm -- --locked",
     "test:unit": "vue-cli-service test:unit",
     "test:rust": "wasm-pack test wasm --node",
+    "test:e2e:local": "find tests -wholename 'tests/e2e/**/*.spec.js'  | TEST_URL=localhost:8080 entr nightwatch",
     "test:e2e:headless:watch": "find tests -wholename 'tests/e2e/**/*.spec.js'  | TEST_URL=test-interface entr nightwatch --env integration",
     "test:e2e:ci": "TEST_URL=test-interface nightwatch --env integration",
     "test:ci": "npm run test:unit && npm run test:rust && npm run test:e2e:ci",
