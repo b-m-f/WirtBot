@@ -8,22 +8,30 @@ module.exports = {
     default: {
       webdriver: {
         start_process: true,
-        port: 4444,
-        server_path: require("geckodriver").path,
+        server_path: require("chromedriver").path,
         cli_args: [
           // very verbose geckodriver logs
-          // '-vv'
+          // "-vv"
         ],
       },
       launch_url: "http://localhost:8080",
       desiredCapabilities: {
-        browserName: "firefox",
-        alwaysMatch: {
-          // Enable this if you encounter unexpected SSL certificate errors in Firefox
-          // acceptInsecureCerts: true,
-          "moz:firefoxOptions": {
-            args: ["-verbose"],
-          },
+        browserName: "chrome",
+        chromeOptions: {
+          w3c: false,
+          args: [
+          ],
+          prefs: {
+            "Browser.setDownloadBehavior": {
+              behavior: "allow",
+              downloadPath: "/tmp/WirtTestDownloads/"
+            },
+            "download.default_directory": "/tmp/WirtTestDownloads/",
+            "download.prompt_for_download": "false",
+            "download.directory_upgrade": "true",
+            "profile": {
+            }
+          }
         },
       },
     },
@@ -31,25 +39,31 @@ module.exports = {
       launch_url: "http://test-server:8080",
       webdriver: {
         start_process: false,
-      },
-      selenium: {
-        host: "firefox",
-        port: "4444",
+        host: "chrome",
+        port: 4444,
       },
       desiredCapabilities: {
-        browserName: "firefox",
-        alwaysMatch: {
-          // Enable this if you encounter unexpected SSL certificate errors in Firefox
-          // acceptInsecureCerts: true,
-          "moz:firefoxOptions": {
-            args: ["-headless"],
-            "prefs": {
-              "media.navigator.streams.fake": true,
-              "media.navigator.permission.disabled": true
+        browserName: "chrome",
+        chromeOptions: {
+          w3c: false,
+          args: [
+            "--headless",
+            "--no-sandbox",
+            "window-size=1920,1080",
+          ],
+          prefs: {
+            "Browser.setDownloadBehavior": {
+              behavior: "allow",
+              downloadPath: "/tmp/WirtTestDownloads/"
             },
-          },
+            "download.default_directory": "/tmp/WirtTestDownloads/",
+            "download.prompt_for_download": "false",
+            "download.directory_upgrade": "true",
+            "profile": {
+            }
+          }
         },
       },
     },
-  },
+  }
 };

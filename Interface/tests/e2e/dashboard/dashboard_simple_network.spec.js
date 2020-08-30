@@ -1,4 +1,7 @@
-const fs = require("fs")
+const fs = require("fs").promises
+const assert = require('assert')
+const util = require('util');
+const setTimeoutAsync = util.promisify(setTimeout);
 
 module.exports = {
     "Add server": async function (browser) {
@@ -43,14 +46,14 @@ module.exports = {
         await browser.click("button#save");
     },
     "Download and verify server configuration": async function (browser) {
-        // await browser.click("#server-widget #download");
-        // function checkDownload() {
-        //     fs.readFile('/Downloads/server.conf', (err, data) => {
-        //         if (err) throw err;
-        //         console.log(data);
-        //     });
-
-        // }
-        // await setTimeout(checkDownload, 1500);
-    },
+        await browser.click("#server-widget #download");
+        try {
+            await setTimeoutAsync(1000, 'waitForDownload').then(async () => {
+                const data = await fs.readFile('/tmp/WirtTestDownloads/server.conf', "utf8")
+                assert.match(data, /.*ListenPort = 1233.*/)
+            });
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
 };

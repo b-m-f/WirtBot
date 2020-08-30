@@ -2,7 +2,6 @@
 FROM rust:alpine  as app
 RUN apk update
 RUN apk add nodejs npm  build-base openssl-dev clang
-RUN cargo install wasm-pack
 
 # build the app
 WORKDIR '/app'

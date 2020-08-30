@@ -1,4 +1,4 @@
-const { setServer } = require("./helpers/dataFillers");
+const { setServer } = require("../helpers/dataFillers");
 
 module.exports = {
   "Test cant add device without server": async function (browser) {
