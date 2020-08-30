@@ -55,5 +55,10 @@ module.exports = {
         } catch (error) {
             throw new Error(error);
         }
+        try {
+            await fs.unlink('/tmp/WirtTestDownloads/server.conf', "utf8")
+        } catch (error) {
+            throw new Error(error);
+        }
     }
 };
