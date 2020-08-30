@@ -3,3 +3,4 @@ node_modules
 tests_output
 wasm/target
 geckodriver.log
+chromedriver.log

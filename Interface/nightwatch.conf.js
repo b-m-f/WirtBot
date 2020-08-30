@@ -9,9 +9,8 @@ module.exports = {
       webdriver: {
         start_process: true,
         server_path: require("chromedriver").path,
+        port: 9515,
         cli_args: [
-          // very verbose geckodriver logs
-          // "-vv"
         ],
       },
       launch_url: "http://localhost:8080",
@@ -20,6 +19,7 @@ module.exports = {
         chromeOptions: {
           w3c: false,
           args: [
+            "window-size=1920,1080"
           ],
           prefs: {
             "Browser.setDownloadBehavior": {
