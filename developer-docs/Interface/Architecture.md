@@ -19,3 +19,8 @@ Need some data that is only needed in your component? Use the API directly. But 
 Use the single State to your advantage.
 Do you want to update the WirtBot on every configuration change? Dont write code for that in your component!
 Simply call the API in the **action** that you call via `dispatch()`. Now you have one less thing to worry about and only one place to fix if things break
+
+## Additional DNS Servers
+First the WirtBot DNS server is tried. It will now block any forwarding of `lan local home` which are reserved for local networks (https://unix.stackexchange.com/questions/92441/whats-the-difference-between-local-home-and-lan).
+Should no DNS entry be found via the WirtBot DNS then the additional DNS servers will be tried.
+This can be used to be able to route all traffic through the WirtBot, reach Wirt internal devices and still be able to communicate with other internal networks.
