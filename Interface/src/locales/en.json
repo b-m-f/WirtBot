@@ -114,9 +114,13 @@
         "expert": "Expert",
         "expertWarning": "You are in expert mode. Take care!",
         "labels": {
-          "routed": "Route all traffic through WireGuard",
+          "routed": "Routed",
           "additionalDNSServers": "Additional DNS Servers",
-          "MTU": "MTU"
+          "MTU": "MTU",
+          "ipv4": "IPv4",
+          "ipv6": "IPv6",
+          "name": "Name",
+          "type": "Device"
         },
         "placeholder": {
           "additionalDNSServers": "Comma seperated",

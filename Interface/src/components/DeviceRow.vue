@@ -3,6 +3,9 @@
   <!-- This will allow the device table to wrap them correctly, and then use display: grid on the mobile table -->
   <tr v-if="editingMode" id="new-device" class="table-row">
     <td class="column-one">
+      <label for="device-name">{{
+        $t("dashboard.widgets.devices.labels.name")
+      }}</label>
       <input
         type="text"
         name="device-name"
@@ -15,36 +18,49 @@
     </td>
     <td class="column-two" id="ip-input">
       <div id="ip-v4">
-        <p>{{ subnet.v4 }}</p>
-        <input
-          type="number"
-          name="device-ipv4"
-          id="ip"
-          min="2"
-          max="255"
-          :placeholder="getNextHighestIPv4()"
-          :value="internalIP.v4"
-          required
-          @input="(e) => updateIP({ v4: e.target.value })"
-          ref="ip-input"
-        />
+        <label for="device-ipv4">{{
+          $t("dashboard.widgets.devices.labels.ipv4")
+        }}</label>
+        <div class="value">
+          <p>{{ subnet.v4 }}</p>
+          <input
+            type="number"
+            name="device-ipv4"
+            id="ip"
+            min="2"
+            max="255"
+            :placeholder="getNextHighestIPv4()"
+            :value="internalIP.v4"
+            required
+            @input="(e) => updateIP({ v4: e.target.value })"
+            ref="ip-input"
+          />
+        </div>
       </div>
       <div v-if="expanded" id="ip-v6">
-        <p :title="subnet.v6">{{ subnet.v6.substring(0, 4) }}::</p>
-        <input
-          type="text"
-          name="ipv6"
-          id="ip"
-          pattern="^[0-9A-F]+$"
-          placeholder="0001-ffff"
-          :value="internalIP.v6"
-          required
-          @input="(e) => updateIP({ v6: e.target.value })"
-          ref="ip-input"
-        />
+        <label for="device-ipv4">{{
+          $t("dashboard.widgets.devices.labels.ipv6")
+        }}</label>
+        <div class="value">
+          <p :title="subnet.v6">{{ subnet.v6.substring(0, 4) }}::</p>
+          <input
+            type="text"
+            name="device-ipv6"
+            id="ip"
+            pattern="^[0-9A-F]+$"
+            placeholder="0001-ffff"
+            :value="internalIP.v6"
+            required
+            @input="(e) => updateIP({ v6: e.target.value })"
+            ref="ip-input"
+          />
+        </div>
       </div>
     </td>
     <td class="column-three">
+      <label for="device-type">{{
+        $t("dashboard.widgets.devices.labels.type")
+      }}</label>
       <select
         id="device-type"
         :required="true"
@@ -59,42 +75,46 @@
       </select>
     </td>
     <td class="column-four">
+      <div id="mtu">
+        <label for="mtu">
+          {{ $t("dashboard.widgets.devices.labels.MTU") }}
+        </label>
+        <input
+          type="text"
+          name="MTU"
+          id="MTU"
+          pattern="[0-9]{4}"
+          :value="MTU"
+          :placeholder="$t('dashboard.widgets.devices.placeholder.MTU')"
+          @input="(e) => updateMTU(e.target.value)"
+          ref="MTU"
+        />
+      </div>
+      <div id="additionalDNSServers">
+        <label for="additionalDNSServers">
+          {{ $t("dashboard.widgets.devices.labels.additionalDNSServers") }}
+        </label>
+        <input
+          type="text"
+          name="additionalDNSServers"
+          id="additionalDNSServers"
+          pattern="([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+,?)+"
+          :value="additionalDNSServers"
+          :placeholder="
+            $t('dashboard.widgets.devices.placeholder.additionalDNSServers')
+          "
+          @input="(e) => updateAdditionalDNSServers(e.target.value)"
+          ref="additionalDNSServers"
+        />
+      </div>
+    </td>
+    <td class="column-five" v-if="expanded">
       <div id="routed">
         <label for="routed">{{
           $t("dashboard.widgets.devices.labels.routed")
         }}</label>
         <input type="checkbox" name="routed" v-model="internalRouted" />
       </div>
-      <label for="mtu">
-        {{ $t("dashboard.widgets.devices.labels.MTU") }}
-      </label>
-      <input
-        type="text"
-        name="MTU"
-        id="MTU"
-        pattern="[0-9]{4}"
-        :value="MTU"
-        :placeholder="$t('dashboard.widgets.devices.placeholder.MTU')"
-        @input="(e) => updateMTU(e.target.value)"
-        ref="MTU"
-      />
-    </td>
-    <td class="column-five" v-if="expanded">
-      <label for="additionalDNSServers">
-        {{ $t("dashboard.widgets.devices.labels.additionalDNSServers") }}
-      </label>
-      <input
-        type="text"
-        name="additionalDNSServers"
-        id="additionalDNSServers"
-        pattern="([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+,?)+"
-        :value="additionalDNSServers"
-        :placeholder="
-          $t('dashboard.widgets.devices.placeholder.additionalDNSServers')
-        "
-        @input="(e) => updateAdditionalDNSServers(e.target.value)"
-        ref="additionalDNSServers"
-      />
     </td>
     <td class="column-six">
       <button id="save" @click="save">Save</button>
@@ -104,20 +124,32 @@
 
   <tr v-else class="table-row device-overview">
     <td class="column-one">
-      <p>{{ name }}</p>
+      <div id="name">
+        <label>{{ $t("dashboard.widgets.devices.labels.name") }}</label>
+        <p>{{ name }}</p>
+      </div>
     </td>
     <td class="column-two">
-      <p>{{ subnet.v4 }}{{ ip.v4 }}</p>
+      <div id="ip-v4">
+        <label>{{ $t("dashboard.widgets.devices.labels.ipv4") }}</label>
+        <p>{{ subnet.v4 }}{{ ip.v4 }}</p>
+      </div>
       <!-- <p
         :title="`${subnet.v6}${ip.v6}`"
         v-if="expanded && ip.v6"
       >{{ subnet.v6.substring(0, 4) }}::{{ ip.v6 }}</p>-->
     </td>
     <td class="column-three">
-      <p>{{ type }}</p>
+      <div id="type">
+        <label>{{ $t("dashboard.widgets.devices.labels.type") }}</label>
+        <p>{{ type }}</p>
+      </div>
     </td>
     <td class="column-four">
-      <p>{{ routed ? $t("global.words.yes") : $t("global.words.no") }}</p>
+      <div id="routed">
+        <label>{{ $t("dashboard.widgets.devices.labels.routed") }}</label>
+        <p>{{ routed ? $t("global.words.yes") : $t("global.words.no") }}</p>
+      </div>
     </td>
     <td class="column-five">
       <div v-if="qr">
@@ -336,11 +368,8 @@ export default {
 <style lang="scss" scoped>
 #routed {
   display: flex;
-
-  & input {
-    align-self: flex-end;
-    width: 2rem;
-  }
+  justify-content: space-between;
+  margin-bottom: $spacing-small;
 }
 
 #new-device {
@@ -352,8 +381,12 @@ export default {
     #ip-v4 {
       display: flex;
       flex-direction: row;
-      justify-content: center;
-      align-items: center;
+      justify-content: space-between;
+
+      & .value {
+        display: flex;
+        flex-direction: row;
+      }
       & input[type="number"] {
         margin-left: $spacing-x-small;
         width: 4rem;
@@ -363,6 +396,13 @@ export default {
         width: 4rem;
       }
     }
+  }
+
+  & #additionalDNSServers,
+  #mtu {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
 }
 

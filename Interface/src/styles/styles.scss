@@ -94,7 +94,7 @@ input {
     -webkit-appearance: none;
     -moz-appearance: none;
     height: 1.8rem;
-    width: 3rem;
+    width: 2rem;
     outline: none;
     display: inline-block;
     vertical-align: top;
@@ -143,7 +143,7 @@ input {
       box-shadow: 0 0 0 var(--focus);
     }
     &:not(.switch) {
-      width: 3rem;
+      width: 2rem;
       &:after {
         opacity: var(--o, 0);
       }
