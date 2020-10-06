@@ -38,8 +38,8 @@ export function generateDeviceConfig({ ip, keys, routed, additionalDNSServers, M
 Address = ${server.subnet.v4}${ip.v4}
 PrivateKey = ${keys.private}
 DNS = ${server.subnet.v4}1${additionalDNSServers ? `,${additionalDNSServers.join(',')}` : ``}
-MTU = ${MTU || "1500"}
-
+${MTU ? `MTU = ${MTU}
+`: ``}
 [Peer]
 Endpoint = ${endpoint}
 AllowedIPs = ${allowedIps}
@@ -56,8 +56,8 @@ PersistentKeepalive = 25`;
 Address = ${server.subnet.v6}${ip.v6}
 PrivateKey = ${keys.private}
 DNS = ${server.subnet.v6}1${additionalDNSServers ? `,${additionalDNSServers.join(',')}` : ``}
-MTU = ${MTU || "1500"}
-
+${MTU ? `MTU = ${MTU}
+`: ``}
 [Peer]
 Endpoint = ${endpoint}
 AllowedIPs = ${allowedIps}
@@ -71,8 +71,8 @@ PersistentKeepalive = 25`;
 Address = ${server.subnet.v4}${ip.v4}, ${server.subnet.v6}${ip.v6}
 PrivateKey = ${keys.private}
 DNS = ${server.subnet.v4}1${additionalDNSServers ? `,${additionalDNSServers.join(',')}` : ``}
-MTU = ${MTU || "1500"}
-
+${MTU ? `MTU = ${MTU}
+`: ``}
 [Peer]
 Endpoint = ${endpoint}
 AllowedIPs = ${allowedIps}
