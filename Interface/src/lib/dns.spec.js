@@ -9,7 +9,7 @@ describe("Correctly generates a valid DNS master file", () => {
         expect(generateDNSFile(server, [device], { dns: { name: "wirt.test" } })).toBe(`. {
     reload
     forward . tls://1.1.1.1 tls://1.0.0.1 {
-       except wirt.test lan local fritz.box
+       except wirt.test lan local home fritz.box
        tls_servername cloudflare-dns.com
        health_check 5s
     }
@@ -31,7 +31,7 @@ wirt.test {
         expect(generateDNSFile(server, [device], { dns: { name: "wirt.test" } })).toBe(`. {
     reload
     forward . tls://1.1.1.1 tls://1.0.0.1 {
-       except wirt.test lan local fritz.box
+       except wirt.test lan local home fritz.box
        tls_servername cloudflare-dns.com
        health_check 5s
     }
@@ -59,7 +59,7 @@ wirt.test {
         expect(generateDNSFile(server, devices, { dns: { name: "wirt.test" } })).toBe(`. {
     reload
     forward . tls://1.1.1.1 tls://1.0.0.1 {
-       except wirt.test
+       except wirt.test lan local home fritz.box
        tls_servername cloudflare-dns.com
        health_check 5s
     }
@@ -91,7 +91,7 @@ wirt.test {
         expect(generateDNSFile(server, devices, { dns: { name: "wirt.test" } })).toBe(`. {
     reload
     forward . tls://1.1.1.1 tls://1.0.0.1 {
-       except wirt.test
+       except wirt.test lan local home fritz.box
        tls_servername cloudflare-dns.com
        health_check 5s
     }
@@ -115,7 +115,7 @@ wirt.test {
         expect(generateDNSFile(server, [device], { dns: { name: "wirt.test" } })).toBe(`. {
     reload
     forward . tls://1.1.1.1 tls://1.0.0.1 {
-       except wirt.test
+       except wirt.test lan local home fritz.box
        tls_servername cloudflare-dns.com
        health_check 5s
     }
