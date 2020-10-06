@@ -80,9 +80,9 @@
 
       <button @click="downloadConfig">Download</button>
     </td>
-    <td class="column-six">
+    <td class="column-six" v-if="expanded">
       <label for="additionalDNSServers">
-        $t("dashboard.widgets.devices.labels.additionalDNSServers")
+        {{ $t("dashboard.widgets.devices.labels.additionalDNSServers") }}
       </label>
       <input
         type="text"
@@ -90,6 +90,9 @@
         id="additionalDNSServers"
         pattern="([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+,?)+"
         :value="additionalDNSServers"
+        :placeholder="
+          $t('dashboard.widgets.devices.placeholder.additionalDNSServers')
+        "
         @input="(e) => updateAdditionalDNSServers(e.target.value)"
         ref="additionalDNSServers"
       />
