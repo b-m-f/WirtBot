@@ -1,7 +1,7 @@
 FROM rust:slim as builder
 
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update && apt-get upgrade
+RUN apt-get update && apt-get upgrade -yy
 RUN apt-get install -yy git
 
 RUN git clone https://github.com/b-m-f/Wirt.git /builder
