@@ -1,7 +1,11 @@
 <template>
   <!-- TODO: return multiple <td> elements from this component when possible in vue3 -->
   <!-- This will allow the device table to wrap them correctly, and then use display: grid on the mobile table -->
-  <tr v-if="editingMode" id="new-device" class="table-row">
+  <tr
+    v-if="editingMode"
+    id="new-device"
+    :class="{ mobile: isMobilePage, 'table-row': true }"
+  >
     <td class="column-one">
       <label for="device-name">{{
         $t("dashboard.widgets.devices.labels.name")
@@ -122,7 +126,15 @@
     </td>
   </tr>
 
-  <tr v-else class="table-row device-overview">
+  <tr
+    v-else
+    class="table-row"
+    :class="{
+      mobile: isMobilePage,
+      'table-row': true,
+      'device-overview': true,
+    }"
+  >
     <td class="column-one">
       <div id="name">
         <label>{{ $t("dashboard.widgets.devices.labels.name") }}</label>
@@ -209,6 +221,9 @@ export default {
     },
     editingMode() {
       return this.edit || this.internalEdit;
+    },
+    isMobilePage() {
+      return this.$store.state.websiteBeingViewedOnMobileDevice;
     },
   },
   mounted() {},
@@ -403,6 +418,14 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+  }
+}
+
+.mobile {
+  & #new-device {
+    & #ip-input {
+      flex-direction: column;
+    }
   }
 }
 

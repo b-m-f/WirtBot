@@ -209,7 +209,6 @@ export default {
       justify-content: center;
       flex-direction: column;
       justify-content: center;
-      align-items: center;
       padding: 0;
 
       &.table-row {
@@ -233,7 +232,7 @@ export default {
         }
         & .column-four {
           padding-top: $spacing-small;
-          flex-direction: row;
+          flex-direction: column;
         }
         & .column-five {
           flex-direction: row;
