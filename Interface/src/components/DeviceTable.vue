@@ -13,6 +13,8 @@
             :routed="device.routed"
             :edit="!device.id"
             :qr="device.qr"
+            :additionalDNSServers="device.additionalDNSServers"
+            :MTU="device.MTU"
             @change="save"
             @cancelNewDevice="cancelNewDevice"
             :class="{ even: index % 2 == 0 }"
@@ -30,6 +32,8 @@
         :ip="device.ip"
         :type="device.type"
         :name="device.name"
+        :additionalDNSServers="device.additionalDNSServers"
+        :MTU="device.MTU"
         :routed="device.routed"
         :edit="!device.id"
         @change="save"
@@ -70,7 +74,7 @@ export default {
         return false;
       }
     },
-    async save({ type, id, ip, name, routed, additionalDNSServers }) {
+    async save({ type, id, ip, name, routed, additionalDNSServers, MTU }) {
       await this.saveDevice({
         ip,
         type,
@@ -78,12 +82,21 @@ export default {
         id,
         routed,
         additionalDNSServers,
+        MTU,
       });
     },
     reportValidity() {
       this.$refs.form.reportValidity();
     },
-    async saveDevice({ ip, name, type, id, routed, additionalDNSServers }) {
+    async saveDevice({
+      ip,
+      name,
+      type,
+      id,
+      routed,
+      additionalDNSServers,
+      MTU,
+    }) {
       if (!name || !type || (!ip.v4 && !ip.v6)) {
         // TODO: this is calling a method on the child directly, to trigger its form validation
         // Something that should generally be avoided
@@ -98,6 +111,7 @@ export default {
           id,
           routed,
           additionalDNSServers,
+          MTU,
         });
       }
       // https://stackoverflow.com/questions/6860853/generate-random-string-for-div-id/6860916#6860916
@@ -130,6 +144,8 @@ export default {
         name,
         type,
         routed,
+        additionalDNSServers,
+        MTU,
       };
       await this.$store.dispatch("addDevice", device);
       this.$emit("deviceSaved");
@@ -159,11 +175,10 @@ export default {
       height: 100%;
       display: grid;
       grid-gap: $spacing-medium;
-      grid-template-areas: "one two three four five six";
+      grid-template-areas: "one two three " "four five six";
       grid-template-columns:
-        calc(16.6% - #{$spacing-medium}) calc(16.6% - #{$spacing-medium})
-        calc(16.6% - #{$spacing-medium}) calc(16.6% - #{$spacing-medium})
-        calc(16.6% - #{$spacing-medium}) calc(16.6% - #{$spacing-medium});
+        calc(1fr - #{$spacing-medium}) calc(1fr - #{$spacing-medium})
+        calc(1fr - #{$spacing-medium});
       padding-top: $spacing-medium;
       padding-bottom: $spacing-medium;
       &.even {

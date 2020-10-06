@@ -59,28 +59,27 @@
       </select>
     </td>
     <td class="column-four">
-      <input
-        type="checkbox"
-        id="routed"
-        name="routed"
-        v-model="internalRouted"
-      />
-      <label for="routed">{{
-        $t("dashboard.widgets.devices.labels.routed")
-      }}</label>
-    </td>
-    <td class="column-five">
-      <div v-if="qr">
-        <img
-          class="qr-code"
-          :src="qr"
-          alt="QR Code for config of mobile devices"
-        />
+      <div id="routed">
+        <label for="routed">{{
+          $t("dashboard.widgets.devices.labels.routed")
+        }}</label>
+        <input type="checkbox" name="routed" v-model="internalRouted" />
       </div>
-
-      <button @click="downloadConfig">Download</button>
+      <label for="mtu">
+        {{ $t("dashboard.widgets.devices.labels.MTU") }}
+      </label>
+      <input
+        type="text"
+        name="MTU"
+        id="MTU"
+        pattern="[0-9]{4}"
+        :value="MTU"
+        :placeholder="$t('dashboard.widgets.devices.placeholder.MTU')"
+        @input="(e) => updateMTU(e.target.value)"
+        ref="MTU"
+      />
     </td>
-    <td class="column-six" v-if="expanded">
+    <td class="column-five" v-if="expanded">
       <label for="additionalDNSServers">
         {{ $t("dashboard.widgets.devices.labels.additionalDNSServers") }}
       </label>
@@ -97,7 +96,7 @@
         ref="additionalDNSServers"
       />
     </td>
-    <td class="column-seven">
+    <td class="column-six">
       <button id="save" @click="save">Save</button>
       <button @click="stopEditingMode">Stop</button>
     </td>
@@ -151,6 +150,7 @@ export default {
     expanded: Boolean,
     routed: Boolean,
     additionalDNSServers: Array,
+    MTU: String,
   },
   data() {
     return {
@@ -162,6 +162,7 @@ export default {
       internalEdit: this.$props.edit,
       internalRouted: this.$props.routed || false,
       internalAdditionalDNSServers: this.$props.additionalDNSServers || [],
+      internalMTU: this.$props.MTU || "1500",
     };
   },
   computed: {
@@ -245,6 +246,9 @@ export default {
           return entry.trim();
         });
     },
+    updateMTU(mtu) {
+      this.internalMTU = mtu;
+    },
     async checkIPv4(ip) {
       // remove invalidity from field
       this.$refs["ip-input"].setCustomValidity("");
@@ -322,6 +326,7 @@ export default {
         ip: this.internalIP,
         routed: this.internalRouted,
         additionalDNSServers: this.internalAdditionalDNSServers,
+        MTU: this.internalMTU,
       });
     },
   },
@@ -329,6 +334,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+#routed {
+  display: flex;
+
+  & input {
+    align-self: flex-end;
+    width: 2rem;
+  }
+}
+
 #new-device {
   & #ip-input {
     & #ip-v4 {
