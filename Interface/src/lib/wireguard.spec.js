@@ -222,4 +222,27 @@ PublicKey = test
 PersistentKeepalive = 25`
     );
   });
+  it("works with additional DNS servers", () => {
+    const server = {
+      ip: { v4: [1, 1, 1, 1] },
+      port: 11111,
+      subnet: { v4: "10.10.10." },
+      keys: { private: "test", public: "test" },
+    };
+    const device = { ip: { v4: 2 }, keys: { public: "test", private: "test" }, additionalDNSServers: ["1.1.1.1"] };
+    expect(generateDeviceConfig(device, server)).toBe(
+      `[Interface]
+Address = 10.10.10.2
+PrivateKey = test
+DNS = 10.10.10.1,1.1.1.1
+
+[Peer]
+Endpoint = 1.1.1.1:11111
+AllowedIPs = 10.10.10.0/24
+PublicKey = test
+
+## keep connection alive behind NAT
+PersistentKeepalive = 25`
+    );
+  });
 });
