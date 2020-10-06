@@ -2,23 +2,6 @@
   <div id="device-table" :class="{ mobile: isMobilePage }">
     <form ref="form" @submit.prevent="save">
       <table v-if="!isMobilePage">
-        <thead>
-          <th class="header-one">
-            <p>{{ $t("device.name") }}:</p>
-          </th>
-          <th class="header-two">
-            <p>{{ $t("device.ipInPrivateNetwork") }}:</p>
-          </th>
-          <th class="header-three">
-            <p>{{ $t("device.type") }}:</p>
-          </th>
-          <th class="header-four">
-            <p>{{ $t("device.routeThroughInternet") }}:</p>
-          </th>
-          <th class="header-five">
-            <p>{{ $t("device.downloadConfig") }}:</p>
-          </th>
-        </thead>
         <tbody>
           <DeviceRow
             v-for="(device, index) in devices"
@@ -37,24 +20,23 @@
           />
         </tbody>
       </table>
-      <table v-else>
-        <DeviceRow
-          v-for="(device, index) in devices"
-          :key="device.id || 'newDevice'"
-          ref="mobile-row"
-          :qr="device.qr"
-          :id="device.id"
-          :ip="device.ip"
-          :type="device.type"
-          :name="device.name"
-          :routed="device.routed"
-          :edit="!device.id"
-          @change="save"
-          @cancelNewDevice="cancelNewDevice"
-          :class="{ even: index % 2 == 0 }"
-          :expanded="expanded"
-        />
-      </table>
+      <DeviceRow
+        v-else
+        v-for="(device, index) in devices"
+        :key="device.id || 'newDevice'"
+        ref="mobile-row"
+        :qr="device.qr"
+        :id="device.id"
+        :ip="device.ip"
+        :type="device.type"
+        :name="device.name"
+        :routed="device.routed"
+        :edit="!device.id"
+        @change="save"
+        @cancelNewDevice="cancelNewDevice"
+        :class="{ even: index % 2 == 0 }"
+        :expanded="expanded"
+      />
     </form>
   </div>
 </template>
@@ -70,14 +52,14 @@ export default {
   computed: {
     isMobilePage() {
       return this.$store.state.websiteBeingViewedOnMobileDevice;
-    }
+    },
   },
   methods: {
     cancelNewDevice() {
       this.$emit("cancelNewDevice");
     },
     async updateDevice(device) {
-      const old = this.devices.find(dvc => dvc.id === device.id);
+      const old = this.devices.find((dvc) => dvc.id === device.id);
       const updatedDevice = Object.assign({}, old, device);
       try {
         await this.$store.dispatch("updateDevice", updatedDevice);
@@ -88,19 +70,20 @@ export default {
         return false;
       }
     },
-    async save({ type, id, ip, name, routed }) {
+    async save({ type, id, ip, name, routed, additionalDNSServers }) {
       await this.saveDevice({
         ip,
         type,
         name,
         id,
-        routed
+        routed,
+        additionalDNSServers,
       });
     },
     reportValidity() {
       this.$refs.form.reportValidity();
     },
-    async saveDevice({ ip, name, type, id, routed }) {
+    async saveDevice({ ip, name, type, id, routed, additionalDNSServers }) {
       if (!name || !type || (!ip.v4 && !ip.v6)) {
         // TODO: this is calling a method on the child directly, to trigger its form validation
         // Something that should generally be avoided
@@ -108,11 +91,18 @@ export default {
         return false;
       }
       if (id) {
-        return await this.updateDevice({ ip, name, type, id, routed });
+        return await this.updateDevice({
+          ip,
+          name,
+          type,
+          id,
+          routed,
+          additionalDNSServers,
+        });
       }
       // https://stackoverflow.com/questions/6860853/generate-random-string-for-div-id/6860916#6860916
       function guidGenerator() {
-        var S4 = function() {
+        var S4 = function () {
           return (((1 + Math.random()) * 0x10000) | 0)
             .toString(16)
             .substring(1);
@@ -139,13 +129,13 @@ export default {
         ip,
         name,
         type,
-        routed
+        routed,
       };
       await this.$store.dispatch("addDevice", device);
       this.$emit("deviceSaved");
       return true;
-    }
-  }
+    },
+  },
 };
 </script>
 

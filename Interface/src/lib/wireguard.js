@@ -1,4 +1,4 @@
-export function generateDeviceConfig({ ip, keys, routed }, server) {
+export function generateDeviceConfig({ ip, keys, routed, additionalDNSServers }, server) {
   let allowedIps = "";
   if (routed) {
     allowedIps = "0.0.0.0/0, ::/0";
@@ -37,7 +37,7 @@ export function generateDeviceConfig({ ip, keys, routed }, server) {
     return `[Interface]
 Address = ${server.subnet.v4}${ip.v4}
 PrivateKey = ${keys.private}
-DNS = ${server.subnet.v4}1
+DNS = ${server.subnet.v4}1${additionalDNSServers ? `,${additionalDNSServers.join(',')}` : ``}
 
 [Peer]
 Endpoint = ${endpoint}
@@ -48,10 +48,13 @@ PublicKey = ${server.keys.public}
 PersistentKeepalive = 25`;
   }
   if (!ip.v4 && ip.v6) {
+    // TODO: is there a Bug here? What if additionalDNSServers are IPv4, or the server is IPv4.
+    // The Wirt server IP should be checked to determine if DNS is IPv4 vs IPv6
+    // Write tests first
     return `[Interface]
 Address = ${server.subnet.v6}${ip.v6}
 PrivateKey = ${keys.private}
-DNS = ${server.subnet.v6}1
+DNS = ${server.subnet.v6}1${additionalDNSServers ? `,${additionalDNSServers.join(',')}` : ``}
 
 [Peer]
 Endpoint = ${endpoint}
@@ -65,7 +68,7 @@ PersistentKeepalive = 25`;
     return `[Interface]
 Address = ${server.subnet.v4}${ip.v4}, ${server.subnet.v6}${ip.v6}
 PrivateKey = ${keys.private}
-DNS = ${server.subnet.v4}1
+DNS = ${server.subnet.v4}1${additionalDNSServers ? `,${additionalDNSServers.join(',')}` : ``}
 
 [Peer]
 Endpoint = ${endpoint}

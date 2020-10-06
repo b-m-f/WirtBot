@@ -53,21 +53,51 @@
           ['device-type']: true,
         }"
       >
-        <option :value="type" v-for="type in deviceTypes" :key="type">{{ type }}</option>
+        <option :value="type" v-for="type in deviceTypes" :key="type">
+          {{ type }}
+        </option>
       </select>
     </td>
     <td class="column-four">
-      <input type="checkbox" id="routed" name="routed" v-model="internalRouted" />
-      <label for="routed">{{ $t("dashboard.widgets.devices.labels.routed") }}</label>
+      <input
+        type="checkbox"
+        id="routed"
+        name="routed"
+        v-model="internalRouted"
+      />
+      <label for="routed">{{
+        $t("dashboard.widgets.devices.labels.routed")
+      }}</label>
     </td>
     <td class="column-five">
       <div v-if="qr">
-        <img class="qr-code" :src="qr" alt="QR Code for config of mobile devices" />
+        <img
+          class="qr-code"
+          :src="qr"
+          alt="QR Code for config of mobile devices"
+        />
       </div>
 
       <button @click="downloadConfig">Download</button>
     </td>
-    <td class="column-six">
+    <td class="column-six" v-if="expanded">
+      <label for="additionalDNSServers">
+        {{ $t("dashboard.widgets.devices.labels.additionalDNSServers") }}
+      </label>
+      <input
+        type="text"
+        name="additionalDNSServers"
+        id="additionalDNSServers"
+        pattern="([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+,?)+"
+        :value="additionalDNSServers"
+        :placeholder="
+          $t('dashboard.widgets.devices.placeholder.additionalDNSServers')
+        "
+        @input="(e) => updateAdditionalDNSServers(e.target.value)"
+        ref="additionalDNSServers"
+      />
+    </td>
+    <td class="column-seven">
       <button id="save" @click="save">Save</button>
       <button @click="stopEditingMode">Stop</button>
     </td>
@@ -88,11 +118,15 @@
       <p>{{ type }}</p>
     </td>
     <td class="column-four">
-      <p>{{ routed ? $t('global.words.yes') : $t('global.words.no') }}</p>
+      <p>{{ routed ? $t("global.words.yes") : $t("global.words.no") }}</p>
     </td>
     <td class="column-five">
       <div v-if="qr">
-        <img class="qr-code" :src="qr" alt="QR Code for config of mobile devices" />
+        <img
+          class="qr-code"
+          :src="qr"
+          alt="QR Code for config of mobile devices"
+        />
       </div>
       <button @click="downloadConfig">Download</button>
     </td>
@@ -116,6 +150,7 @@ export default {
     qr: String,
     expanded: Boolean,
     routed: Boolean,
+    additionalDNSServers: Array,
   },
   data() {
     return {
@@ -126,6 +161,7 @@ export default {
       selectTouched: false,
       internalEdit: this.$props.edit,
       internalRouted: this.$props.routed || false,
+      internalAdditionalDNSServers: this.$props.additionalDNSServers || [],
     };
   },
   computed: {
@@ -200,6 +236,14 @@ export default {
           return;
         }
       }
+    },
+    updateAdditionalDNSServers(serverString) {
+      // split by comma
+      this.internalAdditionalDNSServers = serverString
+        .split(",")
+        .map((entry) => {
+          return entry.trim();
+        });
     },
     async checkIPv4(ip) {
       // remove invalidity from field
@@ -277,6 +321,7 @@ export default {
         type: this.internalType,
         ip: this.internalIP,
         routed: this.internalRouted,
+        additionalDNSServers: this.internalAdditionalDNSServers,
       });
     },
   },
