@@ -3,7 +3,7 @@
   <!-- This will allow the device table to wrap them correctly, and then use display: grid on the mobile table -->
   <tr
     v-if="editingMode"
-    id="new-device"
+    id="editing"
     :class="{ mobile: isMobilePage, 'table-row': true }"
   >
     <td class="column-one">
@@ -395,12 +395,14 @@ export default {
 
 <style lang="scss" scoped>
 #routed {
-  display: flex;
-  justify-content: space-between;
   margin-bottom: $spacing-small;
 }
-
-#new-device {
+#editing {
+  & #routed {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: $spacing-small;
+  }
   & #ip-input {
     & #ip-v4 {
       margin-bottom: $spacing-small;
