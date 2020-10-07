@@ -122,7 +122,7 @@
     </td>
     <td class="column-six">
       <button id="save" @click="save">Save</button>
-      <button @click="stopEditingMode">Stop</button>
+      <button id="stop" @click="stopEditingMode">Stop</button>
     </td>
   </tr>
 
@@ -164,6 +164,24 @@
       </div>
     </td>
     <td class="column-five">
+      <div id="MTU">
+        <label>{{ $t("dashboard.widgets.devices.labels.MTU") }}</label>
+        <p>{{ MTU }}</p>
+      </div>
+      <div id="additionalDNSServers">
+        <label>{{
+          $t("dashboard.widgets.devices.labels.additionalDNSServers")
+        }}</label>
+        <ul>
+          <li v-for="(server, index) in additionalDNSServers" :key="index">
+            {{ server }}
+          </li>
+        </ul>
+      </div>
+    </td>
+    <td class="column-six">
+      <button id="edit" @click="activateEditingMode">Edit</button>
+      <button id="delete" @click="deleteDevice">Delete</button>
       <img
         v-if="qr"
         class="qr-code"
@@ -171,10 +189,6 @@
         alt="QR Code for config of mobile devices"
       />
       <button @click="downloadConfig">Download</button>
-    </td>
-    <td class="column-six">
-      <button @click="activateEditingMode">Edit</button>
-      <button @click="deleteDevice">Delete</button>
     </td>
   </tr>
 </template>
@@ -428,10 +442,23 @@ export default {
   }
 }
 
+#edit {
+}
+#delete {
+  margin-top: $spacing-small;
+}
+#save {
+}
+
+#stop {
+  margin-top: $spacing-small;
+}
+
 .qr-code {
   width: 100%;
   max-width: 12rem;
   align-self: center;
   margin-bottom: $spacing-medium;
+  margin-top: $spacing-medium;
 }
 </style>
