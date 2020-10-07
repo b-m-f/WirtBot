@@ -5,14 +5,25 @@
 
 <br/>
 
-![Interface Tests](https://github.com/b-m-f/Wirt/workflows/run%20Interface%20tests/badge.svg)
-![WirtBot Tests](https://github.com/b-m-f/Wirt/workflows/run%20WirtBot%20tests/badge.svg)
-![Interface release](https://github.com/b-m-f/Wirt/workflows/build%20and%20push%20interface/badge.svg)
-![WirtBot release](https://github.com/b-m-f/Wirt/workflows/build%20and%20push%20WirtBot/badge.svg)
 
 Welcome to the [Wirt](https://wirt.network) repository.
+
+## What is this for?
+
+Think of it as your LAN extended over the whole internet, but only accessible to your devices.
+
+- Do you want **replace your [GoogleDrive, AppleCloud etc.]** with [Nextcloud](https://nextcloud.com/)?
+- Want to **safely resolve DNS**?
+- Developing an App/Website on your machine and want to **show it off live on your phone via the internet**?
+- Have loads of **IOT devices** that you want to be able to **communicate safely** with each other?
+
+Wirt has got you covered. 
+
+
+## How?
+
 **Wirt** is a system that is designed after the UNIX philosophy. 
-Many small parts that do a job and do it well.
+Many small parts that do a job and do it well. Putting special importance into correct configuration.
 Everything is controlled via a UI that focusses on **ease of use** and all is glued together using Infrastructure as code.
 If you set it up you can rest assured that it is done properly.
 
@@ -32,10 +43,14 @@ Read the setup documentation at [wirt.network/docs/setup](https://wirt.network/d
 - **Configuration over code**. Leverage existing tooling and provide a clean interface for configuring it correctly
 
 ## Contributing
+![Interface Tests](https://github.com/b-m-f/Wirt/workflows/run%20Interface%20tests/badge.svg)
+![WirtBot Tests](https://github.com/b-m-f/Wirt/workflows/run%20WirtBot%20tests/badge.svg)
+![Interface release](https://github.com/b-m-f/Wirt/workflows/build%20and%20push%20interface/badge.svg)
+![WirtBot release](https://github.com/b-m-f/Wirt/workflows/build%20and%20push%20WirtBot/badge.svg)
 
-You want to help out making Wirt better? **AWESOME**!.
+You want to help out making Wirt better? **AWESOME**! For example the CI is not yet perfect as you can see with the badges.
 
-Please feel free to open up an issue here in Github to discuss what you would want to do, and what kind of help we can give you.
+Please feel free to open up an issue here in Github to discuss what you would want to do, and what kind of help I can give you.
 I also encourage you to ask questions! My goal is to document as many of those questions as I can, to allow more people to understand what is going on in the code.
 
 For an overview of things that need help check the [issues](https://github.com/b-m-f/wirt/issues).
@@ -43,8 +58,11 @@ For an overview of things that need help check the [issues](https://github.com/b
 Other things that need help:
 
 - Translate it into a language that you know
+- Pairing on documentation. If I explain it to you, its easier to figure how my code makes no sense
+- Second mode that hides the Wirt Interface on the WirtBot and ignores all traffic except WireGuard on pulic interfaces
 
 Please check out the `developers-docs` directory for more details on the application.
+
 
 ## LICENSE
 
