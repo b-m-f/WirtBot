@@ -93,7 +93,8 @@ input {
     --background: #{$white};
     -webkit-appearance: none;
     -moz-appearance: none;
-    height: 21px;
+    height: 1.8rem;
+    width: 2rem;
     outline: none;
     display: inline-block;
     vertical-align: top;
@@ -110,8 +111,7 @@ input {
       left: 0;
       top: 0;
       position: absolute;
-      transition: transform var(--d-t, 0.3s) var(--d-t-e, ease),
-        opacity var(--d-o, 0.2s);
+      transition: transform var(--d-t, 0.3s) var(--d-t-e, ease), opacity var(--d-o, 0.2s);
     }
     &:checked {
       --b: var(--active);
@@ -143,7 +143,7 @@ input {
       box-shadow: 0 0 0 var(--focus);
     }
     &:not(.switch) {
-      width: 21px;
+      width: 2rem;
       &:after {
         opacity: var(--o, 0);
       }

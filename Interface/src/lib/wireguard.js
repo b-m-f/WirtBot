@@ -1,4 +1,4 @@
-export function generateDeviceConfig({ ip, keys, routed, additionalDNSServers }, server) {
+export function generateDeviceConfig({ ip, keys, routed, additionalDNSServers, MTU }, server) {
   let allowedIps = "";
   if (routed) {
     allowedIps = "0.0.0.0/0, ::/0";
@@ -38,7 +38,8 @@ export function generateDeviceConfig({ ip, keys, routed, additionalDNSServers },
 Address = ${server.subnet.v4}${ip.v4}
 PrivateKey = ${keys.private}
 DNS = ${server.subnet.v4}1${additionalDNSServers ? `,${additionalDNSServers.join(',')}` : ``}
-
+${MTU ? `MTU = ${MTU}
+`: ``}
 [Peer]
 Endpoint = ${endpoint}
 AllowedIPs = ${allowedIps}
@@ -55,7 +56,8 @@ PersistentKeepalive = 25`;
 Address = ${server.subnet.v6}${ip.v6}
 PrivateKey = ${keys.private}
 DNS = ${server.subnet.v6}1${additionalDNSServers ? `,${additionalDNSServers.join(',')}` : ``}
-
+${MTU ? `MTU = ${MTU}
+`: ``}
 [Peer]
 Endpoint = ${endpoint}
 AllowedIPs = ${allowedIps}
@@ -69,7 +71,8 @@ PersistentKeepalive = 25`;
 Address = ${server.subnet.v4}${ip.v4}, ${server.subnet.v6}${ip.v6}
 PrivateKey = ${keys.private}
 DNS = ${server.subnet.v4}1${additionalDNSServers ? `,${additionalDNSServers.join(',')}` : ``}
-
+${MTU ? `MTU = ${MTU}
+`: ``}
 [Peer]
 Endpoint = ${endpoint}
 AllowedIPs = ${allowedIps}
