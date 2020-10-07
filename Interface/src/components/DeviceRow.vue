@@ -78,7 +78,7 @@
         </option>
       </select>
     </td>
-    <td class="column-four">
+    <td class="column-four" v-if="expanded">
       <div id="mtu">
         <label for="mtu">
           {{ $t("dashboard.widgets.devices.labels.MTU") }}
@@ -112,7 +112,7 @@
         />
       </div>
     </td>
-    <td class="column-five" v-if="expanded">
+    <td class="column-five">
       <div id="routed">
         <label for="routed">{{
           $t("dashboard.widgets.devices.labels.routed")
@@ -164,13 +164,12 @@
       </div>
     </td>
     <td class="column-five">
-      <div v-if="qr">
-        <img
-          class="qr-code"
-          :src="qr"
-          alt="QR Code for config of mobile devices"
-        />
-      </div>
+      <img
+        v-if="qr"
+        class="qr-code"
+        :src="qr"
+        alt="QR Code for config of mobile devices"
+      />
       <button @click="downloadConfig">Download</button>
     </td>
     <td class="column-six">
@@ -431,5 +430,8 @@ export default {
 
 .qr-code {
   width: 100%;
+  max-width: 12rem;
+  align-self: center;
+  margin-bottom: $spacing-medium;
 }
 </style>
