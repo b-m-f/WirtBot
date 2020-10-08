@@ -34,33 +34,61 @@ module.exports = {
         await browser.setValue("input[name='device-name']", "test1");
         await browser.setValue("input[name='device-ipv4']", "2");
         await browser.setValue("select.device-type", "Linux");
-        await browser.click("button#save");
+        await browser.click("button.save");
+        browser.expect.elements(".table-row.device-overview").count.to.equal(1);
     },
     "Add complex device": async function (browser) {
-        await browser.click("#add-device button");
         await browser.click("#expert-mode #expert");
+        await browser.click("#add-device button");
 
         await browser.setValue("input[name='device-name']", "test2");
         await browser.setValue("input[name='device-ipv4']", "3");
         await browser.setValue("select.device-type", "Linux");
         await browser.setValue("input[name='MTU']", "1320");
+        await browser.execute(function () {
+            var element = document.querySelector("input[name='MTU']");
+            element.dispatchEvent(new Event("change"));
+        });
         await browser.setValue("input[name='additionalDNSServers']", "1.1.1.1,2.2.2.2");
+        await browser.execute(function () {
+            var element = document.querySelector("input[name='additionalDNSServers']");
+            element.dispatchEvent(new Event("change"));
+        });
+
         await browser.click("input[name='routed']");
-        await browser.click("button#save");
+        await browser.click("button.save");
+        await browser.pause(1000000)
+        browser.expect.elements(".table-row.device-overview").count.to.equal(2);
     },
     "Download and verify server configuration": async function (browser) {
+        const downloadLocation = '/tmp/WirtTestDownloads/server.conf'
         await browser.click("#server-widget #download");
+
         try {
             await setTimeoutAsync(1000, 'waitForDownload').then(async () => {
-                const data = await fs.readFile('/tmp/WirtTestDownloads/server.conf', "utf8")
+                const data = await fs.readFile(downloadLocation, "utf8")
                 assert.match(data, /.*ListenPort = 1233.*/)
+
+                await fs.unlink(downloadLocation)
             });
         } catch (error) {
+            await fs.unlink(downloadLocation)
             throw new Error(error);
         }
+    },
+    "Download and verify complex device configuration": async function (browser) {
+        const downloadLocation = '/tmp/WirtTestDownloads/test2.conf'
+        await browser.click(".table-row.device-overview:first-child .download");
         try {
-            await fs.unlink('/tmp/WirtTestDownloads/server.conf', "utf8")
+            await setTimeoutAsync(1000, 'waitForDownload').then(async () => {
+                const data = await fs.readFile(downloadLocation, "utf8")
+                assert.match(data, /.*DNS = 10\.10\.0\.1,1\.1\.1\.1,2\.2\.2\.2.*/)
+                assert.match(data, /.*MTU = 1320.*/)
+
+                await fs.unlink(downloadLocation)
+            });
         } catch (error) {
+            await fs.unlink(downloadLocation)
             throw new Error(error);
         }
     },
