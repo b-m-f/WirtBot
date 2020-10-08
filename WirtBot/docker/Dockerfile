@@ -13,7 +13,7 @@ RUN cargo build --release --target-dir /builder/artifact
 
 FROM debian:buster-slim
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt update && apt upgrade
+RUN apt update && apt upgrade -yy
 
 WORKDIR /app
 COPY --from=builder /builder/artifact/release/wirtbot ./wirtbot
