@@ -226,12 +226,12 @@ const store = new Vuex.Store({
     },
     async addDevice(
       { commit, dispatch, state },
-      { id, name, ip, type, routed }
+      { id, name, ip, type, routed, additionalDNSServers, MTU }
     ) {
       try {
         const keys = await getKeys();
         const newDevice = await addConfigToDevice(
-          { id, keys, name, ip, type, routed },
+          { id, keys, name, ip, type, routed, additionalDNSServers, MTU },
           state.server
         );
         commit("addDevice", newDevice);

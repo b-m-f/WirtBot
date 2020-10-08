@@ -1,4 +1,4 @@
-const tests = require("./dashboard_simple_network.spec")
+const tests = require("./dashboard_device_widget.spec")
 
 module.exports = {
     "Resize window": async function (browser) {

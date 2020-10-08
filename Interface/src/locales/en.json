@@ -124,7 +124,7 @@
         },
         "placeholder": {
           "additionalDNSServers": "Comma seperated",
-          "MTU": "1320-1500"
+          "MTU": "1320-1800"
         }
       }
     },
@@ -237,6 +237,8 @@
     "deviceAdd": "Error when adding device: ",
     "deviceIpUsed": "Error when adding Device: The IP is already used in the network. Please choose another one.",
     "deviceIpServer": "Error when adding Device: IP number 1 belongs to the server",
+    "deviceMTU": "Please add an MTU between 1320 and 1800",
+    "deviceAdditionalDNSServers": "Please enter a comma separated list of DNS server IPs",
     "serverUpdate": "Error when updating the server.",
     "documentation": "Please check the documentation or contact us to find a solution.",
     "keysGeneration": "Error when generating keys:",

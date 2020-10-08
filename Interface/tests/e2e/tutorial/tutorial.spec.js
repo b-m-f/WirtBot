@@ -123,7 +123,7 @@ module.exports = {
   "Test that you can not continue without specifying all data for a device": async function (
     browser
   ) {
-    await browser.click("button#save");
+    await browser.click("button.save");
     await browser.assert.not.urlEquals(
       `http://${process.env.TEST_URL}/tutorial/devices/success`
     );
@@ -173,14 +173,14 @@ module.exports = {
   "Test that type needs to specified to be redirected to next step": async function (
     browser
   ) {
-    await browser.setValue("select#device-type", "Android");
+    await browser.setValue("select.device-type", "Android");
     await browser.execute(function () {
-      var element = document.querySelector("select#device-type");
+      var element = document.querySelector("select.device-type");
       var event = new Event("change");
       element.dispatchEvent(event);
     });
 
-    await browser.click("button#save ");
+    await browser.click("button.save ");
     await browser.assert.urlEquals(
       `http://${process.env.TEST_URL}/tutorial/devices/success`
     );

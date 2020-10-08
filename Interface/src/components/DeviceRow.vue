@@ -3,8 +3,7 @@
   <!-- This will allow the device table to wrap them correctly, and then use display: grid on the mobile table -->
   <tr
     v-if="editingMode"
-    id="editing"
-    :class="{ mobile: isMobilePage, 'table-row': true }"
+    :class="{ mobile: isMobilePage, 'table-row': true, editing: 'true' }"
   >
     <td class="column-one">
       <label for="device-name">{{
@@ -13,15 +12,15 @@
       <input
         type="text"
         name="device-name"
-        id="name"
+        class="name"
         v-model="internalName"
         required
         placeholder=" "
       />
       <div v-if="expanded"></div>
     </td>
-    <td class="column-two" id="ip-input">
-      <div id="ip-v4">
+    <td class="column-two ip-input">
+      <div class="ip-v4">
         <label for="device-ipv4">{{
           $t("dashboard.widgets.devices.labels.ipv4")
         }}</label>
@@ -30,7 +29,6 @@
           <input
             type="number"
             name="device-ipv4"
-            id="ip"
             min="2"
             max="255"
             :placeholder="getNextHighestIPv4()"
@@ -41,8 +39,8 @@
           />
         </div>
       </div>
-      <div v-if="expanded" id="ip-v6">
-        <label for="device-ipv4">{{
+      <div v-if="expanded" class="ip-v6">
+        <label for="device-ipv6">{{
           $t("dashboard.widgets.devices.labels.ipv6")
         }}</label>
         <div class="value">
@@ -50,8 +48,6 @@
           <input
             type="text"
             name="device-ipv6"
-            id="ip"
-            pattern="^[0-9A-F]+$"
             placeholder="0001-ffff"
             :value="internalIP.v6"
             required
@@ -66,7 +62,7 @@
         $t("dashboard.widgets.devices.labels.type")
       }}</label>
       <select
-        id="device-type"
+        class="device-type"
         :required="true"
         v-model="internalType"
         :class="{
@@ -79,30 +75,28 @@
       </select>
     </td>
     <td class="column-four" v-if="expanded">
-      <div id="mtu">
+      <div class="mtu">
         <label for="mtu">
           {{ $t("dashboard.widgets.devices.labels.MTU") }}
         </label>
         <input
           type="text"
           name="MTU"
-          id="MTU"
-          pattern="[0-9]{4}"
+          class="MTU"
           :value="MTU"
           :placeholder="$t('dashboard.widgets.devices.placeholder.MTU')"
           @input="(e) => updateMTU(e.target.value)"
           ref="MTU"
         />
       </div>
-      <div id="additionalDNSServers">
+      <div class="additionalDNSServers">
         <label for="additionalDNSServers">
           {{ $t("dashboard.widgets.devices.labels.additionalDNSServers") }}
         </label>
         <input
           type="text"
           name="additionalDNSServers"
-          id="additionalDNSServers"
-          pattern="([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+,?)+"
+          class="additionalDNSServers"
           :value="additionalDNSServers"
           :placeholder="
             $t('dashboard.widgets.devices.placeholder.additionalDNSServers')
@@ -113,16 +107,16 @@
       </div>
     </td>
     <td class="column-five">
-      <div id="routed">
+      <div class="routed">
         <label for="routed">{{
           $t("dashboard.widgets.devices.labels.routed")
         }}</label>
-        <input type="checkbox" name="routed" v-model="internalRouted" />
+        <input type="checkbox" name="routed" :value="internalRouted" />
       </div>
     </td>
     <td class="column-six">
-      <button id="save" @click="save">Save</button>
-      <button id="stop" @click="stopEditingMode">Stop</button>
+      <button class="save" @click="save">Save</button>
+      <button class="stop" @click="stopEditingMode">Stop</button>
     </td>
   </tr>
 
@@ -136,13 +130,13 @@
     }"
   >
     <td class="column-one">
-      <div id="name">
+      <div class="name">
         <label>{{ $t("dashboard.widgets.devices.labels.name") }}</label>
         <p>{{ name }}</p>
       </div>
     </td>
     <td class="column-two">
-      <div id="ip-v4">
+      <div class="ip-v4">
         <label>{{ $t("dashboard.widgets.devices.labels.ipv4") }}</label>
         <p>{{ subnet.v4 }}{{ ip.v4 }}</p>
       </div>
@@ -152,23 +146,23 @@
       >{{ subnet.v6.substring(0, 4) }}::{{ ip.v6 }}</p>-->
     </td>
     <td class="column-three">
-      <div id="type">
+      <div class="type">
         <label>{{ $t("dashboard.widgets.devices.labels.type") }}</label>
         <p>{{ type }}</p>
       </div>
     </td>
     <td class="column-four">
-      <div id="routed">
+      <div class="routed">
         <label>{{ $t("dashboard.widgets.devices.labels.routed") }}</label>
         <p>{{ routed ? $t("global.words.yes") : $t("global.words.no") }}</p>
       </div>
     </td>
     <td class="column-five">
-      <div id="MTU">
+      <div class="MTU" v-if="expanded">
         <label>{{ $t("dashboard.widgets.devices.labels.MTU") }}</label>
         <p>{{ MTU }}</p>
       </div>
-      <div id="additionalDNSServers">
+      <div class="additionalDNSServers" v-if="expanded">
         <label>{{
           $t("dashboard.widgets.devices.labels.additionalDNSServers")
         }}</label>
@@ -180,21 +174,23 @@
       </div>
     </td>
     <td class="column-six">
-      <button id="edit" @click="activateEditingMode">Edit</button>
-      <button id="delete" @click="deleteDevice">Delete</button>
+      <button class="edit" @click="activateEditingMode">Edit</button>
+      <button class="delete" @click="deleteDevice">Delete</button>
       <img
         v-if="qr"
         class="qr-code"
         :src="qr"
         alt="QR Code for config of mobile devices"
       />
-      <button @click="downloadConfig">Download</button>
+      <button class="download" @click="downloadConfig">Download</button>
     </td>
   </tr>
 </template>
 
 <script>
 import { downloadText } from "../lib/download";
+import debounce from "lodash/debounce";
+
 export default {
   props: {
     controls: Boolean,
@@ -219,7 +215,7 @@ export default {
       internalEdit: this.$props.edit,
       internalRouted: this.$props.routed || false,
       internalAdditionalDNSServers: this.$props.additionalDNSServers || [],
-      internalMTU: this.$props.MTU || "1500",
+      internalMTU: this.$props.MTU,
     };
   },
   computed: {
@@ -299,15 +295,54 @@ export default {
       }
     },
     updateAdditionalDNSServers(serverString) {
-      // split by comma
-      this.internalAdditionalDNSServers = serverString
-        .split(",")
-        .map((entry) => {
-          return entry.trim();
-        });
+      const correct = /^([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+,?)+$/.test(
+        serverString
+      );
+      if (this.updatingAdditionalDNSServers) {
+        this.updatingAdditionalDNSServers.cancel();
+      }
+      this.updatingAdditionalDNSServers = debounce(function () {
+        try {
+          if (correct) {
+            // split by comma
+            this.internalAdditionalDNSServers = serverString
+              .split(",")
+              .map((entry) => {
+                return entry.trim();
+              });
+          } else {
+            throw "Error";
+          }
+        } catch (error) {
+          this.$refs["additionalDNSServers"].reportValidity();
+          this.$store.dispatch(
+            "alerts/addWarning",
+            this.$t("warnings.deviceAdditionalDNSServers")
+          );
+        }
+      });
+      this.updatingAdditionalDNSServers();
     },
     updateMTU(mtu) {
-      this.internalMTU = mtu;
+      if (this.updatingMTU) {
+        this.updatingMTU.cancel();
+      }
+      this.updatingMTU = debounce(function () {
+        try {
+          if (parseInt(mtu) >= 1320 && parseInt(mtu) < 1800) {
+            this.internalMTU = mtu;
+          } else {
+            throw "Error";
+          }
+        } catch (error) {
+          this.$refs["MTU"].reportValidity();
+          this.$store.dispatch(
+            "alerts/addWarning",
+            this.$t("warnings.deviceMTU")
+          );
+        }
+      }, 1000);
+      this.updatingMTU();
     },
     async checkIPv4(ip) {
       // remove invalidity from field
@@ -379,7 +414,7 @@ export default {
         this.internalEdit = false;
       }
 
-      this.$emit("change", {
+      this.$emit("saved", {
         id: this.internalId,
         name: this.internalName,
         type: this.internalType,
@@ -394,21 +429,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#routed {
+.routed {
   margin-bottom: $spacing-small;
 }
-#editing {
-  & #routed {
+.editing {
+  & .routed {
     display: flex;
     justify-content: space-between;
     margin-bottom: $spacing-small;
   }
-  & #ip-input {
-    & #ip-v4 {
+  & .ip-input {
+    & .ip-v4 {
       margin-bottom: $spacing-small;
     }
-    & #ip-v6,
-    #ip-v4 {
+    & .ip-v6,
+    .ip-v4 {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
@@ -428,8 +463,8 @@ export default {
     }
   }
 
-  & #additionalDNSServers,
-  #mtu {
+  & .additionalDNSServers,
+  .mtu {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -437,22 +472,22 @@ export default {
 }
 
 .mobile {
-  & #new-device {
-    & #ip-input {
+  & .new-device {
+    & .ip-input {
       flex-direction: column;
     }
   }
 }
 
-#edit {
+.edit {
 }
-#delete {
+.delete {
   margin-top: $spacing-small;
 }
-#save {
+.save {
 }
 
-#stop {
+.stop {
   margin-top: $spacing-small;
 }
 
