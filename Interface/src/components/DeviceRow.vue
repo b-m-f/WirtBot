@@ -215,7 +215,7 @@ export default {
       internalEdit: this.$props.edit,
       internalRouted: this.$props.routed || false,
       internalAdditionalDNSServers: this.$props.additionalDNSServers || [],
-      internalMTU: this.$props.MTU || "1500",
+      internalMTU: this.$props.MTU,
     };
   },
   computed: {

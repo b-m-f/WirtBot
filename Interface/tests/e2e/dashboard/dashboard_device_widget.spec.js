@@ -45,19 +45,10 @@ module.exports = {
         await browser.setValue("input[name='device-ipv4']", "3");
         await browser.setValue("select.device-type", "Linux");
         await browser.setValue("input[name='MTU']", "1320");
-        await browser.execute(function () {
-            var element = document.querySelector("input[name='MTU']");
-            element.dispatchEvent(new Event("change"));
-        });
         await browser.setValue("input[name='additionalDNSServers']", "1.1.1.1,2.2.2.2");
-        await browser.execute(function () {
-            var element = document.querySelector("input[name='additionalDNSServers']");
-            element.dispatchEvent(new Event("change"));
-        });
-
         await browser.click("input[name='routed']");
+        await browser.pause(2000) // REFACTOR: this is done to wait for the debouce that is on MTU and additionalDNSServers
         await browser.click("button.save");
-        await browser.pause(1000000)
         browser.expect.elements(".table-row.device-overview").count.to.equal(2);
     },
     "Download and verify server configuration": async function (browser) {
@@ -98,7 +89,7 @@ module.exports = {
         await browser.setValue("input[name='device-name']", "mtu-test");
         await browser.setValue("input[name='MTU']", "20000");
         await browser.assert.visible("#alerts .warning");
-        await browser.click("button#stop");
+        await browser.click("button.stop");
     },
     "additional DNS Servers must be a comma separated list of valid IPv4s": async function (browser) {
         await browser.click("#add-device button");
@@ -108,6 +99,6 @@ module.exports = {
         await browser.setValue("input[name='additionalDNSServers']", "1.1.1.1,2.2.2.");
         await browser.assert.visible("#alerts .warning");
 
-        await browser.click("button#stop");
+        await browser.click("button.stop");
     },
 };
