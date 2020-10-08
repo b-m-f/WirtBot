@@ -48,7 +48,7 @@ Read the setup documentation at [wirt.network/docs/setup](https://wirt.network/d
 ![Interface release](https://github.com/b-m-f/Wirt/workflows/build%20and%20push%20interface/badge.svg)
 ![WirtBot release](https://github.com/b-m-f/Wirt/workflows/build%20and%20push%20WirtBot/badge.svg)
 ![Wirt-Interface Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/bmff/wirt-interface?label=Wirt-Interface%20build)
-![WirtBot Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/bmff/wirtbot?label=Wirtbot%20build)
+![WirtBot Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/bmff/wirtbot?label=WirtBot%20build)
 
 You want to help out making Wirt better? **AWESOME**! For example the CI is not yet perfect as you can see with the badges.
 
