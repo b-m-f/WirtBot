@@ -21,6 +21,6 @@
   },
   "homepage": "https://github.com/b-m-f/wirt#readme",
   "devDependencies": {
-    "vuepress": "^1.4.1"
+    "vuepress": "^1.6.0"
   }
 }
