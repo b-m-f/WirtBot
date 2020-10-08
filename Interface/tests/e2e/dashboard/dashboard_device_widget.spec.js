@@ -36,12 +36,15 @@ module.exports = {
         await browser.setValue("select.device-type", "Linux");
         await browser.click("button#save");
     },
-    "Add routed device": async function (browser) {
+    "Add complex device": async function (browser) {
         await browser.click("#add-device button");
+        await browser.click("#expert-mode #expert");
 
         await browser.setValue("input[name='device-name']", "test2");
         await browser.setValue("input[name='device-ipv4']", "3");
         await browser.setValue("select.device-type", "Linux");
+        await browser.setValue("input[name='MTU']", "1320");
+        await browser.setValue("input[name='additionalDNSServers']", "1.1.1.1,2.2.2.2");
         await browser.click("input[name='routed']");
         await browser.click("button#save");
     },
@@ -60,5 +63,23 @@ module.exports = {
         } catch (error) {
             throw new Error(error);
         }
-    }
+    },
+    "MTU is bounded": async function (browser) {
+        await browser.click("#add-device button");
+
+        await browser.setValue("input[name='device-name']", "mtu-test");
+        await browser.setValue("input[name='MTU']", "20000");
+        await browser.assert.visible("#alerts .warning");
+        await browser.click("button#stop");
+    },
+    "additional DNS Servers must be a comma separated list of valid IPv4s": async function (browser) {
+        await browser.click("#add-device button");
+        await browser.setValue("input[name='additionalDNSServers']", "1.1.1.1,2.2.2.t");
+        await browser.assert.visible("#alerts .warning");
+
+        await browser.setValue("input[name='additionalDNSServers']", "1.1.1.1,2.2.2.");
+        await browser.assert.visible("#alerts .warning");
+
+        await browser.click("button#stop");
+    },
 };

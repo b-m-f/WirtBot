@@ -51,7 +51,6 @@
             type="text"
             name="device-ipv6"
             id="ip"
-            pattern="^[0-9A-F]+$"
             placeholder="0001-ffff"
             :value="internalIP.v6"
             required
@@ -87,10 +86,9 @@
           type="text"
           name="MTU"
           id="MTU"
-          pattern="[0-9]{4}"
           :value="MTU"
           :placeholder="$t('dashboard.widgets.devices.placeholder.MTU')"
-          @input="(e) => updateMTU(e.target.value)"
+          @change="(e) => updateMTU(e.target.value)"
           ref="MTU"
         />
       </div>
@@ -102,12 +100,11 @@
           type="text"
           name="additionalDNSServers"
           id="additionalDNSServers"
-          pattern="([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+,?)+"
           :value="additionalDNSServers"
           :placeholder="
             $t('dashboard.widgets.devices.placeholder.additionalDNSServers')
           "
-          @input="(e) => updateAdditionalDNSServers(e.target.value)"
+          @change="(e) => updateAdditionalDNSServers(e.target.value)"
           ref="additionalDNSServers"
         />
       </div>
@@ -164,11 +161,11 @@
       </div>
     </td>
     <td class="column-five">
-      <div id="MTU">
+      <div id="MTU" v-if="expanded">
         <label>{{ $t("dashboard.widgets.devices.labels.MTU") }}</label>
         <p>{{ MTU }}</p>
       </div>
-      <div id="additionalDNSServers">
+      <div id="additionalDNSServers" v-if="expanded">
         <label>{{
           $t("dashboard.widgets.devices.labels.additionalDNSServers")
         }}</label>
@@ -299,15 +296,43 @@ export default {
       }
     },
     updateAdditionalDNSServers(serverString) {
-      // split by comma
-      this.internalAdditionalDNSServers = serverString
-        .split(",")
-        .map((entry) => {
-          return entry.trim();
-        });
+      const correct = /^([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+,?)+$/.test(
+        serverString
+      );
+
+      try {
+        if (correct) {
+          // split by comma
+          this.internalAdditionalDNSServers = serverString
+            .split(",")
+            .map((entry) => {
+              return entry.trim();
+            });
+        } else {
+          throw "Error";
+        }
+      } catch (error) {
+        this.$refs["additionalDNSServers"].reportValidity();
+        this.$store.dispatch(
+          "alerts/addWarning",
+          this.$t("warnings.deviceAdditionalDNSServers")
+        );
+      }
     },
     updateMTU(mtu) {
-      this.internalMTU = mtu;
+      try {
+        if (parseInt(mtu) > 1320 && parseInt(mtu) < 1800) {
+          this.internalMTU = mtu;
+        } else {
+          throw "Error";
+        }
+      } catch (error) {
+        this.$refs["MTU"].reportValidity();
+        this.$store.dispatch(
+          "alerts/addWarning",
+          this.$t("warnings.deviceMTU")
+        );
+      }
     },
     async checkIPv4(ip) {
       // remove invalidity from field
