@@ -3,9 +3,18 @@
     <div id="top-bar">
       <h1>{{ $t("dashboard.title") }}</h1>
       <div id="expert-mode">
-        <h2 v-if="expertMode">{{ $t("dashboard.widgets.devices.expertWarning") }}</h2>
+        <h2 v-if="expertMode">
+          {{ $t("dashboard.widgets.devices.expertWarning") }}
+        </h2>
         <label for="expert">{{ $t("dashboard.widgets.server.expert") }}</label>
-        <input type="checkbox" class="switch" name="expert" id="expert" v-model="expertMode" @change="(e) => updateExpertMode(e.target.checked)" />
+        <input
+          type="checkbox"
+          class="switch"
+          name="expert"
+          id="expert"
+          :value="expertMode"
+          @change="(e) => updateExpertMode(e.target.checked)"
+        />
       </div>
     </div>
     <AccentedCard
@@ -50,13 +59,13 @@ const availableWidgets = {
   network: NetworkWidget,
   server: ServerWidget,
   devices: DeviceWidget,
-  settings: SettingsWidget
+  settings: SettingsWidget,
 };
 
 export default {
   components: { AccentedCard, Card },
   data() {
-    return { };
+    return {};
   },
   computed: {
     devices() {
@@ -66,7 +75,7 @@ export default {
       return this.$store.state.dashboard.messages;
     },
     widgets() {
-      return this.$store.state.dashboard.widgets.map(widget => {
+      return this.$store.state.dashboard.widgets.map((widget) => {
         return availableWidgets[widget];
       });
     },
@@ -90,7 +99,7 @@ export default {
     async removeMessage(message) {
       await this.$store.dispatch("removeDashboardMessage", message);
     },
-    async updateExpertMode(enabled){
+    async updateExpertMode(enabled) {
       await this.$store.dispatch("updateExpertMode", enabled);
     },
   },
@@ -106,7 +115,7 @@ export default {
       this.$store.dispatch("addDashboardWidget", "devices");
       this.$store.dispatch("addDashboardWidget", "settings");
     }
-  }
+  },
 };
 </script>
 
