@@ -2,7 +2,7 @@
   "name": "wirt-installer",
   "version": "1.0.0",
   "description": "Installation script for WirtBot",
-  "main": "dist/index.js",
+  "main": "dist/installer.js",
   "directories": {
     "doc": "docs"
   },
@@ -10,6 +10,10 @@
     "build": "webpack-cli",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "files": [
+    "ansible",
+    "dist/**"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/b-m-f/Wirt.git"
