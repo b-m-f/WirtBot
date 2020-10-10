@@ -2,3 +2,4 @@ tests_output
 geckodriver.log
 chromedriver.log
 node_modules
+dist

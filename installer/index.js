@@ -1,13 +1,23 @@
-#!/usr/bin/env node
-const Configstore = require('configstore');
-const packageJson = require('./package.json');
-const prompts = require('prompts');
-const fs = require("fs").promises;
-const { spawn } = require("child_process");
+import Configstore from 'configstore';
+import prompts from 'prompts';
+import { promises as fs } from "fs"
+import { spawn } from "child_process";
 
 const configPath = "./wirt-installer.config.json"
 
-const config = new Configstore(packageJson.name, {}, { configPath });
+const config = new Configstore("wirt-installer", {}, { configPath });
+
+async function getKeys() {
+    try {
+        const wasm = await import('@wirt/wasm');
+        const generateKeypair = (await wasm).generate_key_pair;
+
+        const pair = JSON.parse(generateKeypair());
+        return { private: pair.private_key, public: pair.public_key };
+    } catch (error) {
+        throw `WebAssembly key generation: ${error}`;
+    }
+}
 
 const runAnsible = async ({
     user,
@@ -20,7 +30,7 @@ const runAnsible = async ({
     update,
     sshPrivateKeyPath
 }) => {
-    let arguments = [
+    let args = [
         "-i", `${serverIP},`, "ansible/main.yml",
         "--extra-vars", `wirtui_public_key = ${wirtBotUIKey} `,
         "--extra-vars", `maintainer_username = ${user} `,
@@ -42,13 +52,13 @@ const runAnsible = async ({
 
     ]
     if (update) {
-        arguments = [...arguments, ...updateArguments]
+        args = [...args, ...updateArguments]
     } else {
         console.log("If you have an SSH key on the server during initial setup, use an SSH config and simply hit Enter when asked for a password")
-        arguments = [...arguments, ...installArguments]
+        args = [...args, ...installArguments]
     }
 
-    const ansible = spawn("ansible-playbook", arguments);
+    const ansible = spawn("ansible-playbook", args);
 
     ansible.stdout.on("data", data => {
         console.log(`${data} `);
@@ -139,6 +149,8 @@ const main = async () => {
     if (updateOrInstall["value"] === 'install') {
         const response = await prompts(questionsInstall);
         console.log("Configuration written to", configPath)
+        const keys = await getKeys();
+        console.log(keys)
         Object.keys(response).forEach(entry => {
             if (entry !== 'password') {
                 config.set(entry, response[entry])

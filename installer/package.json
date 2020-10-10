@@ -2,11 +2,12 @@
   "name": "wirt-installer",
   "version": "1.0.0",
   "description": "Installation script for WirtBot",
-  "main": "installer.js",
+  "main": "dist/index.js",
   "directories": {
     "doc": "docs"
   },
   "scripts": {
+    "build": "webpack-cli",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,7 +24,13 @@
   },
   "homepage": "https://github.com/b-m-f/Wirt#readme",
   "dependencies": {
+    "@wirt/config-generators": "file:../shared-libs/config-generators",
+    "@wirt/wasm": "file:../shared-libs/wasm",
     "configstore": "^5.0.1",
     "prompts": "^2.3.2"
+  },
+  "devDependencies": {
+    "webpack": "^5.0.0",
+    "webpack-cli": "^4.0.0"
   }
 }

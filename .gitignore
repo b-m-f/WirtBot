@@ -1,4 +1,3 @@
 wirt-installer.config.json
 **/node_modules
 **/wasm/target
-**/dist
