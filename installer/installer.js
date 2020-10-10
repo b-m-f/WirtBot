@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const Configstore = require('configstore');
 const packageJson = require('./package.json');
 const prompts = require('prompts');
