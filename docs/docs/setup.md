@@ -15,14 +15,17 @@ First thing to do is to make sure that you have an SSH key.
 If you do not have one yet you can follow [this tutorial](https://www.ssh.com/ssh/keygen/).
 You will need the content of the `.pub` file that will be created for the next step.
 
-Now clone or download the [Wirt repository](https://github.com/b-m-f/wirt), rename `ansible/main.yml.expamle` to `ansible/main.yml` and update it with the correct values.
+Now clone or download the [Wirt repository](https://github.com/b-m-f/wirt).
 
 Time to install:
-- ansible
-- ansible-playbook
-- sshpass (necessary to login via SSH to your servers root user via password for the setup)
+- [ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
+- [sshpass](https://gist.github.com/arunoda/7790979) (necessary to login via SSH to your servers root user via password for the setup)
+- [node](https://nodejs.org/en/download/)
 
-When you are done run `make setup-wirtbot` in the root of the repository and wait until the setup is done, this can take up to **20 minutes** so just be patient.
+When you are done run `node installer/installer.js` in the root of the repository.
+
+The installer will now take you through the rest of the setup.
+After answering all the questions wait until the setup is done, this can take up to **20 minutes** so just be patient.
 
 Thats it. 
 
@@ -30,8 +33,7 @@ Your WirtBot will have a valid certificate from LetsEncrypt and will be ready to
 
 #### Updating
 
-To update simply update the repository run `make update-wirtbot`. It will take care of updating WirtBot and the server to the latest state.
-You can also simply reinstall the whole server and run `make setup-wirtbot` again.
+Simply run the installer again as described above and choose the update option.
 
 ### Manual (You need to know what you are doing for this!)
 

@@ -4,7 +4,7 @@
   vars:
     # If you change the username make sure to update this in the Makefile
     # WARNING: do not choose wirtbot here
-    - maintainer_username: wirt
+    - maintainer_username: "CHOOSE_A_USERNAME"
 
     - wirtui_public_key: "ENTER_PUBLIC_KEY_FROM_DASHBOARD_SETTINGS"
 

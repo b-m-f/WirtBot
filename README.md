@@ -8,6 +8,22 @@
 
 Welcome to the [Wirt](https://wirt.network) repository.
 
+## Setup
+
+**Install:**
+- [ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
+- [sshpass](https://gist.github.com/arunoda/7790979) (necessary to login via SSH to your servers root user via password for the setup)
+- [node](https://nodejs.org/en/download/)
+
+**Run:**
+```
+git clone https://github.com/b-m-f/Wirt.git
+cd Wirt
+node installer/installer.js
+```
+
+**Done**
+
 ## What is this for?
 
 Think of it as your LAN extended over the whole internet, but only accessible to your devices.
