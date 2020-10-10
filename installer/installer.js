@@ -138,27 +138,24 @@ const main = async () => {
     const updateOrInstall = await prompts(updateOrInstallQuestions);
     if (updateOrInstall["value"] === 'install') {
         const response = await prompts(questionsInstall);
+        console.log("Configuration written to", configPath)
         Object.keys(response).forEach(entry => {
             if (entry !== 'password') {
                 config.set(entry, response[entry])
             }
         })
-        console.log(config.all)
-
         runAnsible(Object.assign({}, config.all, { password: response.password, update: false }))
 
     }
     if (updateOrInstall["value"] === 'update') {
         const response = await prompts(questionsUpdate);
+        console.log("Configuration written to", configPath)
         Object.keys(response).forEach(entry => {
             if (entry !== 'password') {
                 config.set(entry, response[entry])
             }
         })
-        console.log(config.all)
-
         runAnsible(Object.assign({}, config.all, { password: response.password, update: true, sshPrivateKeyPath: response.sshPrivateKeyPath }))
-
     }
 
 
