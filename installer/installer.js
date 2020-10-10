@@ -128,7 +128,7 @@ const main = async () => {
             message: 'Password for the maintenance user'
         },
         {
-            type: 'text',
+            type: config.get('sshPrivateKeyPath') ? null : 'text',
             name: 'sshPrivateKeyPath',
             message: 'Path to private key to enter WirtBot via SSH'
         },
