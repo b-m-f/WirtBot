@@ -19,11 +19,8 @@ const runAnsible = async ({
     update,
     sshPrivateKeyPath
 }) => {
-    const ansible = spawn("ansible-playbook", [
+    let arguments = [
         "-i", `${serverIP},`, "ansible/main.yml",
-        `--user`, `${update ? `${user}` : 'root'}`,
-        `${update ? `--extra-vars` : ''}`, `${update ? `ansible_become_pass=${password}` : ''}`,
-        `${update ? '--private-key' : ''}`, `${update ? `${sshPrivateKeyPath}` : ''}`,
         "--extra-vars", `wirtui_public_key = ${wirtBotUIKey} `,
         "--extra-vars", `maintainer_username = ${user} `,
         "--extra-vars", `maintainer_ssh_key = ${sshKey} `,
@@ -31,7 +28,26 @@ const runAnsible = async ({
         "--extra-vars", `letsencrypt_email = ${email} `,
         "--extra-vars", `domain_name = ${domain} `,
         "--extra-vars", 'ansible_python_interpreter=/usr/bin/python3',
-    ]);
+    ]
+
+    const updateArguments = [
+        `--extra-vars`, `ansible_become_pass=${password}`,
+        '--private-key', `${sshPrivateKeyPath}`,
+        `--user`, `${user}`,
+    ]
+    const installArguments = [
+        `--user`, `root`,
+        '--ask-pass'
+
+    ]
+    if (update) {
+        arguments = [...arguments, ...updateArguments]
+    } else {
+        console.log("If you have an SSH key on the server during initial setup, use an SSH config and simply hit Enter when asked for a password")
+        arguments = [...arguments, ...installArguments]
+    }
+
+    const ansible = spawn("ansible-playbook", arguments);
 
     ansible.stdout.on("data", data => {
         console.log(`${data} `);
