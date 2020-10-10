@@ -1,0 +1,34 @@
+version: '3'
+networks:
+  dockernet:
+    external: true
+
+services:
+ certbot:
+    container_name: certbot
+    hostname: certbot
+    networks:
+      dockernet:
+        ipv4_address: 172.10.17.80
+    ports:
+        - "80:80"
+    dns:
+        - 1.1.1.1
+    image: certbot/certbot
+    volumes:
+        - ./data:/etc/letsencrypt
+    command: certonly  --standalone -d {{domain_name}}  --non-interactive --agree-tos  --email {{letsencrypt_email}}
+ renew:
+    container_name: certbot-renew
+    hostname: certbot
+    networks:
+      dockernet:
+        ipv4_address: 172.10.17.80
+    dns:
+        - 1.1.1.1
+    ports:
+        - "80:80"
+    image: certbot/certbot
+    volumes:
+        - ./data:/etc/letsencrypt
+    command: renew

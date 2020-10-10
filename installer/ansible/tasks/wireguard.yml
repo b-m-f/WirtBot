@@ -1,0 +1,76 @@
+- name: Get architecture
+  command: "dpkg --print-architecture"
+  register: dpkg_arch
+  changed_when: False
+  when: ansible_kernel is version('5.6', '<') 
+
+- set_fact:
+    kernel_header_version: "{{ ('-cloud-' in ansible_kernel) | ternary(ansible_kernel,dpkg_arch.stdout) }}"
+  when: ansible_kernel is version('5.6', '<') 
+
+- name: "Install linux-headers-{{ kernel_header_version }} for WireGuard in case the Kernel is too old"
+  apt:
+    name:
+     - "linux-headers-{{ kernel_header_version }}"
+    state: present
+  register: new_headers
+  when: ansible_kernel is version('5.6', '<') 
+
+- name: reboot server to have kernel-header available
+  reboot:
+  when: new_headers.changed
+
+
+- name: install wireguard kernel module
+  apt:
+    name:
+      - wireguard-dkms
+    state: present
+  register: new_wireguard_dkms
+  when: ansible_kernel is version('5.6', '<') 
+
+- name: reboot server to have wireguard module available
+  reboot:
+  when: new_wireguard_dkms.changed
+
+- name: install wireguard
+  apt:
+    name:
+      - wireguard
+      - wireguard-tools
+    state: present
+
+- name: Allow wirt-editors to access /etc/wireguard
+  file:
+    state: directory
+    path: /etc/wireguard
+    owner: root
+    group: wirt-editors
+    mode: "0770"
+
+- name: create wireguard config file
+  template:
+    src: templates/server.conf.j2
+    dest: /etc/wireguard/server.conf
+    owner: root
+    group: wirt-editors
+    mode: 0660
+    force: no
+
+- name: enable wireguard
+  systemd:
+    name: wg-quick@server
+    state: started
+    enabled: yes
+
+- name: enable ipv4 forwarding
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: "1"
+    sysctl_set: yes
+
+- name: enable ipv6 forwarding
+  sysctl:
+    name: net.ipv6.conf.all.forwarding
+    value: "1"
+    sysctl_set: yes

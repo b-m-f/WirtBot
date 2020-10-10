@@ -1,0 +1,49 @@
+
+- name: Create directories for wirtbot
+  file:
+    path: "/home/{{ maintainer_username }}/wirtbot"
+    owner: "{{ maintainer_username }}"
+    group: "{{ maintainer_username }}"
+    state: directory
+    mode: '0750'
+
+- name: Copy docker-compose file to machine
+  template:
+    src: "templates/wirtbot.docker-compose.yml.j2"
+    dest: "/home/{{ maintainer_username }}/wirtbot/docker-compose.yml"
+    owner: "{{ maintainer_username }}"
+    group: "{{ maintainer_username }}"
+    mode: 0640
+
+- name: Start wirtbot docker service
+  docker_compose:
+    project_src: "/home/{{ maintainer_username }}/wirtbot"
+    build: yes
+
+- name: install inotifywait via inotify-tools
+  apt:
+    name:
+      - inotify-tools
+    state: present
+
+- name: create wireguard restarter script
+  template:
+    src: templates/watch-wireguard-config.sh.j2
+    dest: /usr/bin/watch-wireguard-config.sh
+    owner: root
+    group: root
+    mode: 0750
+
+- name: create wireguard restarter
+  template:
+    src: templates/watch-wireguard-config.service.j2
+    dest: /etc/systemd/system/watch-wireguard-config.service
+    owner: root
+    group: root
+    mode: 0644
+
+- name: enable wireguard restarter
+  systemd:
+    name: watch-wireguard-config
+    state: started
+    enabled: yes

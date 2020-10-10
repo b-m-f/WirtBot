@@ -1,0 +1,29 @@
+{
+  "name": "wirt-installer",
+  "version": "1.0.0",
+  "description": "Installation script for WirtBot",
+  "main": "installer.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/b-m-f/Wirt.git"
+  },
+  "keywords": [
+    "Wirt"
+  ],
+  "author": "b-m-f <max@ehlers.berlin>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/b-m-f/Wirt/issues"
+  },
+  "homepage": "https://github.com/b-m-f/Wirt#readme",
+  "dependencies": {
+    "configstore": "^5.0.1",
+    "prompts": "^2.3.2"
+  }
+}

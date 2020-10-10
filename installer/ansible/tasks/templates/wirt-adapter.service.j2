@@ -1,0 +1,17 @@
+[Unit]
+Description=wirt.network adapter for automatic server updating
+Documentation=https://wirt.network/docs/server
+
+[Service]
+User=wirtbot
+Group=wirt-editors
+Type=simple
+Restart=always
+Environment="PUBLIC_KEY={{ wirt_public_key }}"
+Environment="PORT=3030"
+Environment="SSL_PEM_CERT=/home/wirt/letsencrypt/robot.wirt.network/fullchain.pem"
+Environment="SSL_KEY=/home/wirt/letsencrypt/data/{{}}/privkey.pem"
+ExecStart=/usr/bin/wirt-adapter 
+
+[Install]
+WantedBy=multi-user.target
