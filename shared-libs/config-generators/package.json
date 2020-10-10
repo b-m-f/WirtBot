@@ -1,0 +1,19 @@
+{
+  "name": "@wirt/config-generators",
+  "version": "1.0.0",
+  "description": "Config generator library for use in Wirt",
+  "main": "index.js",
+  "scripts": {},
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/b-m-f/Wirt.git"
+  },
+  "author": "b-m-f <max@ehlers.berlin>",
+  "license": "AGPLv3",
+  "bugs": {
+    "url": "https://github.com/b-m-f/Wirt/issues"
+  },
+  "homepage": "https://github.com/b-m-f/Wirt#readme",
+  "devDependencies": {}
+}

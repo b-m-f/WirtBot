@@ -101,19 +101,21 @@
             }
           "
         />
-        <font-awesome-icon class="check" v-if="server.port" :icon="['fas', 'check-square']" />
+        <font-awesome-icon
+          class="check"
+          v-if="server.port"
+          :icon="['fas', 'check-square']"
+        />
       </div>
     </div>
   </form>
 </template>
 
 <script>
-import { getKeys } from "../lib/wireguard";
-
 export default {
   data() {
     return {
-      fetchingKey: false
+      fetchingKey: false,
     };
   },
   computed: {
@@ -122,14 +124,14 @@ export default {
     },
     isMobilePage() {
       return this.$store.state.websiteBeingViewedOnMobileDevice;
-    }
+    },
   },
   methods: {
     async updateServer(serverData) {
       try {
         if (!this.server.keys) {
           serverData = Object.assign({}, serverData, {
-            keys: await this.getKeyPair()
+            keys: await this.getKeyPair(),
           });
         }
         this.$store.dispatch("updateServer", serverData);
@@ -171,8 +173,8 @@ export default {
       }
       ip.splice(index, 1, newValue);
       return ip;
-    }
-  }
+    },
+  },
 };
 </script>
 
