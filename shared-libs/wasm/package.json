@@ -4,7 +4,8 @@
   "main": "wasm/pkg/wirt_wasm.js",
   "scripts": {
     "build": "wasm-pack build wasm -- --locked",
-    "test": "wasm-pack test wasm --node"
+    "test": "wasm-pack test wasm --node",
+    "preinstall": "npm run build"
   },
   "dependencies": {
     "@wasm-tool/wasm-pack-plugin": "1.3.1",
