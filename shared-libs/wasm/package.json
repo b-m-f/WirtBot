@@ -1,0 +1,24 @@
+{ "name": "@wirt/wasm",
+  "version": "1.0.0",
+  "description": "WASM library for use in Wirt",
+  "main": "wasm/pkg/wirt_wasm.js",
+  "scripts": {
+    "build": "wasm-pack build wasm -- --locked",
+    "test": "wasm-pack test wasm --node"
+  },
+  "dependencies": {
+    "@wasm-tool/wasm-pack-plugin": "1.3.1",
+    "html-webpack-plugin": "^4.5.0",
+    "wasm-pack": "^0.9.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/b-m-f/Wirt.git"
+  },
+  "author": "b-m-f <max@ehlers.berlin>",
+  "license": "AGPLv3",
+  "bugs": {
+    "url": "https://github.com/b-m-f/Wirt/issues"
+  },
+  "homepage": "https://github.com/b-m-f/Wirt#readme"
+}

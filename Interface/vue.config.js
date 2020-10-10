@@ -1,6 +1,5 @@
 const path = require("path");
 const webpack = require("webpack");
-const WasmPackPlugin = require("@wasm-tool/wasm-pack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
 
@@ -24,17 +23,7 @@ module.exports = {
     },
   },
   chainWebpack: (config) => {
-    // rust wasm bindgen https://github.com/rustwasm/wasm-bindgen
     config
-      .plugin("wasm-pack")
-      .use(WasmPackPlugin)
-      .init(
-        (Plugin) =>
-          new Plugin({
-            crateDirectory: path.resolve(__dirname, "./wasm"),
-          })
-      )
-      .end()
       // TODO: 16.3 check if still needed for Edge browser https://rustwasm.github.io/docs/wasm-bindgen/examples/hello-world.html
       .plugin("text-encoder")
       .use(webpack.ProvidePlugin)

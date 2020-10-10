@@ -1,7 +1,7 @@
 import store from "../store";
 export async function generateSigningKeys() {
   try {
-    const wasm = import("../../wasm/pkg");
+    const wasm = import("@wirt/wasm");
     const generateKeypair = (await wasm).generate_signature_keys;
     const pair = JSON.parse(generateKeypair());
     return pair;
@@ -13,7 +13,7 @@ export async function generateSigningKeys() {
 
 export async function sign(message) {
   try {
-    const wasm = import("../../wasm/pkg");
+    const wasm = import("@wirt/wasm");
     const sign = (await wasm).sign_message;
     const keys = store.state.keys;
     const signature = sign(JSON.stringify(keys), message);

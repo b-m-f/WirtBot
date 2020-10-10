@@ -147,7 +147,7 @@ ${configs}`;
 
 export async function getKeys() {
   try {
-    const wasm = import("../../wasm/pkg");
+    const wasm = import("@wirt/wasm");
     const generateKeypair = (await wasm).generate_key_pair;
     const pair = JSON.parse(generateKeypair());
     return { private: pair.private_key, public: pair.public_key };
