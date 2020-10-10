@@ -2,20 +2,72 @@ const Configstore = require('configstore');
 const packageJson = require('./package.json');
 const prompts = require('prompts');
 const fs = require("fs").promises;
+const { spawn } = require("child_process");
 
 const configPath = "./wirt-installer.config.json"
 
 const config = new Configstore(packageJson.name, {}, { configPath });
 
-const runAnsible = async ({ user, serverIP, password, sshKey, wirtBotUIKey }) => {
+const runAnsible = async ({
+    user,
+    serverIP,
+    password,
+    sshKey,
+    wirtBotUIKey,
+    domain,
+    email,
+    update,
+    sshPrivateKeyPath
+}) => {
+    const ansible = spawn("ansible-playbook", [
+        "-i", `${serverIP},`, "ansible/main.yml",
+        `--user`, `${update ? `${user}` : 'root'}`,
+        `${update ? `--extra-vars` : ''}`, `${update ? `ansible_become_pass=${password}` : ''}`,
+        `${update ? '--private-key' : ''}`, `${update ? `${sshPrivateKeyPath}` : ''}`,
+        "--extra-vars", `wirtui_public_key = ${wirtBotUIKey} `,
+        "--extra-vars", `maintainer_username = ${user} `,
+        "--extra-vars", `maintainer_ssh_key = ${sshKey} `,
+        "--extra-vars", `maintainer_password = ${password} `,
+        "--extra-vars", `letsencrypt_email = ${email} `,
+        "--extra-vars", `domain_name = ${domain} `,
+        "--extra-vars", 'ansible_python_interpreter=/usr/bin/python3',
+    ]);
+
+    ansible.stdout.on("data", data => {
+        console.log(`${data} `);
+    });
+
+    ansible.stderr.on("data", data => {
+        console.log(`Error: ${data} `);
+    });
+
+    ansible.on('error', (error) => {
+        console.log(`Error: ${error.message} `);
+    });
+
+    ansible.on("close", code => {
+    });
 
 
 }
 
 
 const main = async () => {
+    const updateOrInstallQuestions = [
+        {
+            type: 'select',
+            name: 'value',
+            message: 'Choose a mode',
+            choices: [
+                { title: 'Update', description: 'Update an existing installation', value: 'update' },
+                { title: 'Install', description: 'Install a new WirtBot', value: 'install' },
+            ],
+            initial: 1
+        }
+
+    ]
     // TODO: verify the inputs
-    const questions = [
+    const questionsInstall = [
         {
             type: config.get('serverIP') ? null : 'text',
             name: 'serverIP',
@@ -53,16 +105,45 @@ const main = async () => {
             message: 'Email for SSL certificate'
         },
     ];
+    const questionsUpdate = [
+        {
+            type: 'text',
+            name: 'password',
+            message: 'Password for the maintenance user'
+        },
+        {
+            type: 'text',
+            name: 'sshPrivateKeyPath',
+            message: 'Path to private key to enter WirtBot via SSH'
+        },
+    ];
 
-    const response = await prompts(questions);
+    const updateOrInstall = await prompts(updateOrInstallQuestions);
+    if (updateOrInstall["value"] === 'install') {
+        const response = await prompts(questionsInstall);
+        Object.keys(response).forEach(entry => {
+            if (entry !== 'password') {
+                config.set(entry, response[entry])
+            }
+        })
+        console.log(config.all)
 
-    Object.keys(response).forEach(entry => {
-        if (!entry === 'password') {
-            config.set(entry, response[entry])
-        }
-    })
+        runAnsible(Object.assign({}, config.all, { password: response.password, update: false }))
 
-    runAnsible({ ...config.get(), password: response.password })
+    }
+    if (updateOrInstall["value"] === 'update') {
+        const response = await prompts(questionsUpdate);
+        Object.keys(response).forEach(entry => {
+            if (entry !== 'password') {
+                config.set(entry, response[entry])
+            }
+        })
+        console.log(config.all)
+
+        runAnsible(Object.assign({}, config.all, { password: response.password, update: true, sshPrivateKeyPath: response.sshPrivateKeyPath }))
+
+    }
+
 
 };
 
