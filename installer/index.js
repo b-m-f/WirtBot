@@ -2,6 +2,7 @@ import Configstore from 'configstore';
 import prompts from 'prompts';
 import { promises as fs } from "fs"
 import { spawn } from "child_process";
+import crypto from 'crypto';
 
 const configPath = "./wirt-installer.config.json"
 
@@ -9,6 +10,7 @@ const config = new Configstore("wirt-installer", {}, { configPath });
 
 async function getKeys() {
     try {
+        crypto.Certificate
         const wasm = await import('@wirt/wasm');
         const generateKeypair = (await wasm).generate_key_pair;
 
