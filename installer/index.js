@@ -149,15 +149,18 @@ const main = async () => {
     if (updateOrInstall["value"] === 'install') {
         const response = await prompts(questionsInstall);
         console.log("Configuration written to", configPath)
-        const keys = await getKeys();
-        console.log(keys)
-        Object.keys(response).forEach(entry => {
-            if (entry !== 'password') {
-                config.set(entry, response[entry])
-            }
-        })
-        runAnsible(Object.assign({}, config.all, { password: response.password, update: false }))
-
+        try {
+            const keys = await getKeys();
+            console.log(keys)
+            Object.keys(response).forEach(entry => {
+                if (entry !== 'password') {
+                    config.set(entry, response[entry])
+                }
+            })
+            runAnsible(Object.assign({}, config.all, { password: response.password, update: false }))
+        } catch (error) {
+            console.error(error)
+        }
     }
     if (updateOrInstall["value"] === 'update') {
         const response = await prompts(questionsUpdate);
