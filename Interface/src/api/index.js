@@ -1,4 +1,5 @@
-import { sign } from "../lib/cryptography";
+import { sign } from "@wirt/crypto";
+import store from "../store";
 
 // Loaded with https://cli.vuejs.org/guide/mode-and-env.html
 // const BASE_URL = process.env.VUE_APP_BASE_URL + "/api";
@@ -69,7 +70,7 @@ async function post(endpoint, data) {
 
 export async function updateServerConfig(config, host) {
   try {
-    const messageWithSignature = await sign(config);
+    const messageWithSignature = await sign(config, store.state.keys);
     const http = process.env.VUE_APP_HTTP_MODE === "true" ? "http" : "https";
     await post(`${http}://${host}:3030/update`, messageWithSignature);
     return true;
@@ -81,7 +82,7 @@ export async function updateServerConfig(config, host) {
 
 export async function updateDNSConfig(config, host) {
   try {
-    const messageWithSignature = await sign(config);
+    const messageWithSignature = await sign(config, store.state.keys);
     const http = process.env.VUE_APP_HTTP_MODE === "true" ? "http" : "https";
     await post(`${http}://${host}:3030/update-device-dns-entries`, messageWithSignature);
     return true;

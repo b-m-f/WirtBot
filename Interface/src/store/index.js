@@ -3,7 +3,7 @@ import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
 import QRCode from "qrcode";
 import i18n from "../i18n";
-import { generateSigningKeys, getKeys } from "../lib/cryptography";
+import { generateSigningKeys, getKeys } from "@wirt/crypto";
 import { generateDNSFile, generateDeviceConfig, generateServerConfig } from "@wirt/config-generators";
 import { updateServerConfig as updateServerViaApi, updateDNSConfig as updateDNSConfigViaApi } from "../api";
 
@@ -130,8 +130,8 @@ const store = new Vuex.Store({
         process.env.VUE_APP_DEVELOPMENT_PUBLIC_KEY &&
         process.env.VUE_APP_DEVELOPMENT_PRIVATE_KEY
       ) {
-        keys.public_key = process.env.VUE_APP_DEVELOPMENT_PUBLIC_KEY;
-        keys.private_key = process.env.VUE_APP_DEVELOPMENT_PRIVATE_KEY;
+        keys.public = process.env.VUE_APP_DEVELOPMENT_PUBLIC_KEY;
+        keys.private = process.env.VUE_APP_DEVELOPMENT_PRIVATE_KEY;
       }
       commit("setKeys", keys);
     },

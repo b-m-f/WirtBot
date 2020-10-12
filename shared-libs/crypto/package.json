@@ -1,0 +1,25 @@
+{
+  "name": "@wirt/crypto",
+  "version": "1.0.0",
+  "description": "Crypto library to be used in Wirt",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/b-m-f/Wirt.git"
+  },
+  "keywords": [
+    "Wirt"
+  ],
+  "author": "b-m-f <max@ehlers.berlin>",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/b-m-f/Wirt/issues"
+  },
+  "homepage": "https://github.com/b-m-f/Wirt#readme",
+  "dependencies": {
+    "@wirt/wasm": "file:../wasm"
+  }
+}

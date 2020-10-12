@@ -62,8 +62,8 @@ pub fn generate_signature_keys() -> String {
 pub fn sign_message(keypair: String, message: String) -> String {
     #[derive(Deserialize)]
     struct Pair {
-        private_key: String,
-        public_key: String,
+        private: String,
+        public: String,
     }
     // Keys are in Base64. See above.
     // Base64 decode will return a vector that we need to put back into a bounded array
@@ -72,13 +72,13 @@ pub fn sign_message(keypair: String, message: String) -> String {
     let pair: Pair = serde_json::from_str(&keypair).unwrap();
 
     let mut raw_private_key_buffer = [0; SECRET_KEY_LENGTH];
-    let raw_private_key_vector = base64::decode(&pair.private_key).unwrap();
+    let raw_private_key_vector = base64::decode(&pair.private).unwrap();
     let raw_private_key_bytes = &raw_private_key_vector[..raw_private_key_buffer.len()];
     raw_private_key_buffer.copy_from_slice(raw_private_key_bytes);
     let decoded_private_key = SecretKey::from_bytes(&raw_private_key_buffer).unwrap();
 
     let mut raw_public_key_buffer = [0; PUBLIC_KEY_LENGTH];
-    let raw_public_key_vector = base64::decode(&pair.public_key).unwrap();
+    let raw_public_key_vector = base64::decode(&pair.public).unwrap();
     let raw_public_key_bytes = &raw_public_key_vector[..raw_public_key_buffer.len()];
     raw_public_key_buffer.copy_from_slice(raw_public_key_bytes);
     let decoded_public_key = PublicKey::from_bytes(&raw_public_key_buffer).unwrap();
