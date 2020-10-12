@@ -28,7 +28,7 @@
     - import_tasks: tasks/programs.yml
     - import_tasks: tasks/users.yml
     - import_tasks: tasks/wireguard.yml
-    # - import_tasks: tasks/firewall.yml
+    - import_tasks: tasks/firewall.yml
     # TODO: add to domain tickets
     # - import_tasks: tasks/letsencrypt.yml
     - import_tasks: tasks/wirt-adapter.yml
