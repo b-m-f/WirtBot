@@ -6,7 +6,7 @@
     - wirt-editors
     - docker
 
-- name: Creating user wirt
+- name: Creating user wirtbot
   user:
     name: wirtbot
     password: "!"

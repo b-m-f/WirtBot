@@ -2,24 +2,12 @@ import Configstore from 'configstore';
 import prompts from 'prompts';
 import { promises as fs } from "fs"
 import { spawn } from "child_process";
-import crypto from 'crypto';
+import { generateServerConfig, generateDeviceConfig, generateDNSFile } from '@wirt/config-generators'
+import { getKeys, generateSigningKeys } from '@wirt/crypto'
 
 const configPath = "./wirt-installer.config.json"
 
 const config = new Configstore("wirt-installer", {}, { configPath });
-
-async function getKeys() {
-    try {
-        crypto.Certificate
-        const wasm = await import('@wirt/wasm');
-        const generateKeypair = (await wasm).generate_key_pair;
-
-        const pair = JSON.parse(generateKeypair());
-        return { private: pair.private_key, public: pair.public_key };
-    } catch (error) {
-        throw `WebAssembly key generation: ${error}`;
-    }
-}
 
 const runAnsible = async ({
     user,
@@ -30,18 +18,22 @@ const runAnsible = async ({
     domain,
     email,
     update,
-    sshPrivateKeyPath
+    sshPrivateKeyPath,
+    dnsConfig,
+    serverConfig
 }) => {
+    console.log(sshKey)
     let args = [
         "-i", `${serverIP},`, "ansible/main.yml",
-        "--extra-vars", `wirtui_public_key = ${wirtBotUIKey} `,
-        "--extra-vars", `maintainer_username = ${user} `,
-        "--extra-vars", `maintainer_ssh_key = ${sshKey} `,
-        "--extra-vars", `maintainer_password = ${password} `,
-        "--extra-vars", `letsencrypt_email = ${email} `,
-        "--extra-vars", `domain_name = ${domain} `,
+        "--extra-vars", `wirtui_public_key=${wirtBotUIKey}`,
+        "--extra-vars", `maintainer_username=${user}`,
+        "--extra-vars", `maintainer_ssh_key="${sshKey}"`,
+        "--extra-vars", `maintainer_password=${password}`,
+        "--extra-vars", `letsencrypt_email=${email}`,
+        "--extra-vars", `domain_name=${domain}`,
         "--extra-vars", 'ansible_python_interpreter=/usr/bin/python3',
     ]
+    console.log(args)
 
     const updateArguments = [
         `--extra-vars`, `ansible_become_pass=${password}`,
@@ -50,8 +42,10 @@ const runAnsible = async ({
     ]
     const installArguments = [
         `--user`, `root`,
-        '--ask-pass'
-
+        '--ask-pass',
+        "--extra-vars", `initial_server_config=${serverConfig}`,
+        "--extra-vars", `initial_dns_config=${dnsConfig}`,
+        "--ssh-common-args='-o StrictHostKeyChecking=no'"
     ]
     if (update) {
         args = [...args, ...updateArguments]
@@ -118,21 +112,19 @@ const main = async () => {
             name: 'sshKey',
             message: 'Please paste the Public Key of the keypair you want to use for accessing the WirtBot via SSH'
         },
-        {
-            type: config.get('wirtBotUIKey') ? null : 'text',
-            name: 'wirtBotUIKey',
-            message: 'Public key of the WirtBot UI'
-        },
-        {
-            type: config.get('domain') ? null : 'text',
-            name: 'domain',
-            message: 'Domain name that points to WirtBot'
-        },
-        {
-            type: config.get('email') ? null : 'text',
-            name: 'email',
-            message: 'Email for SSL certificate'
-        },
+        // TODO: Readd domain name generation
+        // Ask first if a domain name is wanted
+        // Add ticket
+        // {
+        //     type: config.get('domain') ? null : 'text',
+        //     name: 'domain',
+        //     message: 'Domain name that points to WirtBot'
+        // },
+        // {
+        //     type: config.get('email') ? null : 'text',
+        //     name: 'email',
+        //     message: 'Email for SSL certificate'
+        // },
     ];
     const questionsUpdate = [
         {
@@ -152,14 +144,36 @@ const main = async () => {
         const response = await prompts(questionsInstall);
         console.log("Configuration written to", configPath)
         try {
-            const keys = await getKeys();
-            console.log(keys)
             Object.keys(response).forEach(entry => {
                 if (entry !== 'password') {
                     config.set(entry, response[entry])
                 }
             })
-            runAnsible(Object.assign({}, config.all, { password: response.password, update: false }))
+
+            const serverKeys = await getKeys();
+            const deviceKeys = await getKeys();
+            const signingKeys = await generateSigningKeys()
+            const device = { ip: { v4: 2 }, name: "Change me", keys: deviceKeys }
+            // TODO: Fix IPv4 to always be a string 
+            // needs changes in many places
+            const server = { ip: { v4: config.get('serverIP').split('.') }, port: 10101, keys: serverKeys, subnet: { v4: "10.10.0." } }
+            const serverConfig = generateServerConfig(server, [device])
+            const deviceConfig = generateDeviceConfig(device, server)
+            const dnsConfig = generateDNSFile(server, [device], { dns: { name: "wirt.internal" } })
+
+            runAnsible(Object.assign({}, config.all, { password: response.password, wirtBotUIKey: signingKeys.public, update: false, serverConfig, dnsConfig }))
+            console.log("DONE")
+            console.log(deviceConfig)
+            console.log(serverConfig)
+            console.log({
+                state: {
+                    // TODO keep this version somewhere else
+                    version: 1.1,
+                    server,
+                    devices: [device],
+                    keys: signingKeys
+                }
+            })
         } catch (error) {
             console.error(error)
         }
