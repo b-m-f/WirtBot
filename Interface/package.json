@@ -21,6 +21,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/vue-fontawesome": "^0.1.10",
     "@wirt/config-generators": "file:../shared-libs/config-generators",
+    "@wirt/crypto": "file:../shared-libs/crypto",
     "core-js": "^3.6.5",
     "jszip": "^3.5.0",
     "lodash-es": "^4.17.15",
