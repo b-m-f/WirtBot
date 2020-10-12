@@ -22,7 +22,6 @@ const runAnsible = async ({
     dnsConfig,
     serverConfig
 }) => {
-    console.log(sshKey)
     let args = [
         "-i", `${serverIP},`, "ansible/main.yml",
         "--extra-vars", `wirtui_public_key=${wirtBotUIKey}`,
@@ -31,9 +30,9 @@ const runAnsible = async ({
         "--extra-vars", `maintainer_password=${password}`,
         "--extra-vars", `letsencrypt_email=${email}`,
         "--extra-vars", `domain_name=${domain}`,
+        "--extra-vars", `update=true`,
         "--extra-vars", 'ansible_python_interpreter=/usr/bin/python3',
     ]
-    console.log(args)
 
     const updateArguments = [
         `--extra-vars`, `ansible_become_pass=${password}`,
@@ -43,10 +42,11 @@ const runAnsible = async ({
     const installArguments = [
         `--user`, `root`,
         '--ask-pass',
-        "--extra-vars", `initial_server_config=${serverConfig}`,
-        "--extra-vars", `initial_dns_config=${dnsConfig}`,
+        "--extra-vars", `initial_server_config="${serverConfig}"`,
+        "--extra-vars", `initial_dns_config="${dnsConfig}"`,
         "--ssh-common-args='-o StrictHostKeyChecking=no'"
     ]
+    console.log(installArguments)
     if (update) {
         args = [...args, ...updateArguments]
     } else {
@@ -186,7 +186,8 @@ const main = async () => {
                 config.set(entry, response[entry])
             }
         })
-        runAnsible(Object.assign({}, config.all, { password: response.password, update: true, sshPrivateKeyPath: response.sshPrivateKeyPath }))
+        // TODO: Make this configurable in case the subnet is changed
+        runAnsible(Object.assign({}, config.all, { server: { ip: { v4: "10.10.0.1" } }, password: response.password, update: true, sshPrivateKeyPath: response.sshPrivateKeyPath }))
     }
 
 
