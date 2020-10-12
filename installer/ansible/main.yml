@@ -1,0 +1,39 @@
+---
+- hosts: all
+  become: true
+  vars:
+    # WARNING: do not choose wirtbot here
+    - maintainer_username: "CHOOSE_A_USERNAME"
+
+    - wirtui_public_key: "ENTER_PUBLIC_KEY_FROM_DASHBOARD_SETTINGS"
+
+    - server_config: "Intial WireGuard config for your server"
+
+    # This public key will be allowed to log in as the user specified above
+    - maintainer_ssh_key: "PASTE_YOUR_SSH_PUBLIC_KEY"
+
+    # This will be the password to use sudo on the machine
+    - maintainer_password: "ENTER_YOUR_PASSWORD"
+
+    - domain_name: "DOMAIN_THAT_POINTS_TO_YOUR_SERVER"
+    - letsencrypt_email: "EMAIL_TO_USE_FOR_LETSENCRYPT_REGISTRATION"
+
+    - hidden: true
+
+    - initial_server_config: "INITIAL CONFIG TO BE USED" # needed for hidden mode
+    - initial_dns_config: "INITIAL DNS CONFIGURATION TO BE USED" # needed for hidden mode
+
+  tasks:
+    - import_tasks: tasks/apt-configuration.yml
+    - import_tasks: tasks/programs.yml
+    - import_tasks: tasks/users.yml
+    - import_tasks: tasks/wireguard.yml
+    # - import_tasks: tasks/firewall.yml
+    # TODO: add to domain tickets
+    # - import_tasks: tasks/letsencrypt.yml
+    - import_tasks: tasks/wirt-adapter.yml
+    - import_tasks: tasks/dns.yml
+    - import_tasks: tasks/sshd_config.yml
+    - import_tasks: tasks/fail2ban.yml
+    - import_tasks: tasks/disable_root.yml
+    - import_tasks: tasks/restart_server.yml

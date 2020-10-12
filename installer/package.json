@@ -30,6 +30,7 @@
   "homepage": "https://github.com/b-m-f/Wirt#readme",
   "dependencies": {
     "@wirt/config-generators": "file:../shared-libs/config-generators",
+    "@wirt/crypto": "file:../shared-libs/crypto",
     "@wirt/wasm": "file:../shared-libs/wasm",
     "configstore": "^5.0.1",
     "prompts": "^2.3.2"
