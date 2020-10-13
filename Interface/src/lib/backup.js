@@ -54,16 +54,14 @@ export function upgradeBackup(backupAsJSONString) {
   if (
     !backup.version
   ) {
-    console.log("hi here beta")
     updatedBackup = betaTo1(updatedBackup);
   }
   if (updatedBackup.version == 1.0) {
-    console.log("hi here ione")
     updatedBackup = oneToOneDotOne(updatedBackup)
   }
   if (appVersion < backupVersion) {
     throw Error(i18n.t("errors.backupNotCompatible"));
   }
 
-  return JSON.stringify(updatedBackup);
+  return JSON.stringify(Object.assign({}, store.state, updatedBackup));
 }
