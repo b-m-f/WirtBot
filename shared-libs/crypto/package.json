@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Crypto library to be used in Wirt",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
