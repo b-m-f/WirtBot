@@ -20,7 +20,7 @@
     "url": "https://github.com/b-m-f/wirt/issues"
   },
   "homepage": "https://github.com/b-m-f/wirt#readme",
-  "devDependencies": {
+  "dependencies": {
     "vuepress": "^1.6.0"
   }
 }
