@@ -165,13 +165,11 @@ const main = async () => {
             // The backup is double stringified
             // Fix this on backup creation and here
             const interfaceState = JSON.stringify(JSON.stringify({
-                state: {
                     // TODO keep this version somewhere else
                     version: 1.1,
                     server,
                     devices: [device],
                     keys: signingKeys
-                }
             }));
 
             runAnsible(Object.assign({}, config.all, { password: response.password, wirtBotUIKey: signingKeys.public, update: false, serverConfig, dnsConfig }));
