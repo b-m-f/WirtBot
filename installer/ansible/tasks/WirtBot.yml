@@ -1,7 +1,7 @@
 
 - name: Create directories for wirtbot
   file:
-    path: "/home/{{ maintainer_username }}/wirtbot"
+    path: "/home/{{ maintainer_username }}/WirtBot"
     owner: "{{ maintainer_username }}"
     group: "{{ maintainer_username }}"
     state: directory
@@ -9,15 +9,15 @@
 
 - name: Copy docker-compose file to machine
   template:
-    src: "templates/wirtbot.docker-compose.yml.j2"
-    dest: "/home/{{ maintainer_username }}/wirtbot/docker-compose.yml"
+    src: "templates/WirtBot.docker-compose.yml.j2"
+    dest: "/home/{{ maintainer_username }}/WirtBot/docker-compose.yml"
     owner: "{{ maintainer_username }}"
     group: "{{ maintainer_username }}"
     mode: 0640
 
-- name: Start wirtbot docker service
+- name: Start WirtBot docker service
   docker_compose:
-    project_src: "/home/{{ maintainer_username }}/wirtbot"
+    project_src: "/home/{{ maintainer_username }}/WirtBot"
     build: yes
 
 - name: install inotifywait via inotify-tools
