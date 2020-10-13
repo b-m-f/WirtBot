@@ -218,7 +218,7 @@ async fn main() {
     let log = warp::log("wirt::api");
 
     let allowed_origin: String =
-        env::var("ALLOWED_ORIGIN").unwrap_or("https://wirt.network".into());
+        env::var("ALLOWED_ORIGIN").unwrap_or("http://wirtbot.wirt.internal".into());
     let cors = warp::cors()
         .allow_origin(&allowed_origin[..])
         .allow_methods(vec!["POST"])
@@ -235,7 +235,6 @@ async fn main() {
         .with(log)
         .with(cors)
         .recover(handle_rejection);
-    // TODO: It should be possible to configure the port and host
 
     let port: String = env::var("PORT").unwrap_or("3030".into());
     let port: u16 = port.parse().unwrap();
