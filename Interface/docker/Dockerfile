@@ -3,14 +3,23 @@ FROM rust:alpine  as app
 RUN apk update
 RUN apk add nodejs npm  build-base openssl-dev clang
 
+WORKDIR '/shared-libs'
+COPY shared-libs .
+WORKDIR '/shared-libs/wasm'
+RUN npm ci
+RUN npm run build 
+WORKDIR '/shared-libs/crypto'
+RUN npm ci
+WORKDIR '/shared-libs/config-generators'
+RUN npm ci
+
+
 # build the app
 WORKDIR '/app'
 COPY Interface/package.json  .
 COPY Interface/package-lock.json .
-RUN npm install
-
-COPY Interface/wasm wasm
-RUN npm run build:rust
+ENV NODE_ENV production
+RUN npm ci
 
 COPY Interface/src src 
 COPY Interface/public public
