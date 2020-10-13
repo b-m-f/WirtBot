@@ -73,7 +73,7 @@
     },
     "parserOptions": {
       "parser": "babel-eslint",
-      "ecmascriptVersion": "6"
+      "ecmaVersion": "6"
     },
     "overrides": [
       {
