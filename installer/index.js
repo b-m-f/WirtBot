@@ -47,7 +47,6 @@ const runAnsible = async ({
         "--extra-vars", `initial_dns_config="${dnsConfig}"`,
         "--ssh-common-args='-o StrictHostKeyChecking=no'"
     ]
-    console.log(installArguments)
     if (update) {
         args = [...args, ...updateArguments]
     } else {
@@ -192,7 +191,7 @@ const main = async () => {
             }
         })
         // TODO: Make this configurable in case the subnet is changed
-        runAnsible(Object.assign({}, config.all, { server: { ip: { v4: "10.10.0.1" } }, password: response.password, update: true, sshPrivateKeyPath: response.sshPrivateKeyPath }));
+        runAnsible(Object.assign({}, config.all, { server: { ip: { v4: "10.10.0.1" } }, password: response.password, update: true, sshPrivateKeyPath: config.get('sshPrivateKeyPath') }));
     }
 
 
