@@ -18,3 +18,5 @@
   docker_compose:
     project_src: "/home/{{ maintainer_username }}/WirtBot-Interface"
     build: yes
+    recreate: always
+    pull: yes
