@@ -1,2 +1,2 @@
-export * from './src/dns'
-export * from './src/wireguard'
+export * from './src/dns.js'
+export * from './src/wireguard.js'
