@@ -19,6 +19,8 @@
   docker_compose:
     project_src: "/home/{{ maintainer_username }}/WirtBot"
     build: yes
+    recreate: always
+    pull: yes
 
 - name: install inotifywait via inotify-tools
   apt:
