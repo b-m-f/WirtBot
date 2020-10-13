@@ -4,7 +4,7 @@ networks:
     external: true
 
 services:
-  wirtbot:
+  WirtBot:
     image: bmff/wirtbot:release
     networks:
       dockernet:
@@ -19,8 +19,6 @@ services:
     environment:
       - "PUBLIC_KEY={{ wirtui_public_key }}"
       - "PORT=3030"
-      - "SSL_KEY=/certs/live/{{domain_name}}/privkey.pem"
-      - "SSL_PEM_CERT=/certs/live/{{domain_name}}/fullchain.pem"
       - "MANAGED_DNS_ENABLED=1"
       - "MANAGED_DNS_DEVICE_FILE=/dns/Corefile"
       - "CONFIG_PATH=/wireguard/server.conf"

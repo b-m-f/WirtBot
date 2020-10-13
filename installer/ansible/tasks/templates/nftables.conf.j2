@@ -11,9 +11,6 @@ table inet filter {
 
                 ct state invalid drop comment "Drop invalid connections"
                 ct state established,related accept comment "Accept traffic originated from us"
-                {% if hidden is false %}
-                tcp dport ssh accept comment "Accept SSH on port 22"
-                {% endif %}
                 udp dport 10101 accept comment "Accept WireGuard connection establishment" 
         }
 
@@ -35,17 +32,12 @@ table inet filter {
 table ip nat {
         chain prerouting {
                 type nat hook prerouting priority 0; policy accept;
-                {% if hidden is false %}
-                iif eth0 tcp dport 80 dnat 172.10.17.80 comment "Allow traffic to letsencrypt containers"
-                iif eth0 tcp dport 3030 dnat 172.10.17.30 comment "Allow traffic to wirtbot container"
-                {% endif %}
-                iifname server tcp dport 80 dnat 172.10.17.80 comment "Allow traffic to letsencrypt containers"
-                iifname server tcp dport 3030 dnat 172.10.17.30 comment "Allow traffic to wirtbot container"
+                iifname server tcp dport 80 dnat 172.10.17.31 comment "Allow traffic to WirtBot interface"
+                iifname server tcp dport 3030 dnat 172.10.17.30 comment "Allow traffic to WirtBot container"
         }
 
         chain postrouting {
                 type nat hook postrouting priority 100; policy accept;
-                oif eth0 masquerade comment "masquerade traffic comming from docker containers"
                 oifname server masquerade comment "masquerade traffic comming from docker containers"
         }
 }
