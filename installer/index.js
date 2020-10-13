@@ -89,24 +89,24 @@ const main = async () => {
         }
 
     ]
-    // TODO: verify the inputs
     const questionsInstall = [
         {
             type: config.get('serverIP') ? null : 'text',
             name: 'serverIP',
-            message: 'What is the IP address of your server?'
+            message: 'What is the IP address of your server?',
+            validate: ip => /^([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3},?)+$/.test(ip)
         },
         {
             type: config.get('user') ? null : 'text',
             name: 'user',
-            message: 'Maintenance user name'
+            message: 'Maintenance user name',
+            validate: name => name === 'wirtbot' ? "Sorry, you can not use wirtbot as a name" : true
         },
         {
-            type: 'text',
+            type: 'password',
             name: 'password',
             message: 'Password for the maintenance user'
         },
-        // TODO: make open SSH port optional
         {
             type: config.get('sshKey') ? null : 'text',
             name: 'sshKey',
@@ -128,7 +128,7 @@ const main = async () => {
     ];
     const questionsUpdate = [
         {
-            type: 'text',
+            type: 'password',
             name: 'password',
             message: 'Password for the maintenance user'
         },

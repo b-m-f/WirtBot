@@ -295,7 +295,7 @@ export default {
       }
     },
     updateAdditionalDNSServers(serverString) {
-      const correct = /^([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+,?)+$/.test(
+      const correct = /^([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3},?)+$/.test(
         serverString
       );
       if (this.updatingAdditionalDNSServers) {
