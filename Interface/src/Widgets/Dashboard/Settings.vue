@@ -9,23 +9,19 @@
     <h2 id="backup">{{ $t("dashboard.widgets.settings.backup") }}</h2>
     <div class="row">
       <Button @click.prevent="createBackup" id="export">
-        {{
-        $t("dashboard.widgets.settings.export")
-        }}
+        {{ $t("dashboard.widgets.settings.export") }}
       </Button>
       <div id="import">
         <input type="file" @change="updateFile" />
-        <Button
-          @click.prevent="importBackup"
-          id="import"
-        >{{ $t("dashboard.widgets.settings.import") }}</Button>
+        <Button @click.prevent="importBackup" id="import">{{
+          $t("dashboard.widgets.settings.import")
+        }}</Button>
       </div>
     </div>
     <div class="row">
-        <Button
-          @click.prevent="updateUi"
-          id="update-ui"
-        >{{ $t("dashboard.widgets.settings.updateUi") }}</Button>
+      <Button @click.prevent="updateUi" id="update-ui">{{
+        $t("dashboard.widgets.settings.updateUi")
+      }}</Button>
     </div>
   </div>
 </template>
@@ -46,7 +42,7 @@ export default {
         this.$store.dispatch("generateKeys");
         return "";
       }
-    }
+    },
   },
   methods: {
     updateFile(event) {
@@ -73,14 +69,14 @@ export default {
 
       document.body.removeChild(element);
     },
-    updateUi(){
+    updateUi() {
       try {
-      const settings = window.localStorage.getItem("vuex")
-      const backup = upgradeBackup(settings);
-      window.localStorage.setItem("vuex", backup);
-      this.$store.replaceState(JSON.parse(backup));
-      this.$forceUpdate();
-      } catch (error){
+        const settings = window.localStorage.getItem("vuex");
+        const backup = upgradeBackup(settings);
+        window.localStorage.setItem("vuex", backup);
+        this.$store.replaceState(JSON.parse(backup));
+        this.$forceUpdate();
+      } catch (error) {
         this.$store.dispatch("alerts/addWarning", error);
       }
     },
@@ -93,7 +89,7 @@ export default {
       }
       try {
         const reader = new FileReader();
-        reader.onload = e => {
+        reader.onload = (e) => {
           let backup = JSON.parse(e.target.result);
           // The backup will still be a JSON string here!
           backup = upgradeBackup(backup);
@@ -108,6 +104,9 @@ export default {
           this.$forceUpdate();
         };
         reader.readAsText(this.file);
+        reader.onerror = (e) => {
+          throw e;
+        };
       } catch (error) {
         // TODO: check for the error to throw the commented code
         this.$store.dispatch("alerts/addWarning", error);
@@ -117,8 +116,8 @@ export default {
         // );
         console.error(error);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
