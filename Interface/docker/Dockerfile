@@ -34,9 +34,9 @@ RUN npm run build
 WORKDIR '/docs'
 COPY docs/package.json  .
 COPY docs/package-lock.json .
-RUN npm install
 
 COPY docs/docs ./docs
+RUN npm ci
 RUN npm run build:docs
 
 # Create small Nginx image with the production ready application

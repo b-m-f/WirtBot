@@ -87,7 +87,7 @@
     ]
   },
   "eslintIgnore": [
-    "wasm"
+    "shared-libs"
   ],
   "browserslist": [
     "> 1%",
