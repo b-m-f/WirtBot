@@ -40,12 +40,12 @@
       - wireguard-tools
     state: present
 
-- name: Allow wirt-editors to access /etc/wireguard
+- name: Allow WirtBot-Editors to access /etc/wireguard
   file:
     state: directory
     path: /etc/wireguard
     owner: root
-    group: wirt-editors
+    group: WirtBot-Editors
     mode: "0770"
 
 - name: create wireguard config file
@@ -53,7 +53,7 @@
     src: templates/server.conf.j2
     dest: /etc/wireguard/server.conf
     owner: root
-    group: wirt-editors
+    group: WirtBot-Editors
     mode: 0660
     force: no
 

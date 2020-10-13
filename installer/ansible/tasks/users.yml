@@ -3,14 +3,14 @@
     name: "{{ item }}"
     state: present
   loop:
-    - wirt-editors
+    - WirtBot-Editors
     - docker
 
-- name: Creating user wirtbot
+- name: Creating user WirtBot
   user:
-    name: wirtbot
+    name: WirtBot
     password: "!"
-    groups: "wirt-editors"
+    groups: "WirtBot-Editors"
     shell: /sbin/nologin
 
 - name: Creating maintenance user
