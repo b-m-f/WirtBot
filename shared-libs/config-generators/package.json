@@ -4,6 +4,7 @@
   "description": "Config generator library for use in Wirt",
   "main": "index.js",
   "scripts": {},
+  "type": "module",
   "dependencies": {},
   "repository": {
     "type": "git",
