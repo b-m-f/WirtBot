@@ -1,11 +1,11 @@
-{ "name": "@wirt/wasm",
+{
+  "name": "@wirt/wasm",
   "version": "1.0.0",
   "description": "WASM library for use in Wirt",
   "main": "wasm/pkg/wirt_wasm.js",
   "scripts": {
     "build": "wasm-pack build wasm -- --locked",
-    "test": "wasm-pack test wasm --node",
-    "preinstall": "npm run build"
+    "test": "wasm-pack test wasm --node"
   },
   "dependencies": {
     "@wasm-tool/wasm-pack-plugin": "1.3.1",
