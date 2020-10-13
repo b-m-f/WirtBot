@@ -154,7 +154,7 @@ const main = async () => {
             const serverKeys = await getKeys();
             const deviceKeys = await getKeys();
             const signingKeys = await generateSigningKeys();
-            const device = { ip: { v4: 2 }, name: "Change me", keys: deviceKeys };
+            const device = { ip: { v4: 2 }, name: "Change me", keys: deviceKeys, type: "Linux" };
             // TODO: Fix IPv4 to always be a string 
             // needs changes in many places
             const server = { ip: { v4: config.get('serverIP').split('.') }, port: 10101, keys: serverKeys, subnet: { v4: "10.10.0." } };
@@ -162,7 +162,10 @@ const main = async () => {
             const deviceConfig = generateDeviceConfig(device, server);
             const dnsConfig = generateDNSFile(server, [device], { dns: { name: "wirt.internal" } });
 
-            const interfaceState = JSON.stringify({
+            // TODO:
+            // The backup is double stringified
+            // Fix this on backup creation and here
+            const interfaceState = JSON.stringify(JSON.stringify({
                 state: {
                     // TODO keep this version somewhere else
                     version: 1.1,
@@ -170,13 +173,10 @@ const main = async () => {
                     devices: [device],
                     keys: signingKeys
                 }
-            });
+            }));
 
             runAnsible(Object.assign({}, config.all, { password: response.password, wirtBotUIKey: signingKeys.public, update: false, serverConfig, dnsConfig }));
-            console.log("DONE");
-            console.log(deviceConfig);
-            console.log(serverConfig);
-            console.log(interfaceState);
+            await fs.writeFile('UseThisWireGuardConfigurationToConnectToYourWirtBot.conf', deviceConfig, 'utf8');
             await fs.writeFile('ImportThisFileIntoYourWirtBotInterface.json', interfaceState, 'utf8');
 
         } catch (error) {
