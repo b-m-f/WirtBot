@@ -1,8 +1,9 @@
 {
-  "name": "wirt-installer",
+  "name": "@wirt/installer",
   "version": "1.0.0",
   "description": "Installation script for WirtBot",
   "main": "dist/installer.js",
+  "bin" : { "wirt-installer" : "./dist/installer.js" },
   "directories": {
     "doc": "docs"
   },
@@ -20,7 +21,10 @@
     "url": "git+https://github.com/b-m-f/Wirt.git"
   },
   "keywords": [
-    "Wirt"
+    "Wirt",
+    "installer",
+    "vpn",
+    "cyberspace"
   ],
   "author": "b-m-f <max@ehlers.berlin>",
   "license": "MIT",
