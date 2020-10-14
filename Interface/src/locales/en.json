@@ -13,66 +13,6 @@
       "yes": "yes"
     }
   },
-  "home": {
-    "one": {
-      "title": "Create a private network for all your devices.",
-      "subheader": "Connecting all your devices has never been easier, thanks to WireGuard®. Wirt simplifies the process of creating your own private network into 3 steps. No registration, no accounts - Just a network that belongs to you.",
-      "getStarted": "Get started"
-    },
-    "two": {
-      "hi": "Hi, I'm WirtBot®.",
-      "job": "I have one job and I do it well. I forward traffic at the highest speed, without compromising security."
-    },
-    "three": {
-      "title": "Enjoy all the benefits of a professional set-up, without the hassle.",
-      "browser": {
-        "title": "Browser based",
-        "text": "Wirt runs in your browser. No data leaves your computer, unless it is meant to configure your WirtBot. You can easily verify this with your browsers Developer tools."
-      },
-      "fast": {
-        "title": "Lightning fast",
-        "text": "Security does not have to mean slow. Using WireGuard makes your WirtBot perform at very high speed."
-      },
-      "secure": {
-        "title": "Secure",
-        "text": "Modern cryptography is used in the WirtUI and WirtBot to ensure that your network is secure."
-      },
-      "learnMore": "Learn more"
-    },
-    "four": {
-      "title": "We broke down the process so you dont have to.",
-      "one": {
-        "title": " Build a WirtBot",
-        "text": ""
-      },
-      "two": {
-        "title": "Configure your WirtBot using the WirtUI",
-        "text": ""
-      },
-      "three": {
-        "title": "Build your network",
-        "text": ""
-      }
-    },
-    "docs": {
-      "title": "Wirt works for you",
-      "atHome": {
-        "title": "At home",
-        "text": "Build a Cloud or Video streaming service that you own or whatever else you would like to bring online. From your home into your cloud.",
-        "link": "Learn more"
-      },
-      "atCompanies": {
-        "title": "For companies",
-        "text": "Secure monitoring, self-hosted Groupware or a development environment that can be accessed from anywhere in the world. WirtBot got you covered and keeps secure communication concerns out of your architecture.",
-        "link": "Learn more"
-      }
-    },
-    "ready": {
-      "title": "Ready to get started?",
-      "sub": "Build your own WirtBot today, for free! No registration required",
-      "link": "Get started"
-    }
-  },
   "footer": {
     "contact": "Contact me",
     "about": "About",
