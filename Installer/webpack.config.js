@@ -14,6 +14,6 @@ module.exports = {
 	},
 	experiments: { syncWebAssembly: true },
 	plugins: [
-		    new webpack.BannerPlugin({ banner: "#!/usr/bin/env node", raw: true }),
+		    new webpack.BannerPlugin({ banner: "#!/usr/bin/env node", raw: true, entryOnly: true }),
 	]
 };
