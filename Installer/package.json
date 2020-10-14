@@ -1,6 +1,6 @@
 {
   "name": "@wirt/installer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Installation script for WirtBot",
   "main": "dist/installer.js",
   "bin" : { "wirt-installer" : "./dist/installer.js" },
@@ -34,13 +34,13 @@
   },
   "homepage": "https://github.com/b-m-f/Wirt#readme",
   "dependencies": {
+  },
+  "devDependencies": {
     "@wirt/config-generators": "file:../shared-libs/config-generators",
     "@wirt/crypto": "file:../shared-libs/crypto",
     "@wirt/wasm": "file:../shared-libs/wasm",
     "configstore": "^5.0.1",
-    "prompts": "^2.3.2"
-  },
-  "devDependencies": {
+    "prompts": "^2.3.2",
     "@wasm-tool/wasm-pack-plugin": "^1.3.1",
     "replace-in-file": "^6.1.0",
     "webpack": "^5.0.0",
