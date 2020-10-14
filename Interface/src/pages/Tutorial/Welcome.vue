@@ -4,14 +4,16 @@
     <p v-html="explainer"></p>
     <slot></slot>
     <router-link :to="{ name: 'tutorial-server-questionaire' }">
-      <Button id="start" tabindex="1" empty>{{ $t("tutorial.welcome.start") }}</Button>
+      <Button id="start" tabindex="1" empty>{{
+        $t("tutorial.welcome.start")
+      }}</Button>
     </router-link>
   </div>
 </template>
 
 <script>
 import { getTranslationWithVariables } from "../../lib/helpers";
-import Button from "../../components/Button";
+import Button from "shared-components/Button";
 export default {
   components: { Button },
   computed: {
@@ -21,8 +23,8 @@ export default {
         "dashboard",
         "<a href='/dashboard'>Dashboard</a>"
       );
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -72,7 +72,8 @@
             href="/docs/what-can-i-do-with-wirt"
             target="_blank"
             rel="noopener noreferrer"
-          >{{ $t("home.docs.atHome.link") }}</a>
+            >{{ $t("home.docs.atHome.link") }}</a
+          >
         </Card>
         <Card padded>
           <h2>{{ $t("home.docs.atCompanies.title") }}</h2>
@@ -81,7 +82,8 @@
             href="/docs/what-can-i-do-with-wirt"
             target="_blank"
             rel="noopener noreferrer"
-          >{{ $t("home.docs.atCompanies.link") }}</a>
+            >{{ $t("home.docs.atCompanies.link") }}</a
+          >
         </Card>
       </div>
     </div>
@@ -96,16 +98,16 @@
 </template>
 
 <script>
-import Button from "../components/Button";
-import Card from "../components/Card";
+import Button from "shared-components/Button";
+import Card from "shared-components/Card";
 
 export default {
   components: { Button, Card },
   computed: {
     isMobilePage() {
       return this.$store.state.websiteBeingViewedOnMobileDevice;
-    }
-  }
+    },
+  },
 };
 </script>
 

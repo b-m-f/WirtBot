@@ -56,5 +56,12 @@ module.exports = {
       .options({
         raw: true,
       });
+
+
+    config.resolve.alias
+      .set('shared-styles', path.join(__dirname, '../shared-libs/styles'))
+      .set('shared-components', path.join(__dirname, "../shared-libs/components"))
+      .set('components', path.join(__dirname, "src/components"));
+
   },
 };

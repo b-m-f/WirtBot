@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import TutorialBar from "../../components/TutorialBar";
+import TutorialBar from "components/TutorialBar";
 import Vue from "vue";
 Vue.prototype.getActiveElement = () => {
   return window.document.activeElement;

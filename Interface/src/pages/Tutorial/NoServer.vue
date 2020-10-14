@@ -10,18 +10,16 @@
           <div class="option">
             <a href="/docs/setup" target="_blank" rel="noopener noreferrer">
               <Button id="no" empty>
-                {{
-                $t("tutorial.noserver.selfSetup.goToDocs")
-                }}
+                {{ $t("tutorial.noserver.selfSetup.goToDocs") }}
               </Button>
             </a>
             <ul class="option-infos">
               <li>
-                <p>{{$t("tutorial.noserver.selfSetup.key") + ": "}}</p>
-                <code @click="copyToClipBoard">{{key}}</code>
+                <p>{{ $t("tutorial.noserver.selfSetup.key") + ": " }}</p>
+                <code @click="copyToClipBoard">{{ key }}</code>
               </li>
               <li>
-                <p>{{$t("tutorial.noserver.selfSetup.returnHere") }}</p>
+                <p>{{ $t("tutorial.noserver.selfSetup.returnHere") }}</p>
               </li>
             </ul>
           </div>
@@ -32,8 +30,8 @@
 </template>
 
 <script>
-import Button from "../../components/Button";
-import Card from "../../components/Card";
+import Button from "shared-components/Button";
+import Card from "shared-components/Card";
 
 export default {
   components: { Button, Card },

@@ -28,7 +28,7 @@
 
 <script>
 import { upgradeBackup } from "../../lib/backup";
-import Button from "../../components/Button";
+import Button from "shared-components/Button";
 export default {
   data() {
     return { file: undefined };

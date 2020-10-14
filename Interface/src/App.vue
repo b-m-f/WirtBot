@@ -11,9 +11,9 @@
 </template>
 
 <script>
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import Alerts from "./components/Alerts";
+import Header from "components/Header";
+import Footer from "components/Footer";
+import Alerts from "components/Alerts";
 import { assumedWidthThresholdToBeMobileDevice } from "./variables";
 export default {
   props: {

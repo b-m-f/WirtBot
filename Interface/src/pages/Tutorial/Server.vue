@@ -17,16 +17,12 @@
           <div class="buttons">
             <router-link :to="{ name: 'tutorial-choose-server' }">
               <Button id="no" empty uppercase tabindex="2">
-                {{
-                $t("tutorial.server.no")
-                }}
+                {{ $t("tutorial.server.no") }}
               </Button>
             </router-link>
             <router-link :to="{ name: 'tutorial-server-hostname' }">
               <Button id="yes" empty uppercase tabindex="1">
-                {{
-                $t("tutorial.server.yes")
-                }}
+                {{ $t("tutorial.server.yes") }}
               </Button>
             </router-link>
           </div>
@@ -44,12 +40,13 @@
         </div>
         <div v-if="activeIndex == 3" id="port">
           <h2>{{ $t("tutorial.server.port") }}</h2>
-          <PortInput @change="updatePort" :placeholder="$t('tutorial.server.defaultPort')" />
-          <a
-            href="/docs/faq"
-            target="_blank"
-            rel="noopener noreferrer"
-          >{{ $t("tutorial.server.whatsAPort") }}</a>
+          <PortInput
+            @change="updatePort"
+            :placeholder="$t('tutorial.server.defaultPort')"
+          />
+          <a href="/docs/faq" target="_blank" rel="noopener noreferrer">{{
+            $t("tutorial.server.whatsAPort")
+          }}</a>
         </div>
       </Card>
       <div class="navigation-circle next" v-if="!isMobilePage">
@@ -63,9 +60,9 @@
 </template>
 
 <script>
-import Button from "../../components/Button";
-import Card from "../../components/Card";
-import PortInput from "../../components/PortInput";
+import Button from "shared-components/Button";
+import Card from "shared-components/Card";
+import PortInput from "components/PortInput";
 
 export default {
   components: { Button, Card, PortInput },
