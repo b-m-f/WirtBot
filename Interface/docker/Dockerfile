@@ -28,20 +28,9 @@ COPY Interface/vue.config.js .
 COPY Interface/.env .
 RUN npm run build
 
-# build the docs
-
-
-WORKDIR '/docs'
-COPY docs/package.json  .
-COPY docs/package-lock.json .
-
-COPY docs/docs ./docs
-RUN npm ci
-RUN npm run build:docs
 
 # Create small Nginx image with the production ready application
 FROM nginx:alpine
 
 COPY --from=app /app/dist /app
-COPY --from=app /docs/docs/.vuepress/dist /app/docs
 COPY Interface/docker/nginx/nginx.conf /etc/nginx/nginx.conf
