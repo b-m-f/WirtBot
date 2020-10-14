@@ -5,3 +5,6 @@ dev-server:
 
 dev-client: 
 	cd ./Interface && npm run dev
+test-interface-ci: 
+	docker build . -f Interface/docker/TestsDockerfile -t test-interface;\
+	docker-compose -f Interface/docker/compose/test-ci.yml up --abort-on-container-exit
