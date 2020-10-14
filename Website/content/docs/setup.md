@@ -2,45 +2,66 @@
 
 ## WirtBot®
 
-If you want to run your own WirtBot you will need the following things:
+So you want a WirtBot, I can totally understand that.
 
-- A machine with a public IP on the internet
-- Root access on this machine
-- A Domain that points to your machine
+You will need a few things to be able to set one up.
 
-### Automated (you are highly encouraged to use this!)
-> This assumes you have a fresh Debian10 server or VPS with root access!
+### Prerequisites
+- A server with a public IP on the internet. Simply rent a cheap VPS
+- Root access on this server
+- Knowledge of how to execute commands on the terminal
 
-First thing to do is to make sure that you have an SSH key. 
+When that is all sorted make sure that you have an SSH key. 
 If you do not have one yet you can follow [this tutorial](https://www.ssh.com/ssh/keygen/).
-You will need the content of the `.pub` file that will be created for the next step.
+You will need the content of the `.pub` file that will be created. The installer will ask for the contents of that file.
 
-Now clone or download the [Wirt repository](https://github.com/b-m-f/wirt).
 
-Time to install:
+### Dependencies
+
+The following programs are needed for the initail install of the WirtBot and to keep it up to date later on.
+
 - [ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
 - [sshpass](https://gist.github.com/arunoda/7790979) (necessary to login via SSH to your servers root user via password for the setup)
-- [node](https://nodejs.org/en/download/)
+- [node](https://nodejs.org/en/download/) with `npm`
 
-When you are done run `node installer/installer.js` in the root of the repository.
 
-The installer will now take you through the rest of the setup.
-After answering all the questions wait until the setup is done, this can take up to **20 minutes** so just be patient.
+### Installer
+Alright, time to get the installer: `npm install -g @wirt/installer`. 
 
-Thats it. 
+Once installed run `wirt-installer` and the installer will now take you through the rest of the setup.
+After answering all the questions wait until the setup is done, this can take up to **20 minutes** so just be patient and follow the things that it is doing of you like.
 
-Your WirtBot will have a valid certificate from LetsEncrypt and will be ready to securely manage your network, complete with all functionality that the Wirt system has to offer.
+And then you are done with the first part. Congrats, your private WirtBot is set up.
+
+**The installer will have created a few files in the directory you ran it in. Save them to make future updating a breeze!**
+
+### First access
+But how do you access it? After all the WirtBot is completely hidden on the normal internet.
+
+Simple: during the setup an initial network is set up automatically that you can join with the `UseThisWireGuardConfigurationToConnectToYourWirtBot.conf` file that was created by the installer.
+Use this with the WireGuard® client for your system, you can check [this site](/docs/join-a-network) and hopefully it will have a guide for your operating system as well.
+
+To test that everything worked head to [wirtbot.wirtbot.internal](http://wirtbot.wirtbot.internal). 
+This should be taking you to the, still empty, WirtBot interface.
+
+### Getting some data into the interface
+
+So the Dashboard is empty, but a network already exists. How do get access to that information?
+
+At the bottom you will find the `import` functionality.
+Choose the `ImportThisFileIntoYourWirtBotInterface.json` that the installer created and import it.
+
+**Do not skip this import, besides the initial network configuration this imports cryptographic keys that make sure that only your computer can configure the WirtBot, and everyone else in your network simply sees and empty Dashboard**.
+
+
+Congrats. You are done, or well, ready to go and build the network of your dreams!
+
+
+
+Good luck, have fun and maybe share a few cool projects you were able to put into existence.
 
 #### Updating
 
-Simply run the installer again as described above and choose the update option.
+Run `npm install -g @wirt/installer` to update the installer with the newest changes.
 
-### Manual (You need to know what you are doing for this!)
-
-Please consult the [developer documentation](https://github.com/b-m-f/Wirt/tree/master/developer-docs/WirtBot/Manual_setup.md) for this.
-
-## WirtUI
-
-Nothing to set up here.
-
-By reaching the website your setup is done. If you have set up the WirtBot following the above instructions it should already be connected to the WirtUI and you are ready to go.
+Now run it with `wirt-installer` and choose the update option.

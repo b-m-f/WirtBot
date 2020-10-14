@@ -12,11 +12,8 @@ module.exports = {
           "/docs/": [
             ["", "What is it?"],
             ["what-can-i-do-with-wirt", "What can you do with Wirt?"],
-            ["how-does-it-work", "How does it work?"],
             ["setup", "Setup"],
-            ["updating", "Updating to a new version"],
             ["join-a-network", "Join a network"],
-            ["interface", "WirtBot Interface"],
             ["faq", "FAQ"],
             ["issues", "New features & Bugs"],
             ["shoutouts", "Shoutouts"],
