@@ -1,9 +1,11 @@
 {
   "name": "@wirt/installer",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Installation script for WirtBot",
   "main": "dist/installer.js",
-  "bin" : { "wirt-installer" : "./dist/installer.js" },
+  "bin": {
+    "wirt-installer": "./dist/installer.js"
+  },
   "directories": {
     "doc": "docs"
   },
@@ -11,7 +13,7 @@
     "build": "webpack-cli && node fix-webpack-require-on-wasm.js",
     "dev": "webpack-cli --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "publish:public": "npm publish --access public"
+    "publish:public": "npm run build && npm pack && npm publish --access public"
   },
   "files": [
     "ansible",
@@ -33,8 +35,7 @@
     "url": "https://github.com/b-m-f/Wirt/issues"
   },
   "homepage": "https://github.com/b-m-f/Wirt#readme",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "@wirt/config-generators": "file:../shared-libs/config-generators",
     "@wirt/crypto": "file:../shared-libs/crypto",
