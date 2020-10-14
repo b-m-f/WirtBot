@@ -47,9 +47,6 @@ Ready to get started?
 
 Read the setup documentation at [wirt.network/docs/setup](https://wirt.network/docs/setup) and get your own cloud network with **1 command on the terminal** and a **few clicks in your browser**!
 
-
-![Small video to demonstrate the Tutorial](media/wirt_tutorial.gif)
-
 ## Features
 - Based on WireGuard for **security** and **speed**
 - Find all your devices by their name! **DNS** is included
