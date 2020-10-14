@@ -1,7 +1,9 @@
 <template>
   <div id="tutorial-devices" :class="{ mobile: isMobilePage }">
     <h1 v-if="activeIndex == 4">{{ $t("tutorial.devices.header") }}</h1>
-    <h1 v-if="activeIndex == 5">{{ $t("tutorial.devices.firstDeviceAdded") }}</h1>
+    <h1 v-if="activeIndex == 5">
+      {{ $t("tutorial.devices.firstDeviceAdded") }}
+    </h1>
     <div id="card-with-navigation">
       <div class="navigation-circle back" v-if="!isMobilePage">
         <router-link :to="{ name: steps[activeIndex + -1] }">
@@ -30,9 +32,7 @@
           <p v-html="editDeviceText"></p>
           <router-link :to="{ name: 'tutorial-done' }">
             <Button id="finish" uppercase>
-              {{
-              $t("tutorial.devices.finish")
-              }}
+              {{ $t("tutorial.devices.finish") }}
             </Button>
           </router-link>
         </div>
@@ -48,9 +48,9 @@
 </template>
 
 <script>
-import Button from "../../components/Button";
-import DeviceTable from "../../components/DeviceTable";
-import Card from "../../components/Card";
+import Button from "shared-components/Button";
+import DeviceTable from "components/DeviceTable";
+import Card from "shared-components/Card";
 import { getTranslationWithVariables } from "../../lib/helpers";
 
 export default {
@@ -71,7 +71,7 @@ export default {
         "dashboard",
         "<a href='dashboard'>Dashboard</a>"
       );
-    }
+    },
   },
   data() {
     return {
@@ -80,8 +80,8 @@ export default {
         3: "tutorial-server-port",
         4: "tutorial-device-form",
         5: "tutorial-device-success",
-        6: "tutorial-done"
-      }
+        6: "tutorial-done",
+      },
     };
   },
   methods: {
@@ -91,8 +91,8 @@ export default {
       } else {
         this.$refs["table"].reportValidity();
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

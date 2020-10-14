@@ -47,8 +47,8 @@
 
 <script>
 import { downloadText } from "../../lib/download";
-import AccentedCard from "../../components/AccentedCard";
-import Card from "../../components/Card";
+import AccentedCard from "shared-components/AccentedCard";
+import Card from "shared-components/Card";
 import { WHY_NO_LOGIN, REGULAR_BACKUP } from "../../lib/messages";
 import NetworkWidget from "../../Widgets/Dashboard/Network";
 import ServerWidget from "../../Widgets/Dashboard/Server";

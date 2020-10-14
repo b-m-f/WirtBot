@@ -1,6 +1,8 @@
 <template>
   <header id="app-header">
-    <div :class="{ container: true, desktop: !isMobilePage, mobile: isMobilePage }">
+    <div
+      :class="{ container: true, desktop: !isMobilePage, mobile: isMobilePage }"
+    >
       <div v-if="isMobilePage" class="mobile-head">
         <div id="logo">
           <router-link to="/">
@@ -20,28 +22,27 @@
           </div>
           <div id="about">
             <router-link :to="{ name: 'about' }">
-              {{
-              $t("header.about")
-              }}
+              {{ $t("header.about") }}
             </router-link>
           </div>
           <div id="documentation">
-            <a
-              href="/docs"
-              target="_blank"
-              rel="noopener noreferrer"
-            >{{ $t("header.documentation") }}</a>
+            <a href="/docs" target="_blank" rel="noopener noreferrer">{{
+              $t("header.documentation")
+            }}</a>
           </div>
           <div id="github">
-            <a href="https://github.com/b-m-f/wirt" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a
+              href="https://github.com/b-m-f/wirt"
+              target="_blank"
+              rel="noopener noreferrer"
+              >GitHub</a
+            >
           </div>
         </div>
         <div id="right">
           <div id="dashboard">
             <router-link :to="{ name: 'dashboard' }">
-              {{
-              $t("header.dashboard")
-              }}
+              {{ $t("header.dashboard") }}
             </router-link>
           </div>
           <div id="tutorial">
@@ -54,22 +55,25 @@
       <nav v-if="mobileNavigationExpanded" class="mobile-navigation">
         <div id="about">
           <router-link :to="{ name: 'about' }">
-            {{
-            $t("header.about")
-            }}
+            {{ $t("header.about") }}
           </router-link>
         </div>
         <div id="documentation">
-          <a href="/docs" target="_blank" rel="noopener noreferrer">{{ $t("header.documentation") }}</a>
+          <a href="/docs" target="_blank" rel="noopener noreferrer">{{
+            $t("header.documentation")
+          }}</a>
         </div>
         <div id="github">
-          <a href="https://github.com/b-m-f/wirt" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a
+            href="https://github.com/b-m-f/wirt"
+            target="_blank"
+            rel="noopener noreferrer"
+            >GitHub</a
+          >
         </div>
         <div id="dashboard">
           <router-link :to="{ name: 'dashboard' }">
-            {{
-            $t("header.dashboard")
-            }}
+            {{ $t("header.dashboard") }}
           </router-link>
         </div>
         <div id="tutorial">
@@ -83,10 +87,10 @@
 </template>
 
 <script>
-import Button from "../components/Button";
+import Button from "shared-components/Button";
 export default {
   components: {
-    Button
+    Button,
   },
   data() {
     return { mobileNavigationExpanded: false };
@@ -94,13 +98,13 @@ export default {
   computed: {
     isMobilePage() {
       return this.$store.state.websiteBeingViewedOnMobileDevice;
-    }
+    },
   },
   methods: {
     toggleMobileNavigation() {
       this.mobileNavigationExpanded = !this.mobileNavigationExpanded;
-    }
-  }
+    },
+  },
 };
 </script>
 

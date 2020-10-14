@@ -1,8 +1,10 @@
 <template>
-  <footer :class="{mobile: isMobilePage}">
+  <footer :class="{ mobile: isMobilePage }">
     <div class="button-and-links">
       <div>
-        <Button @click.prevent="contact" empty>{{ $t("footer.contact") }}</Button>
+        <Button @click.prevent="contact" empty>{{
+          $t("footer.contact")
+        }}</Button>
       </div>
       <div>
         <ul>
@@ -10,11 +12,9 @@
             <a href="/about">{{ $t("footer.about") }}</a>
           </li>
           <li>
-            <a
-              href="/docs"
-              target="_blank"
-              rel="noopener noreferrer"
-            >{{ $t("footer.documentation") }}</a>
+            <a href="/docs" target="_blank" rel="noopener noreferrer">{{
+              $t("footer.documentation")
+            }}</a>
           </li>
         </ul>
       </div>
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import Button from "./Button";
+import Button from "shared-components/Button";
 import { getTranslationWithVariables } from "../lib/helpers";
 export default {
   components: { Button },
@@ -38,13 +38,13 @@ export default {
         "address",
         "<pre>0x39DF85776c626117B945afECF08C4DD262817522</pre>"
       );
-    }
+    },
   },
   methods: {
     contact() {
       window.location = "mailto:contact@wirt.network";
-    }
-  }
+    },
+  },
 };
 </script>
 

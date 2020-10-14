@@ -52,9 +52,7 @@
       <p v-else>{{ server.subnet.v4 }}</p>
     </div>
     <Button id="download" @click="downloadConfig" v-if="server.config">
-      {{
-      $t("dashboard.widgets.server.download")
-      }}
+      {{ $t("dashboard.widgets.server.download") }}
     </Button>
 
     <button id="edit" @click="toggleEdit">
@@ -65,9 +63,9 @@
 </template>
 
 <script>
-import PortInput from "../../components/PortInput";
-import IPInput from "../../components/IPInput";
-import Button from "../../components/Button";
+import PortInput from "components/PortInput";
+import IPInput from "components/IPInput";
+import Button from "shared-components/Button";
 import { downloadText } from "../../lib/download";
 
 export default {

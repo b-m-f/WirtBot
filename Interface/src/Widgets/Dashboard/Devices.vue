@@ -7,27 +7,25 @@
       :expanded="expertMode"
       @cancelNewDevice="removeNewDevice"
     />
-    <Button
-      id="add-device"
-      uppercase
-      @click="addNewDevice"
-    >{{ $t("dashboard.widgets.devices.addDevice") }}</Button>
+    <Button id="add-device" uppercase @click="addNewDevice">{{
+      $t("dashboard.widgets.devices.addDevice")
+    }}</Button>
   </div>
 </template>
 
 <script>
-import DeviceTable from "../../components/DeviceTable";
-import Button from "../../components/Button";
+import DeviceTable from "components/DeviceTable";
+import Button from "shared-components/Button";
 
 export default {
   components: { DeviceTable, Button },
   data() {
     return {
-      newDevice: undefined
+      newDevice: undefined,
     };
   },
   props: {
-    expertMode: Boolean
+    expertMode: Boolean,
   },
   computed: {
     devices() {
@@ -36,7 +34,7 @@ export default {
       } else {
         return [...this.$store.state.devices].reverse();
       }
-    }
+    },
   },
   methods: {
     addNewDevice() {
@@ -47,8 +45,8 @@ export default {
     },
     removeNewDevice() {
       this.newDevice = undefined;
-    }
-  }
+    },
+  },
 };
 </script>
 

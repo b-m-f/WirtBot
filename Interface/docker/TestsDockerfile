@@ -3,15 +3,24 @@ FROM rust:alpine
 RUN apk update
 RUN apk add nodejs npm  build-base openssl-dev clang curl nginx entr
 
+WORKDIR '/shared-libs'
+COPY shared-libs .
+WORKDIR '/shared-libs/wasm'
+RUN npm ci
+RUN npm run build 
+WORKDIR '/shared-libs/crypto'
+RUN npm ci
+WORKDIR '/shared-libs/config-generators'
+RUN npm ci
+
 # build the app
 WORKDIR '/app'
 COPY docker/wait-for.sh wait-for.sh
 RUN chmod +x wait-for.sh
 COPY package.json  .
 COPY package-lock.json .
-RUN npm install
+RUN npm ci
 
-COPY wasm wasm
 COPY src src 
 COPY babel.config.js .
 COPY vue.config.js .
