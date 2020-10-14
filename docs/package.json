@@ -21,6 +21,8 @@
   },
   "homepage": "https://github.com/b-m-f/wirt#readme",
   "dependencies": {
+    "node-sass": "^4.14.1",
+    "sass-loader": "^10.0.3",
     "vuepress": "^1.6.0"
   }
 }
