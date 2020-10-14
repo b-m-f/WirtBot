@@ -103,6 +103,7 @@
             environment that can be accessed from anywhere in the world. WirtBot
             got you covered and keeps secure communication concerns out of your
             architecture.
+            Just don't expect wonders if you are an enterprise. This project is meant for people, families and small company scale.
           </p>
           <a href="/docs/what-can-i-do-with-wirt"> Learn more </a>
         </Card>

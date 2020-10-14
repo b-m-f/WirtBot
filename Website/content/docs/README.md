@@ -3,14 +3,20 @@ sidebarDepth: 2
 ---
 
 
-# What is Wirt?
+# What is WirtBot®?
 
-Wirt is a system to allow secure communication between any devices you might have - over the internet.
+The WirtBot is a system designed to take you into Cyberspace safely.
+Think of it as a core component that will allow you yo extend your LAN over the whole internet.
 
-It is designed in 2 parts, a WirtBot® that is easily reachable via the internet and the WirtUI to configure.
+It has a few properties that make this safe and secure:
 
-- Head over [here](/docs/how-does-it-work) to understand how it works.
-- Check out [this page](/docs/setup) to set it up yourself
-- The [FAQ page](/docs/setup) should hopefully answer any other questions
+- Based on WireGuard® to have battle tested cryptography protecting your traffic. No eavesdropping
+- You choose who is part of the network. Its impossible to join without your knowledge
+- Stealthy as Sam Fisher. Its there, but no one will know. No open ports except for WireGuard, which can not be port-scanned.
+- High speed. By having WireGuard integrated directly into the Linux Kernel, which a WirtBot uses, your network will be blazing fast.
+
+Convinced? Want a WirtBot?
+
+Check out [this page](/docs/setup) to set one up with the provided installer. Its completely free (Except for the server/VPS you need to rent)! 
 
 Still got questions? Reach me at `contact at wirt.network`.

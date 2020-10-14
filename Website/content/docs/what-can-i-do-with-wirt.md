@@ -1,4 +1,4 @@
-## What can I do with Wirt?
+## What can I do with a WirtBot?
 
 Ever wanted to run your own cloud at home, where the data is on **your** harddrive but still available to you anywhere in the world?
 No problem.
@@ -6,16 +6,11 @@ No problem.
 Want to collect data from your IOT project securely onto your server back home?
 No problem.
 
-Need to securely monitor your infrastructure but dont want to add messy authentification to all the endpoints?
+Want to have secure **DNS** on all your devices?
 No problem.
 
-Want to connect your massive DataCenters over geographical locations?
-That might be a problem.
+As you can see Wirt is a good system for any of your projects that need secure communication over the internet.
+But only up to a certain scale. The focus is to stay to true to the people and help beginners and experts alike.
 
-As you can see Wirt is a good system for any of your projects that need secure communication over the internet up to a certain scale.
-
-Over that scale, especially if you need high network resilience, you should probably do more research into WireGuard® and then decide if Wirt can help you!
-
-I hope to add a few tutorials in the future, but would of course appreciate any help with this. If you have a project that was suddenly easily doable because of the WirtBot please let me know!
-
-Maybe we can work together on adding it to this documentation?
+In the future I hope to add a few tutorials on the amazing things that my WirtBot enables me to do.
+And if you have got a use case, I'd love to hear about it, and maybe we can add a blog/showcases to this website together?
