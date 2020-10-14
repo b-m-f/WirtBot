@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
   base: "/docs/",
   port: 9090,
@@ -46,4 +48,12 @@ module.exports = {
     //   description: "Dein Netz im Netz"
     // }
   },
+  scss: {
+    additionalData: `@import "shared-styles/variables.scss";`,
+  },
+  chainWebpack: (config, isServer) => {
+    config.resolve.alias
+      .set('shared-styles', path.join(__dirname, '../../../shared-libs/styles'))
+      .set('shared-components', path.join(__dirname, "../../../shared-libs/components"))
+  }
 };
