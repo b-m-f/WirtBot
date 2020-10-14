@@ -8,19 +8,24 @@ module.exports = {
     logo: "/logo.svg",
     locales: {
       "/": {
-        sidebar: [
-          ["/docs/", "What is it?"],
-          ["/docs/what-can-i-do-with-wirt", "What can you do with Wirt?"],
-          ["/docs/how-does-it-work", "How does it work?"],
-          ["/docs/setup", "Setup"],
-          ["/docs/updating", "Updating to a new version"],
-          ["/docs/join-a-network", "Join a network"],
-          ["/docs/interface", "WirtBot Interface"],
-          ["/docs/faq", "FAQ"],
-          ["/docs/issues", "New features & Bugs"],
-          ["/docs/shoutouts", "Shoutouts"],
+        sidebar: {
+          "/docs/": [
+            ["", "What is it?"],
+            ["what-can-i-do-with-wirt", "What can you do with Wirt?"],
+            ["how-does-it-work", "How does it work?"],
+            ["setup", "Setup"],
+            ["updating", "Updating to a new version"],
+            ["join-a-network", "Join a network"],
+            ["interface", "WirtBot Interface"],
+            ["faq", "FAQ"],
+            ["issues", "New features & Bugs"],
+            ["shoutouts", "Shoutouts"],
+          ],
+        },
+        nav: [
+          { text: "Documentation", link: "/docs/" },
+          { text: "About", link: "/about" }
         ],
-        nav: [{ text: "Documentation", link: "/docs/" }],
       },
       //   "/de/": {
       //     "/": {
