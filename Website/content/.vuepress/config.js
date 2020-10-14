@@ -1,26 +1,26 @@
 const path = require('path');
 
 module.exports = {
-  base: "/docs/",
+  base: "/",
   port: 9090,
   title: "Wirt documentation",
   themeConfig: {
     logo: "/logo.svg",
     locales: {
       "/": {
-        nav: [{ text: "Back to the App", link: "https://wirt.network" }],
         sidebar: [
-          ["/", "What is it?"],
-          ["/what-can-i-do-with-wirt", "What can you do with Wirt?"],
-          ["/how-does-it-work", "How does it work?"],
-          ["/setup", "Setup"],
-          ["/updating", "Updating to a new version"],
-          ["/join-a-network", "Join a network"],
-          ["/ui", "WirtUI"],
-          ["/faq", "FAQ"],
-          ["/issues", "New features & Bugs"],
-          ["/shoutouts", "Shoutouts"],
+          ["/docs/", "What is it?"],
+          ["/docs/what-can-i-do-with-wirt", "What can you do with Wirt?"],
+          ["/docs/how-does-it-work", "How does it work?"],
+          ["/docs/setup", "Setup"],
+          ["/docs/updating", "Updating to a new version"],
+          ["/docs/join-a-network", "Join a network"],
+          ["/docs/interface", "WirtBot Interface"],
+          ["/docs/faq", "FAQ"],
+          ["/docs/issues", "New features & Bugs"],
+          ["/docs/shoutouts", "Shoutouts"],
         ],
+        nav: [{ text: "Documentation", link: "/docs/" }],
       },
       //   "/de/": {
       //     "/": {
@@ -39,7 +39,7 @@ module.exports = {
   locales: {
     "/": {
       lang: "English",
-      title: "Wirt",
+      title: "WirtBot",
       description: "Connect all your devices",
     },
     // "/de/": {

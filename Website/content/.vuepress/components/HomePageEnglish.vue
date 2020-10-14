@@ -9,9 +9,9 @@
           network into 3 steps. No registration, no accounts - Just a network
           that belongs to you.
         </p>
-        <router-link :to="{ name: 'tutorial-welcome' }">
+        <a href="/docs/setup">
           <Button> Get started </Button>
-        </router-link>
+        </a>
       </div>
       <img src="devices.svg" alt="Picture of connected devices" srcset />
     </div>
@@ -94,13 +94,7 @@
             Build a Cloud or Video streaming service that you own or whatever
             else you would like to bring online. From your home into your cloud.
           </p>
-          <a
-            href="/docs/what-can-i-do-with-wirt"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn more
-          </a>
+          <a href="/docs/what-can-i-do-with-wirt"> Learn more </a>
         </Card>
         <Card padded>
           <h2>For companies</h2>
@@ -110,22 +104,16 @@
             got you covered and keeps secure communication concerns out of your
             architecture.
           </p>
-          <a
-            href="/docs/what-can-i-do-with-wirt"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn more
-          </a>
+          <a href="/docs/what-can-i-do-with-wirt"> Learn more </a>
         </Card>
       </div>
     </div>
     <div id="ready">
       <h2>Ready to get started?</h2>
       <p>Build your own WirtBot today, for free! No registration required</p>
-      <router-link :to="{ name: 'tutorial-welcome' }">
+      <a href="/docs/setup">
         <Button> Get started now </Button>
-      </router-link>
+      </a>
     </div>
   </div>
 </template>
