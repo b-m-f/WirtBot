@@ -1,6 +1,6 @@
-# Wirt documentation
+# WirtBot documentation
 
-This repository houses the documentation for https://wirt.network .
+This directory houses the [WirtBot website](https://wirtbot.com)
 
 Feel free to contribute to it if you think something is missing or you have a great tutorial!
 
@@ -10,7 +10,9 @@ First of all download this repository.
 Now create a new [markdown](https://www.markdownguide.org/basic-syntax) file in the docs folder.
 When you are satisfied with your page add it to the sidebar in `docs/.vuepress/config.js`.
 
-### Test you changes
+Everything is based on [vuepress](https://vuepress.vuejs.org/), which has great documentation and is beginner friendly.
+
+### Test your changes
 
 You will need:
 - nodejs

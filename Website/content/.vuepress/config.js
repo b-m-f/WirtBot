@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
   base: "/",
   port: 9090,
-  title: "Wirt documentation",
+  title: "WirtBot, your LAN in the cloud",
   themeConfig: {
     logo: "/logo.svg",
     locales: {

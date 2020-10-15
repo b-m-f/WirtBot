@@ -1,6 +1,6 @@
 # Joining a network
 
-You have received a configuration file for a Wirt network?
+You have received a configuration file for a WirtBot network?
 
 Follow the guide for your the operating system you use to join it.
 
@@ -10,7 +10,7 @@ Follow the guide for your the operating system you use to join it.
 
 ## Windows
 
-**First download the WireGuard software from** [https://wireguard.com](https://wireguard.com)
+**First download the WireGuard® software from** [https://wireguard.com](https://wireguard.com)
 
 ![](./images/windows1.jpg)
 
