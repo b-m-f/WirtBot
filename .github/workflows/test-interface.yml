@@ -1,4 +1,4 @@
-name: run WirtBot Interface tests
+name: run WirtBot system tests
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
@@ -7,6 +7,7 @@ on:
     branches: [master]
     paths:
       - "Interface/**"
+      - "WirtBot/**"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -16,6 +17,6 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      - name: Run test suite for the interface
+      - name: Run test suite for the whole System
         run: |
-         make test-interface-ci
+         make test-ci
