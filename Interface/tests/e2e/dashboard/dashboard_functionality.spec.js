@@ -5,6 +5,7 @@ module.exports = {
     await browser.url(`http://${process.env.TEST_URL}/`);
     await browser.waitForElementVisible(".app");
 
+
     await browser.click("#add-device button");
     await browser.setValue("input[name='device-name']", "test1");
     await browser.setValue("input[name='device-ipv4']", "4");
@@ -12,12 +13,14 @@ module.exports = {
     await browser.click("button.save");
 
     await browser.assert.visible("#alerts .warning");
+    await browser.pause(3000)
 
     browser.expect.elements(".device").count.to.equal(0);
   },
   "Test dashboard server button only appears when data is input": async function (
     browser
   ) {
+    await browser.url(`http://${process.env.TEST_URL}/`);
     await browser.assert.not.elementPresent("#server-widget #download");
 
     await setServer(browser);
@@ -65,14 +68,13 @@ module.exports = {
     await browser.click("#add-device button");
     await browser.setValue("input[name='device-name']", "test3");
     await browser.clearValue("input[name='device-ipv4']");
-    await browser.setValue("input[name='device-ipv4']", "5");
+    await browser.setValue("input[name='device-ipv4']", "4");
     await browser.setValue("select.device-type", "Android");
 
     await browser.click("button.save");
 
     await browser.assert.visible("#alerts .warning");
-    browser.expect
-      .elements("#device-widget form .device-overview")
-      .count.to.equal(3);
+
+    await browser.pause(3000)
   },
 };

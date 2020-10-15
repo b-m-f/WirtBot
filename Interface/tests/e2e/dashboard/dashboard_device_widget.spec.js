@@ -89,6 +89,8 @@ module.exports = {
         await browser.setValue("input[name='device-name']", "mtu-test");
         await browser.setValue("input[name='MTU']", "20000");
         await browser.assert.visible("#alerts .warning");
+        // TODO make alerts be removed on reload so this isnt needed
+        await browser.pause(3000)
         await browser.click("button.stop");
     },
     "additional DNS Servers must be a comma separated list of valid IPv4s": async function (browser) {
@@ -98,6 +100,7 @@ module.exports = {
 
         await browser.setValue("input[name='additionalDNSServers']", "1.1.1.1,2.2.2.");
         await browser.assert.visible("#alerts .warning");
+        await browser.pause(3000)
 
         await browser.click("button.stop");
     },
