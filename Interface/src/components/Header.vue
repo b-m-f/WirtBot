@@ -20,19 +20,17 @@
               <img src="logo.svg" alt="WirtBot logo" />
             </router-link>
           </div>
-          <div id="about">
-            <router-link :to="{ name: 'about' }">
-              {{ $t("header.about") }}
-            </router-link>
-          </div>
           <div id="documentation">
-            <a href="/docs" target="_blank" rel="noopener noreferrer">{{
-              $t("header.documentation")
-            }}</a>
+            <a
+              href="https://wirtbot.com/docs"
+              target="_blank"
+              rel="noopener noreferrer"
+              >{{ $t("header.documentation") }}</a
+            >
           </div>
           <div id="github">
             <a
-              href="https://github.com/b-m-f/wirt"
+              href="https://github.com/b-m-f/wirtbot"
               target="_blank"
               rel="noopener noreferrer"
               >GitHub</a
@@ -45,27 +43,20 @@
               {{ $t("header.dashboard") }}
             </router-link>
           </div>
-          <div id="tutorial">
-            <router-link :to="{ name: 'tutorial-welcome' }">
-              <Button empty uppercase>{{ $t("header.getStarted") }}</Button>
-            </router-link>
-          </div>
         </div>
       </nav>
       <nav v-if="mobileNavigationExpanded" class="mobile-navigation">
-        <div id="about">
-          <router-link :to="{ name: 'about' }">
-            {{ $t("header.about") }}
-          </router-link>
-        </div>
         <div id="documentation">
-          <a href="/docs" target="_blank" rel="noopener noreferrer">{{
-            $t("header.documentation")
-          }}</a>
+          <a
+            href="https://wirtbot.com/docs"
+            target="_blank"
+            rel="noopener noreferrer"
+            >{{ $t("header.documentation") }}</a
+          >
         </div>
         <div id="github">
           <a
-            href="https://github.com/b-m-f/wirt"
+            href="https://github.com/b-m-f/wirtbot"
             target="_blank"
             rel="noopener noreferrer"
             >GitHub</a
@@ -76,22 +67,14 @@
             {{ $t("header.dashboard") }}
           </router-link>
         </div>
-        <div id="tutorial">
-          <router-link :to="{ name: 'tutorial-welcome' }">
-            <Button empty uppercase>{{ $t("header.getStarted") }}</Button>
-          </router-link>
-        </div>
       </nav>
     </div>
   </header>
 </template>
 
 <script>
-import Button from "shared-components/Button";
 export default {
-  components: {
-    Button,
-  },
+  components: {},
   data() {
     return { mobileNavigationExpanded: false };
   },
