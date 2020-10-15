@@ -1,6 +1,6 @@
 {
   "name": "@wirtbot/installer",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Installation script for WirtBot",
   "main": "dist/installer.js",
   "bin": {
