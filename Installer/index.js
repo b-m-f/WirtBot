@@ -25,7 +25,7 @@ const runAnsible = async ({
     serverConfig
 }) => {
     let args = [
-        "-i", `${serverIP},`, path.join(__dirname, "ansible/main.yml"),
+        "-i", `${serverIP},`, path.join(__dirname, "../ansible/main.yml"),
         "--extra-vars", `wirtui_public_key=${wirtBotUIKey}`,
         "--extra-vars", `maintainer_username=${user}`,
         "--extra-vars", `maintainer_ssh_key="${sshKey}"`,
