@@ -21,6 +21,6 @@
   },
   "homepage": "https://github.com/b-m-f/Wirt#readme",
   "dependencies": {
-    "@wirtbot/wasm": "file:../wasm"
+    "@wirtbot/rust-wasm": "file:../wasm"
   }
 }

@@ -27,7 +27,7 @@
     "@vue/cli-service": "^4.5.7",
     "@wirtbot/config-generators": "file:../shared-libs/config-generators",
     "@wirtbot/crypto": "file:../shared-libs/crypto",
-    "@wirtbot/wasm": "file:../shared-libs/wasm",
+    "@wirtbot/rust-wasm": "file:../shared-libs/wasm",
     "babel-eslint": "^10.1.0",
     "core-js": "^3.6.5",
     "eslint": "^7.11.0",

@@ -1,4 +1,4 @@
 wirt-installer.config.json
 **/node_modules
-**/wasm/target
+**/target
 ImportThisFileIntoYourWirtBotInterface.json
