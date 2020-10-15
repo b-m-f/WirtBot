@@ -4,15 +4,15 @@ services:
     image: test-interface
     container_name: test-runner
     command: ["sh", "/app/wait-for.sh", "chrome:4444", "--", "npm", "run", "test:ci"]
-    depends_on: ["chrome", "test-server", "test-interface"]
+    depends_on: ["chrome", "test-wirtbot", "test-interface"]
     volumes:
       - download_folder:/tmp/WirtTestDownloads
   test-interface:
     image: test-interface
     container_name: test-interface
   test-server:
-    image: bmff/wirtbot:release
-    container_name: test-server
+    image: test-wirtbot
+    container_name: test-wirtbot
     environment:
       "PUBLIC_KEY": "1lLU3VhXsrSGMxESmqfY4m2oEVkpfEHyKlCQU6MMPsI="
       "ALLOWED_ORIGIN": "http://localhost:8080"
