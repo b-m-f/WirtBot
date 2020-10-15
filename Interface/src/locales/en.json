@@ -19,7 +19,7 @@
     "documentation": "Documentation",
     "imprint": "Imprint",
     "privacy": "Privacy & cookies",
-    "donation": "Donations for the server costs of Wirt are appreciated and accepted via <a target='_blank' rel='noopener noreferrer' href='https://ethereum.org/' >Ethereum</a> address {{address}}"
+    "donation": "Donations for the server costs of the WirtBot website are appreciated and accepted via <a target='_blank' rel='noopener noreferrer' href='https://ethereum.org/' >Ethereum</a> address {{address}}"
   },
   "dashboard": {
     "edit": "Edit",
@@ -71,13 +71,13 @@
     "messages": {
       "regularBackup": {
         "title": "Remember to regularly export your backups",
-        "text": "Because Wirt never reads or sends your configuration data to anyone (even we can not see that data), your are fully in charge of maintaining backups of your configurations. This is important as you will need these backups to continue work on another computer or restore your work in case something goes wrong.",
+        "text": "Because WirtBot never sends your configuration data to anyone your are fully in charge of maintaining backups of your configurations. This is important as you will need these backups to continue work on another computer or restore your work in case something goes wrong.",
         "link": "Learn more about backups"
       },
       "whyNoLogin": {
         "title": "Why don't I need to login? ",
-        "text": "Your Wirt only runs on your computer. This allows you to access your private Dashboard in your browser without ever needing an external user account or registration.",
-        "link": "Learn more about Wirts authentication methods"
+        "text": "Your WirtBot, your browser: Connected with modern cryptography. No need for oldschool things like passwords",
+        "link": "Learn more about WirtBot`s security"
       }
     },
     "title": "Dashboard",
@@ -167,7 +167,7 @@
     "confirmGeneratingKeysAgain": "Make absolutely sure you know what you are doing! This can lock you out of your server forever if you did not set it up yourself!",
     "connectionEnabled": "Enabled",
     "yourPublicKey": "Your public key",
-    "fileReaderApiNotSupported": "It seems that your browser does not support the FileReader API. Please continue using Wirt on another browser using your backup.",
+    "fileReaderApiNotSupported": "It seems that your browser does not support the FileReader API. Please configure WirtBot on another browser using your backup to continue where you left off",
     "noFileSelected": "No file was selected to import.",
     "serverHostname": "Server hostname"
   },

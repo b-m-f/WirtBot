@@ -1,4 +1,4 @@
-![Wirt logo](Interface/public/logo.svg)
+![WirtBot logo](Interface/public/logo.svg)
 
 # Wirt
 **Easily and securely extend your network into the cloud!**
@@ -33,7 +33,7 @@ Think of it as your LAN extended over the whole internet, but only accessible to
 - Developing an App/Website on your machine and want to **show it off live on your phone via the internet**?
 - Have loads of **IOT devices** that you want to be able to **communicate safely** with each other?
 
-Wirt has got you covered. 
+A WirtBot got you covered. 
 
 
 ## How?
@@ -56,13 +56,13 @@ Read the setup documentation at [wirt.network/docs/setup](https://wirt.network/d
 - **Configuration over code**. Leverage existing tooling and provide a clean interface for configuring it correctly
 
 ## Contributing
-![Interface Tests](https://github.com/b-m-f/Wirt/workflows/run%20Interface%20tests/badge.svg)
+![WirtBot Interface Tests](https://github.com/b-m-f/Wirt/workflows/run%20WirtBot-Interface%20tests/badge.svg)
 ![WirtBot Tests](https://github.com/b-m-f/Wirt/workflows/run%20WirtBot%20tests/badge.svg)
 
-![Wirt-Interface Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/bmff/wirt-interface?label=Wirt-Interface%20build)
+![WirtBot Interface Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/bmff/wirtbot-interface?label=WirtBot-Interface%20build)
 ![WirtBot Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/bmff/wirtbot?label=WirtBot%20build)
 
-You want to help out making Wirt better? **AWESOME**! For example the CI is not yet perfect as you can see with the badges.
+You want to help out making WirtBot better? **AWESOME**! For example the CI is not yet perfect as you can see with the badges.
 
 Please feel free to open up an issue here in Github to discuss what you would want to do, and what kind of help I can give you.
 I also encourage you to ask questions! My goal is to document as many of those questions as I can, to allow more people to understand what is going on in the code.
@@ -73,7 +73,6 @@ Other things that need help:
 
 - Translate it into a language that you know
 - Pairing on documentation. If I explain it to you, its easier to figure how my code makes no sense
-- Second mode that hides the Wirt Interface on the WirtBot and ignores all traffic except WireGuard on pulic interfaces
 
 Please check out the `developers-docs` directory for more details on the application.
 
@@ -82,7 +81,7 @@ Please check out the `developers-docs` directory for more details on the applica
 
 The WirtBot and Interface are licensed with `GNU Affero General Public License v3.0`
 
-The documentation and Wirt logo are provided under `Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)`
+The documentation and WirtBot logo are provided under `Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)`
 
 ## Donate
 

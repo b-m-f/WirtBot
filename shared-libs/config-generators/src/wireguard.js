@@ -50,7 +50,7 @@ PersistentKeepalive = 25`;
   }
   if (!ip.v4 && ip.v6) {
     // TODO: is there a Bug here? What if additionalDNSServers are IPv4, or the server is IPv4.
-    // The Wirt server IP should be checked to determine if DNS is IPv4 vs IPv6
+    // The WirtBot server IP should be checked to determine if DNS is IPv4 vs IPv6
     // Write tests first
     return `[Interface]
 Address = ${server.subnet.v6}${ip.v6}

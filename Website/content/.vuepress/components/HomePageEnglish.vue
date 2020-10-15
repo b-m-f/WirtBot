@@ -5,9 +5,9 @@
         <h1>Create a private network for all your devices.</h1>
         <p>
           Connecting all your devices has never been easier, thanks to
-          WireGuard®. Wirt simplifies the process of creating your own private
-          network into 3 steps. No registration, no accounts - Just a network
-          that belongs to you.
+          WireGuard®. WirtBot simplifies the process of creating your own
+          private network into 3 steps. No registration, no accounts - Just a
+          network that belongs to you.
         </p>
         <a href="/docs/setup">
           <Button> Get started </Button>
@@ -17,7 +17,7 @@
     </div>
     <div id="two">
       <div>
-        <img src="wirt-bot.svg" alt="Picture of the wirt robot" srcset />
+        <img src="wirt-bot.svg" alt="Picture of the WirtBot" srcset />
       </div>
       <div class="text">
         <h2>Hi, I'm WirtBot®.</h2>
@@ -86,7 +86,7 @@
       </ul>
     </div>
     <div id="docs">
-      <h1>Wirt works for you</h1>
+      <h1>WirtBot works for you</h1>
       <div class="cards">
         <Card padded>
           <h2>At home</h2>
@@ -102,8 +102,8 @@
             Secure monitoring, self-hosted Groupware or a development
             environment that can be accessed from anywhere in the world. WirtBot
             got you covered and keeps secure communication concerns out of your
-            architecture.
-            Just don't expect wonders if you are an enterprise. This project is meant for people, families and small company scale.
+            architecture. Just don't expect wonders if you are an enterprise.
+            This project is meant for people, families and small company scale.
           </p>
           <a href="/docs/what-can-i-do-with-wirt"> Learn more </a>
         </Card>

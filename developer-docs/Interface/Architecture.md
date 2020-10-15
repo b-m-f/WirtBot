@@ -23,4 +23,4 @@ Simply call the API in the **action** that you call via `dispatch()`. Now you ha
 ## Additional DNS Servers
 First the WirtBot DNS server is tried. It will now block any forwarding of `lan local home` which are reserved for local networks (https://unix.stackexchange.com/questions/92441/whats-the-difference-between-local-home-and-lan).
 Should no DNS entry be found via the WirtBot DNS then the additional DNS servers will be tried.
-This can be used to be able to route all traffic through the WirtBot, reach Wirt internal devices and still be able to communicate with other internal networks.
+This can be used to be able to route all traffic through the WirtBot to reach devices on your WirtBot network and still be able to communicate with other internal networks.

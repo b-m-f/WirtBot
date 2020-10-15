@@ -9,7 +9,7 @@ No problem.
 Want to have secure **DNS** on all your devices?
 No problem.
 
-As you can see Wirt is a good system for any of your projects that need secure communication over the internet.
+As you can see WirtBot allows you to realize projects that need secure communication over the internet.
 But only up to a certain scale. The focus is to stay to true to the people and help beginners and experts alike.
 
 In the future I hope to add a few tutorials on the amazing things that my WirtBot enables me to do.

@@ -6,7 +6,7 @@
       <div v-if="isMobilePage" class="mobile-head">
         <div id="logo">
           <router-link to="/">
-            <img src="logo.svg" alt="wirt logo" />
+            <img src="logo.svg" alt="WirtBot logo" />
           </router-link>
         </div>
         <button class="toggle-nav" @click.prevent="toggleMobileNavigation">
@@ -17,7 +17,7 @@
         <div id="left">
           <div id="logo">
             <router-link to="/">
-              <img src="logo.svg" alt="wirt logo" />
+              <img src="logo.svg" alt="WirtBot logo" />
             </router-link>
           </div>
           <div id="about">
