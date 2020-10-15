@@ -5,7 +5,7 @@ const setTimeoutAsync = util.promisify(setTimeout);
 
 module.exports = {
     "Add server": async function (browser) {
-        await browser.url(`http://${process.env.TEST_URL}/dashboard`);
+        await browser.url(`http://${process.env.TEST_URL}/`);
         await browser.waitForElementVisible({
             selector: ".app",
             message: "Setting Server data",

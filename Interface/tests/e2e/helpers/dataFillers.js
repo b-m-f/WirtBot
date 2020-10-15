@@ -1,5 +1,5 @@
 async function setServer(browser) {
-  await browser.url(`http://${process.env.TEST_URL}/dashboard`);
+  await browser.url(`http://${process.env.TEST_URL}/`);
   await browser.waitForElementVisible({
     selector: "body",
     message: "Setting Server data",
