@@ -56,7 +56,7 @@ Read the setup documentation at [wirt.network/docs/setup](https://wirt.network/d
 - **Configuration over code**. Leverage existing tooling and provide a clean interface for configuring it correctly
 
 ## Contributing
-![WirtBot Interface Tests](https://github.com/b-m-f/Wirt/workflows/run%20WirtBot-Interface%20tests/badge.svg)
+![WirtBot Interface Tests](https://github.com/b-m-f/Wirt/workflows/run%20WirtBot%20Interface%20tests/badge.svg)
 ![WirtBot Tests](https://github.com/b-m-f/Wirt/workflows/run%20WirtBot%20tests/badge.svg)
 
 ![WirtBot Interface Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/bmff/wirtbot-interface?label=WirtBot-Interface%20build)
