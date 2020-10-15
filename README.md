@@ -1,12 +1,12 @@
 ![WirtBot logo](Interface/public/logo.svg)
 
-# Wirt
+# WirtBot
 **Easily and securely extend your network into the cloud!**
 
 <br/>
 
 
-Welcome to the [Wirt](https://wirt.network) repository.
+Welcome to the [WirtBot](https://wirtbot.com) repository.
 
 ## Setup
 
@@ -17,9 +17,7 @@ Welcome to the [Wirt](https://wirt.network) repository.
 
 **Run:**
 ```
-git clone https://github.com/b-m-f/Wirt.git
-cd Wirt
-node installer/installer.js
+npm install -g @wirtbot/installer && wirt-installer
 ```
 
 **Done**
@@ -38,7 +36,7 @@ A WirtBot got you covered.
 
 ## How?
 
-**Wirt** is a system that is designed after the UNIX philosophy. 
+**WirtBot** is a system/robot that is designed after the UNIX philosophy. 
 Many small parts that do a job and do it well. Putting special importance into correct configuration.
 Everything is controlled via a UI that focusses on **ease of use** and all is glued together using Infrastructure as code.
 If you set it up you can rest assured that it is done properly.
@@ -59,8 +57,9 @@ Read the setup documentation at [wirt.network/docs/setup](https://wirt.network/d
 ![WirtBot System Tests](https://github.com/b-m-f/Wirt/workflows/run%20WirtBot%20system%20tests/badge.svg)
 ![WirtBot Tests](https://github.com/b-m-f/Wirt/workflows/run%20WirtBot%20tests/badge.svg)
 
-![WirtBot Interface Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/bmff/wirtbot-interface?label=WirtBot-Interface%20build)
+![WirtBot Interface Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/bmff/wirtbot-interface?label=WirtBot%20Interface%20build)
 ![WirtBot Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/bmff/wirtbot?label=WirtBot%20build)
+![WirtBot Website Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/bmff/wirtbot-website?label=WirtBot%20Website%20build)
 
 You want to help out making WirtBot better? **AWESOME**! For example the CI is not yet perfect as you can see with the badges.
 
