@@ -10,9 +10,12 @@ services:
   test-interface:
     image: test-interface
     container_name: test-interface
-  test-server:
+  test-wirtbot:
     image: test-wirtbot
     container_name: test-wirtbot
+    volumes:
+      - ./test-server-conf:/etc/wireguard/server.conf
+      - ./test-Corefile:/dns/CoreFile
     environment:
       "PUBLIC_KEY": "1lLU3VhXsrSGMxESmqfY4m2oEVkpfEHyKlCQU6MMPsI="
       "ALLOWED_ORIGIN": "http://localhost:8080"
