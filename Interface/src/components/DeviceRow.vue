@@ -361,7 +361,8 @@ export default {
       }
       const isIpUsed = this.devices.reduce((prev, next) => {
         return (
-          prev || (next.ip == this.internalIP.v4 && next.id !== this.internalId)
+          prev ||
+          (next.ip.v4 == this.internalIP.v4 && next.id !== this.internalId)
         );
       }, false);
 
