@@ -2,8 +2,8 @@ import Configstore from 'configstore';
 import prompts from 'prompts';
 import { promises as fs } from "fs"
 import { spawn } from "child_process";
-import { generateServerConfig, generateDeviceConfig, generateDNSFile } from '@wirt/config-generators'
-import { getKeys, generateSigningKeys } from '@wirt/crypto'
+import { generateServerConfig, generateDeviceConfig, generateDNSFile } from '@wirtbot/config-generators'
+import { getKeys, generateSigningKeys } from '@wirtbot/crypto'
 
 const configPath = "./wirt-installer.config.json"
 
@@ -165,11 +165,11 @@ const main = async () => {
             // The backup is double stringified
             // Fix this on backup creation and here
             const interfaceState = JSON.stringify(JSON.stringify({
-                    // TODO keep this version somewhere else
-                    version: 1.1,
-                    server,
-                    devices: [device],
-                    keys: signingKeys
+                // TODO keep this version somewhere else
+                version: 1.1,
+                server,
+                devices: [device],
+                keys: signingKeys
             }));
 
             runAnsible(Object.assign({}, config.all, { password: response.password, wirtBotUIKey: signingKeys.public, update: false, serverConfig, dnsConfig }));
