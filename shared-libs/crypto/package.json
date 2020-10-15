@@ -1,5 +1,5 @@
 {
-  "name": "@wirt/crypto",
+  "name": "@wirtbot/crypto",
   "version": "1.0.0",
   "description": "Crypto library to be used in Wirt",
   "main": "index.js",
@@ -21,6 +21,6 @@
   },
   "homepage": "https://github.com/b-m-f/Wirt#readme",
   "dependencies": {
-    "@wirt/wasm": "file:../wasm"
+    "@wirtbot/wasm": "file:../wasm"
   }
 }

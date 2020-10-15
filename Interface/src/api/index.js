@@ -1,4 +1,4 @@
-import { sign } from "@wirt/crypto";
+import { sign } from "@wirtbot/crypto";
 import store from "../store";
 
 // Loaded with https://cli.vuejs.org/guide/mode-and-env.html

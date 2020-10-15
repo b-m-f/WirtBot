@@ -1,5 +1,5 @@
 {
-  "name": "@wirt/config-generators",
+  "name": "@wirtbot/config-generators",
   "version": "1.0.0",
   "description": "Config generator library for use in Wirt",
   "main": "index.js",

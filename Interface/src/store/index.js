@@ -3,8 +3,8 @@ import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
 import QRCode from "qrcode";
 import i18n from "../i18n";
-import { generateSigningKeys, getKeys } from "@wirt/crypto";
-import { generateDNSFile, generateDeviceConfig, generateServerConfig } from "@wirt/config-generators";
+import { generateSigningKeys, getKeys } from "@wirtbot/crypto";
+import { generateDNSFile, generateDeviceConfig, generateServerConfig } from "@wirtbot/config-generators";
 import { updateServerConfig as updateServerViaApi, updateDNSConfig as updateDNSConfigViaApi } from "../api";
 
 

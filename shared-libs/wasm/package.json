@@ -1,5 +1,5 @@
 {
-  "name": "@wirt/wasm",
+  "name": "@wirtbot/wasm",
   "version": "1.0.0",
   "description": "WASM library for use in Wirt",
   "main": "wasm/pkg/wirt_wasm.js",

@@ -26,7 +26,7 @@ The following programs are needed for the initail install of the WirtBot and to 
 
 
 ### Installer
-Alright, time to get the installer: `npm install -g @wirt/installer`. 
+Alright, time to get the installer: `npm install -g @wirtbot/installer`. 
 
 Once installed run `wirt-installer` and the installer will now take you through the rest of the setup.
 After answering all the questions wait until the setup is done, this can take up to **20 minutes** so just be patient and follow the things that it is doing of you like.
@@ -62,6 +62,6 @@ Good luck, have fun and maybe share a few cool projects you were able to put int
 
 #### Updating
 
-Run `npm install -g @wirt/installer` to update the installer with the newest changes.
+Run `npm install -g @wirtbot/installer` to update the installer with the newest changes.
 
 Now run it with `wirt-installer` and choose the update option.
