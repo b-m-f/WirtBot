@@ -250,7 +250,7 @@ export default {
       this.internalEdit = false;
 
       if (!this.id) {
-        this.$emit("cancelNewDevice");
+        this.$emit("cancel-new-device");
       }
     },
     getNextHighestIPv4() {

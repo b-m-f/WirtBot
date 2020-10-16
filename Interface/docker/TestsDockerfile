@@ -1,13 +1,29 @@
 # APP
-FROM rust:alpine 
+FROM rust:alpine as wasm
 RUN apk update
 RUN apk add nodejs npm  build-base openssl-dev clang curl nginx entr
 
+
+WORKDIR '/wasm'
+ENV NODE_ENV production
+COPY shared-libs/rust-wasm .
+
+RUN npm install -g wasm-pack --unsafe-perm=true
+RUN npm ci 
+RUN npm run build 
+
+FROM node:lts-buster as interface
+
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update
+RUN apt install -yy
+
+# Build shared libs
 WORKDIR '/shared-libs'
 COPY shared-libs .
-WORKDIR '/shared-libs/wasm'
-RUN npm ci
-RUN npm run build 
+RUN rm -rf rust-wasm
+WORKDIR '/shared-libs/rust-wasm'
+COPY --from=wasm /wasm /shared-libs/rust-wasm/
 WORKDIR '/shared-libs/crypto'
 RUN npm ci
 WORKDIR '/shared-libs/config-generators'
@@ -34,6 +50,7 @@ COPY Interface/nightwatch.conf.js .
 COPY Interface/jest.config.js jest.config.js
 COPY Interface/docker/nginx/test.conf /etc/nginx/nginx.conf
 
+# For nginx runtime files
 RUN mkdir -p /run/nginx
 
 CMD ["nginx", "-g", "daemon off;"]

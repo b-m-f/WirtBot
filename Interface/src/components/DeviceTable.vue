@@ -16,7 +16,7 @@
             :additionalDNSServers="device.additionalDNSServers"
             :MTU="device.MTU"
             @saved="save"
-            @cancelNewDevice="cancelNewDevice"
+            @cancel-new-device="cancelNewDevice"
             :class="{ even: index % 2 == 0 }"
             :expanded="expanded"
           />
@@ -37,7 +37,7 @@
         :routed="device.routed"
         :edit="!device.id"
         @saved="save"
-        @cancelNewDevice="cancelNewDevice"
+        @cancel-new-device="cancelNewDevice"
         :class="{ even: index % 2 == 0 }"
         :expanded="expanded"
       />
@@ -60,7 +60,7 @@ export default {
   },
   methods: {
     cancelNewDevice() {
-      this.$emit("cancelNewDevice");
+      this.$emit("cancel-new-device");
     },
     async updateDevice(device) {
       const old = this.devices.find((dvc) => dvc.id === device.id);
@@ -148,7 +148,7 @@ export default {
         MTU,
       };
       await this.$store.dispatch("addDevice", device);
-      this.$emit("deviceSaved");
+      this.$emit("device-saved");
       return true;
     },
   },

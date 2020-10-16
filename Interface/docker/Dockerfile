@@ -1,5 +1,5 @@
 # WASM
-FROM rust:alpine  as wasm
+FROM rust:alpine as wasm
 RUN apk update
 RUN apk add nodejs npm  build-base openssl-dev clang
 
@@ -12,6 +12,8 @@ RUN npm ci
 RUN npm run build 
 
 FROM node:lts-buster as interface
+
+# Build shared libs
 ENV NODE_ENV production
 WORKDIR '/shared-libs'
 COPY shared-libs .
