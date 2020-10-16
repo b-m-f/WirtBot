@@ -56,8 +56,8 @@ export default {
   props: {
     ip: {
       type: Array,
-      default: () => [undefined, undefined, undefined, undefined]
-    }
+      default: () => [undefined, undefined, undefined, undefined],
+    },
   },
   methods: {
     focusNext(next) {
@@ -74,7 +74,8 @@ export default {
         return;
       }
 
-      this.ip[index] = newValue;
+      const newIp = this.ip;
+      newIp[index] = newValue;
 
       if (newValue > 255) {
         return;
@@ -88,15 +89,15 @@ export default {
 
       // first and last have to be at least 1
       const ipComplete =
-        this.ip.reduce((prev, next) => {
+        newIp.reduce((prev, next) => {
           return prev + next;
         }, 0) >= 2 &&
         this.ip[0] > 0 &&
         this.ip[3] > 0;
 
-      this.$emit("change", { ip: this.ip, valid: ipComplete });
-    }
-  }
+      this.$emit("change", { ip: newIp, valid: ipComplete });
+    },
+  },
 };
 </script>
 

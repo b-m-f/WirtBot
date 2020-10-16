@@ -3,9 +3,9 @@
     <h1>{{ $t("dashboard.widgets.devices.title") }}</h1>
     <DeviceTable
       :devices="devices"
-      @deviceSaved="removeNewDevice"
+      @device-saved="removeNewDevice"
       :expanded="expertMode"
-      @cancelNewDevice="removeNewDevice"
+      @cancel-new-device="removeNewDevice"
     />
     <Button id="add-device" uppercase @click="addNewDevice">{{
       $t("dashboard.widgets.devices.addDevice")
