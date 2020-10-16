@@ -15,7 +15,6 @@ RUN npm run build
 FROM node:lts-buster as interface
 
 # Build shared libs
-ENV NODE_ENV production
 WORKDIR '/shared-libs'
 COPY shared-libs .
 RUN rm -rf rust-wasm
