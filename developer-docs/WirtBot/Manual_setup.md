@@ -19,14 +19,14 @@ Here are a few links:
 
 But what about the last **20%**?
 
-Finishing up the setup requires the [WirtBot executable](https://github.com/b-m-f/wirt/releases) to be running on your machine.
+Finishing up the setup requires the [WirtBot executable](https://github.com/b-m-f/WirtBot/releases) to be running on your machine.
 
 This can be achieved with the following steps:
 
-- Download a release from https://github.com/b-m-f/wirt/releases and place it into `/usr/bin/`
+- Download a release from https://github.com/b-m-f/WirtBot/releases and place it into `/usr/bin/`
 - `sudo chmod +x /usr/bin/wirtbot` to make it executable
 - Get the public key of your WirtUI from the [settings section](https://wirt.network/dashboard) on the Dashboard
-- Copy https://github.com/b-m-f/Wirt/blob/master/WirtBot/wirtbot.service to `/etc/systemd/system/wirtbot.service`
+- Copy https://github.com/b-m-f/WirtBot/blob/master/WirtBot/wirtbot.service to `/etc/systemd/system/wirtbot.service`
   - **Make sure to change the variables in that file**!
   - PUBLIC_KEY: this is the public key from the WirtUI
   - SSL_PEM_CERT: this is the location of your SSL certificate
@@ -34,8 +34,8 @@ This can be achieved with the following steps:
   - User and Group: choose the user and the group that is used to run the `wirtbot` or delete these lines to use the root user.
   - You can leave the port and host setting at the default, unless you really know what you are doing
 - When configured correctly you can now run `systemctl enable --now wirtbot` to start the WirtBot. Use `journalctl -xe` if something is going wrong to get more information on what happened
-- The last step to finish up the setup is the activation of a reloader. Copy https://github.com/b-m-f/Wirt/blob/master/WirtBot/wireguard-restarter.sh to `/usr/bin/wireguard-restarter.sh`
-- Now copy https://github.com/b-m-f/Wirt/blob/master/WirtBot/wireguard-restarter.service to `/etc/systemd/system/wireguard-restarter.service`
+- The last step to finish up the setup is the activation of a reloader. Copy https://github.com/b-m-f/WirtBot/blob/master/WirtBot/wireguard-restarter.sh to `/usr/bin/wireguard-restarter.sh`
+- Now copy https://github.com/b-m-f/WirtBot/blob/master/WirtBot/wireguard-restarter.service to `/etc/systemd/system/wireguard-restarter.service`
 - Run `systemctl enable --now wireguard-restarter`
 
 ### Testing your setup

@@ -9,18 +9,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/b-m-f/Wirt.git"
+    "url": "git+https://github.com/b-m-f/WirtBot.git"
   },
   "keywords": [
-    "Wirt"
+    "WirtBot"
   ],
   "author": "b-m-f <max@ehlers.berlin>",
   "license": "AGPL-3.0",
   "bugs": {
-    "url": "https://github.com/b-m-f/Wirt/issues"
+    "url": "https://github.com/b-m-f/WirtBot/issues"
   },
-  "homepage": "https://github.com/b-m-f/Wirt#readme",
+  "homepage": "https://github.com/b-m-f/WirtBot#readme",
   "dependencies": {
-    "@wirtbot/rust-wasm": "file:../wasm"
+    "@wirtbot/rust-wasm": "file:../rust-wasm"
   }
 }

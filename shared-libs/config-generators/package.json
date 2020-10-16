@@ -8,13 +8,13 @@
   "dependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/b-m-f/Wirt.git"
+    "url": "git+https://github.com/b-m-f/WirtBot.git"
   },
   "author": "b-m-f <max@ehlers.berlin>",
   "license": "AGPLv3",
   "bugs": {
-    "url": "https://github.com/b-m-f/Wirt/issues"
+    "url": "https://github.com/b-m-f/WirtBot/issues"
   },
-  "homepage": "https://github.com/b-m-f/Wirt#readme",
+  "homepage": "https://github.com/b-m-f/WirtBot#readme",
   "devDependencies": {}
 }

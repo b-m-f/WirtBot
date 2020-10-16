@@ -30,7 +30,7 @@
           </div>
           <div id="github">
             <a
-              href="https://github.com/b-m-f/wirtbot"
+              href="https://github.com/b-m-f/WirtBot"
               target="_blank"
               rel="noopener noreferrer"
               >GitHub</a
@@ -56,7 +56,7 @@
         </div>
         <div id="github">
           <a
-            href="https://github.com/b-m-f/wirtbot"
+            href="https://github.com/b-m-f/WirtBot"
             target="_blank"
             rel="noopener noreferrer"
             >GitHub</a
