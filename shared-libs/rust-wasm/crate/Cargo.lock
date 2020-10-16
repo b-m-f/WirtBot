@@ -480,7 +480,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "wirt-wasm"
+name = "wirtbot-interface-rust-wasm"
 version = "1.0.0"
 dependencies = [
  "base64",

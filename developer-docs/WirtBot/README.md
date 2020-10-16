@@ -13,7 +13,7 @@ Your server must support `systemd` to control processes.
 
 ### Using the WirtBot
 
-- Place the `target/release/wirtbot` executable from your compilation, or a release from the [release page](https://github.com/b-m-f/wirt/releases) into `/usr/bin` or `/bin` on your server.
+- Place the `target/release/wirtbot` executable from your compilation, or a release from the [release page](https://github.com/b-m-f/WirtBot/releases) into `/usr/bin` or `/bin` on your server.
 - Generate the public key from your [wirt](https://wirt.network/settings) webapp
 - Create a new user that is allowed to change the config at `/etc/wireguard/server.conf`
 - Copy the example `wirtbot.service` config to `/etc/systemd/system/` and update it with the correct values

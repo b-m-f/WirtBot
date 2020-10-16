@@ -62,4 +62,4 @@ Follow the guide for your the operating system you use to join it.
 
 ## iOS
 
-I do not have a device yet. If you have got a few minutes please be so kind to add a few screenshots via [https://github.com/b-m-f/wirt](https://github.com/b-m-f/wirt)
+I do not have a device yet. If you have got a few minutes please be so kind to add a few screenshots via [https://github.com/b-m-f/WirtBot](https://github.com/b-m-f/WirtBot)

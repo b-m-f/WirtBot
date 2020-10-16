@@ -1,10 +1,10 @@
 [package]
-name = "wirt-wasm"
+name = "wirtbot-interface-rust-wasm"
 version = "1.0.0"
 authors = ["b-m-f <max@ehlers.berlin>"]
 edition = "2018"
 license = "AGPL-3"
-repository = "https://github.com/b-m-f/Wirt"
+repository = "https://github.com/b-m-f/WirtBot"
 
 [lib]
 crate-type = ["cdylib", "rlib"]

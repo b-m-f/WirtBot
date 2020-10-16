@@ -8,7 +8,7 @@ The frontend app.
 
 ## docs/
 
-The documentation for the frontend app and [WirtBot](https://github.com/b-m-f/wirt/WirtBot).
+The documentation for the frontend app and [WirtBot](https://github.com/b-m-f/WirtBot/WirtBot).
 
 ## developers
 

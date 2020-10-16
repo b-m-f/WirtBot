@@ -54,8 +54,8 @@ Read the setup documentation at [wirt.network/docs/setup](https://wirt.network/d
 - **Configuration over code**. Leverage existing tooling and provide a clean interface for configuring it correctly
 
 ## Contributing
-![WirtBot System Tests](https://github.com/b-m-f/Wirt/workflows/run%20WirtBot%20system%20tests/badge.svg)
-![WirtBot Tests](https://github.com/b-m-f/Wirt/workflows/run%20WirtBot%20tests/badge.svg)
+![WirtBot System Tests](https://github.com/b-m-f/WirtBot/workflows/run%20WirtBot%20system%20tests/badge.svg)
+![WirtBot Tests](https://github.com/b-m-f/WirtBot/workflows/run%20WirtBot%20tests/badge.svg)
 
 ![WirtBot Interface Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/bmff/wirtbot-interface?label=WirtBot%20Interface%20build)
 ![WirtBot Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/bmff/wirtbot?label=WirtBot%20build)
@@ -66,7 +66,7 @@ You want to help out making WirtBot better? **AWESOME**! For example the CI is n
 Please feel free to open up an issue here in Github to discuss what you would want to do, and what kind of help I can give you.
 I also encourage you to ask questions! My goal is to document as many of those questions as I can, to allow more people to understand what is going on in the code.
 
-For an overview of things that need help check the [issues](https://github.com/b-m-f/wirt/issues).
+For an overview of things that need help check the [issues](https://github.com/b-m-f/WirtBot/issues).
 
 Other things that need help:
 

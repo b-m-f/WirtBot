@@ -21,7 +21,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/b-m-f/Wirt.git"
+    "url": "git+https://github.com/b-m-f/WirtBot.git"
   },
   "keywords": [
     "Wirt",
@@ -32,19 +32,19 @@
   "author": "b-m-f <max@ehlers.berlin>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/b-m-f/Wirt/issues"
+    "url": "https://github.com/b-m-f/WirtBot/issues"
   },
-  "homepage": "https://github.com/b-m-f/Wirt#readme",
+  "homepage": "https://github.com/b-m-f/WirtBot#readme",
   "dependencies": {},
   "devDependencies": {
     "@wirtbot/config-generators": "file:../shared-libs/config-generators",
     "@wirtbot/crypto": "file:../shared-libs/crypto",
-    "@wirtbot/rust-wasm": "file:../shared-libs/wasm",
-    "configstore": "^5.0.1",
-    "prompts": "^2.3.2",
-    "@wasm-tool/wasm-pack-plugin": "^1.3.1",
-    "replace-in-file": "^6.1.0",
-    "webpack": "^5.0.0",
-    "webpack-cli": "^4.0.0"
+    "@wirtbot/rust-wasm": "file:../shared-libs/rust-wasm",
+    "configstore": "5.0.1",
+    "prompts": "2.3.2",
+    "@wasm-tool/wasm-pack-plugin": "1.3.1",
+    "replace-in-file": "6.1.0",
+    "webpack": "5.1.2",
+    "webpack-cli": "4.0.0"
   }
 }

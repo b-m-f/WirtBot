@@ -13,13 +13,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/b-m-f/wirt.git"
+    "url": "git+https://github.com/b-m-f/WirtBot.git"
   },
   "license": "AGPL-3",
   "bugs": {
-    "url": "https://github.com/b-m-f/wirt/issues"
+    "url": "https://github.com/b-m-f/WirtBot/issues"
   },
-  "homepage": "https://github.com/b-m-f/wirt#readme",
+  "homepage": "https://github.com/b-m-f/WirtBot#readme",
   "dependencies": {
     "node-sass": "^4.14.1",
     "sass-loader": "^10.0.3",
