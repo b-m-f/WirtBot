@@ -33,9 +33,16 @@ COPY Interface/.env Interface/.env
 COPY package.json package.json
 COPY yarn.lock yarn.lock
 
-RUN yarn install && cd shared-libs/rust-wasm && npm run build && cd - && \
-    cd Interface && npm run build
+RUN yarn install && cd shared-libs/rust-wasm && npm run build && cd -
 
+
+
+
+RUN ls -la shared-libs/rust-wasm/crate/pkg
+RUN ls -la Interface/node_modules/@wirtbot/rust-wasm/crate/pkg
+RUN ls -la Interface/node_modules/@wirtbot/crypto/node_modules/@wirtbot/rust-wasm/crate/pkg
+
+RUN cd Interface && npm run build
 
 
 # Create small Nginx image with the production ready application
