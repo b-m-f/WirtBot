@@ -33,9 +33,10 @@ COPY Interface/.env Interface/.env
 COPY package.json package.json
 COPY package-lock.json package-lock.json
 
-RUN npm install && cd shared-libs/rust-wasm && npm run build && cd -
+RUN npm install && cd shared-libs/rust-wasm && npm run build && cd - && \
+    cd shared-libs/crypto && npm install && cd -
 
-RUN cd Interface && npm run build
+RUN cd Interface && npm install && npm run build
 
 
 # Create small Nginx image with the production ready application
