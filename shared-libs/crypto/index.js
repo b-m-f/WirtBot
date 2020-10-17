@@ -1,4 +1,3 @@
-
 export async function generateSigningKeys() {
   try {
     const wasm = import("@wirtbot/rust-wasm");
