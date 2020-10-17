@@ -4,7 +4,7 @@
   "description": "Crypto library to be used in Wirt",
   "main": "index.js",
   "type": "module",
-  "module": "./crate/pkg/wirtbot_crypto_wasm.js",
+  "module": "index.js",
   "scripts": {
     "build": "wasm-pack build crate --out-name wirtbot_crypto_wasm  -- --locked",
     "test": "wasm-pack test crate --node"
