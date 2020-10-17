@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Config generator library for use in Wirt",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "jest"
+  },
   "type": "module",
   "dependencies": {},
   "repository": {
@@ -16,5 +18,9 @@
     "url": "https://github.com/b-m-f/WirtBot/issues"
   },
   "homepage": "https://github.com/b-m-f/WirtBot#readme",
-  "devDependencies": {}
+  "devDependencies": {
+    "@babel/preset-env": "^7.12.1",
+    "babel-jest": "^26.5.2",
+    "jest": "^26.5.3"
+  }
 }
