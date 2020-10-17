@@ -19,8 +19,8 @@ jobs:
 
       - name: Test config-generators library
         run: cd shared-libs/config-generators && npm install && npm run test && cd -
-      - name: Test rust-wasm library
-        run: cd shared-libs/rust-wasm && npm install && npm run test && cd -
+      - name: Test crypto library
+        run: cd shared-libs/crypto && npm install && npm run test && cd -
 
 
 
