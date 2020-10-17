@@ -1,13 +1,12 @@
 FROM node:latest
 
-RUN npm install -g npm@7 --unsafe-perm=true --force
 # fails when installing from package.json
 
 # build the app
 WORKDIR '/app'
 COPY package.json  .
 COPY package-lock.json .
-RUN npm install
+RUN npm ci
 
 COPY compose/wait-for.sh wait-for.sh
 RUN chmod +x wait-for.sh
