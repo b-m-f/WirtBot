@@ -29,10 +29,10 @@ COPY Interface/babel.config.js Interface/babel.config.js
 COPY Interface/vue.config.js Interface/vue.config.js
 COPY Interface/.env Interface/.env
 
-# Need to run npm install in crypto somehow, since the Workspace wide install removes the dep at the end of its install
-RUN cd shared-libs/rust-wasm && npm ci && npm run build && cd - && \
-    cd shared-libs/crypto && npm ci && cd -
+# Compile and package wasm
+RUN cd shared-libs/rust-wasm && npm ci && npm run build && cd -
 
+# Build interface
 RUN cd Interface && npm ci && npm run build
 
 
