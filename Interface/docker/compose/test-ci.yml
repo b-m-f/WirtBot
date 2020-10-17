@@ -1,17 +1,23 @@
 version: "3"
 services:
-  test-container:
-    image: test-interface
+  test-runner:
+    build: 
+      dockerfile: Interface/docker/TestsDockerfile
+      context: ../../..
     container_name: test-runner
     command: ["sh", "/app/wait-for.sh", "chrome:4444", "--", "npm", "run", "test:ci"]
     depends_on: ["chrome", "test-wirtbot", "test-interface"]
     volumes:
       - download_folder:/tmp/WirtTestDownloads
   test-interface:
-    image: test-interface
+    build: 
+      dockerfile: Interface/docker/Dockerfile
+      context: ../../..
     container_name: test-interface
   test-wirtbot:
-    image: test-wirtbot
+    build: 
+      dockerfile: WirtBot/docker/Dockerfile
+      context: ../../..
     container_name: test-wirtbot
     volumes:
       - ./test-server-conf:/etc/wireguard/server.conf
