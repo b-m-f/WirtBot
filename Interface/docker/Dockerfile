@@ -33,6 +33,7 @@ COPY Interface/.env Interface/.env
 COPY package.json package.json
 COPY package-lock.json package-lock.json
 
+# Need to run npm install in crypto somehow, since the Workspace wide install removes the dep at the end of its install
 RUN npm install && cd shared-libs/rust-wasm && npm run build && cd - && \
     cd shared-libs/crypto && npm install && cd -
 

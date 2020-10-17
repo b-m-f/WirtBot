@@ -9,7 +9,7 @@
     "test:ci": "TEST_URL=test-interface nightwatch --env integration"
   },
   "dependencies": {
-    "chromedriver": "86.0.0",
+    "chromedriver": "85.0.0",
     "fibers": "5.0.0",
     "nightwatch": "1.4.3",
     "webpack-bundle-analyzer": "3.9.0"
