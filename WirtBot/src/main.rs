@@ -1,5 +1,5 @@
 use base64::decode;
-use ed25519_dalek::{PublicKey, Signature, PUBLIC_KEY_LENGTH, SIGNATURE_LENGTH};
+use ed25519_dalek::{Digest, PublicKey, Sha512, Signature, PUBLIC_KEY_LENGTH, SIGNATURE_LENGTH};
 use serde::{Deserialize, Serialize};
 use std::convert::Infallible;
 use std::env;
@@ -105,7 +105,7 @@ fn decode_signature_base64(signature_base64: String) -> Signature {
     let raw_signature_vector = base64::decode(&signature_base64).unwrap();
     let raw_signature_bytes = &raw_signature_vector[..raw_signature_buffer.len()];
     raw_signature_buffer.copy_from_slice(raw_signature_bytes);
-    let decoded_signature = Signature::from_bytes(&raw_signature_buffer).unwrap();
+    let decoded_signature = Signature::new(raw_signature_buffer);
     decoded_signature
 }
 
@@ -152,7 +152,12 @@ fn update(
         .and_then(|message: Message, public_key: PublicKey| async move {
             let signature = decode_signature_base64(message.signature);
             let message_as_bytes = message.message.as_bytes();
-            if public_key.verify(&message_as_bytes, &signature).is_ok() {
+            let mut prehashed: Sha512 = Sha512::default();
+            prehashed.update(message_as_bytes);
+            if public_key
+                .verify_prehashed(prehashed, Some(b"wirtbot"), &signature)
+                .is_ok()
+            {
                 Ok(message.message)
             } else {
                 Err(reject::custom(IncorrectSignature))
@@ -189,7 +194,12 @@ fn update_device_dns_entries(
         .and_then(|message: Message, public_key: PublicKey| async move {
             let signature = decode_signature_base64(message.signature);
             let message_as_bytes = message.message.as_bytes();
-            if public_key.verify(&message_as_bytes, &signature).is_ok() {
+            let mut prehashed: Sha512 = Sha512::default();
+            prehashed.update(message_as_bytes);
+            if public_key
+                .verify_prehashed(prehashed, Some(b"wirtbot"), &signature)
+                .is_ok()
+            {
                 Ok(message.message)
             } else {
                 Err(reject::custom(IncorrectSignature))
@@ -204,7 +214,12 @@ fn update_device_dns_entries(
                 }
             }
         })
-        .map(|_| format!("Updated {} with new devices", managed_dns::get_device_file_path()))
+        .map(|_| {
+            format!(
+                "Updated {} with new devices",
+                managed_dns::get_device_file_path()
+            )
+        })
 }
 
 #[tokio::main]
@@ -225,7 +240,9 @@ async fn main() {
         .allow_header("content-type");
 
     let update_options = warp::options().and(warp::path("update")).map(warp::reply);
-    let update_dns_options = warp::options().and(warp::path("update-device-dns-entries")).map(warp::reply);
+    let update_dns_options = warp::options()
+        .and(warp::path("update-device-dns-entries"))
+        .map(warp::reply);
 
     let routes = ok()
         .or(update(public_key))
