@@ -17,7 +17,11 @@ RUN npm install -g yarn --unsafe-perm=true --force
 # Install all dependecies with yarn workspaces first
 ENV NODE_ENV production
 WORKDIR '/wirtbot/shared-libs'
-COPY shared-libs .
+COPY shared-libs/rust-wasm  rust-wasm
+COPY shared-libs/config-generators config-generators
+COPY shared-libs/crypto crypto
+COPY shared-libs/components components
+COPY shared-libs/styles styles
 
 
 WORKDIR '/wirtbot/Interface'
@@ -32,6 +36,9 @@ RUN yarn install
 # Build shared libs
 WORKDIR '/wirtbot/shared-libs/rust-wasm'
 RUN npm run build
+
+WORKDIR '/wirtbot'
+RUN yarn install
 
 
 # Build interface
