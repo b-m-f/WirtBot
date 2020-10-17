@@ -15,23 +15,31 @@ FROM node:lts-buster as interface
 
 RUN npm install -g yarn --unsafe-perm=true --force
 
+
 # Build shared libs
 ENV NODE_ENV production
-WORKDIR '/shared-libs'
+WORKDIR '/wirtbot/shared-libs'
 COPY shared-libs .
-RUN rm -rf rust-wasm
-WORKDIR '/shared-libs/rust-wasm'
-COPY --from=wasm /wasm /shared-libs/rust-wasm/
-WORKDIR '/shared-libs/crypto'
-RUN yarn install
-WORKDIR '/shared-libs/config-generators'
+WORKDIR '/wirtbot/shared-libs/rust-wasm/crate/pkg'
+COPY --from=wasm /wasm/crate/pkg/ .
+
+WORKDIR '/wirtbot/shared-libs/crypto'
 RUN yarn install
 
+WORKDIR '/wirtbot/shared-libs/config-generators'
+RUN yarn install
 
-# build the app
-WORKDIR '/app'
+WORKDIR '/wirtbot/Interface'
 COPY Interface/package.json  .
-COPY Interface/package-lock.json .
+COPY Interface/yarn.lock .
+WORKDIR '/wirtbot'
+COPY package.json .
+COPY yarn.lock .
+RUN yarn install
+
+
+WORKDIR '/wirtbot/Interface'
+# build the app
 RUN yarn install
 
 COPY Interface/src src 
@@ -45,5 +53,5 @@ RUN npm run build
 # Create small Nginx image with the production ready application
 FROM nginx:alpine
 
-COPY --from=interface /app/dist /app
+COPY --from=interface /wirtbot/Interface/dist /app
 COPY Interface/docker/nginx/nginx.conf /etc/nginx/nginx.conf

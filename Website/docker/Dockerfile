@@ -14,7 +14,7 @@ COPY shared-libs/components .
 # build the app
 WORKDIR '/website'
 COPY Website/package.json  .
-COPY Website/package-lock.json .
+COPY Website/yarn.lock .
 ENV NODE_ENV production
 RUN yarn install
 
