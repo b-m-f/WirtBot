@@ -11,9 +11,6 @@ ENV RUSTUP_HOME=/usr/local/rustup \
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > install_rust.sh
 RUN sh install_rust.sh -y --no-modify-path --profile minimal --default-toolchain $RUST_VERSION && chmod -R a+w $RUSTUP_HOME $CARGO_HOME
 
-# use npm 7 which has workspaces
-RUN npm install -g npm@7 --unsafe-perm=true --force
-
 
 ENV NODE_ENV production
 WORKDIR '/wirtbot'
@@ -30,11 +27,9 @@ COPY Interface/public Interface/public
 COPY Interface/babel.config.js Interface/babel.config.js
 COPY Interface/vue.config.js Interface/vue.config.js
 COPY Interface/.env Interface/.env
-COPY package.json package.json
-COPY package-lock.json package-lock.json
 
 # Need to run npm install in crypto somehow, since the Workspace wide install removes the dep at the end of its install
-RUN npm ci && cd shared-libs/rust-wasm && npm run build && cd - && \
+RUN cd shared-libs/rust-wasm && npm ci && npm run build && cd - && \
     cd shared-libs/crypto && npm ci && cd -
 
 RUN cd Interface && npm ci && npm run build
