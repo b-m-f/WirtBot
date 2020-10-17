@@ -15,7 +15,7 @@
     "url": "git+https://github.com/b-m-f/WirtBot.git"
   },
   "author": "b-m-f <max@ehlers.berlin>",
-  "license": "AGPLv3",
+  "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/b-m-f/WirtBot/issues"
   },
