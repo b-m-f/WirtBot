@@ -4,10 +4,10 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
 RUN apt-get -yy upgrade
 
-RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-RUN apt install -yy ./google-chrome-stable_current_amd64.deb
+RUN wget https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_85.0.4183.102-1_amd64.deb
+RUN apt install -yy ./google-chrome-stable_85.0.4183.102-1_amd64.deb
 
-RUN npm install -g chromedriver --allow-root --unsafe-perm=true
+RUN npm install -g chromedriver@85 --allow-root --unsafe-perm=true
 
 
 EXPOSE 4444
