@@ -33,7 +33,7 @@ COPY Interface/.env Interface/.env
 RUN cd shared-libs/rust-wasm && npm ci && npm run build && cd -
 
 # Build interface
-RUN cd Interface && npm ci && npm run build
+RUN cd Interface && npm ci --force && npm run build
 
 
 # Create small Nginx image with the production ready application
