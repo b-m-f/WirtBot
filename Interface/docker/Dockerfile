@@ -7,7 +7,7 @@ RUN apt-get install curl -yy
 
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > install_rust.sh
 RUN sh install_rust.sh -y
-ENV PATH "$HOME/.cargo/bin:$PATH"
+RUN source $HOME/.cargo/env
 
 
 RUN npm install -g yarn --unsafe-perm=true --force
@@ -30,7 +30,6 @@ RUN yarn install
 
 # Build shared libs
 WORKDIR '/wirtbot/shared-libs/rust-wasm'
-RUN  ls -la && ls -la crate
 RUN npm run build
 
 
