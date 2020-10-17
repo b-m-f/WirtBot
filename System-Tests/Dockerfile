@@ -6,7 +6,7 @@ RUN npm install -g yarn --unsafe-perm=true --force
 # build the app
 WORKDIR '/app'
 COPY package.json  .
-COPY package-lock.json .
+COPY yarn.lock .
 RUN yarn install
 
 COPY compose/wait-for.sh wait-for.sh
