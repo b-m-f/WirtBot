@@ -5,7 +5,6 @@ const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
 
 module.exports = {
   transpileDependencies: [],
-
   css: {
     loaderOptions: {
       scss: {
