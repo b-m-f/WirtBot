@@ -9,7 +9,6 @@
     "test:ci": "TEST_URL=test-interface nightwatch --env integration"
   },
   "dependencies": {
-    "@vue/test-utils": "1.1.0",
     "chromedriver": "86.0.0",
     "fibers": "5.0.0",
     "nightwatch": "1.4.3",
