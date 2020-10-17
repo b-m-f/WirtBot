@@ -18,9 +18,9 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Test config-generators library
-        run: cd shared-libs/config-generators && yarn install && npm run test && cd -
+        run: cd shared-libs/config-generators && npm install && npm run test && cd -
       - name: Test rust-wasm library
-        run: cd shared-libs/rust-wasm && yarn install && npm run test && cd -
+        run: cd shared-libs/rust-wasm && npm install && npm run test && cd -
 
 
 

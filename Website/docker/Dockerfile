@@ -3,7 +3,7 @@ FROM rust:alpine  as app
 RUN apk update
 RUN apk add nodejs npm  build-base openssl-dev clang
 
-RUN npm install -g yarn --unsafe-perm=true  --force
+RUN npm install -g npm@7 --unsafe-perm=true  --force
 
 WORKDIR '/shared-libs'
 COPY shared-libs/styles .
@@ -14,9 +14,9 @@ COPY shared-libs/components .
 # build the app
 WORKDIR '/website'
 COPY Website/package.json  .
-COPY Website/yarn.lock .
+COPY Website/package-lock.json .
 ENV NODE_ENV production
-RUN yarn install
+RUN npm install
 
 COPY Website/content content
 RUN npm run build

@@ -35,13 +35,6 @@ COPY package-lock.json package-lock.json
 
 RUN npm install && cd shared-libs/rust-wasm && npm run build && cd -
 
-
-
-
-RUN ls -la shared-libs/rust-wasm/crate/pkg
-RUN ls -la Interface/node_modules/@wirtbot/rust-wasm/crate/pkg
-RUN ls -la Interface/node_modules/@wirtbot/crypto/node_modules/@wirtbot/rust-wasm/crate/pkg
-
 RUN cd Interface && npm run build
 
 
