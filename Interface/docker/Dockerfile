@@ -35,7 +35,7 @@ RUN yarn install
 
 # Build shared libs
 WORKDIR '/wirtbot/shared-libs/rust-wasm'
-RUN npm run build
+RUN npm run build && rm crate/pkg/.gitignore
 
 WORKDIR '/wirtbot'
 RUN yarn install
