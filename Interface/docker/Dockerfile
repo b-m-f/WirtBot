@@ -33,7 +33,7 @@ COPY Interface/.env Interface/.env
 COPY package.json package.json
 COPY package-lock.json package-lock.json
 
-RUN npm ci && cd shared-libs/rust-wasm && npm run build && cd -
+RUN npm install && cd shared-libs/rust-wasm && npm run build && cd -
 
 
 
