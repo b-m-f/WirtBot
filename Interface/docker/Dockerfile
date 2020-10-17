@@ -11,29 +11,29 @@ ENV RUSTUP_HOME=/usr/local/rustup \
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > install_rust.sh
 RUN sh install_rust.sh -y --no-modify-path --profile minimal --default-toolchain $RUST_VERSION && chmod -R a+w $RUSTUP_HOME $CARGO_HOME
 
-RUN npm install -g yarn --unsafe-perm=true --force
+# use npm 7 which has workspaces
+RUN npm install -g npm@7 --unsafe-perm=true --force
 
 
 ENV NODE_ENV production
 WORKDIR '/wirtbot'
 
-# Install all dependecies with yarn workspaces first
+# Install all dependecies via workspaces first
 COPY shared-libs/rust-wasm  shared-libs/rust-wasm
 COPY shared-libs/config-generators shared-libs/config-generators
 COPY shared-libs/crypto shared-libs/crypto
 COPY shared-libs/components shared-libs/components
 COPY shared-libs/styles shared-libs/styles
 COPY Interface/package.json  Interface/package.json
-COPY Interface/yarn.lock Interface/yarn.lock
 COPY Interface/src Interface/src 
 COPY Interface/public Interface/public
 COPY Interface/babel.config.js Interface/babel.config.js
 COPY Interface/vue.config.js Interface/vue.config.js
 COPY Interface/.env Interface/.env
 COPY package.json package.json
-COPY yarn.lock yarn.lock
+COPY package-lock.json package-lock.json
 
-RUN yarn install && cd shared-libs/rust-wasm && npm run build && cd -
+RUN npm ci && cd shared-libs/rust-wasm && npm run build && cd -
 
 
 

@@ -1,10 +1,1 @@
-{
-    "private": true,
-    "workspaces": [
-        "shared-libs/rust-wasm",
-        "shared-libs/crypto",
-        "shared-libs/config-generators",
-        "Interface",
-        "Installer"
-    ]
-}
+{"name":"wirtbot","version":"1.0.0","workspaces":["shared-libs/rust-wasm","shared-libs/crypto","shared-libs/config-generators","Interface","Installer"]}
