@@ -2,7 +2,7 @@
   "name": "@wirtbot/rust-wasm",
   "version": "1.0.0",
   "description": "WASM library for use in Wirt",
-  "main": "crate/pkg/wirt_wasm.js",
+  "main": "./crate/pkg/wirt_wasm.js",
   "scripts": {
     "build": "wasm-pack build crate -- --locked",
     "test": "wasm-pack test crate --node"
