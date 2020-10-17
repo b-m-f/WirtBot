@@ -14,52 +14,28 @@ RUN sh install_rust.sh -y --no-modify-path --profile minimal --default-toolchain
 RUN npm install -g yarn --unsafe-perm=true --force
 
 
-# Install all dependecies with yarn workspaces first
 ENV NODE_ENV production
-WORKDIR '/wirtbot/shared-libs'
-COPY shared-libs/rust-wasm  rust-wasm
-COPY shared-libs/config-generators config-generators
-COPY shared-libs/crypto crypto
-COPY shared-libs/components components
-COPY shared-libs/styles styles
-
-
-WORKDIR '/wirtbot/Interface'
-COPY Interface/package.json  .
-COPY Interface/yarn.lock .
-
 WORKDIR '/wirtbot'
-COPY package.json .
-COPY yarn.lock .
-RUN yarn install
 
-# Build shared libs
-WORKDIR '/wirtbot/shared-libs/rust-wasm'
-RUN npm run build && rm crate/pkg/.gitignore
+# Install all dependecies with yarn workspaces first
+COPY shared-libs/rust-wasm  shared-libs/rust-wasm
+COPY shared-libs/config-generators shared-libs/config-generators
+COPY shared-libs/crypto shared-libs/crypto
+COPY shared-libs/components shared-libs/components
+COPY shared-libs/styles shared-libs/styles
+COPY Interface/package.json  Interface/package.json
+COPY Interface/yarn.lock Interface/yarn.lock
+COPY Interface/src Interface/src 
+COPY Interface/public Interface/public
+COPY Interface/babel.config.js Interface/babel.config.js
+COPY Interface/vue.config.js Interface/vue.config.js
+COPY Interface/.env Interface/.env
+COPY package.json package.json
+COPY yarn.lock yarn.lock
 
-WORKDIR '/wirtbot'
-RUN yarn install
+RUN yarn install && cd shared-libs/rust-wasm && npm run build && cd - && \
+    cd Interface && npm run build
 
-
-# Build interface
-WORKDIR '/wirtbot/Interface'
-
-COPY Interface/src src 
-COPY Interface/public public
-COPY Interface/babel.config.js .
-COPY Interface/vue.config.js .
-COPY Interface/.env .
-
-RUN ls -la node_modules/@wirtbot
-RUN ls -la node_modules/@wirtbot/rust-wasm
-RUN ls -la node_modules/@wirtbot/rust-wasm/crate
-RUN ls -la node_modules/@wirtbot/rust-wasm/crate/pkg
-RUN ls -la node_modules/@wirtbot/crypto
-RUN ls -la node_modules/@wirtbot/crypto/node_modules/@wirtbot
-RUN ls -la node_modules/@wirtbot/crypto/node_modules/@wirtbot/rust-wasm
-RUN ls -la node_modules/@wirtbot/crypto/node_modules/@wirtbot/rust-wasm/crate
-RUN ls -la node_modules/@wirtbot/crypto/node_modules/@wirtbot/rust-wasm/crate/pkg
-RUN npm run build
 
 
 # Create small Nginx image with the production ready application
