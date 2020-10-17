@@ -1,0 +1,10 @@
+{
+    "private": true,
+    "workspaces": [
+        "shared-libs/rust-wasm",
+        "shared-libs/crypto",
+        "shared-libs/config-generators",
+        "Interface",
+        "Installer"
+    ]
+}

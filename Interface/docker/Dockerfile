@@ -7,11 +7,13 @@ WORKDIR '/wasm'
 ENV NODE_ENV production
 COPY shared-libs/rust-wasm .
 
-RUN npm install -g wasm-pack --unsafe-perm=true
-RUN npm ci 
+RUN npm install -g wasm-pack yarn --unsafe-perm=true 
+RUN yarn install 
 RUN npm run build 
 
 FROM node:lts-buster as interface
+
+RUN npm install -g yarn --unsafe-perm=true --force
 
 # Build shared libs
 ENV NODE_ENV production
@@ -21,16 +23,16 @@ RUN rm -rf rust-wasm
 WORKDIR '/shared-libs/rust-wasm'
 COPY --from=wasm /wasm /shared-libs/rust-wasm/
 WORKDIR '/shared-libs/crypto'
-RUN npm ci
+RUN yarn install
 WORKDIR '/shared-libs/config-generators'
-RUN npm ci
+RUN yarn install
 
 
 # build the app
 WORKDIR '/app'
 COPY Interface/package.json  .
 COPY Interface/package-lock.json .
-RUN npm ci
+RUN yarn install
 
 COPY Interface/src src 
 COPY Interface/public public

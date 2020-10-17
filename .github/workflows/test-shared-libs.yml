@@ -17,9 +17,10 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       - name: Run test suite for the whole System
-        run: |
-            cd shared-libs/config-generators && npm ci && npm run test && cd - && \
-            cd shared-libs/rust-wasm && npm ci && npm run test && cd -
+
+      - run: npm install -g yarn
+      - run: cd shared-libs/config-generators && yarn install && npm run test && cd -
+      - run: cd shared-libs/rust-wasm && yarn isntall && npm run test && cd -
 
 
 
