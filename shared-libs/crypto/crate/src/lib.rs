@@ -1,6 +1,10 @@
+extern crate ed25519_dalek;
+extern crate rand;
+
 use base64::{decode, encode};
 use ed25519_dalek::{
-    ExpandedSecretKey, Keypair, PublicKey, SecretKey, PUBLIC_KEY_LENGTH, SECRET_KEY_LENGTH,
+    Digest, ExpandedSecretKey, Keypair, PublicKey, SecretKey, Sha512, PUBLIC_KEY_LENGTH,
+    SECRET_KEY_LENGTH,
 };
 use rand::rngs::OsRng;
 use serde::{Deserialize, Serialize};
@@ -84,7 +88,13 @@ pub fn sign_message(keypair: String, message: String) -> String {
     let decoded_public_key = PublicKey::from_bytes(&raw_public_key_buffer).unwrap();
 
     let expanded_private_key = ExpandedSecretKey::from(&decoded_private_key);
-    let signature = expanded_private_key.sign(message.as_bytes(), &decoded_public_key);
+
+    let mut prehashed: Sha512 = Sha512::default();
+    prehashed.update(message);
+
+    let signature = expanded_private_key
+        .sign_prehashed(prehashed, &decoded_public_key, Some(b"wirtbot"))
+        .unwrap();
 
     let signature_bytes = signature.to_bytes();
 
