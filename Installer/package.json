@@ -40,7 +40,6 @@
     "@wasm-tool/wasm-pack-plugin": "1.3.1",
     "@wirtbot/config-generators": "file:../shared-libs/config-generators",
     "@wirtbot/crypto": "file:../shared-libs/crypto",
-    "@wirtbot/rust-wasm": "file:../shared-libs/rust-wasm",
     "configstore": "5.0.1",
     "prompts": "2.3.2",
     "replace-in-file": "6.1.0",

@@ -1,5 +1,5 @@
 [package]
-name = "wirtbot-interface-rust-wasm"
+name = "wirtbot-crypto-rust-wasm"
 version = "1.0.0"
 authors = ["b-m-f <max@ehlers.berlin>"]
 edition = "2018"

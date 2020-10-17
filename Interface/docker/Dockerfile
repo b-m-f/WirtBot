@@ -16,7 +16,6 @@ ENV NODE_ENV production
 WORKDIR '/wirtbot'
 
 # Install all dependecies via workspaces first
-COPY shared-libs/rust-wasm  shared-libs/rust-wasm
 COPY shared-libs/config-generators shared-libs/config-generators
 COPY shared-libs/crypto shared-libs/crypto
 COPY shared-libs/components shared-libs/components
@@ -30,10 +29,10 @@ COPY Interface/vue.config.js Interface/vue.config.js
 COPY Interface/.env Interface/.env
 
 # Compile and package wasm
-RUN cd shared-libs/rust-wasm && npm ci && npm run build && cd -
+RUN cd shared-libs/crypto && npm ci && npm run build && cd -
 
 # Build interface
-RUN cd Interface && npm ci --force && npm run build
+RUN cd Interface && npm ci  && npm run build
 
 
 # Create small Nginx image with the production ready application
