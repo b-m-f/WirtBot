@@ -2284,7 +2284,7 @@
 "@wirtbot/crypto@file:shared-libs/crypto":
   version "1.0.0"
   dependencies:
-    "@wirtbot/rust-wasm" "file:../../../.cache/yarn/v6/npm-@wirtbot-crypto-1.0.0-a4fe03ff-265e-4317-bd46-e80f7d12d5f3-1602934590883/node_modules/@wirtbot/rust-wasm"
+    "@wirtbot/rust-wasm" "file:../../../.cache/yarn/v6/npm-@wirtbot-crypto-1.0.0-fbc38fa4-ed3b-4e4d-9380-ac8df6842d13-1602941841299/node_modules/@wirtbot/rust-wasm"
 
 "@wirtbot/rust-wasm@file:shared-libs/rust-wasm":
   version "1.0.0"
@@ -3838,11 +3838,6 @@ combined-stream@^1.0.6, combined-stream@~1.0.6:
   integrity sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==
   dependencies:
     delayed-stream "~1.0.0"
-
-command-exists@^1.2.7:
-  version "1.2.9"
-  resolved "https://registry.yarnpkg.com/command-exists/-/command-exists-1.2.9.tgz#c50725af3808c8ab0260fd60b01fbfa25b954f69"
-  integrity sha512-LTQ/SGc+s0Xc0Fu5WaKnR0YiygZkm9eKFvyS+fRsU7/ZWFF8ykFM6Pc9aCVf1+xasOOZpO3BAVgVrKvsqKHV7w==
 
 command-line-usage@^6.1.0:
   version "6.1.0"
@@ -12683,7 +12678,7 @@ watchpack-chokidar2@^2.0.0:
   dependencies:
     chokidar "^2.1.8"
 
-watchpack@^1.6.0, watchpack@^1.7.4:
+watchpack@^1.7.4:
   version "1.7.4"
   resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-1.7.4.tgz#6e9da53b3c80bb2d6508188f5b200410866cd30b"
   integrity sha512-aWAgTW4MoSJzZPAicljkO1hsi1oKj/RRq/OJQh2PKI2UKL04c2Bs+MBOB+BBABHTXJpf9mCwHN7ANCvYsvY2sg==

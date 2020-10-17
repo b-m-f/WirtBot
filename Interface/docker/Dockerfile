@@ -1,46 +1,41 @@
-# WASM
-FROM rust:alpine as wasm
-RUN apk update
-RUN apk add nodejs npm  build-base openssl-dev clang
 
-WORKDIR '/wasm'
-ENV NODE_ENV production
-COPY shared-libs/rust-wasm .
+FROM node:buster as interface
 
-RUN npm install -g wasm-pack yarn --unsafe-perm=true 
-RUN yarn install 
-RUN npm run build 
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt-get update
+RUN apt-get install curl -yy
 
-FROM node:lts-buster as interface
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > install_rust.sh
+RUN sh install_rust.sh -y
+ENV PATH "$HOME/.cargo/bin:$PATH"
+
 
 RUN npm install -g yarn --unsafe-perm=true --force
 
 
-# Build shared libs
+# Install all dependecies with yarn workspaces first
 ENV NODE_ENV production
 WORKDIR '/wirtbot/shared-libs'
 COPY shared-libs .
-WORKDIR '/wirtbot/shared-libs/rust-wasm/crate/pkg'
-COPY --from=wasm /wasm/crate/pkg/ .
 
-WORKDIR '/wirtbot/shared-libs/crypto'
-RUN yarn install
-
-WORKDIR '/wirtbot/shared-libs/config-generators'
-RUN yarn install
 
 WORKDIR '/wirtbot/Interface'
 COPY Interface/package.json  .
 COPY Interface/yarn.lock .
+
 WORKDIR '/wirtbot'
 COPY package.json .
 COPY yarn.lock .
 RUN yarn install
 
+# Build shared libs
+WORKDIR '/wirtbot/shared-libs/rust-wasm'
+RUN  ls -la && ls -la crate
+RUN npm run build
 
+
+# Build interface
 WORKDIR '/wirtbot/Interface'
-# build the app
-RUN yarn install
 
 COPY Interface/src src 
 COPY Interface/public public
