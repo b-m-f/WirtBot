@@ -2,13 +2,14 @@
 FROM node:buster as interface
 
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update
-RUN apt-get install curl -yy
 
+# Taken from https://github.com/rust-lang/docker-rust/blob/master/1.47.0/buster/Dockerfile
+ENV RUSTUP_HOME=/usr/local/rustup \
+    CARGO_HOME=/usr/local/cargo \
+    PATH=/usr/local/cargo/bin:$PATH \
+    RUST_VERSION=1.47.0
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > install_rust.sh
-RUN sh install_rust.sh -y
-RUN source $HOME/.cargo/env
-
+RUN sh install_rust.sh -y --no-modify-path --profile minimal --default-toolchain $RUST_VERSION && chmod -R a+w $RUSTUP_HOME $CARGO_HOME
 
 RUN npm install -g yarn --unsafe-perm=true --force
 
