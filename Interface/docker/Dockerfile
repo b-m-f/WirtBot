@@ -22,6 +22,7 @@ COPY shared-libs/crypto shared-libs/crypto
 COPY shared-libs/components shared-libs/components
 COPY shared-libs/styles shared-libs/styles
 COPY Interface/package.json  Interface/package.json
+COPY Interface/package-lock.json  Interface/package-lock.json
 COPY Interface/src Interface/src 
 COPY Interface/public Interface/public
 COPY Interface/babel.config.js Interface/babel.config.js
