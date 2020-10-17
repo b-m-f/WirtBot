@@ -49,6 +49,16 @@ COPY Interface/public public
 COPY Interface/babel.config.js .
 COPY Interface/vue.config.js .
 COPY Interface/.env .
+
+RUN ls -la node_modules/@wirtbot
+RUN ls -la node_modules/@wirtbot/rust-wasm
+RUN ls -la node_modules/@wirtbot/rust-wasm/crate
+RUN ls -la node_modules/@wirtbot/rust-wasm/crate/pkg
+RUN ls -la node_modules/@wirtbot/crypto
+RUN ls -la node_modules/@wirtbot/crypto/node_modules/@wirtbot
+RUN ls -la node_modules/@wirtbot/crypto/node_modules/@wirtbot/rust-wasm
+RUN ls -la node_modules/@wirtbot/crypto/node_modules/@wirtbot/rust-wasm/crate
+RUN ls -la node_modules/@wirtbot/crypto/node_modules/@wirtbot/rust-wasm/crate/pkg
 RUN npm run build
 
 
