@@ -176,59 +176,58 @@ export default {
     }
   }
   &.mobile {
-    & table {
+    & form {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      width: 100%;
-    }
-    & tr {
-      width: 30%;
-      min-width: 18rem;
-      margin-top: $spacing-small;
-      margin-left: $spacing-small;
-      height: 100%;
-      display: flex;
-      justify-content: center;
       flex-direction: column;
-      justify-content: center;
-      padding: 0;
+      align-items: center;
+      & tr {
+        width: 30%;
+        min-width: 18rem;
+        margin-top: $spacing-small;
+        margin-left: $spacing-small;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0;
 
-      &.table-row {
-        border: $grey-light $border-small solid;
-        padding: $spacing-medium;
+        &.table-row {
+          border: $grey-light $border-small solid;
+          padding: $spacing-medium;
 
-        & .column-one {
-          padding-left: 0;
-          flex-direction: row;
-          & p {
-            font-size: $heading-medium;
+          & .column-one {
+            padding-left: 0;
+            flex-direction: row;
+            & p {
+              font-size: $heading-medium;
+            }
           }
-        }
-        & .column-two {
-          flex-direction: row;
-          padding-top: $spacing-small;
-        }
-        & .column-three {
-          padding-top: $spacing-small;
-          flex-direction: row;
-        }
-        & .column-four {
-          padding-top: $spacing-small;
-          flex-direction: column;
-        }
-        & .column-five {
-          flex-direction: row;
-          padding-right: 0;
-          padding-top: $spacing-small;
-        }
-        & .column-six {
-          flex-direction: row;
-          padding-right: 0;
-          padding-top: $spacing-small;
-        }
-        &.even {
-          background-color: $grey-light;
+          & .column-two {
+            flex-direction: row;
+            padding-top: $spacing-small;
+          }
+          & .column-three {
+            padding-top: $spacing-small;
+            flex-direction: row;
+          }
+          & .column-four {
+            padding-top: $spacing-small;
+            flex-direction: column;
+          }
+          & .column-five {
+            flex-direction: column;
+            padding-right: 0;
+            padding-top: $spacing-small;
+          }
+          & .column-six {
+            flex-direction: column;
+            padding-right: 0;
+            padding-top: $spacing-small;
+          }
+          &.even {
+            background-color: $grey-light;
+          }
         }
       }
     }
