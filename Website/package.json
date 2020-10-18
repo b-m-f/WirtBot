@@ -1,8 +1,8 @@
 {
-  "name": "wirt-documentation",
-  "version": "0.5.0",
+  "name": "@wirtbot/website",
+  "version": "1.0.0",
   "author": "b-m-f <max@ehlers.berlin>",
-  "description": "Documentation for https://wirt.network",
+  "description": "Documentation for https://wirtbot.com",
   "main": "index.js",
   "directories": {
     "doc": "docs"
