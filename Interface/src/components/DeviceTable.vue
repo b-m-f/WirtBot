@@ -159,17 +159,6 @@ export default {
 #device-table {
   & table {
     width: calc(100% - #{$spacing-medium * 2}); // removing the padding
-    & thead {
-      width: 100%;
-      height: 100%;
-      display: grid;
-      grid-gap: $spacing-medium;
-      grid-template-areas: "header-one header-two header-three header-four header-five";
-      grid-template-columns:
-        calc(16.6% - #{$spacing-medium}) calc(16.6% - #{$spacing-medium})
-        calc(16.6% - #{$spacing-medium}) calc(16.6% - #{$spacing-medium});
-      margin-bottom: $spacing-medium;
-    }
     & tr {
       width: 100%;
       height: 100%;
@@ -177,19 +166,13 @@ export default {
       grid-gap: $spacing-medium;
       grid-template-areas: "one two three " "four five six";
       grid-template-columns:
-        calc(1fr - #{$spacing-medium}) calc(1fr - #{$spacing-medium})
-        calc(1fr - #{$spacing-medium});
+        calc(33.3% - #{$spacing-medium}) calc(33.3% - #{$spacing-medium})
+        calc(33.3% - #{$spacing-medium});
       padding-top: $spacing-medium;
       padding-bottom: $spacing-medium;
       &.even {
         background-color: $grey-light;
       }
-    }
-
-    & th {
-      text-align: start;
-      font-weight: bold;
-      color: $primary;
     }
   }
   &.mobile {
@@ -250,22 +233,6 @@ export default {
       }
     }
   }
-  &.header-one {
-    grid-area: header-one;
-  }
-  & .header-two {
-    grid-area: header-two;
-  }
-  & .header-three {
-    grid-area: header-three;
-  }
-  & .header-four {
-    grid-area: header-four;
-  }
-  & .header-five {
-    grid-area: header-five;
-  }
-
   & .column-one {
     display: flex;
     justify-content: flex-start;
