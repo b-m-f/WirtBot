@@ -1,5 +1,6 @@
 import store from "../store";
 import i18n from "../i18n";
+import { guidGenerator } from "./helpers";
 import { WHY_NO_LOGIN, REGULAR_BACKUP } from "./messages";
 
 function betaTo1(backup) {
@@ -62,6 +63,15 @@ export function upgradeBackup(backupAsJSONString) {
   if (appVersion < backupVersion) {
     throw Error(i18n.t("errors.backupNotCompatible"));
   }
+
+  // Check that all devices have an ID
+  // This should only trigger when backups are changed manually
+  updatedBackup.devices = backup.devices.map(device => {
+    if (!device.id) {
+      device.id = `${guidGenerator()}-generated-at-import`;
+    }
+    return device
+  })
 
   return JSON.stringify(Object.assign({}, store.state, updatedBackup));
 }
