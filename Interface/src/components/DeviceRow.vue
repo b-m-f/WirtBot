@@ -122,7 +122,6 @@
 
   <tr
     v-else
-    class="table-row"
     :class="{
       mobile: isMobilePage,
       'table-row': true,
@@ -473,6 +472,17 @@ export default {
 }
 
 .mobile {
+  &.editing {
+    & .ip-input {
+      // These importants are necessary because
+      // the device table wraps this component
+      // and applies its own styles
+      // TODO: refactor
+      display: flex !important;
+      flex-direction: column !important;
+    }
+  }
+
   & .new-device {
     & .ip-input {
       flex-direction: column;
