@@ -83,7 +83,7 @@
           type="text"
           name="MTU"
           class="MTU"
-          :value="MTU"
+          :value="internalMTU"
           :placeholder="$t('dashboard.widgets.devices.placeholder.MTU')"
           @input="(e) => updateMTU(e.target.value)"
           ref="MTU"
@@ -97,7 +97,7 @@
           type="text"
           name="additionalDNSServers"
           class="additionalDNSServers"
-          :value="additionalDNSServers"
+          :value="internalAdditionalDNSServers"
           :placeholder="
             $t('dashboard.widgets.devices.placeholder.additionalDNSServers')
           "
