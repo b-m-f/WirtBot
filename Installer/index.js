@@ -26,7 +26,7 @@ const runAnsible = async ({
 }) => {
     let args = [
         "-i", `${serverIP},`, path.join(__dirname, "../ansible/main.yml"),
-        "--extra-vars", `wirtui_public_key=${wirtBotUIKey}`,
+        "--extra-vars", `wirtui_public_key="${wirtBotUIKey}"`,
         "--extra-vars", `maintainer_username=${user}`,
         "--extra-vars", `maintainer_ssh_key="${sshKey}"`,
         "--extra-vars", `maintainer_password=${password}`,
@@ -162,6 +162,9 @@ const main = async () => {
             const deviceConfig = generateDeviceConfig(device, server);
             const dnsConfig = generateDNSFile(server, [device], { dns: { name: "wirt.internal" } });
 
+
+            config.set("wirtBotUIKey", signingKeys.public)
+
             // TODO:
             // The backup is double stringified
             // Fix this on backup creation and here
@@ -173,7 +176,7 @@ const main = async () => {
                 keys: signingKeys
             }));
 
-            runAnsible(Object.assign({}, config.all, { password: response.password, wirtBotUIKey: signingKeys.public, update: false, serverConfig, dnsConfig }));
+            runAnsible(Object.assign({}, config.all, { password: response.password, update: false, serverConfig, dnsConfig }));
             await fs.writeFile('UseThisWireGuardConfigurationToConnectToYourWirtBot.conf', deviceConfig, 'utf8');
             await fs.writeFile('ImportThisFileIntoYourWirtBotInterface.json', interfaceState, 'utf8');
 
