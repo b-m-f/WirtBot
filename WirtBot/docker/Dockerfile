@@ -1,12 +1,12 @@
 FROM rust:slim as builder
 
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update && apt-get upgrade -yy
-RUN apt-get install -yy git
 
-RUN git clone https://github.com/b-m-f/WirtBot.git /builder
 WORKDIR /builder/WirtBot
-RUN git pull
+COPY src src
+COPY Cargo.toml Cargo.toml
+COPY Cargo.lock Cargo.local
+
 RUN cargo build --release --target-dir /builder/artifact
 
 
