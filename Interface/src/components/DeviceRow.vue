@@ -319,7 +319,7 @@ export default {
             this.$t("warnings.deviceAdditionalDNSServers")
           );
         }
-      });
+      }, 1300);
       this.updatingAdditionalDNSServers();
     },
     updateMTU(mtu) {
@@ -383,7 +383,9 @@ export default {
       // remove invalidity from field
       this.$refs["ipv6-input"].setCustomValidity("");
       if (!/^[0-9A-F]+$/.test(ip)) {
-        this.$refs["ipv6-input"].setCustomValidity(this.$t("warnings.wrongIPv6"));
+        this.$refs["ipv6-input"].setCustomValidity(
+          this.$t("warnings.wrongIPv6")
+        );
         this.$refs["ipv6-input"].reportValidity();
         return false;
       }
