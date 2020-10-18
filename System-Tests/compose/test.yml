@@ -17,7 +17,7 @@ services:
   test-wirtbot:
     build: 
       dockerfile: WirtBot/docker/Dockerfile
-      context: ../../..
+      context: ../..
     container_name: test-wirtbot
     volumes:
       - ./test-server-conf:/etc/wireguard/server.conf
