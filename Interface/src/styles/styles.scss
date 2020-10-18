@@ -94,7 +94,7 @@ input {
     -webkit-appearance: none;
     -moz-appearance: none;
     height: 1.8rem;
-    width: 2rem;
+    width: 3rem;
     outline: none;
     display: inline-block;
     vertical-align: top;
@@ -180,7 +180,7 @@ input {
       border-radius: 11px;
       &:after {
         left: 2px;
-        top: 2px;
+        top: 6px;
         border-radius: 50%;
         width: 15px;
         height: 15px;
