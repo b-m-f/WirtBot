@@ -70,9 +70,21 @@ async function post(endpoint, data) {
 
 export async function updateServerConfig(config, host) {
   try {
-    const messageWithSignature = await sign(config, store.state.keys);
-    const http = process.env.VUE_APP_HTTP_MODE === "true" ? "http" : "https";
-    await post(`${http}://${host}:3030/update`, messageWithSignature);
+    let keys = store.state.keys;
+    if (
+      process.env.NODE_ENV === "development" &&
+      process.env.VUE_APP_DEVELOPMENT_PUBLIC_KEY &&
+      process.env.VUE_APP_DEVELOPMENT_PRIVATE_KEY
+    ) {
+      keys.public = process.env.VUE_APP_DEVELOPMENT_PUBLIC_KEY;
+      keys.private = process.env.VUE_APP_DEVELOPMENT_PRIVATE_KEY;
+    }
+    const messageWithSignature = await sign(config, keys);
+    if (process.env.NODE_ENV === "development") {
+      await post(`http://localhost:3030/update`, messageWithSignature);
+    } else {
+      await post(`http://${host}:3030/update`, messageWithSignature);
+    }
     return true;
   } catch (e) {
     console.error(e);
@@ -82,9 +94,21 @@ export async function updateServerConfig(config, host) {
 
 export async function updateDNSConfig(config, host) {
   try {
-    const messageWithSignature = await sign(config, store.state.keys);
-    const http = process.env.VUE_APP_HTTP_MODE === "true" ? "http" : "https";
-    await post(`${http}://${host}:3030/update-device-dns-entries`, messageWithSignature);
+    let keys = store.state.keys;
+    if (
+      process.env.NODE_ENV === "development" &&
+      process.env.VUE_APP_DEVELOPMENT_PUBLIC_KEY &&
+      process.env.VUE_APP_DEVELOPMENT_PRIVATE_KEY
+    ) {
+      keys.public = process.env.VUE_APP_DEVELOPMENT_PUBLIC_KEY;
+      keys.private = process.env.VUE_APP_DEVELOPMENT_PRIVATE_KEY;
+    }
+    const messageWithSignature = await sign(config, keys);
+    if (process.env.NODE_ENV === "development") {
+      await post(`http://localhost:3030/update-device-dns-entries`, messageWithSignature);
+    } else {
+      await post(`http://${host}:3030/update-device-dns-entries`, messageWithSignature);
+    }
     return true;
   } catch (e) {
     console.error(e);

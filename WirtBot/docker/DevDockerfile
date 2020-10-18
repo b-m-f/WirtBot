@@ -10,6 +10,6 @@ RUN mkdir /etc/wireguard
 RUN mkdir /etc/coredns/
 RUN touch /etc/wireguard/server.conf
 RUN touch /etc/coredns/Corefile.conf
-COPY src/ .
-COPY Cargo.toml .
-COPY Cargo.lock .
+COPY src/ src
+COPY Cargo.toml Cargo.toml
+COPY Cargo.lock Cargo.local

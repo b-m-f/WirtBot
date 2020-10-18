@@ -7,7 +7,7 @@ services:
       dockerfile: docker/DevDockerfile
     ports: [3030:3030]
     restart: always
-    volumes: ["..:/app"]
+    volumes: ["../..:/app"]
     environment:
       "PUBLIC_KEY": "1lLU3VhXsrSGMxESmqfY4m2oEVkpfEHyKlCQU6MMPsI="
       "ALLOWED_ORIGIN": "http://localhost:8080"
