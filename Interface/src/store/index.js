@@ -124,15 +124,6 @@ const store = new Vuex.Store({
   actions: {
     async generateKeys({ commit }) {
       const keys = await generateSigningKeys();
-
-      if (
-        process.env.NODE_ENV === "development" &&
-        process.env.VUE_APP_DEVELOPMENT_PUBLIC_KEY &&
-        process.env.VUE_APP_DEVELOPMENT_PRIVATE_KEY
-      ) {
-        keys.public = process.env.VUE_APP_DEVELOPMENT_PUBLIC_KEY;
-        keys.private = process.env.VUE_APP_DEVELOPMENT_PRIVATE_KEY;
-      }
       commit("setKeys", keys);
     },
     async disableFirstUse({ commit }) {
@@ -208,18 +199,16 @@ const store = new Vuex.Store({
     async updateDNS({ state, commit }) {
       commit("updateDNSConfig", generateDNSFile(state.server, state.devices, state.network));
       if (state.server.hostname) {
-        updateDNSConfigViaApi(state.network.dns.config, state.server.hostname);
+        updateDNSConfigViaApi(state.network.dns.config, `wirtbot.${state.network.dns.name}`);
       } else {
-        // In most cases this will throw CORS errors, since HTTPS is enforced
-        updateDNSConfigViaApi(state.network.dns.config, state.server.ip.v4.join(""));
+        updateDNSConfigViaApi(state.network.dns.config, `${state.server.subnet.v4}1`);
       }
     },
     async sendConfigUpdatesToAPI({ state }) {
-      if (state.server.hostname) {
-        updateServerViaApi(state.server.config, state.server.hostname);
+      if (state.network.dns.name) {
+        updateServerViaApi(state.server.config, `wirtbot.${state.network.dns.name}`);
       } else {
-        // In most cases this will throw CORS errors, since HTTPS is enforced
-        updateServerViaApi(state.server.config, state.server.ip.v4.join(""));
+        updateServerViaApi(state.server.config, `${state.server.subnet.v4}1`);
       }
     },
     async addDevice(
