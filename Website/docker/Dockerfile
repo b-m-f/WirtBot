@@ -1,11 +1,9 @@
 # APP
-FROM rust:alpine  as app
-RUN apk update
-RUN apk add nodejs npm  build-base openssl-dev clang
+FROM node:buster as app
 
 WORKDIR '/shared-libs'
-COPY shared-libs/styles .
-COPY shared-libs/components .
+COPY shared-libs/styles styles
+COPY shared-libs/components components
 
 
 
