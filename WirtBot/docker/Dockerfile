@@ -5,7 +5,7 @@ ENV DEBIAN_FRONTEND noninteractive
 WORKDIR /builder/WirtBot
 COPY WirtBot/src src
 COPY WirtBot/Cargo.toml Cargo.toml
-COPY WirtBot/Cargo.lock Cargo.local
+COPY WirtBot/Cargo.lock Cargo.lock
 
 RUN cargo build --release --target-dir /builder/artifact
 
