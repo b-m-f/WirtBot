@@ -16,7 +16,6 @@ module.exports = {
             ["join-a-network", "Join a network"],
             ["faq", "FAQ"],
             ["issues", "New features & Bugs"],
-            ["shoutouts", "Shoutouts"],
           ],
         },
         nav: [
