@@ -167,11 +167,8 @@ input {
         border: 2px solid var(--active-inner);
         border-top: 0;
         border-left: 0;
-        left: 7px;
-        top: 4px;
-        transform: rotate(20deg);
-      }
-      &:checked {
+        left: 11px;
+        top: 6px;
         transform: rotate(43deg);
       }
     }
@@ -206,11 +203,6 @@ select {
   &:invalid {
     border: solid $border-small $accent;
   }
-}
-
-input[type="checkbox"] {
-}
-input[type="checkbox"] {
 }
 
 // MARKDOWN
