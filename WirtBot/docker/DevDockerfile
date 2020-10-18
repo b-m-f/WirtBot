@@ -12,4 +12,4 @@ RUN touch /etc/wireguard/server.conf
 RUN touch /etc/coredns/Corefile.conf
 COPY WirtBot/src/ src
 COPY WirtBot/Cargo.toml Cargo.toml
-COPY WirtBot/Cargo.lock Cargo.local
+COPY WirtBot/Cargo.lock Cargo.lock
