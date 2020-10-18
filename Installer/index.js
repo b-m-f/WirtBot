@@ -157,7 +157,7 @@ const main = async () => {
             const device = { ip: { v4: 2 }, name: "Change me", keys: deviceKeys, type: "Linux" };
             // TODO: Fix IPv4 to always be a string 
             // needs changes in many places
-            const server = { ip: { v4: config.get('serverIP').split('.') }, port: 10101, keys: serverKeys, subnet: { v4: "10.10.0." } };
+            const server = { ip: { v4: config.get('serverIP').split('.') }, port: 10101, keys: serverKeys, subnet: { v4: "10.10.0.", v6: "1010:1010:1010:1010:" } };
             const serverConfig = generateServerConfig(server, [device]);
             const deviceConfig = generateDeviceConfig(device, server);
             const dnsConfig = generateDNSFile(server, [device], { dns: { name: "wirt.internal" } });
