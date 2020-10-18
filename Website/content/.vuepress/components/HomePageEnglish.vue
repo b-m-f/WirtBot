@@ -125,11 +125,15 @@ import Card from "shared-components/Card";
 
 export default {
   components: { Button, Card },
-  computed: {
-    isMobilePage() {
-      return window.innerWidth < 100;
-    },
+  beforeMount() {
+    this.isMobilePage = window.innerWidth < 1000;
   },
+  data() {
+    return {
+      isMobilePage: false,
+    };
+  },
+  computed: {},
 };
 </script>
 
