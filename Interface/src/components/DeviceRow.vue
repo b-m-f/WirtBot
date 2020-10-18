@@ -35,7 +35,7 @@
             :value="internalIP.v4"
             required
             @input="(e) => updateIP({ v4: e.target.value })"
-            ref="ip-input"
+            ref="ipv4-input"
           />
         </div>
       </div>
@@ -52,7 +52,7 @@
             :value="internalIP.v6"
             required
             @input="(e) => updateIP({ v6: e.target.value })"
-            ref="ip-input"
+            ref="ipv6-input"
           />
         </div>
       </div>
@@ -345,17 +345,17 @@ export default {
     },
     async checkIPv4(ip) {
       // remove invalidity from field
-      this.$refs["ip-input"].setCustomValidity("");
+      this.$refs["ipv4-input"].setCustomValidity("");
 
       if (ip == 1) {
         this.$store.dispatch(
           "alerts/addWarning",
           this.$t("warnings.deviceIpServer")
         );
-        this.$refs["ip-input"].setCustomValidity(
+        this.$refs["ipv4-input"].setCustomValidity(
           this.$t("warnings.deviceIpServer")
         );
-        this.$refs["ip-input"].reportValidity();
+        this.$refs["ipv4-input"].reportValidity();
         return false;
       }
       const isIpUsed = this.devices.reduce((prev, next) => {
@@ -370,10 +370,10 @@ export default {
           "alerts/addWarning",
           this.$t("warnings.deviceIpUsed")
         );
-        this.$refs["ip-input"].setCustomValidity(
+        this.$refs["ipv4-input"].setCustomValidity(
           this.$t("warnings.deviceIpUsed")
         );
-        this.$refs["ip-input"].reportValidity();
+        this.$refs["ipv4-input"].reportValidity();
         return false;
       } else {
         return true;
@@ -381,10 +381,10 @@ export default {
     },
     checkIPv6(ip) {
       // remove invalidity from field
-      this.$refs["ip-input"].setCustomValidity("");
+      this.$refs["ipv6-input"].setCustomValidity("");
       if (!/^[0-9A-F]+$/.test(ip)) {
-        this.$refs["ip-input"].setCustomValidity(this.$t("warnings.wrongIPv6"));
-        this.$refs["ip-input"].reportValidity();
+        this.$refs["ipv6-input"].setCustomValidity(this.$t("warnings.wrongIPv6"));
+        this.$refs["ipv6-input"].reportValidity();
         return false;
       }
       try {
