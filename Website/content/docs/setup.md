@@ -29,7 +29,7 @@ The following programs are needed for the initail install of the WirtBot and to 
 Alright, time to get the installer: `npm install -g @wirtbot/installer`. 
 
 Once installed run `wirt-installer` and the installer will now take you through the rest of the setup.
-After answering all the questions wait until the setup is done, this can take up to **20 minutes** so just be patient and follow the things that it is doing of you like.
+After answering all the questions wait until the setup is done, this can take up to **20 minutes**. Just be patient and follow the things that are printed to the terminal if you like to know what is happening.
 
 And then you are done with the first part. Congrats, your private WirtBot is set up.
 
@@ -51,7 +51,7 @@ So the Dashboard is empty, but a network already exists. How do get access to th
 At the bottom you will find the `import` functionality.
 Choose the `ImportThisFileIntoYourWirtBotInterface.json` that the installer created and import it.
 
-**Do not skip this import, besides the initial network configuration this imports cryptographic keys that make sure that only your computer can configure the WirtBot, and everyone else in your network simply sees and empty Dashboard**.
+**Do not skip this import, besides the initial network configuration this imports cryptographic keys that make sure that only your computer can configure the WirtBot, and everyone else in your network simply sees an empty Dashboard**.
 
 
 Congrats. You are done, or well, ready to go and build the network of your dreams!
