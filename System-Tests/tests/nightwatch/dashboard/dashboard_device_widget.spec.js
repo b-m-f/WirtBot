@@ -89,7 +89,6 @@ module.exports = {
         await browser.setValue("input[name='device-name']", "mtu-test");
         await browser.setValue("input[name='MTU']", "20000");
         await browser.assert.visible("#alerts .warning");
-        // TODO make alerts be removed on reload so this isnt needed
         await browser.pause(3000)
         await browser.click("button.stop");
     },

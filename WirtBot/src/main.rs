@@ -147,7 +147,6 @@ fn update(
     warp::post()
         .and(warp::path("update"))
         .and(warp::body::json())
-        // TODO: try to extract the signature verification into its own Filter
         .and(warp::any().map(move || public_key.clone()))
         .and_then(|message: Message, public_key: PublicKey| async move {
             let signature = decode_signature_base64(message.signature);
@@ -189,7 +188,6 @@ fn update_device_dns_entries(
                 Err(reject::custom(FeatureDisabled))
             }
         })
-        // TODO: try to extract the signature verification into its own Filter
         .and(warp::any().map(move || public_key.clone()))
         .and_then(|message: Message, public_key: PublicKey| async move {
             let signature = decode_signature_base64(message.signature);

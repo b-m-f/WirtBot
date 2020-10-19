@@ -38,7 +38,6 @@
       <PortInput v-if="edit" :port="server.port" @change="updatePort" />
       <p v-else>{{ server.port }}</p>
     </div>
-    <!-- TODO: ipv6 subnet -->
     <div class="row" v-if="expertMode">
       <label>{{ $t("dashboard.widgets.server.subnet") }}</label>
       <input

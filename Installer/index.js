@@ -113,19 +113,6 @@ const main = async () => {
             name: 'sshKey',
             message: 'Please paste the Public Key of the keypair you want to use for accessing the WirtBot via SSH'
         },
-        // TODO: Readd domain name generation
-        // Ask first if a domain name is wanted
-        // Add ticket
-        // {
-        //     type: config.get('domain') ? null : 'text',
-        //     name: 'domain',
-        //     message: 'Domain name that points to WirtBot'
-        // },
-        // {
-        //     type: config.get('email') ? null : 'text',
-        //     name: 'email',
-        //     message: 'Email for SSL certificate'
-        // },
     ];
     const questionsUpdate = [
         {
@@ -155,8 +142,6 @@ const main = async () => {
             const deviceKeys = await getKeys();
             const signingKeys = await generateSigningKeys();
             const device = { ip: { v4: 2 }, name: "Change me", keys: deviceKeys, type: "Linux" };
-            // TODO: Fix IPv4 to always be a string 
-            // needs changes in many places
             const server = { ip: { v4: config.get('serverIP').split('.') }, port: 10101, keys: serverKeys, subnet: { v4: "10.10.0.", v6: "1010:1010:1010:1010:" } };
             const serverConfig = generateServerConfig(server, [device]);
             const deviceConfig = generateDeviceConfig(device, server);
@@ -165,11 +150,7 @@ const main = async () => {
 
             config.set("wirtBotUIKey", signingKeys.public)
 
-            // TODO:
-            // The backup is double stringified
-            // Fix this on backup creation and here
             const interfaceState = JSON.stringify(JSON.stringify({
-                // TODO keep this version somewhere else
                 version: 1.1,
                 server,
                 devices: [device],
@@ -192,7 +173,6 @@ const main = async () => {
                 config.set(entry, response[entry])
             }
         })
-        // TODO: Make this configurable in case the subnet is changed
         runAnsible(Object.assign({}, config.all, { server: { ip: { v4: "10.10.0.1" } }, password: response.password, update: true, sshPrivateKeyPath: config.get('sshPrivateKeyPath') }));
     }
 
