@@ -4,6 +4,10 @@ module.exports = {
   base: "/",
   port: 9090,
   title: "WirtBot, your LAN in the cloud",
+  head: [
+    ['noscript', {}, `<img src="https://analytics.ehlers.berlin/ingress/925003fb-cd79-4dee-8b21-f32c7d00f978/pixel.gif">`],
+    ['script', { src: 'https://analytics.ehlers.berlin/ingress/925003fb-cd79-4dee-8b21-f32c7d00f978/script.js' }]
+  ],
   themeConfig: {
     logo: "/logo.svg",
     locales: {
