@@ -382,7 +382,7 @@ export default {
     checkIPv6(ip) {
       // remove invalidity from field
       this.$refs["ipv6-input"].setCustomValidity("");
-      if (!/^[0-9A-F]+$/.test(ip)) {
+      if (!/^[0-9a-fA-F]+$/.test(ip)) {
         this.$refs["ipv6-input"].setCustomValidity(
           this.$t("warnings.wrongIPv6")
         );
