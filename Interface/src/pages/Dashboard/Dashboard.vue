@@ -105,9 +105,6 @@ export default {
   },
   mounted() {
     if (this.isFirstUse) {
-      // TODO: Great place to learn about this in JS
-      // Why do you think this is needed here?
-      // You'll wanna check this for ES5 to learn some cool programming history
       this.$store.dispatch("disableFirstUse");
       this.$store.dispatch("addDashboardMessage", WHY_NO_LOGIN);
       this.$store.dispatch("addDashboardMessage", REGULAR_BACKUP);

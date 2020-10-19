@@ -1,6 +1,4 @@
 <template>
-  <!-- TODO: return multiple <td> elements from this component when possible in vue3 -->
-  <!-- This will allow the device table to wrap them correctly, and then use display: grid on the mobile table -->
   <tr
     v-if="editingMode"
     :class="{ mobile: isMobilePage, 'table-row': true, editing: 'true' }"
@@ -260,8 +258,6 @@ export default {
         if (ip === nextHighest) {
           nextHighest = ip + 1;
         }
-        // TODO: Test this method completely
-        // TODO: Test and refactor to make sure this throws an error at 255
       });
       return nextHighest;
     },
@@ -476,10 +472,6 @@ export default {
 .mobile {
   &.editing {
     & .ip-input {
-      // These importants are necessary because
-      // the device table wraps this component
-      // and applies its own styles
-      // TODO: refactor
       display: flex !important;
       flex-direction: column !important;
     }

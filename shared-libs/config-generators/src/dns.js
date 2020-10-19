@@ -29,8 +29,6 @@ export function generateDNSFile(server, clients, network) {
             return `${server.subnet.v4 + "1"} ${server.name}.${network.dns.name}`
         }
     }
-    // TODO: document local network names that are ignored here
-    // Even better: Make the configurable via Settings
     const masterFile = `. {
     reload
     forward . tls://1.1.1.1 tls://1.0.0.1 {

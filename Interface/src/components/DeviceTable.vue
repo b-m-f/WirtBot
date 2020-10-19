@@ -100,8 +100,6 @@ export default {
       MTU,
     }) {
       if (!name || !type || (!ip.v4 && !ip.v6)) {
-        // TODO: this is calling a method on the child directly, to trigger its form validation
-        // Something that should generally be avoided
         this.reportValidity();
         return false;
       }

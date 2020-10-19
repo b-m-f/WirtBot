@@ -125,7 +125,6 @@ mod test {
         let _key_pair: Pair = serde_json::from_str(&generate_key_pair()).unwrap();
         // TODO: figure out a way to test that both struct fields have values
 
-        // TODO: if the code gets here without crashing it means that keys were successfully generated.
         assert!(true)
     }
 }

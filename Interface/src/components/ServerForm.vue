@@ -206,9 +206,6 @@ export default {
         margin-left: 0;
       }
       .ip-digit {
-        // TODO: fix this magic number
-        // this keeps the IP input line as long as the one below
-        // Research while inputs become huge here when removing the max-width
         margin-left: 0;
       }
       span {

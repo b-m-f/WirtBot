@@ -30,10 +30,6 @@ async function addConfigToDevice(newDevice, server) {
 
 Vue.use(Vuex);
 
-// TODO: add typescript for the store
-// One server can have multiple WG configs,
-// Devices always belong to one network and only have 1 config attached to them
-// Rename to sth else since it also does changes like generating the configs and doesnt just store
 const store = new Vuex.Store({
   modules: { alerts },
   state: {
@@ -130,7 +126,6 @@ const store = new Vuex.Store({
       commit("disableFirstUse");
     },
     async updateDNSName({ commit, dispatch }, name) {
-      // TODO: some kind of check that the DNS name is correct
       commit("updateDNSName", name);
       dispatch("updateDNS");
     },

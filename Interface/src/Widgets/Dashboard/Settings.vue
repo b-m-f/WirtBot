@@ -108,7 +108,6 @@ export default {
           throw e;
         };
       } catch (error) {
-        // TODO: check for the error to throw the commented code
         this.$store.dispatch("alerts/addWarning", error);
 
         // this.$store.dispatch( //   "alerts/addWarning",
