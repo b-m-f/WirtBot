@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ home: true, mobile: isMobilePage }">
+  <div class="homepage-component">
     <div id="one">
       <div class="text">
         <h1>Create a private network for all your devices.</h1>
@@ -125,24 +125,14 @@ import Card from "shared-components/Card";
 
 export default {
   components: { Button, Card },
-  beforeMount() {
-    this.isMobilePage = window.innerWidth < 1000;
-  },
-  data() {
-    return {
-      isMobilePage: false,
-    };
-  },
-  computed: {},
 };
 </script>
 
 <style lang="scss" scoped>
-.home {
+.homepage-component {
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
 
   & > div {
     width: 100%;
@@ -171,7 +161,7 @@ export default {
     }
   }
 
-  &.mobile {
+  @media screen and (max-width: 1000px) {
     & #one {
       justify-content: center;
       margin-left: auto;
@@ -198,6 +188,7 @@ export default {
       }
     }
   }
+
   & #two {
     display: flex;
     justify-content: center;
@@ -262,7 +253,7 @@ export default {
     }
   }
 
-  &.mobile {
+  @media screen and (max-width: 1000px) {
     & #three {
       & h1 {
         text-align: center;
@@ -310,7 +301,7 @@ export default {
     }
   }
 
-  &.mobile {
+  @media screen and (max-width: 1000px) {
     & #four {
       & ul {
         & li {
@@ -342,7 +333,7 @@ export default {
     }
   }
 
-  &.mobile {
+  @media screen and (max-width: 1000px) {
     & #docs {
       & .cards {
         flex-direction: column;
@@ -369,7 +360,7 @@ export default {
     color: $white;
   }
 
-  &.mobile {
+  @media screen and (max-width: 1000px) {
     & #ready {
       & p {
         text-align: center;
