@@ -21,10 +21,14 @@ module.exports = {
             ["faq", "FAQ"],
             ["issues", "New features & Bugs"],
           ],
+          "/announcements/": [
+            ["21-10-20", "21.10.20: Please update your installer"],
+          ],
         },
         nav: [
           { text: "Documentation", link: "/docs/" },
           { text: "Screenshots", link: "/screenshots" },
+          { text: "Announcements", link: "/announcements/" },
           { text: "About", link: "/about" }
         ],
       },
