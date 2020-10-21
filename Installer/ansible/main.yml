@@ -25,7 +25,7 @@
     - import_tasks: tasks/programs.yml
     - import_tasks: tasks/users.yml
     - import_tasks: tasks/WireGuard.yml
-    # - import_tasks: tasks/firewall.yml
+    - import_tasks: tasks/firewall.yml
     - import_tasks: tasks/WirtBot.yml
     - import_tasks: tasks/WirtBot-Interface.yml
     - import_tasks: tasks/dns.yml
