@@ -90,8 +90,7 @@ export default {
       try {
         const reader = new FileReader();
         reader.onload = (e) => {
-          let backup = JSON.parse(e.target.result);
-          // The backup will still be a JSON string here!
+          let backup = e.target.result.replace(/\\"/g, "\"").slice(1,-1);
           backup = upgradeBackup(backup);
 
           window.localStorage.setItem("vuex", backup);
