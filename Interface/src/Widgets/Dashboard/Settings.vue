@@ -53,9 +53,7 @@ export default {
       element.setAttribute(
         "href",
         "data:application/json;charset=utf-8," +
-          encodeURIComponent(
-            JSON.stringify(window.localStorage.getItem("vuex"))
-          )
+          encodeURIComponent(window.localStorage.getItem("vuex"))
       );
       element.setAttribute(
         "download",
@@ -90,8 +88,7 @@ export default {
       try {
         const reader = new FileReader();
         reader.onload = (e) => {
-          let backup = e.target.result.replace(/\\"/g, "\"").slice(1,-1);
-          backup = upgradeBackup(backup);
+          let backup = upgradeBackup(e.target.result);
 
           window.localStorage.setItem("vuex", backup);
           this.$store.replaceState(JSON.parse(backup));
