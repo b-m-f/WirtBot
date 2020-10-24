@@ -13,7 +13,7 @@ module.exports = {
     locales: {
       "/": {
         sidebar: {
-          "/docs/": [
+          "/documentation/": [
             ["", "What is it?"],
             ["what-can-i-do-with-wirt", "What can you do with Wirt?"],
             ["setup", "Setup"],
@@ -24,11 +24,22 @@ module.exports = {
           "/announcements/": [
             ["21-10-20", "21.10.20: Please update your installer"],
           ],
+          "/developer-documentation/": [
+            ["", "WirtBot developer documentation"],
+            ["system-architecture", "System Architecture"],
+            ["development-environment", "Development Environment"],
+            ["interface", "Interface"],
+            ["wirtbot", "WirtBot"],
+            ["system-tests", "System Tests"],
+            ["contributing", "Contributing"],
+            ["code-of-conduct", "Code of Conduct"],
+          ],
         },
         nav: [
-          { text: "Documentation", link: "/docs/" },
+          { text: "Documentation", link: "/documentation/" },
           { text: "Screenshots", link: "/screenshots" },
           { text: "Announcements", link: "/announcements/" },
+          { text: "Developer Documentation", link: "/developer-documentation/" },
           { text: "About", link: "/about" }
         ],
       },

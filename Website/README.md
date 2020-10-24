@@ -8,7 +8,7 @@ Feel free to contribute to it if you think something is missing or you have a gr
 
 First of all download this repository.
 Now create a new [markdown](https://www.markdownguide.org/basic-syntax) file in the docs folder.
-When you are satisfied with your page add it to the sidebar in `docs/.vuepress/config.js`.
+When you are satisfied with your page add it to the sidebar in `documentation/.vuepress/config.js`.
 
 Everything is based on [vuepress](https://vuepress.vuejs.org/), which has great documentation and is beginner friendly.
 

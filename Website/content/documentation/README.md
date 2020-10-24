@@ -17,6 +17,6 @@ It has a few properties that make this safe and secure:
 
 Convinced? Want a WirtBot?
 
-Check out [this page](/docs/setup) to set one up with the provided installer. Its completely free (Except for the server/VPS you need to rent)! 
+Check out [this page](/documentation/setup) to set one up with the provided installer. Its completely free (Except for the server/VPS you need to rent)! 
 
 Still got questions? Reach me at `contact at wirt.network`.
