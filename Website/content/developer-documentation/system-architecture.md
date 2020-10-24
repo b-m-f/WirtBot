@@ -2,8 +2,9 @@
 
 ## Tight security
 
-- All public network interfaces block traffic
+- All public network interfaces block traffic via nftables
 - All traffic has to be signed/encrypted
+
 
 ## Interface <-> WirtBot communication
 
