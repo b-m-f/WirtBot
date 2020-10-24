@@ -19,6 +19,9 @@ Welcome to the [WirtBot](https://wirtbot.com) repository.
 ```
 npm install -g @wirtbot/installer && wirt-installer
 ```
+**Join the network with generated WireGuard config**
+
+**Assume control of WirtBot by importing generated initial configuration**
 
 **Done**
 
