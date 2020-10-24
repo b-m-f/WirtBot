@@ -1,6 +1,7 @@
 const fs = require("fs").promises
 const assert = require('assert')
 const util = require('util');
+const glob = require('glob');
 const setTimeoutAsync = util.promisify(setTimeout);
 
 module.exports = {
@@ -80,6 +81,27 @@ module.exports = {
             });
         } catch (error) {
             await fs.unlink(downloadLocation)
+            throw new Error(error);
+        }
+    },
+    "Download and verify backup": async function (browser) {
+        await browser.click("#export button");
+        try {
+            await setTimeoutAsync(1000, 'waitForDownload').then(async () => {
+                let files = glob.sync("/tmp/WirtTestDownloads/dasboard-backup-*.json");
+                let file = files[files.length - 1];
+                // console.log(file);
+                try {
+                    const data = await fs.readFile(file, "utf8")
+                    let json = JSON.parse(data);
+                    assert(typeof json.version === 'number' )
+                    fs.unlink(file)
+                } catch (error) {
+                    fs.unlink(file)
+                    throw new Error(error);
+                }
+            });
+        } catch (error) {
             throw new Error(error);
         }
     },

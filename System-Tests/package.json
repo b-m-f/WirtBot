@@ -11,6 +11,7 @@
   "dependencies": {
     "chromedriver": "85.0.0",
     "fibers": "5.0.0",
+    "glob": "^7.1.6",
     "nightwatch": "1.4.3",
     "webpack-bundle-analyzer": "3.9.0"
   },
