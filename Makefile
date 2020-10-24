@@ -3,6 +3,8 @@ dev-server:
 	docker-compose -f WirtBot/docker/compose/dev.yml up -d --build --remove-orphans 
 dev-client: 
 	cd ./Interface && npm run dev
+dev-website: 
+	cd ./Website && npm run dev
 test-system: 
 	docker-compose -f System-Tests/compose/test.yml up --abort-on-container-exit --build --remove-orphans
 test-wirtbot:
