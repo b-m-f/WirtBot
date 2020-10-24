@@ -62,19 +62,16 @@ Read the setup documentation at [wirt.network/docs/setup](https://wirt.network/d
 ![WirtBot Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/bmff/wirtbot?label=WirtBot%20build)
 ![WirtBot Website Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/bmff/wirtbot-website?label=WirtBot%20Website%20build)
 
-You want to help out making WirtBot better? **AWESOME**! For example the CI is not yet perfect as you can see with the badges.
+You want to help out making WirtBot better? **AWESOME**! 
 
 Please feel free to open up an issue here in Github to discuss what you would want to do, and what kind of help I can give you.
+
+If you want to learn about the inner workings of the system check out the [developer documentation](https://wirtbot.com/developer-documentation/).
+
 I also encourage you to ask questions! My goal is to document as many of those questions as I can, to allow more people to understand what is going on in the code.
 
+
 For an overview of things that need help check the [issues](https://github.com/b-m-f/WirtBot/issues).
-
-Other things that need help:
-
-- Translate it into a language that you know
-- Pairing on documentation. If I explain it to you, its easier to figure how my code makes no sense
-
-Please check out the `developers-docs` directory for more details on the application.
 
 
 ## LICENSE
