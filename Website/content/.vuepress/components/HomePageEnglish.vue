@@ -9,7 +9,7 @@
           private network into 3 steps. No registration, no accounts - Just a
           network that belongs to you.
         </p>
-        <a href="/docs/setup">
+        <a href="/documentation/setup">
           <Button> Get started </Button>
         </a>
       </div>
@@ -94,7 +94,7 @@
             Build a Cloud or Video streaming service that you own or whatever
             else you would like to bring online. From your home into your cloud.
           </p>
-          <a href="/docs/what-can-i-do-with-wirt"> Learn more </a>
+          <a href="/documentation/what-can-i-do-with-wirt"> Learn more </a>
         </Card>
         <Card padded>
           <h2>For companies</h2>
@@ -105,14 +105,14 @@
             architecture. Just don't expect wonders if you are an enterprise.
             This project is meant for people, families and small company scale.
           </p>
-          <a href="/docs/what-can-i-do-with-wirt"> Learn more </a>
+          <a href="/documentation/what-can-i-do-with-wirt"> Learn more </a>
         </Card>
       </div>
     </div>
     <div id="ready">
       <h2>Ready to get started?</h2>
       <p>Build your own WirtBot today, for free! No registration required</p>
-      <a href="/docs/setup">
+      <a href="/documentation/setup">
         <Button> Get started now </Button>
       </a>
     </div>

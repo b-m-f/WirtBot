@@ -8,9 +8,9 @@ The WirtBot is the central piece to create a system that will allow secure commu
 
 It is designed in 2 parts, a WirtBot® running on a server and the WirtBot Interface to configure it.
 
-- Head over <a target="_blank" rel="noopener noreferrer" href="/docs/how-does-it-work">here</a> to understand how it works.
-- Check out <a target="_blank" rel="noopener noreferrer" href="/docs/setup">this page</a> to set it up yourself
-- The <a target="_blank" rel="noopener noreferrer" href="/docs/setup">FAQ page</a> should hopefully answer any other questions
+- Head over <a target="_blank" rel="noopener noreferrer" href="/documentation/how-does-it-work">here</a> to understand how it works.
+- Check out <a target="_blank" rel="noopener noreferrer" href="/documentation/setup">this page</a> to set it up yourself
+- The <a target="_blank" rel="noopener noreferrer" href="/documentation/setup">FAQ page</a> should hopefully answer any other questions
 
 
 ## Who build this?

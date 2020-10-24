@@ -39,7 +39,7 @@ And then you are done with the first part. Congrats, your private WirtBot is set
 But how do you access it? After all the WirtBot is completely hidden on the normal internet.
 
 Simple: during the setup an initial network is set up automatically that you can join with the `UseThisWireGuardConfigurationToConnectToYourWirtBot.conf` file that was created by the installer.
-Use this with the WireGuard® client for your system, you can check [this site](/docs/join-a-network) and hopefully it will have a guide for your operating system as well.
+Use this with the WireGuard® client for your system, you can check [this site](/documentation/join-a-network) and hopefully it will have a guide for your operating system as well.
 
 To test that everything worked head to [wirtbot.wirt.internal](http://wirtbot.wirt.internal). 
 This should be taking you to the, still empty, WirtBot interface.
