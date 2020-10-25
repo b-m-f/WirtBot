@@ -84,13 +84,12 @@ module.exports = {
             throw new Error(error);
         }
     },
-    "Download and verify backup": async function (browser) {
+    "Download and verify that backup is a simple JSON string": async function (browser) {
         await browser.click("#export button");
         try {
             await setTimeoutAsync(1000, 'waitForDownload').then(async () => {
                 let files = glob.sync("/tmp/WirtTestDownloads/dasboard-backup-*.json");
                 let file = files[files.length - 1];
-                // console.log(file);
                 try {
                     const data = await fs.readFile(file, "utf8")
                     let json = JSON.parse(data);
