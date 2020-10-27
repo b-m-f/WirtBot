@@ -46,7 +46,7 @@ If you set it up you can rest assured that it is done properly.
 
 Ready to get started?
 
-Read the setup documentation at [wirt.network/docs/setup](https://wirt.network/docs/setup) and get your own cloud network with **1 command on the terminal** and a **few clicks in your browser**!
+Read the setup documentation at [wirt.network/documentation/setup](https://wirt.network/documentation/setup.html) and get your own cloud network with **1 command on the terminal** and a **few clicks in your browser**!
 
 ## Features
 - Based on WireGuard for **security** and **speed**
