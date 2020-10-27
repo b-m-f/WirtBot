@@ -3,31 +3,11 @@ const assert = require('assert')
 const util = require('util');
 const glob = require('glob');
 const setTimeoutAsync = util.promisify(setTimeout);
+const { setServer } = require("../helpers/dataFillers");
 
 module.exports = {
     "Add server": async function (browser) {
-        await browser.url(`http://${process.env.TEST_URL}/`);
-        await browser.waitForElementVisible({
-            selector: ".app",
-            message: "Setting Server data",
-        });
-
-        await browser.click("#server-widget #edit");
-        await browser.setValue("#server-widget input[name='hostname']", "localhost");
-        await browser.execute(function () {
-            var element = document.querySelector("#server-widget input[name='hostname']");
-            var event = new Event("change");
-            element.dispatchEvent(event);
-        });
-
-        await browser.setValue("#server-widget input[name='port']", "1233");
-        await browser.execute(function () {
-            var element = document.querySelector("#server-widget input[name='port']");
-            var event = new Event("change");
-            element.dispatchEvent(event);
-        });
-
-        await browser.click("#server-widget #edit");
+        setServer(browser)
     },
     "Add new device": async function (browser) {
         await browser.click("#add-device button");
@@ -93,7 +73,7 @@ module.exports = {
                 try {
                     const data = await fs.readFile(file, "utf8")
                     let json = JSON.parse(data);
-                    assert(typeof json.version === 'number' )
+                    assert(typeof json.version === 'number')
                     fs.unlink(file)
                 } catch (error) {
                     fs.unlink(file)

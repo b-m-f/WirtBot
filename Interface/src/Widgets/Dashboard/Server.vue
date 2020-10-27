@@ -12,7 +12,7 @@
       />
       <p v-else>{{ server.name }}</p>
     </div>
-    <div class="row" v-if="expertMode">
+    <div class="row">
       <label>{{ $t("dashboard.widgets.server.ip") }}</label>
       <IPInput
         v-if="edit"
@@ -21,7 +21,7 @@
       />
       <p v-else>{{ server.ip.v4.join(".") }}</p>
     </div>
-    <div class="row">
+    <div class="row" v-if="expertMode">
       <label>{{ $t("dashboard.widgets.server.hostname") }}</label>
       <input
         v-if="edit"
