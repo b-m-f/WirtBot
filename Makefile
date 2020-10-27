@@ -5,6 +5,13 @@ dev-client:
 	cd ./Interface && npm run dev
 dev-website: 
 	cd ./Website && npm run dev
+dev-setup:
+	cd ./shared-libs/crypto && npm install && npm run build && cd - && \
+	cd ./shared-libs/config-generators && npm install && npm run build || cd - && \
+	cd ./Website && npm install && cd - && \
+	cd ./Installer && npm install && cd - && \
+	cd ./Interface && npm install && cd -
+
 test-system: 
 	docker-compose -f System-Tests/compose/test.yml up --abort-on-container-exit --build --remove-orphans
 test-wirtbot:

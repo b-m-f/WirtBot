@@ -27,7 +27,6 @@ module.exports = {
           "/developer-documentation/": [
             ["", "WirtBot developer documentation"],
             ["system-architecture", "System Architecture"],
-            ["development-environment", "Development Environment"],
             ["interface", "Interface"],
             ["wirtbot", "WirtBot"],
             ["system-tests", "System Tests"],
