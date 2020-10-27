@@ -35,6 +35,7 @@ module.exports = {
           ],
         },
         nav: [
+          { text: "Github", link: "https://github.com/b-m-f/WirtBot" },
           { text: "Documentation", link: "/documentation/" },
           { text: "Screenshots", link: "/screenshots" },
           { text: "Announcements", link: "/announcements/" },
