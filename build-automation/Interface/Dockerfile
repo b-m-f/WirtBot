@@ -39,4 +39,4 @@ RUN cd Interface && npm ci  && npm run build
 FROM nginx:alpine
 
 COPY --from=interface /wirtbot/Interface/dist /app
-COPY Interface/docker/nginx/nginx.conf /etc/nginx/nginx.conf
+COPY build-automation/Interface/nginx/nginx.conf /etc/nginx/nginx.conf

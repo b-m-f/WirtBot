@@ -11,13 +11,13 @@ services:
       - download_folder:/tmp/WirtTestDownloads
   test-interface:
     build: 
-      dockerfile: Interface/docker/Dockerfile
-      context: ../..
+      dockerfile: build-automation/Interface/Dockerfile
+      context: ../../..
     container_name: test-interface
   test-wirtbot:
     build: 
-      dockerfile: WirtBot/docker/Dockerfile
-      context: ../..
+      dockerfile: build-automation/WirtBot/Dockerfile
+      context: ../../..
     container_name: test-wirtbot
     volumes:
       - ./test-server-conf:/etc/wireguard/server.conf
