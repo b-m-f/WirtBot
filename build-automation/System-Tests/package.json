@@ -6,7 +6,7 @@
   "scripts": {
     "test:local": "mkdir -p /tmp/WirtTestDownloads && find tests -wholename 'tests/nightwatch/**/*.spec.js'  | TEST_URL=localhost:8080 entr nightwatch",
     "test:headless:watch": "find tests -wholename 'tests/nightwatch/**/*.spec.js'  | TEST_URL=test-interface entr nightwatch --env integration",
-    "test:ci": "TEST_URL=test-interface nightwatch --env integration"
+    "test:ci": "TEST_URL=test-wirtbot nightwatch --env integration"
   },
   "dependencies": {
     "chromedriver": "85.0.0",

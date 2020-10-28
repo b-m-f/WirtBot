@@ -6,14 +6,9 @@ services:
       context: ..
     container_name: test-runner
     command: ["bash", "/app/wait-for.sh", "chrome:4444", "--", "npm", "run", "test:ci"]
-    depends_on: ["chrome", "test-wirtbot", "test-interface"]
+    depends_on: ["chrome", "test-wirtbot"]
     volumes:
       - download_folder:/tmp/WirtTestDownloads
-  test-interface:
-    build: 
-      dockerfile: build-automation/Interface/Dockerfile
-      context: ../../..
-    container_name: test-interface
   test-wirtbot:
     build: 
       dockerfile: build-automation/WirtBot/Dockerfile
