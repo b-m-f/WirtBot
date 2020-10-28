@@ -4,7 +4,7 @@ services:
   test_wirtbot:
     build: 
       context: ../../..
-      dockerfile: WirtBot/docker/DevDockerfile
+      dockerfile: build-automation/WirtBot/DevDockerfile
     ports: [3030:3030]
     restart: always
     volumes: ["../..:/app"]
