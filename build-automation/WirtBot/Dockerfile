@@ -47,11 +47,26 @@ COPY WirtBot/Cargo.lock Cargo.lock
 
 RUN cargo build --release --target-dir /builder/artifact
 
+### Build necessary tooling
+FROM debian:buster-slim as wireguard
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt update && apt upgrade -yy
+RUN apt-get install make gcc xz-utils -yy
+
+WORKDIR /
+
+ENV WG_TOOLS="wireguard-tools-1.0.20200827"
+
+COPY build-automation/WirtBot/$WG_TOOLS.tar.xz .
+RUN tar xf $WG_TOOLS.tar.xz
+RUN cd $WG_TOOLS/src && make && mv wg / && mv wg-quick/linux.bash /wg-quick && cd /
+
+
 ### This is where the final image starts
 FROM debian:buster-slim
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt update && apt upgrade -yy
-RUN apt-get install nginx inotify-tools -yy
+RUN apt-get install nginx inotify-tools iproute2 -yy
 
 # Set up the s6 overlay init system
 COPY build-automation/WirtBot/s6-overlay-amd64-installer-2.1.0.2 /tmp/s6-overlay-amd64-installer
@@ -64,10 +79,11 @@ WORKDIR /
 # Interface
 RUN useradd -r -s /bin/false interface
 RUN ln -sf /dev/stdout /var/log/nginx/access.log && ln -sf /dev/stderr /var/log/nginx/error.log
-RUN chown -R interface:interface /var/log/nginx
-
 COPY build-automation/WirtBot/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY --from=interface /wirtbot/Interface/dist /interface
+
+RUN chown -R interface:interface /var/log/nginx
+RUN chown -R interface:interface /interface
 COPY build-automation/WirtBot/service-files/interface /etc/services.d/interface/run
 COPY build-automation/WirtBot/service-files/finisher /etc/services.d/interface/finish
 
@@ -77,6 +93,13 @@ RUN useradd -r -s /bin/false core
 COPY --from=builder /builder/artifact/release/wirtbot /usr/bin/wirtbot-core
 COPY build-automation/WirtBot/service-files/core /etc/services.d/core/run
 COPY build-automation/WirtBot/service-files/finisher /etc/services.d/core/finish
+
+# WireGuard
+## Make sure to mount a WireGuard config to /etc/wireguard/server.conf
+COPY --from=wireguard /wg .
+COPY --from=wireguard /wg-quick .
+RUN chmod +x wg wg-quick && mv wg wg-quick /usr/bin
+
 
 # WireGuard restarter script
 RUN useradd -r -s /bin/false restarter

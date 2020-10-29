@@ -14,6 +14,8 @@ services:
       dockerfile: build-automation/WirtBot/Dockerfile
       context: ../../..
     container_name: test-wirtbot
+    cap_add:
+      - NET_ADMIN
     volumes:
       - ./test-server-conf:/etc/wireguard/server.conf
       - ./test-Corefile:/dns/CoreFile

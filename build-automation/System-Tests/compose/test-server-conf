@@ -1,0 +1,4 @@
+[Interface]
+Address = 10.10.0.1
+DNS = 10.10.0.1
+PrivateKey = oK56DE9Ue9zK76rAc8pBl6opph+1v36lm7cXXsQKrQM=
