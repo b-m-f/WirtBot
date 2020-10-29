@@ -1,4 +1,5 @@
 #!/usr/bin/execlineb -P
-s6-setuidgid daemon
+cd /etc/wireguard
+wg-quick up server.conf
 wireguard-restarter
 
