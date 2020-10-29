@@ -1,5 +1,4 @@
 #!/usr/bin/execlineb -P
-cd /etc/wireguard
-wg-quick up server.conf
+wg-quick up server
 wireguard-restarter
 
