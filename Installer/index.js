@@ -108,6 +108,11 @@ const main = async () => {
             message: 'Password for the maintenance user'
         },
         {
+            type: 'password',
+            name: 'password2',
+            message: 'Password again'
+        },
+        {
             type: config.get('sshKey') ? null : 'text',
             name: 'sshKey',
             message: 'Please paste the Public Key of the keypair you want to use for accessing the WirtBot via SSH'
@@ -146,8 +151,15 @@ const main = async () => {
         try {
             let allowedPublicKey = undefined;
             Object.keys(response).forEach(entry => {
-                if (entry !== 'password') {
+                if (entry === 'password') {
+                    if (response['password'] !== response['password2']) {
+                        console.error("Passwords for maintainer dont match");
+                        process.exit(1);
+                    }
+                }
+                else {
                     config.set(entry, response[entry]);
+
                 }
             });
 
@@ -212,7 +224,7 @@ const main = async () => {
                 config.set(entry, response[entry])
             }
         })
-        runAnsible(Object.assign({}, config.all, { server: { ip: { v4: "10.10.0.1" } }, password: response.password, update: true, sshPrivateKeyPath: config.get('sshPrivateKeyPath') }));
+        runAnsible(Object.assign({}, config.all, { serverIP: "10.10.0.1", password: response.password, update: true, sshPrivateKeyPath: config.get('sshPrivateKeyPath') }));
     }
 
 
