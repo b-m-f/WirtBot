@@ -2,7 +2,6 @@
 - hosts: all
   become: true
   vars:
-    # WARNING: do not choose WirtBot here
     - maintainer_username: "CHOOSE_A_USERNAME"
 
     - wirtui_public_key: "ENTER_PUBLIC_KEY_FROM_DASHBOARD_SETTINGS"
@@ -15,10 +14,8 @@
     # This will be the password to use sudo on the machine
     - maintainer_password: "ENTER_YOUR_PASSWORD"
 
-    - hidden: true
-
-    - initial_server_config: "INITIAL CONFIG TO BE USED" # needed for hidden mode
-    - initial_dns_config: "INITIAL DNS CONFIGURATION TO BE USED" # needed for hidden mode
+    - initial_server_config: "INITIAL CONFIG TO BE USED"
+    - initial_dns_config: "INITIAL DNS CONFIGURATION TO BE USED"
 
   tasks:
     - import_tasks: tasks/apt-configuration.yml
@@ -27,7 +24,6 @@
     - import_tasks: tasks/WireGuard.yml
     - import_tasks: tasks/firewall.yml
     - import_tasks: tasks/WirtBot.yml
-    - import_tasks: tasks/WirtBot-Interface.yml
     - import_tasks: tasks/dns.yml
     - import_tasks: tasks/sshd_config.yml
     - import_tasks: tasks/fail2ban.yml

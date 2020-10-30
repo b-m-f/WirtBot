@@ -10,10 +10,13 @@ services:
       dockernet:
         ipv4_address: 172.10.17.30
     ports:
+      - 80:80
       - 3030:3030
+      - 10101:10101/udp
     restart: "unless-stopped"
+    cap_add:
+      - NET_ADMIN
     volumes:
-      - "../letsencrypt/data/:/certs/:ro"
       - /etc/wireguard:/wireguard
       - ../coredns/data:/dns
     environment:
