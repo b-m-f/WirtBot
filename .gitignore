@@ -2,3 +2,4 @@ wirt-installer.config.json
 **/node_modules
 **/target
 ImportThisFileIntoYourWirtBotInterface.json
+testwirtbot.conf
