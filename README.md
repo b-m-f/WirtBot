@@ -8,7 +8,43 @@
 
 Welcome to the [WirtBot](https://wirtbot.com) repository.
 
-## Setup
+## Run in Docker
+
+This image needs **NET_ADMIN** capabilities and:
+
+- Linux Kernel > 5.6 || WireGuard® Kernel Module
+
+Here is an example `docker-compose.yml` with WireGuard:
+```
+version: "3"
+
+services:
+  wirtbot:
+    build: 
+      context: ../../..
+      dockerfile: build-automation/WirtBot/Dockerfile
+      
+    ports: [3030:3030]
+    restart: always
+    volumes: ["../..:/app"]
+    environment:
+      "PUBLIC_KEY": "1lLU3VhXsrSGMxESmqfY4m2oEVkpfEHyKlCQU6MMPsI="
+      "ALLOWED_ORIGIN": "http://localhost:8080"
+      "RUST_LOG": "debug"
+      "MANAGED_DNS_ENABLED": 1
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - ./test-server.conf:/etc/wireguard/server.conf
+      - ./test-Corefile:/dns/CoreFile
+    ports:
+      - 80:80
+      - 3030:3030
+      - 10101:10101/udp
+    container_name: development_wirtbot
+```
+
+## Setup WireGuard VPS
 
 **Install:**
 - [ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
