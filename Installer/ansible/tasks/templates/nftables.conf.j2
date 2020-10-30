@@ -7,7 +7,9 @@ table inet filter {
                 type filter hook input priority 0; policy drop;
 
                 iif lo accept comment "Accept any localhost traffic"
-                iifname server accept comment "Accept Wireguard traffic"
+                iifname server tcp dport 80 accept comment "Accept Interface traffic"
+                iifname server tcp dport 3030 accept comment "Accept WirtBot traffic"
+                iifname server udp dport 10101 accept comment "Accept Wireguard traffic"
 
                 ct state invalid drop comment "Drop invalid connections"
                 ct state established,related accept comment "Accept traffic originated from us"
@@ -32,8 +34,9 @@ table inet filter {
 table ip nat {
         chain prerouting {
                 type nat hook prerouting priority 0; policy accept;
-                iifname server tcp dport 80 dnat 172.10.17.31 comment "Allow traffic to WirtBot interface"
+                iifname server tcp dport 80 dnat 172.10.17.30 comment "Allow traffic to WirtBot container"
                 iifname server tcp dport 3030 dnat 172.10.17.30 comment "Allow traffic to WirtBot container"
+                iifname server udp dport 10101 dnat 172.10.17.30 comment "Allow traffic to WirtBot container"
         }
 
         chain postrouting {

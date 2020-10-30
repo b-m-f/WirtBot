@@ -113,6 +113,19 @@ const main = async () => {
             name: 'sshKey',
             message: 'Please paste the Public Key of the keypair you want to use for accessing the WirtBot via SSH'
         },
+        {
+            type: 'toggle',
+            name: "hasBackup",
+            message: 'Do you have a backup?',
+            active: 'yes',
+            inactive: 'no',
+            initial: false,
+        },
+        {
+            type: prev => prev == true ? 'text' : null,
+            name: 'backupPath',
+            message: 'Specify the relative path to the backup'
+        },
     ];
     const questionsUpdate = [
         {
@@ -132,34 +145,61 @@ const main = async () => {
         const response = await prompts(questionsInstall);
         console.log("Configuration written to", configPath)
         try {
+            let allowedPublicKey = undefined;
             Object.keys(response).forEach(entry => {
                 if (entry !== 'password') {
-                    config.set(entry, response[entry])
+                    config.set(entry, response[entry]);
                 }
             });
 
-            const serverKeys = await getKeys();
-            const deviceKeys = await getKeys();
-            const signingKeys = await generateSigningKeys();
-            const device = { ip: { v4: 2 }, name: "Change me", keys: deviceKeys, type: "Linux" };
-            const server = { ip: { v4: config.get('serverIP').split('.') }, port: 10101, keys: serverKeys, subnet: { v4: "10.10.0.", v6: "1010:1010:1010:1010:" } };
-            const serverConfig = generateServerConfig(server, [device]);
-            const deviceConfig = generateDeviceConfig(device, server);
-            const dnsConfig = generateDNSFile(server, [device], { dns: { name: "wirt.internal" } });
 
 
-            config.set("wirtBotUIKey", signingKeys.public)
+            const devices = [];
+            let server = undefined;
 
-            const interfaceState = JSON.stringify(JSON.stringify({
-                version: 1.1,
-                server,
-                devices: [device],
-                keys: signingKeys
-            }));
+            if (response['backupPath']) {
+                const backupFile = await fs.readFile(response['backupPath'], 'utf8');
+                const backup = JSON.parse(backupFile);
+                allowedPublicKey = backup.keys.public;
+                device = { ip: { v4: 2 }, name: "Change me", keys: deviceKeys, type: "Linux" };
+                backup.devices.forEach(device => {
+                    devices.push(device)
+                })
+                server = {
+                    ip: { v4: backup.server.ip.v4 },
+                    port: backup.server.port,
+                    keys: backup.server.keys,
+                    subnet: backup.server.subnet
+                };
+                config.set("wirtBotUIKey", allowedPublicKey);
+            } else {
+                const serverKeys = await getKeys();
+                const deviceKeys = await getKeys();
+                const signingKeys = await generateSigningKeys();
+
+                const device = { ip: { v4: 2 }, name: "Change me", keys: deviceKeys, type: "Linux" }
+                devices.push(
+                    device
+                );
+                server = { ip: { v4: config.get('serverIP').split('.') }, port: 10101, keys: serverKeys, subnet: { v4: "10.10.0.", v6: "1010:1010:1010:1010:" } };
+                config.set("wirtBotUIKey", signingKeys.public);
+                const deviceConfig = generateDeviceConfig(device, server);
+                const interfaceState = JSON.stringify(JSON.stringify({
+                    version: 1.1,
+                    server,
+                    devices: [device],
+                    keys: signingKeys
+                }));
+
+                await fs.writeFile('UseThisWireGuardConfigurationToConnectToYourWirtBot.conf', deviceConfig, 'utf8');
+                await fs.writeFile('ImportThisFileIntoYourWirtBotInterface.json', interfaceState, 'utf8');
+            }
+
+            const serverConfig = generateServerConfig(server, devices);
+            const dnsConfig = generateDNSFile(server, devices, { dns: { name: "wirt.internal" } });
+
 
             runAnsible(Object.assign({}, config.all, { password: response.password, update: false, serverConfig, dnsConfig }));
-            await fs.writeFile('UseThisWireGuardConfigurationToConnectToYourWirtBot.conf', deviceConfig, 'utf8');
-            await fs.writeFile('ImportThisFileIntoYourWirtBotInterface.json', interfaceState, 'utf8');
 
         } catch (error) {
             console.error(error);

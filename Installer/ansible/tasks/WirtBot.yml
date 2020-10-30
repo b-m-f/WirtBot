@@ -21,31 +21,3 @@
     build: yes
     recreate: always
     pull: yes
-
-- name: install inotifywait via inotify-tools
-  apt:
-    name:
-      - inotify-tools
-    state: present
-
-- name: create wireguard restarter script
-  template:
-    src: templates/watch-wireguard-config.sh.j2
-    dest: /usr/bin/watch-wireguard-config.sh
-    owner: root
-    group: root
-    mode: 0750
-
-- name: create wireguard restarter
-  template:
-    src: templates/watch-wireguard-config.service.j2
-    dest: /etc/systemd/system/watch-wireguard-config.service
-    owner: root
-    group: root
-    mode: 0644
-
-- name: enable wireguard restarter
-  systemd:
-    name: watch-wireguard-config
-    state: started
-    enabled: yes
