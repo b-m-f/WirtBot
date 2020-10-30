@@ -1,0 +1,8 @@
+[Interface]
+Address = 10.10.4.2
+PrivateKey = uLpBxEZScI95kg8a2PxFk47CFTF2k7G8Fy3Aly57G0E=
+
+[Peer]
+Endpoint = development_wirtbot:10101
+AllowedIPs = 10.10.4.0/24
+PublicKey = abY3VwejvKPG7mMBVdXWkqXE2TYinjfJGJDPIchcJEw=
