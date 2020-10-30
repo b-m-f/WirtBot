@@ -1,14 +1,9 @@
 version: "3.4"
-networks:
-  dockernet:
-    external: true
 
 services:
   WirtBot:
-    image: bmff/wirtbot:latest
-    networks:
-      dockernet:
-        ipv4_address: 172.10.17.30
+    image: bmff/wirtbot:test
+    network_mode: host
     ports:
       - 80:80
       - 3030:3030
