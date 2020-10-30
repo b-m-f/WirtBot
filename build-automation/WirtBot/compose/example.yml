@@ -20,5 +20,7 @@ services:
       - ./test-server.conf:/etc/wireguard/server.conf
       - ./test-Corefile:/dns/CoreFile
     ports:
+      - 80:80
+      - 3030:3030
       - 10101:10101/udp
     container_name: development_wirtbot
