@@ -12,6 +12,9 @@ dev-setup:
 	cd ./Installer && npm install && cd - && \
 	cd ./Interface && npm install && cd -
 
+run-test-wirtbot: 
+	docker-compose -f build-automation/WirtBot/compose/example.yml up --abort-on-container-exit --build --remove-orphans
+
 test-system: 
 	docker-compose -f build-automation/System-Tests/compose/test.yml up --abort-on-container-exit --build --remove-orphans
 test-wirtbot:

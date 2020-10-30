@@ -19,6 +19,8 @@ services:
     volumes:
       - ./test-server-conf:/etc/wireguard/server.conf
       - ./test-Corefile:/dns/CoreFile
+    ports:
+      - 10101:10101/udp
     environment:
       "PUBLIC_KEY": "1lLU3VhXsrSGMxESmqfY4m2oEVkpfEHyKlCQU6MMPsI="
       "ALLOWED_ORIGIN": "http://localhost:8080"

@@ -102,12 +102,11 @@ RUN chmod +x wg wg-quick && mv wg wg-quick /usr/bin
 
 
 # WireGuard restarter script
-RUN useradd -r -s /bin/false restarter
-
 COPY WirtBot/wireguard-restarter.sh /usr/bin/wireguard-restarter
 RUN chmod +x /usr/bin/wireguard-restarter
 COPY build-automation/WirtBot/service-files/wireguard-restarter /etc/services.d/wireguard-restarter/run
-COPY build-automation/WirtBot/service-files/finisher /etc/services.d/wireguard-restarter/finish
+RUN which wireguard-restarter
+RUN ls -la /etc/services.d/wireguard-restarter
 
 EXPOSE 3030
 EXPOSE 80
