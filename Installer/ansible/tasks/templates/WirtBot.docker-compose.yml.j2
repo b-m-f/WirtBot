@@ -5,7 +5,7 @@ networks:
 
 services:
   WirtBot:
-    image: bmff/wirtbot:release
+    image: bmff/wirtbot:latest
     networks:
       dockernet:
         ipv4_address: 172.10.17.30
@@ -17,7 +17,7 @@ services:
     cap_add:
       - NET_ADMIN
     volumes:
-      - /etc/wireguard:/wireguard
+      - /etc/wireguard:/etc/wireguard
       - ../coredns/data:/dns
     environment:
       - "PUBLIC_KEY={{ wirtui_public_key }}"

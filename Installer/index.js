@@ -101,7 +101,6 @@ const main = async () => {
             type: config.get('user') ? null : 'text',
             name: 'user',
             message: 'Maintenance user name',
-            validate: name => name === 'wirtbot' ? "Sorry, you can not use wirtbot as a name" : true
         },
         {
             type: 'password',

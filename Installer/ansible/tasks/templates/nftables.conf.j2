@@ -7,6 +7,7 @@ table inet filter {
                 type filter hook input priority 0; policy drop;
 
                 iif lo accept comment "Accept any localhost traffic"
+                iifname server tcp dport 22 accept comment "Accept Interface traffic"
                 iifname server tcp dport 80 accept comment "Accept Interface traffic"
                 iifname server tcp dport 3030 accept comment "Accept WirtBot traffic"
                 iifname server udp dport 10101 accept comment "Accept Wireguard traffic"
