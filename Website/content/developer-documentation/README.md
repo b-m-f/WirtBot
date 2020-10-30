@@ -26,7 +26,26 @@ By using predefined keys both will be linked together automatically.
 
 Most other parts of the system can be run with `npm run dev`.
 
-#### Reading the WirtBot logs
+### Reading the WirtBot logs
 
 - Find out WirtBot container name with `docker ps`
 - attach to WirtBot with `docker logs -f $CONTAINER_NAME`
+
+### Running a completely virtualized WirtBot
+
+This is super useful for testing!
+Just spawn a local WirtBot as it would run on the Server and connect to it with WireGuard for testing.
+
+
+#### Dependencies
+
+- wg-quick
+- wg
+- Linux Kernel > 5.6 || WireGuard® Kernel Module
+
+Run `make run-test-wirtbot`. This will build and set up a complete WirtBot, including a WireGuard interface.
+
+In order to connect to the WirtBot run `make connect-test-wirtbot`.
+
+You should now be able to ping the Container at **10.10.4.1**.
+
