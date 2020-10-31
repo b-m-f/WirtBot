@@ -117,7 +117,6 @@ const install = async () => {
             console.log(`Generating configs for ${backup.devices.lengt} devices`)
 
             const serverConfig = generateServerConfig(server, devices);
-            console.log(serverConfig)
             const dnsConfig = generateDNSFile(server, devices, { dns: { name: "wirt.internal" } });
             await runAnsible(Object.assign({}, config.all, { password: response.password, update: false, serverConfig, dnsConfig }));
 
