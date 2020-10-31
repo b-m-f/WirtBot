@@ -1,6 +1,6 @@
 import Configstore from 'configstore';
 import prompts from 'prompts';
-import { promises as fs } from "fs"
+import { promises as fs, existsSync } from "fs"
 import { generateServerConfig, generateDeviceConfig, generateDNSFile } from '@wirtbot/config-generators'
 import { getKeys, generateSigningKeys } from '@wirtbot/crypto'
 import { runAnsible } from './src/ansible'
@@ -100,7 +100,6 @@ const install = async () => {
         if (response['backupPath']) {
             const backupFile = await fs.readFile(response['backupPath'], 'utf8');
             const backup = JSON.parse(backupFile);
-            console.log(backup.keys)
             allowedPublicKey = backup.keys.public;
             config.set("wirtBotUIKey", allowedPublicKey);
 
@@ -115,22 +114,26 @@ const install = async () => {
             backup.devices.forEach(device => {
                 devices.push(device)
             })
+            console.log(`Generating configs for ${backup.devices.lengt} devices`)
 
             const serverConfig = generateServerConfig(server, devices);
+            console.log(serverConfig)
             const dnsConfig = generateDNSFile(server, devices, { dns: { name: "wirt.internal" } });
             await runAnsible(Object.assign({}, config.all, { password: response.password, update: false, serverConfig, dnsConfig }));
 
             const folderName = 'WirtBot\ Configurations'
-            if (!fs.stat(folderName)) {
+            const folderExists = await existsSync(folderName)
+            if (!folderExists) {
                 await fs.mkdir(folderName);
 
             }
+
             devices.forEach(async device => {
                 const deviceConfig = generateDeviceConfig(device, server);
                 await fs.writeFile(`${folderName}/${device.name}.conf`, deviceConfig, 'utf8');
 
             })
-            console.log("Update configurations for devices written to 'WirtBot Configurations' directory")
+            console.log("Updated configurations for devices written to 'WirtBot Configurations' directory. Use them in case the external server IP has changed")
 
 
         } else {

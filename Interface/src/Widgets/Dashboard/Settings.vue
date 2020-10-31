@@ -57,7 +57,7 @@ export default {
       );
       element.setAttribute(
         "download",
-        "dasboard-backup-" + new Date().toISOString() + ".json"
+        "dasboard-backup-" + new Date().toISOString().replace(" ", "-") + ".json"
       );
 
       element.style.display = "none";
