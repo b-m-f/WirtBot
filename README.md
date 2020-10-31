@@ -1,7 +1,7 @@
 ![WirtBot logo](Interface/public/logo.svg)
 
 # WirtBot®
-**Easily and securely extend your network into the cloud!**
+**A real VPN for the modern digitalist**
 
 <br/>
 
