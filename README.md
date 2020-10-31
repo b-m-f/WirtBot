@@ -15,7 +15,7 @@ Check out [this page](https://wirtbot.com/setup#docker)
 
 ## Setup WirtBot VPS
 
--**Install:**
+- **Install:**
   - [ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
   - [sshpass](https://gist.github.com/arunoda/7790979) (necessary to login via SSH to your servers root user via password for the setup)
   - [node](https://nodejs.org/en/download/)
