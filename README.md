@@ -10,38 +10,45 @@ Welcome to the [WirtBot](https://wirtbot.com) repository.
 
 ## Run in Docker
 
-This image needs **NET_ADMIN** capabilities and:
+The WirtBot docker image needs **NET_ADMIN** capabilities and:
 
 - Linux Kernel > 5.6 || WireGuard® Kernel Module
 
-Here is an example `docker-compose.yml` with WireGuard:
+Here is an example `docker-compose.yml` for a WirtBot with DNS:
 ```
-version: "3"
+version: "3.4"
 
 services:
-  wirtbot:
-    build: 
-      context: ../../..
-      dockerfile: build-automation/WirtBot/Dockerfile
-      
-    ports: [3030:3030]
-    restart: always
-    volumes: ["../..:/app"]
-    environment:
-      "PUBLIC_KEY": "1lLU3VhXsrSGMxESmqfY4m2oEVkpfEHyKlCQU6MMPsI="
-      "ALLOWED_ORIGIN": "http://localhost:8080"
-      "RUST_LOG": "debug"
-      "MANAGED_DNS_ENABLED": 1
-    cap_add:
-      - NET_ADMIN
-    volumes:
-      - ./test-server.conf:/etc/wireguard/server.conf
-      - ./test-Corefile:/dns/CoreFile
+  WirtBot:
+    image: bmff/wirtbot:test
+    network_mode: host
     ports:
       - 80:80
       - 3030:3030
       - 10101:10101/udp
-    container_name: development_wirtbot
+    restart: "unless-stopped"
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - /etc/wireguard:/etc/wireguard
+      - ./data:/dns
+    environment:
+      - "PUBLIC_KEY={{ wirtui_public_key }}"
+      - "PORT=3030"
+      - "MANAGED_DNS_ENABLED=1"
+      - "MANAGED_DNS_DEVICE_FILE=/dns/Corefile"
+      - "CONFIG_PATH=/etc/wireguard/server.conf"
+  coredns:
+    network_mode: host
+    image: coredns/coredns
+    ports:
+      - 53:53/udp
+    restart: "unless-stopped"
+    working_dir: /v
+    volumes:
+      - ./data:/v
+
+
 ```
 
 ## Setup WireGuard VPS
