@@ -22,4 +22,4 @@ RUN npm run build
 FROM nginx:alpine
 
 COPY --from=app /website/content/.vuepress/dist /website
-COPY Website/docker/nginx/nginx.conf /etc/nginx/nginx.conf
+COPY build-automation/Website/nginx/nginx.conf /etc/nginx/nginx.conf
