@@ -1,6 +1,6 @@
 ![WirtBot logo](Interface/public/logo.svg)
 
-# WirtBot
+# WirtBot®
 **Easily and securely extend your network into the cloud!**
 
 <br/>
