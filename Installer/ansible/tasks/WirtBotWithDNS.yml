@@ -1,4 +1,5 @@
-- name: Create directories for coredns
+
+- name: Create directories for wirtbot
   file:
     path: "/home/{{ maintainer_username }}/{{ item }}"
     owner: "{{ maintainer_username }}"
@@ -6,31 +7,29 @@
     state: directory
     mode: '0750'
   loop:
-   - coredns
-   - coredns/data
+   - WirtBot 
+   - WirtBot/data
 
 - name: Copy docker-compose file to machine
   template:
-    src: "templates/{{ item }}.docker-compose.yml.j2"
-    dest: "/home/{{ maintainer_username }}/{{ item }}/docker-compose.yml"
+    src: "templates/WirtBot.docker-compose.yml.j2"
+    dest: "/home/{{ maintainer_username }}/WirtBot/docker-compose.yml"
     owner: "{{ maintainer_username }}"
     group: "{{ maintainer_username }}"
     mode: 0640
-  loop:
-    - coredns
 
 - name: Copy coredns config to machine
   template:
     src: "templates/coredns.config.j2"
-    dest: "/home/{{ maintainer_username }}/coredns/data/Corefile"
+    dest: "/home/{{ maintainer_username }}/WirtBot/data/Corefile"
     owner: "{{ maintainer_username }}"
     group: "{{ maintainer_username }}"
     mode: 0640
     force: no
 
-  
-- name: Start coredns docker service
+- name: Start WirtBot docker service
   docker_compose:
-    project_src: "/home/{{ maintainer_username }}/{{ item }}"
-  loop:
-    - coredns
+    project_src: "/home/{{ maintainer_username }}/WirtBot"
+    build: yes
+    recreate: always
+    pull: yes

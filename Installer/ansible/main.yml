@@ -23,8 +23,7 @@
     - import_tasks: tasks/programs.yml
     - import_tasks: tasks/WireGuard.yml
     - import_tasks: tasks/firewall.yml
-    - import_tasks: tasks/WirtBot.yml
-    - import_tasks: tasks/dns.yml
+    - import_tasks: tasks/WirtBotWithDNS.yml
     - import_tasks: tasks/fail2ban.yml
     - import_tasks: tasks/sshd_config.yml
     - import_tasks: tasks/disable_root.yml
