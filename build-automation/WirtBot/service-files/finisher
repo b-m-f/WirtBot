@@ -1,3 +1,2 @@
 #!/usr/bin/execlineb -S1
-wg-quick down server
 s6-svscanctl -t /var/run/s6/services

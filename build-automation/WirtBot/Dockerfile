@@ -105,8 +105,10 @@ RUN chmod +x wg wg-quick && mv wg wg-quick /usr/bin
 COPY WirtBot/wireguard-restarter.sh /usr/bin/wireguard-restarter
 RUN chmod +x /usr/bin/wireguard-restarter
 COPY build-automation/WirtBot/service-files/wireguard-restarter /etc/services.d/wireguard-restarter/run
-RUN which wireguard-restarter
-RUN ls -la /etc/services.d/wireguard-restarter
+
+
+# Clean up script to shut down WireGuard interface on container exit
+COPY build-automation/WirtBot/service-files/clean-up /etc/cont-finish.d/clean
 
 EXPOSE 3030
 EXPOSE 80
