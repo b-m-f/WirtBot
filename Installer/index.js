@@ -114,7 +114,7 @@ const install = async () => {
             backup.devices.forEach(device => {
                 devices.push(device)
             })
-            console.log(`Generating configs for ${backup.devices.lengt} devices`)
+            console.log(`Generating configs for ${backup.devices.length} devices`)
 
             const serverConfig = generateServerConfig(server, devices);
             const dnsConfig = generateDNSFile(server, devices, { dns: { name: "wirt.internal" } });
