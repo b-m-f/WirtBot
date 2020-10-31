@@ -1,0 +1,2 @@
+/etc/wireguard true core 0600 0700
+/dns true core 0644 0755
