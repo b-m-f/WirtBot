@@ -41,6 +41,7 @@
     "@wirtbot/config-generators": "file:../shared-libs/config-generators",
     "@wirtbot/crypto": "file:../shared-libs/crypto",
     "configstore": "5.0.1",
+    "eslint": "^7.12.1",
     "prompts": "2.3.2",
     "replace-in-file": "6.1.0",
     "webpack": "5.1.2",
