@@ -1,95 +1,39 @@
-import path from "path";
 import Configstore from 'configstore';
 import prompts from 'prompts';
 import { promises as fs } from "fs"
-import { spawn } from "child_process";
 import { generateServerConfig, generateDeviceConfig, generateDNSFile } from '@wirtbot/config-generators'
 import { getKeys, generateSigningKeys } from '@wirtbot/crypto'
+import { runAnsible } from './src/ansible'
 
 const configPath = "./wirt-installer.config.json"
 
 const config = new Configstore("wirt-installer", {}, { configPath });
 
-
-const runAnsible = async ({
-    user,
-    serverIP,
-    password,
-    sshKey,
-    wirtBotUIKey,
-    domain,
-    email,
-    update,
-    sshPrivateKeyPath,
-    dnsConfig,
-    serverConfig
-}) => {
-    let args = [
-        "-i", `${serverIP},`, path.join(__dirname, "../ansible/main.yml"),
-        "--extra-vars", `wirtui_public_key="${wirtBotUIKey}"`,
-        "--extra-vars", `maintainer_username=${user}`,
-        "--extra-vars", `maintainer_ssh_key="${sshKey}"`,
-        "--extra-vars", `maintainer_password=${password}`,
-        "--extra-vars", `letsencrypt_email=${email}`,
-        "--extra-vars", `domain_name=${domain}`,
-        "--extra-vars", `update=true`,
-        "--extra-vars", 'ansible_python_interpreter=/usr/bin/python3',
-    ]
-
-    const updateArguments = [
-        `--extra-vars`, `ansible_become_pass=${password}`,
-        '--private-key', `${sshPrivateKeyPath}`,
-        `--user`, `${user}`,
-    ]
-    const installArguments = [
-        `--user`, `root`,
-        '--ask-pass',
-        "--extra-vars", `initial_server_config="${serverConfig}"`,
-        "--extra-vars", `initial_dns_config="${dnsConfig}"`,
-        "--ssh-common-args='-o StrictHostKeyChecking=no'"
-    ]
-    if (update) {
-        args = [...args, ...updateArguments]
-    } else {
-        console.log("If you have an SSH key on the server during initial setup, use an SSH config and simply hit Enter when asked for a password")
-        args = [...args, ...installArguments]
-    }
-
-    const ansible = spawn("ansible-playbook", args);
-
-    ansible.stdout.on("data", data => {
-        console.log(`${data} `);
-    });
-
-    ansible.stderr.on("data", data => {
-        console.log(`Error: ${data} `);
-    });
-
-    ansible.on('error', (error) => {
-        console.log(`Error: ${error.message} `);
-    });
-
-    ansible.on("close", code => {
-    });
-
+const update = async () => {
+    const questionsUpdate = [
+        {
+            type: 'password',
+            name: 'password',
+            message: 'Password for the maintenance user'
+        },
+        {
+            type: config.get('sshPrivateKeyPath') ? null : 'text',
+            name: 'sshPrivateKeyPath',
+            message: 'Path to private key to enter WirtBot via SSH'
+        },
+    ];
+    const response = await prompts(questionsUpdate);
+    console.log("Configuration written to", configPath);
+    Object.keys(response).forEach(entry => {
+        if (entry !== 'password') {
+            config.set(entry, response[entry])
+        }
+    })
+    await runAnsible(Object.assign({}, config.all, { serverIP: "10.10.0.1", password: response.password, update: true, sshPrivateKeyPath: config.get('sshPrivateKeyPath') }));
 
 }
 
-
-const main = async () => {
-    const updateOrInstallQuestions = [
-        {
-            type: 'select',
-            name: 'value',
-            message: 'Choose a mode',
-            choices: [
-                { title: 'Update', description: 'Update an existing installation', value: 'update' },
-                { title: 'Install', description: 'Install a new WirtBot', value: 'install' },
-            ],
-            initial: 1
-        }
-
-    ]
+const install = async () => {
     const questionsInstall = [
         {
             type: config.get('serverIP') ? null : 'text',
@@ -131,100 +75,131 @@ const main = async () => {
             message: 'Specify the relative path to the backup'
         },
     ];
-    const questionsUpdate = [
-        {
-            type: 'password',
-            name: 'password',
-            message: 'Password for the maintenance user'
-        },
-        {
-            type: config.get('sshPrivateKeyPath') ? null : 'text',
-            name: 'sshPrivateKeyPath',
-            message: 'Path to private key to enter WirtBot via SSH'
-        },
-    ];
-
-    const updateOrInstall = await prompts(updateOrInstallQuestions);
-    if (updateOrInstall["value"] === 'install') {
-        const response = await prompts(questionsInstall);
-        console.log("Configuration written to", configPath)
-        try {
-            let allowedPublicKey = undefined;
-            Object.keys(response).forEach(entry => {
-                if (entry === 'password') {
-                    if (response['password'] !== response['password2']) {
-                        console.error("Passwords for maintainer dont match");
-                        process.exit(1);
-                    }
+    const response = await prompts(questionsInstall);
+    console.log("Configuration written to", configPath)
+    try {
+        let allowedPublicKey = undefined;
+        Object.keys(response).forEach(entry => {
+            if (entry === 'password') {
+                if (response['password'] !== response['password2']) {
+                    console.error("Passwords for maintainer dont match");
+                    process.exit(1);
                 }
-                else {
-                    config.set(entry, response[entry]);
-
-                }
-            });
-
-
-
-            const devices = [];
-            let server = undefined;
-
-            if (response['backupPath']) {
-                const backupFile = await fs.readFile(response['backupPath'], 'utf8');
-                const backup = JSON.parse(backupFile);
-                allowedPublicKey = backup.keys.public;
-                device = { ip: { v4: 2 }, name: "Change me", keys: deviceKeys, type: "Linux" };
-                backup.devices.forEach(device => {
-                    devices.push(device)
-                })
-                server = {
-                    ip: { v4: backup.server.ip.v4 },
-                    port: backup.server.port,
-                    keys: backup.server.keys,
-                    subnet: backup.server.subnet
-                };
-                config.set("wirtBotUIKey", allowedPublicKey);
-            } else {
-                const serverKeys = await getKeys();
-                const deviceKeys = await getKeys();
-                const signingKeys = await generateSigningKeys();
-
-                const device = { ip: { v4: 2 }, name: "Change me", keys: deviceKeys, type: "Linux" }
-                devices.push(
-                    device
-                );
-                server = { ip: { v4: config.get('serverIP').split('.') }, port: 10101, keys: serverKeys, subnet: { v4: "10.10.0.", v6: "1010:1010:1010:1010:" } };
-                config.set("wirtBotUIKey", signingKeys.public);
-                const deviceConfig = generateDeviceConfig(device, server);
-                const interfaceState = JSON.stringify(JSON.stringify({
-                    version: 1.1,
-                    server,
-                    devices: [device],
-                    keys: signingKeys
-                }));
-
-                await fs.writeFile('UseThisWireGuardConfigurationToConnectToYourWirtBot.conf', deviceConfig, 'utf8');
-                await fs.writeFile('ImportThisFileIntoYourWirtBotInterface.json', interfaceState, 'utf8');
             }
+            else {
+                config.set(entry, response[entry]);
+
+            }
+        });
+
+
+
+        const devices = [];
+        let server = undefined;
+
+        if (response['backupPath']) {
+            const backupFile = await fs.readFile(response['backupPath'], 'utf8');
+            const backup = JSON.parse(backupFile);
+            console.log(backup.keys)
+            allowedPublicKey = backup.keys.public;
+            config.set("wirtBotUIKey", allowedPublicKey);
+
+            server = {
+                ip: {
+                    v4: config.get('serverIP').split('.')
+                },
+                port: backup.server.port,
+                keys: backup.server.keys,
+                subnet: backup.server.subnet
+            };
+            backup.devices.forEach(device => {
+                devices.push(device)
+            })
 
             const serverConfig = generateServerConfig(server, devices);
             const dnsConfig = generateDNSFile(server, devices, { dns: { name: "wirt.internal" } });
+            await runAnsible(Object.assign({}, config.all, { password: response.password, update: false, serverConfig, dnsConfig }));
+
+            const folderName = 'WirtBot\ Configurations'
+            if (!fs.stat(folderName)) {
+                await fs.mkdir(folderName);
+
+            }
+            devices.forEach(async device => {
+                const deviceConfig = generateDeviceConfig(device, server);
+                await fs.writeFile(`${folderName}/${device.name}.conf`, deviceConfig, 'utf8');
+
+            })
+            console.log("Update configurations for devices written to 'WirtBot Configurations' directory")
 
 
-            runAnsible(Object.assign({}, config.all, { password: response.password, update: false, serverConfig, dnsConfig }));
+        } else {
+            const serverKeys = await getKeys();
+            const deviceKeys = await getKeys();
+            const signingKeys = await generateSigningKeys();
 
+            const device = { ip: { v4: 2 }, name: "Change me", keys: deviceKeys, type: "Linux" }
+            devices.push(
+                device
+            );
+            server = { ip: { v4: config.get('serverIP').split('.') }, port: 10101, keys: serverKeys, subnet: { v4: "10.10.0.", v6: "1010:1010:1010:1010:" } };
+            config.set("wirtBotUIKey", signingKeys.public);
+            const deviceConfig = generateDeviceConfig(device, server);
+            const interfaceState = JSON.stringify(JSON.stringify({
+                version: 1.1,
+                server,
+                devices: [device],
+                keys: signingKeys
+            }));
+
+            const serverConfig = generateServerConfig(server, devices);
+            const dnsConfig = generateDNSFile(server, devices, { dns: { name: "wirt.internal" } });
+            await runAnsible(Object.assign({}, config.all, { password: response.password, update: false, serverConfig, dnsConfig }));
+
+
+            await fs.writeFile('UseThisWireGuardConfigurationToConnectToYourWirtBot.conf', deviceConfig, 'utf8');
+            await fs.writeFile('ImportThisFileIntoYourWirtBotInterface.json', interfaceState, 'utf8');
+
+        }
+
+
+    } catch (error) {
+        console.error(error);
+    }
+
+}
+
+const main = async () => {
+    const updateOrInstallQuestions = [
+        {
+            type: 'select',
+            name: 'value',
+            message: 'Choose a mode',
+            choices: [
+                { title: 'Update', description: 'Update an existing installation', value: 'update' },
+                { title: 'Install', description: 'Install a new WirtBot', value: 'install' },
+            ],
+            initial: 1
+        }
+
+    ]
+    const updateOrInstall = await prompts(updateOrInstallQuestions);
+    if (updateOrInstall["value"] === 'install') {
+        try {
+            await install();
+            console.log("Installation complete")
         } catch (error) {
-            console.error(error);
+            console.error(error)
         }
     }
     if (updateOrInstall["value"] === 'update') {
-        const response = await prompts(questionsUpdate);
-        console.log("Configuration written to", configPath);
-        Object.keys(response).forEach(entry => {
-            if (entry !== 'password') {
-                config.set(entry, response[entry])
-            }
-        })
-        runAnsible(Object.assign({}, config.all, { serverIP: "10.10.0.1", password: response.password, update: true, sshPrivateKeyPath: config.get('sshPrivateKeyPath') }));
+        try {
+
+            await update();
+            console.log("Ran update successfully")
+        } catch (error) {
+            console.error(error)
+        }
     }
 
 
