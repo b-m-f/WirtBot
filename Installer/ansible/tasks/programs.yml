@@ -13,9 +13,10 @@
     dest: "/etc/docker/daemon.json"
     mode: 0640
 
-- name: enable docker at startup
+- name: Start and enable docker
   systemd:
-    state: enabled
+    state: started
+    enabled: yes
     name: docker
 
 - name: Restart docker to load daemon config
