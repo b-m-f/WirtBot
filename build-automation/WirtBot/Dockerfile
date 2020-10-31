@@ -93,6 +93,7 @@ RUN useradd -r -s /bin/false core
 COPY --from=builder /builder/artifact/release/wirtbot /usr/bin/wirtbot-core
 COPY build-automation/WirtBot/service-files/core /etc/services.d/core/run
 COPY build-automation/WirtBot/service-files/finisher /etc/services.d/core/finish
+COPY build-automation/WirtBot/service-files/fix-wireguard-conf-attributes /etc/fix-attrs.d/01-fix-wireguard-conf-access
 
 # WireGuard
 ## Make sure to mount a WireGuard config to /etc/wireguard/server.conf
