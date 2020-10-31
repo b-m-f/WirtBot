@@ -66,7 +66,6 @@ Read the setup documentation at [wirtbot.com/documentation/setup](https://wirtbo
 ![WirtBot Tests](https://github.com/b-m-f/WirtBot/workflows/run%20WirtBot%20tests/badge.svg)
 ![WirtBot Shared-Libraries Tests](https://github.com/b-m-f/WirtBot/workflows/run%20WirtBot%20shared-lib%20tests/badge.svg)
 
-![WirtBot Interface Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/bmff/wirtbot-interface?label=WirtBot%20Interface%20build)
 ![WirtBot Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/bmff/wirtbot?label=WirtBot%20build)
 ![WirtBot Website Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/bmff/wirtbot-website?label=WirtBot%20Website%20build)
 
