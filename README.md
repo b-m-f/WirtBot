@@ -13,7 +13,7 @@ Welcome to the [WirtBot](https://wirtbot.com) repository.
 Check out [this page](https://wirtbot.com/setup#docker)
 
 
-## Setup WireGuard VPS
+## Setup WirtBot VPS
 
 **Install:**
 - [ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
@@ -24,7 +24,7 @@ Check out [this page](https://wirtbot.com/setup#docker)
 ```
 npm install -g @wirtbot/installer && wirt-installer
 ```
-**Join the network with generated WireGuard config**
+**Join the network with generated WireGuard® config**
 
 **Assume control of WirtBot by importing generated initial configuration**
 
