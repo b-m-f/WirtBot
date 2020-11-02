@@ -10,7 +10,7 @@ Welcome to the [WirtBot](https://wirtbot.com) repository.
 
 ## Run in Docker
 
-Check out [this page](https://wirtbot.com/setup#docker)
+Check out [this page](https://wirtbot.com/documentation/setup.html#docker)
 
 
 ## Setup WirtBot VPS
