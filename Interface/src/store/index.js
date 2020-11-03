@@ -33,7 +33,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   modules: { alerts },
   state: {
-    version: 1.1,
+    version: 1.2,
     keys: undefined,
     server: {
       ip: { v4: [undefined, undefined, undefined, undefined], v6: "" },
@@ -49,12 +49,15 @@ const store = new Vuex.Store({
     deviceTypes: ["Android", "Windows", "MacOS", "iOS", "Linux", "FreeBSD"],
     websiteBeingViewedOnMobileDevice: undefined,
     network: {
-      dns: { name: "wirt.internal", config: "" }
+      dns: {
+        name: "wirt.internal", config: "", ip: { v4: [1, 1, 1, 1] },
+        tlsName: "cloudflare-dns.com", tls: true
+      }
     },
     dashboard: {
       // Messages have to be defined in pages/Dashboard/messages.js
       messages: [],
-      widgets: [],
+      hiddenWidgets: [],
       firstUse: true,
       expertMode: false
     },
@@ -102,6 +105,18 @@ const store = new Vuex.Store({
     updateDNSName(state, name) {
       state.network.dns.name = name;
     },
+    updateDNSTls(state, { tlsName, tls }) {
+      state.network.dns.tls = tls;
+      state.network.dns.tlsName = tlsName;
+    },
+    updateDNSIp(state, { v4, v6 }) {
+      if (v4) {
+        state.network.dns.ip = Object.assign({}, state.network.dns.ip, { v4 });
+      }
+      if (v6) {
+        state.network.dns.ip = Object.assign({}, state.network.dns.ip, { v6 });
+      }
+    },
     updateDNSConfig(state, config) {
       state.network.dns.config = config;
     },
@@ -128,6 +143,16 @@ const store = new Vuex.Store({
     async updateDNSName({ commit, dispatch }, name) {
       commit("updateDNSName", name);
       dispatch("updateDNS");
+    },
+    async updateDNSIp({ commit, dispatch }, { v4, v6 }) {
+      commit("updateDNSIp", { v4, v6 });
+      dispatch("updateDNS");
+    },
+    async updateDNSTls({ commit, dispatch }, { tlsName, tls }) {
+      commit("updateDNSTls", { tlsName, tls });
+      if (tls == true && tlsName) {
+        dispatch("updateDNS");
+      }
     },
     async addDashboardMessage({ state, commit }, message) {
       commit("updateDashboard", {
