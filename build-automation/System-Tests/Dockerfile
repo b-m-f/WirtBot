@@ -4,14 +4,14 @@ FROM node:latest
 
 # build the app
 WORKDIR '/app'
-COPY package.json  .
-COPY package-lock.json .
+COPY System-Tests/package.json  .
+COPY System-Tests/package-lock.json .
 RUN npm ci
 
-COPY compose/wait-for.sh wait-for.sh
+COPY build-automation/System-Tests/wait-for.sh wait-for.sh
 RUN chmod +x wait-for.sh
 
-COPY tests tests
-COPY nightwatch.conf.js .
+COPY System-Tests/tests tests
+COPY System-Tests/nightwatch.conf.js .
 
 CMD ["npm", "run", "test:ci"]
