@@ -1,9 +1,23 @@
+// This file fills the server with data.
+// The network name ensures that the test-runner can reach the WirtBot api
+
 async function setServer(browser) {
   await browser.url(`http://${process.env.TEST_URL}/`);
   await browser.waitForElementVisible({
     selector: "body",
     message: "Setting Server data",
   });
+
+  await browser.click("#network-widget #edit");
+  await browser.clearValue("#network-widget input[name='dns-name']");
+  await browser.setValue("#network-widget input[name='dns-name']", "test");
+
+  await browser.execute(function () {
+    var element = document.querySelector("#network-widget input[name='dns-name']");
+    var event = new Event("change");
+    element.dispatchEvent(event);
+  });
+
 
   await browser.click("#server-widget #edit");
 

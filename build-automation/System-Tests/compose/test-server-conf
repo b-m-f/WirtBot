@@ -1,5 +1,8 @@
 [Interface]
 Address = 10.10.0.1
-Port = 10101
-DNS = 10.10.0.1
-PrivateKey = oK56DE9Ue9zK76rAc8pBl6opph+1v36lm7cXXsQKrQM=
+ListenPort = 1233
+PrivateKey = qPTBUSC1YTXu+PRoxx1MJfh2vxmLxdyGy7h70jhX/mM=
+
+[Peer]
+AllowedIPs = 10.10.0.2/32
+PublicKey = BE28RBU2f2py/4bYB7xfNy4e4TKpA0+MQDb4ScmmeF0=

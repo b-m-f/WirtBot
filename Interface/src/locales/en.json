@@ -49,6 +49,7 @@
         "download": "Download config"
       },
       "dns": {
+        "title": "DNS",
         "ip": "IP address of DNS server to use for resolving names",
         "tls": "Use DNSoverTLS ?",
         "tlsName": "Specify the hostname for the DNSoverTLS server"

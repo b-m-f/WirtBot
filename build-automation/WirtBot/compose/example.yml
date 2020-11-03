@@ -18,7 +18,7 @@ services:
       - NET_ADMIN
     volumes:
       - ./test-server.conf:/etc/wireguard/server.conf
-      - ./test-Corefile:/dns/CoreFile
+      - ./test-Corefile:/dns/Corefile
     ports:
       - 80:80
       - 3030:3030

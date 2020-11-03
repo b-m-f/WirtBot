@@ -17,7 +17,7 @@ services:
       - NET_ADMIN
     volumes:
       - ./test-server.conf:/etc/wireguard/server.conf
-      - ./test-Corefile:/dns/CoreFile
+      - ./test-Corefile:/dns/Corefile
     ports:
       - 10101:10101/udp
     container_name: development_wirtbot

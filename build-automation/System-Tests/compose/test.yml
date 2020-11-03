@@ -2,30 +2,37 @@ version: "3"
 services:
   test-runner:
     build: 
-      dockerfile: Dockerfile
-      context: ..
+      dockerfile: build-automation/System-Tests/Dockerfile
+      context: ../../..
     container_name: test-runner
     command: ["bash", "/app/wait-for.sh", "chrome:4444", "--", "npm", "run", "test:ci"]
     depends_on: ["chrome", "test-wirtbot"]
     volumes:
       - download_folder:/tmp/WirtTestDownloads
+      - ./test-Corefile:/dns/Corefile
+      - ./test-server-conf:/etc/wireguard/server.conf
   test-wirtbot:
     build: 
       dockerfile: build-automation/WirtBot/Dockerfile
       context: ../../..
-    container_name: test-wirtbot
+      args:
+        - environment=test
+    container_name: wirtbot.test
     cap_add:
       - NET_ADMIN
     volumes:
       - ./test-server-conf:/etc/wireguard/server.conf
-      - ./test-Corefile:/dns/CoreFile
+      - ./test-Corefile:/dns/Corefile
     ports:
       - 10101:10101/udp
     environment:
-      "PUBLIC_KEY": "1lLU3VhXsrSGMxESmqfY4m2oEVkpfEHyKlCQU6MMPsI="
-      "ALLOWED_ORIGIN": "http://localhost:8080"
-      "RUST_LOG": "debug"
-      "MANAGED_DNS_ENABLED": 1
+      - "PUBLIC_KEY=1lLU3VhXsrSGMxESmqfY4m2oEVkpfEHyKlCQU6MMPsI="
+      - "PORT=3030"
+      - "ALLOWED_ORIGIN=http://wirtbot.test"
+      - "RUST_LOG=debug"
+      - "MANAGED_DNS_ENABLED=1"
+      - "MANAGED_DNS_DEVICE_FILE=/dns/Corefile"
+      - "CONFIG_PATH=/etc/wireguard/server.conf"
   chrome:
     build: 
       dockerfile: ChromeDockerfile
