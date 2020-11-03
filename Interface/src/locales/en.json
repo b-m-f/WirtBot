@@ -48,6 +48,11 @@
         "subnet": "Subnet:",
         "download": "Download config"
       },
+      "dns": {
+        "ip": "IP address of DNS server to use for resolving names",
+        "tls": "Use DNSoverTLS ?",
+        "tlsName": "Specify the hostname for the DNSoverTLS server"
+      },
       "devices": {
         "title": "My devices",
         "addDevice": "Add new device",

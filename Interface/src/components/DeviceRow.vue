@@ -109,7 +109,12 @@
         <label for="routed">{{
           $t("dashboard.widgets.devices.labels.routed")
         }}</label>
-        <input type="checkbox" name="routed" :value="internalRouted" />
+        <input
+          type="checkbox"
+          name="routed"
+          :checked="internalRouted"
+          @change="internalRouted = !internalRouted"
+        />
       </div>
     </td>
     <td class="column-six">

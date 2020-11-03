@@ -22,8 +22,8 @@ module.exports = {
             ["issues", "New features & Bugs"],
           ],
           "/announcements/": [
-            ["21-10-20", "21.10.20: Please update your installer"],
             ["31-10-20", "31.10.20: All aboard the container"],
+            ["21-10-20", "21.10.20: Please update your installer"],
           ],
           "/developer-documentation/": [
             ["", "WirtBot developer documentation"],

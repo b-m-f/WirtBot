@@ -54,12 +54,15 @@ import NetworkWidget from "../../Widgets/Dashboard/Network";
 import ServerWidget from "../../Widgets/Dashboard/Server";
 import DeviceWidget from "../../Widgets/Dashboard/Devices";
 import SettingsWidget from "../../Widgets/Dashboard/Settings";
+import DNSWidget from "../../Widgets/Dashboard/DNS";
+import difference from "lodash/difference";
 
 const availableWidgets = {
   network: NetworkWidget,
   server: ServerWidget,
   devices: DeviceWidget,
   settings: SettingsWidget,
+  dns: DNSWidget,
 };
 
 export default {
@@ -75,9 +78,11 @@ export default {
       return this.$store.state.dashboard.messages;
     },
     widgets() {
-      return this.$store.state.dashboard.widgets.map((widget) => {
-        return availableWidgets[widget];
-      });
+      const widgetsToShow = difference(
+        Object.keys(availableWidgets),
+        this.$store.state.hiddenWidgets
+      );
+      return widgetsToShow.map((widget) => availableWidgets[widget]);
     },
     server() {
       return this.$store.state.server;
@@ -108,9 +113,6 @@ export default {
       this.$store.dispatch("disableFirstUse");
       this.$store.dispatch("addDashboardMessage", WHY_NO_LOGIN);
       this.$store.dispatch("addDashboardMessage", REGULAR_BACKUP);
-      this.$store.dispatch("addDashboardWidget", "server");
-      this.$store.dispatch("addDashboardWidget", "devices");
-      this.$store.dispatch("addDashboardWidget", "settings");
     }
   },
 };

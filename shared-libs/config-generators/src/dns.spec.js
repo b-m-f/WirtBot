@@ -6,9 +6,10 @@ describe("Correctly generates a valid DNS master file", () => {
             subnet: { v4: "10.10.10." },
         };
         const device = { ip: { v4: 2 }, name: "test" };
-        expect(generateDNSFile(server, [device], { dns: { name: "wirt.test" } })).toBe(`. {
+        const dns = { name: "wirt.test", ip: { v4: [1, 1, 1, 1] }, tls: true, tlsName: "cloudflare-dns.com" }
+        expect(generateDNSFile(server, [device], { dns })).toBe(`. {
     reload
-    forward . tls://1.1.1.1 tls://1.0.0.1 {
+    forward . tls://1.1.1.1 {
        except wirt.test lan local home fritz.box
        tls_servername cloudflare-dns.com
        health_check 5s
@@ -28,9 +29,10 @@ wirt.test {
             subnet: { v6: "1001::" },
         };
         const device = { ip: { v6: 2 }, name: "test" };
-        expect(generateDNSFile(server, [device], { dns: { name: "wirt.test" } })).toBe(`. {
+        const dns = { name: "wirt.test", ip: { v4: [1, 1, 1, 1] }, tls: true, tlsName: "cloudflare-dns.com" }
+        expect(generateDNSFile(server, [device], { dns })).toBe(`. {
     reload
-    forward . tls://1.1.1.1 tls://1.0.0.1 {
+    forward . tls://1.1.1.1 {
        except wirt.test lan local home fritz.box
        tls_servername cloudflare-dns.com
        health_check 5s
@@ -56,9 +58,10 @@ wirt.test {
             { ip: { v6: 2, v4: 2 }, name: "test" },
             { ip: { v6: 3, v4: 3 }, name: "test2" }
         ]
-        expect(generateDNSFile(server, devices, { dns: { name: "wirt.test" } })).toBe(`. {
+        const dns = { name: "wirt.test", ip: { v4: [1, 1, 1, 1] }, tls: true, tlsName: "cloudflare-dns.com" }
+        expect(generateDNSFile(server, devices, { dns })).toBe(`. {
     reload
-    forward . tls://1.1.1.1 tls://1.0.0.1 {
+    forward . tls://1.1.1.1 {
        except wirt.test lan local home fritz.box
        tls_servername cloudflare-dns.com
        health_check 5s
@@ -88,9 +91,10 @@ wirt.test {
             { ip: { v4: 2 }, name: "test" },
             { ip: { v6: 3 }, name: "test2" }
         ]
-        expect(generateDNSFile(server, devices, { dns: { name: "wirt.test" } })).toBe(`. {
+        const dns = { name: "wirt.test", ip: { v4: [1, 1, 1, 1] }, tls: true, tlsName: "cloudflare-dns.com" }
+        expect(generateDNSFile(server, devices, { dns })).toBe(`. {
     reload
-    forward . tls://1.1.1.1 tls://1.0.0.1 {
+    forward . tls://1.1.1.1 {
        except wirt.test lan local home fritz.box
        tls_servername cloudflare-dns.com
        health_check 5s
@@ -111,10 +115,11 @@ wirt.test {
         const server = {
             subnet: { v4: "10.10.10." },
         };
+        const dns = { name: "wirt.test", ip: { v4: [1, 1, 1, 1] }, tls: true, tlsName: "cloudflare-dns.com" }
         const device = { ip: { v4: 2 }, name: "test me" };
-        expect(generateDNSFile(server, [device], { dns: { name: "wirt.test" } })).toBe(`. {
+        expect(generateDNSFile(server, [device], { dns })).toBe(`. {
     reload
-    forward . tls://1.1.1.1 tls://1.0.0.1 {
+    forward . tls://1.1.1.1 {
        except wirt.test lan local home fritz.box
        tls_servername cloudflare-dns.com
        health_check 5s
@@ -125,6 +130,28 @@ wirt.test {
     hosts {
         10.10.10.1 wirtbot.wirt.test
         10.10.10.2 test-me.wirt.test
+    }
+}`
+        )
+    })
+    it("without tls", () => {
+        const server = {
+            subnet: { v4: "10.10.10." },
+        };
+        const dns = { name: "wirt.test", ip: { v4: [1, 1, 1, 1], tls: false } }
+        const device = { ip: { v4: 2 }, name: "test" };
+        expect(generateDNSFile(server, [device], { dns })).toBe(`. {
+    reload
+    forward . 1.1.1.1 {
+       except wirt.test lan local home fritz.box
+       health_check 5s
+    }
+    cache 30
+}
+wirt.test {
+    hosts {
+        10.10.10.1 wirtbot.wirt.test
+        10.10.10.2 test.wirt.test
     }
 }`
         )

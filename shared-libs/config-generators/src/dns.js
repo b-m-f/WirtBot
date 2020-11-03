@@ -1,5 +1,9 @@
 // This function creates an RFC 1035 DNS master file
 export function generateDNSFile(server, clients, network) {
+    const tls = network.dns.tls;
+    const tlsName = network.dns.tlsName;
+    const dnsV4 = network.dns.ip.v4 || "1.1.1.1";
+    const dnsV6 = network.dns.ip.v6;
     const deviceNames = clients.map(client => {
         client.name = client.name.split(' ').join('-');
         if (!server.name) {
@@ -29,13 +33,26 @@ export function generateDNSFile(server, clients, network) {
             return `${server.subnet.v4 + "1"} ${server.name}.${network.dns.name}`
         }
     }
+
+    const forwardConfig = () => {
+        if (tls) {
+            return `forward . ${dnsV4 ? `tls://` + dnsV4.join(".") + " " : ""}${dnsV6 ? `tls://` + dnsV6 + "" : ""}{
+       except ${network.dns.name} lan local home fritz.box
+       tls_servername ${tlsName}
+       health_check 5s
+    }`
+        } else {
+            return `forward . ${dnsV4 ? dnsV4.join(".") + "" : ""}${dnsV6 ? dnsV6 : ""} {
+       except ${network.dns.name} lan local home fritz.box
+       health_check 5s
+    }`
+        }
+    }
+
+
     const masterFile = `. {
     reload
-    forward . tls://1.1.1.1 tls://1.0.0.1 {
-       except ${network.dns.name} lan local home fritz.box
-       tls_servername cloudflare-dns.com
-       health_check 5s
-    }
+    ${forwardConfig()}
     cache 30
 }
 ${network.dns.name} {
