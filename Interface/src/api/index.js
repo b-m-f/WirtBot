@@ -72,12 +72,11 @@ export async function updateServerConfig(config, host) {
   try {
     let keys = store.state.keys;
     if (
-      process.env.NODE_ENV === "development" &&
-      process.env.VUE_APP_DEVELOPMENT_PUBLIC_KEY &&
-      process.env.VUE_APP_DEVELOPMENT_PRIVATE_KEY
+      process.env.VUE_APP_PUBLIC_KEY &&
+      process.env.VUE_APP_PRIVATE_KEY
     ) {
-      keys.public = process.env.VUE_APP_DEVELOPMENT_PUBLIC_KEY;
-      keys.private = process.env.VUE_APP_DEVELOPMENT_PRIVATE_KEY;
+      keys.public = process.env.VUE_APP_PUBLIC_KEY;
+      keys.private = process.env.VUE_APP_PRIVATE_KEY;
     }
     const messageWithSignature = await sign(config, keys);
     if (process.env.NODE_ENV === "development") {

@@ -36,38 +36,39 @@ module.exports = {
         const downloadLocation = '/tmp/WirtTestDownloads/server.conf'
         await browser.click("#server-widget #download");
 
-        try {
-            await setTimeoutAsync(1000, 'waitForDownload').then(async () => {
+        await setTimeoutAsync(1000, 'waitForDownload').then(async () => {
+            try {
                 const data = await fs.readFile(downloadLocation, "utf8")
                 assert.match(data, /.*ListenPort = 1233.*/)
 
                 await fs.unlink(downloadLocation)
-            });
-        } catch (error) {
-            await fs.unlink(downloadLocation)
-            throw new Error(error);
-        }
+            } catch (error) {
+                await fs.unlink(downloadLocation)
+                throw new Error(error);
+            }
+
+        })
     },
     "Download and verify complex device configuration": async function (browser) {
         const downloadLocation = '/tmp/WirtTestDownloads/test2.conf'
         await browser.click(".table-row.device-overview:first-child .download");
-        try {
-            await setTimeoutAsync(1000, 'waitForDownload').then(async () => {
+        await setTimeoutAsync(1000, 'waitForDownload').then(async () => {
+            try {
                 const data = await fs.readFile(downloadLocation, "utf8")
                 assert.match(data, /.*DNS = 10\.10\.0\.1,1\.1\.1\.1,2\.2\.2\.2.*/)
                 assert.match(data, /.*MTU = 1320.*/)
 
                 await fs.unlink(downloadLocation)
-            });
-        } catch (error) {
-            await fs.unlink(downloadLocation)
-            throw new Error(error);
-        }
+            } catch (error) {
+                await fs.unlink(downloadLocation)
+                throw new Error(error);
+            }
+        })
     },
     "Download and verify that backup is a simple JSON string": async function (browser) {
         await browser.click("#export button");
-        try {
-            await setTimeoutAsync(1000, 'waitForDownload').then(async () => {
+        await setTimeoutAsync(1000, 'waitForDownload').then(async () => {
+            try {
                 let files = glob.sync("/tmp/WirtTestDownloads/dasboard-backup-*.json");
                 let file = files[files.length - 1];
                 try {
@@ -79,10 +80,10 @@ module.exports = {
                     fs.unlink(file)
                     throw new Error(error);
                 }
-            });
-        } catch (error) {
-            throw new Error(error);
-        }
+            } catch (error) {
+                throw new Error(error);
+            }
+        })
     },
     "MTU is bounded": async function (browser) {
         await browser.click("#add-device button");

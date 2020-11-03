@@ -5,6 +5,7 @@
   "license": "AGPL-3",
   "scripts": {
     "build": "vue-cli-service build",
+    "build:test": "vue-cli-service build --mode=test",
     "test": "vue-cli-service test:unit --passWithNoTests",
     "audit": "npm audit --production",
     "lint": "vue-cli-service lint",

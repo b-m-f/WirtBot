@@ -22,7 +22,7 @@
           </div>
           <div id="documentation">
             <a
-              href="https://wirtbot.com/docs"
+              href="https://wirtbot.com/documentation"
               target="_blank"
               rel="noopener noreferrer"
               >{{ $t("header.documentation") }}</a
@@ -48,7 +48,7 @@
       <nav v-if="mobileNavigationExpanded" class="mobile-navigation">
         <div id="documentation">
           <a
-            href="https://wirtbot.com/docs"
+            href="https://wirtbot.com/documentation"
             target="_blank"
             rel="noopener noreferrer"
             >{{ $t("header.documentation") }}</a

@@ -7,6 +7,8 @@ They should only be written for Functions that implement complex behaviour, such
 
 Refer to the existing unit tests to see when a Unit test would be appropriate. In all other cases test your feature with an E2E test written with [nightwatch](https://nightwatchjs.org/).
 
+The whole system is virtualized in containers if run with `make test-system` and automatically set up to connect together when using `setServer` from `helpers/dataFillers.js`. 
+
 ## Caveats
 
 ### State

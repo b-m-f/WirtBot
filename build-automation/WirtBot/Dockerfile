@@ -12,8 +12,8 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > install_rust.sh
 RUN sh install_rust.sh -y --no-modify-path --profile minimal --default-toolchain $RUST_VERSION && chmod -R a+w $RUSTUP_HOME $CARGO_HOME
 
 
-ENV NODE_ENV production
 WORKDIR '/wirtbot'
+ENV NODE_ENV production
 
 # Install all dependecies via workspaces first
 COPY shared-libs/config-generators shared-libs/config-generators
@@ -27,12 +27,18 @@ COPY Interface/public Interface/public
 COPY Interface/babel.config.js Interface/babel.config.js
 COPY Interface/vue.config.js Interface/vue.config.js
 COPY Interface/.env Interface/.env
+COPY Interface/.env.development Interface/.env.development
 
 # Compile and package wasm
 RUN cd shared-libs/crypto && npm ci && npm run build && cd -
 
 # Build interface
-RUN cd Interface && npm ci  && npm run build
+WORKDIR '/wirtbot/Interface'
+## Inject keys into the test interface by doing this, that way the Interface can talk to the WirtBot Core
+## Which will start with the corresponding public key
+ARG environment=production
+RUN if [ "$environment" = "test" ] ; then rm .env && mv .env.development .env; fi
+RUN npm ci && npm run build
 
 
 ### Image to build WirtBot
@@ -94,6 +100,10 @@ COPY --from=builder /builder/artifact/release/wirtbot /usr/bin/wirtbot-core
 COPY build-automation/WirtBot/service-files/core /etc/services.d/core/run
 COPY build-automation/WirtBot/service-files/finisher /etc/services.d/core/finish
 COPY build-automation/WirtBot/service-files/fix-core-permissions /etc/fix-attrs.d/01-fix-core-permissions
+COPY build-automation/WirtBot/service-files/fix-wireguard-permissions /etc/fix-attrs.d/02-fix-wireguard-permissions
+## This avoids file ownership changes that would require changing them back on the host on the next build
+ARG environment=production
+RUN if [ "$environment" = "test" ] ; then rm /etc/fix-attrs.d/02-fix-wireguard-permissions ; fi
 
 # WireGuard
 ## Make sure to mount a WireGuard config to /etc/wireguard/server.conf

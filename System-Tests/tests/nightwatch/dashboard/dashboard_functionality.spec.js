@@ -61,9 +61,7 @@ module.exports = {
     );
   },
   "Test that two devices can not have the same ip": async function (browser) {
-    browser.expect
-      .elements("#device-widget form .device-overview")
-      .count.to.equal(2);
+    browser.expect.elements("#device-widget form .device-overview").count.to.equal(2);
 
     await browser.click("#add-device button");
     await browser.setValue("input[name='device-name']", "test3");
@@ -74,6 +72,7 @@ module.exports = {
     await browser.click("button.save");
 
     await browser.assert.visible("#alerts .warning");
+    browser.expect.elements("#device-widget form .device-overview").count.to.equal(2);
 
     await browser.pause(3000)
   },

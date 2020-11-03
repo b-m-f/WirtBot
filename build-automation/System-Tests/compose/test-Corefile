@@ -1,0 +1,16 @@
+. {
+    reload
+    forward . tls://1.1.1.2 {
+       except test lan local home fritz.box
+       tls_servername cloudflare-dns.com
+       health_check 5s
+    }
+    cache 30
+}
+test {
+    hosts {
+        10.10.0.1 wirtbot.test
+        1010:1010:1010:1010:1 wirtbot.test
+        10.10.0.2 test1.test
+    }
+}
