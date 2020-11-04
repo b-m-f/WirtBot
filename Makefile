@@ -32,3 +32,8 @@ test-wirtbot-dev:
 	cd WirtBot && cargo watch -x test
 test-wirtbot-ci:
 	docker-compose -f build-automation/WirtBot/compose/test.yml up  --remove-orphans --build test_wirtbot
+
+update-versions:
+	./update_version.sh
+tag-release:
+	git tag $$(cat .version)
