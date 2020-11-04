@@ -25,48 +25,6 @@ async function post(endpoint, data) {
   return response;
 }
 
-// async function get(endpoint) {
-//   const response = await fetch(BASE_URL + endpoint);
-//   if (response.status >= 400 && response.status < 600) {
-//     throw new Error(`${response.status}: ${await response.text()}`);
-//   }
-//   return await response.json();
-// }
-
-// async function patch(endpoint, data) {
-//   const response = await fetch(BASE_URL + endpoint, {
-//     method: "PATCH",
-//     mode: "cors",
-//     cache: "no-cache",
-//     credentials: "same-origin",
-//     headers: {
-//       "Content-Type": "application/json"
-//     },
-//     referrer: "no-referrer",
-//     body: JSON.stringify(data)
-//   });
-//   if (response.status >= 400 && response.status < 600) {
-//     throw new Error(`${response.status}: ${await response.text()}`);
-//   }
-//   return await response.json();
-// }
-// async function del(endpoint, data) {
-//   const response = await fetch(BASE_URL + endpoint, {
-//     method: "DELETE",
-//     mode: "cors",
-//     cache: "no-cache",
-//     credentials: "same-origin",
-//     headers: {
-//       "Content-Type": "application/json"
-//     },
-//     referrer: "no-referrer",
-//     body: JSON.stringify(data)
-//   });
-//   if (response.status >= 400 && response.status < 600) {
-//     throw new Error(`${response.status}: ${await response.text()}`);
-//   }
-//   return await response.json();
-// }
 
 export async function updateServerConfig(config, host) {
   try {
@@ -95,12 +53,11 @@ export async function updateDNSConfig(config, host) {
   try {
     let keys = store.state.keys;
     if (
-      process.env.NODE_ENV === "development" &&
-      process.env.VUE_APP_DEVELOPMENT_PUBLIC_KEY &&
-      process.env.VUE_APP_DEVELOPMENT_PRIVATE_KEY
+      process.env.VUE_APP_PUBLIC_KEY &&
+      process.env.VUE_APP_PRIVATE_KEY
     ) {
-      keys.public = process.env.VUE_APP_DEVELOPMENT_PUBLIC_KEY;
-      keys.private = process.env.VUE_APP_DEVELOPMENT_PRIVATE_KEY;
+      keys.public = process.env.VUE_APP_PUBLIC_KEY;
+      keys.private = process.env.VUE_APP_PRIVATE_KEY;
     }
     const messageWithSignature = await sign(config, keys);
     if (process.env.NODE_ENV === "development") {
