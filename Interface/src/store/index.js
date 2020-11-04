@@ -33,7 +33,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   modules: { alerts },
   state: {
-    version: 1.2,
+    version: 1.4.0,
     keys: undefined,
     server: {
       ip: { v4: [undefined, undefined, undefined, undefined], v6: "" },
