@@ -304,7 +304,16 @@ const store = new Vuex.Store({
     },
   },
 
-  plugins: [createPersistedState({})],
+  plugins: [createPersistedState({
+    filter(stateChange) {
+      if (stateChange.type.includes("alerts/")) {
+        return false;
+      }
+      else {
+        return true;
+      }
+    }
+  })],
 });
 
 
