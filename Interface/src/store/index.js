@@ -288,6 +288,7 @@ const store = new Vuex.Store({
       try {
         commit("removeDevice", id);
         dispatch("alerts/addSuccess", i18n.t("success.deviceRemoved"));
+        dispatch("updateServerConfig");
       } catch (error) {
         dispatch(
           "alerts/addWarning",

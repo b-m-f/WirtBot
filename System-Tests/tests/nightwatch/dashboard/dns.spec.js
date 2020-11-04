@@ -39,8 +39,6 @@ module.exports = {
             try {
                 const data = await fs.readFile('/dns/Corefile', "utf8")
                 const wg = await fs.readFile('/etc/wireguard/server.conf', "utf8")
-                console.log(data)
-                console.log(wg)
                 assert.match(data, /.*forward . tls:\/\/1\.1\.1\.2.*/)
             }
             catch (error) {

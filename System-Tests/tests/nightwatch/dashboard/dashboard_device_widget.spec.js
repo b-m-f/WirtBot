@@ -51,7 +51,7 @@ module.exports = {
     },
     "Download and verify complex device configuration": async function (browser) {
         const downloadLocation = '/tmp/WirtTestDownloads/test2.conf'
-        await browser.click(".table-row.device-overview:first-child .download");
+        await browser.click(".table-row.device-overview:last-child .download");
         await setTimeoutAsync(1000, 'waitForDownload').then(async () => {
             try {
                 const data = await fs.readFile(downloadLocation, "utf8")
@@ -74,7 +74,7 @@ module.exports = {
                 try {
                     const data = await fs.readFile(file, "utf8")
                     let json = JSON.parse(data);
-                    assert(typeof json.version === 'number')
+                    assert(typeof json.deviceTypes === 'object')
                     fs.unlink(file)
                 } catch (error) {
                     fs.unlink(file)
@@ -104,5 +104,18 @@ module.exports = {
         await browser.pause(3000)
 
         await browser.click("button.stop");
+    },
+    "correctly deletes device from config": async function (browser) {
+        await browser.click(".table-row.device-overview:first-child .delete");
+        await browser.pause(3000)
+        await setTimeoutAsync(1000, 'waitForUpdate').then(async () => {
+            try {
+                const data = await fs.readFile('/etc/wireguard/server.conf', "utf8")
+                assert.doesNotMatch(data, /.*AllowedIPs= 10\.10\.0\.2*/)
+            } catch (error) {
+                throw new Error(error);
+            }
+        })
+
     },
 };
