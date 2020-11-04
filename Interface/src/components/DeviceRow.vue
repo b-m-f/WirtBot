@@ -408,6 +408,7 @@ export default {
       if (this.internalIP.v4) {
         ip4OK = await this.checkIPv4(this.internalIP.v4);
         if (!ip4OK) {
+          console.log("asd");
           return;
         }
       }
@@ -415,6 +416,7 @@ export default {
       if (this.internalIP.v6) {
         ip6OK = await this.checkIPv6(this.internalIP.v6);
         if (!ip6OK) {
+          console.log("asd");
           return;
         }
       }

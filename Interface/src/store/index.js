@@ -9,8 +9,6 @@ import { updateServerConfig as updateServerViaApi, updateDNSConfig as updateDNSC
 
 
 import alerts from "./modules/alerts";
-// import hosts from "./modules/hosts";
-// import networks from "./modules/networks";
 
 async function addConfigToDevice(newDevice, server) {
   const config = generateDeviceConfig(newDevice, server);
@@ -33,7 +31,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   modules: { alerts },
   state: {
-    version: 1.4.0,
+    version: "1.4.0",
     keys: undefined,
     server: {
       ip: { v4: [undefined, undefined, undefined, undefined], v6: "" },
@@ -245,7 +243,7 @@ const store = new Vuex.Store({
         commit("addDevice", newDevice);
         dispatch("updateServerConfig");
       } catch (error) {
-        if (error.message === "noServer") {
+        if (error.message === "No Server") {
           dispatch(
             "alerts/addWarning",
             `${i18n.t("warnings.deviceAdd")} ${i18n.t("warnings.noServer")}`
