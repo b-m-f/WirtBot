@@ -4,7 +4,8 @@
   "description": "Config generator library for use in Wirt",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "echo \"Nothing to be build yet\""
   },
   "type": "module",
   "dependencies": {},

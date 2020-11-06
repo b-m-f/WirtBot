@@ -58,8 +58,7 @@ Read the setup documentation at [wirtbot.com/documentation/setup](https://wirtbo
 
 ## Contributing
 ![WirtBot System Tests](https://github.com/b-m-f/WirtBot/workflows/run%20WirtBot%20system%20tests/badge.svg)
-![WirtBot Tests](https://github.com/b-m-f/WirtBot/workflows/run%20WirtBot%20tests/badge.svg)
-![WirtBot Shared-Libraries Tests](https://github.com/b-m-f/WirtBot/workflows/run%20WirtBot%20shared-lib%20tests/badge.svg)
+![WirtBot Unit Tests](https://github.com/b-m-f/WirtBot/workflows/run%20Unit%20tests/badge.svg)
 
 ![WirtBot Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/bmff/wirtbot?label=WirtBot%20build)
 ![WirtBot Website Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/bmff/wirtbot-website?label=WirtBot%20Website%20build)
