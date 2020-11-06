@@ -116,8 +116,9 @@ const install = async () => {
             })
             console.log(`Generating configs for ${backup.devices.length} devices`)
 
+            const dns = backup.network.dns;
             const serverConfig = generateServerConfig(server, devices);
-            const dnsConfig = generateDNSFile(server, devices, { dns: { name: "wirt.internal" } });
+            const dnsConfig = generateDNSFile(server, devices, { dns });
             await runAnsible(Object.assign({}, config.all, { password: response.password, update: false, serverConfig, dnsConfig }));
 
             const folderName = 'WirtBot\ Configurations'
@@ -153,9 +154,13 @@ const install = async () => {
                 devices: [device],
                 keys: signingKeys
             }));
+            const dns = {
+                name: "wirt.internal", config: "", ip: { v4: [1, 1, 1, 1] },
+                tlsName: "cloudflare-dns.com", tls: true
+            }
 
             const serverConfig = generateServerConfig(server, devices);
-            const dnsConfig = generateDNSFile(server, devices, { dns: { name: "wirt.internal" } });
+            const dnsConfig = generateDNSFile(server, devices, { dns });
             await runAnsible(Object.assign({}, config.all, { password: response.password, update: false, serverConfig, dnsConfig }));
 
 
