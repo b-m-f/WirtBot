@@ -47,9 +47,9 @@ FROM rust:slim as builder
 ENV DEBIAN_FRONTEND noninteractive
 
 WORKDIR /builder/WirtBot
-COPY WirtBot/src src
-COPY WirtBot/Cargo.toml Cargo.toml
-COPY WirtBot/Cargo.lock Cargo.lock
+COPY Core/src src
+COPY Core/Cargo.toml Cargo.toml
+COPY Core/Cargo.lock Cargo.lock
 
 RUN cargo build --release --target-dir /builder/artifact
 
@@ -113,7 +113,7 @@ RUN chmod +x wg wg-quick && mv wg wg-quick /usr/bin
 
 
 # WireGuard restarter script
-COPY WirtBot/wireguard-restarter.sh /usr/bin/wireguard-restarter
+COPY Core/wireguard-restarter.sh /usr/bin/wireguard-restarter
 RUN chmod +x /usr/bin/wireguard-restarter
 COPY build-automation/WirtBot/service-files/wireguard-restarter /etc/services.d/wireguard-restarter/run
 
