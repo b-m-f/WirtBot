@@ -1,0 +1,14 @@
+FROM rust:buster
+RUN apt update
+RUN apt install build-essential
+
+EXPOSE 3030
+
+WORKDIR /app
+RUN mkdir /etc/wireguard
+RUN mkdir /etc/coredns/
+RUN touch /etc/wireguard/server.conf
+RUN touch /etc/coredns/Corefile.conf
+COPY src/ src
+COPY Cargo.toml Cargo.toml
+COPY Cargo.lock Cargo.lock

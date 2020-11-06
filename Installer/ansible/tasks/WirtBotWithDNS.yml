@@ -8,7 +8,7 @@
     mode: '0750'
   loop:
    - WirtBot 
-   - WirtBot/data
+   - Core/data
 
 - name: Copy docker-compose file to machine
   template:
