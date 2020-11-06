@@ -1,15 +1,14 @@
 version: "3"
 
 services:
-  test_wirtbot:
+  wirtbot_unit_tests:
     build: 
-      context: .
-      dockerfile: TestDockerfile
+      context: ../..
+      dockerfile: build-automation/Unit-Tests/Dockerfile
     restart: always
     environment:
       "PUBLIC_KEY": "1lLU3VhXsrSGMxESmqfY4m2oEVkpfEHyKlCQU6MMPsI="
       "ALLOWED_ORIGIN": "http://localhost:8080"
       "RUST_LOG": "debug"
       "MANAGED_DNS_ENABLED": 1
-    container_name: test_wirtbot
-    command: ["cargo", "test"]
+    container_name: wirtbot_unit_tests
