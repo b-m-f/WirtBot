@@ -1,6 +1,6 @@
 {
   "name": "@wirtbot/crypto",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "Crypto library to be used in Wirt",
   "main": "index.js",
   "type": "module",
