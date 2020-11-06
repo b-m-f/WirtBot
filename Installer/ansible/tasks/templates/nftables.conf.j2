@@ -7,6 +7,7 @@ table inet filter {
                 type filter hook input priority 0; policy drop;
 
                 iif lo accept comment "Accept any localhost traffic"
+		iifname server icmp type echo-request accept comment "Accept Ping requests"
                 iifname server tcp dport 22 accept comment "Accept Interface traffic"
                 iifname server udp dport 53 accept comment "Accept DNS traffic"
                 iifname server tcp dport 53 accept comment "Accept DNS traffic"
