@@ -24,13 +24,13 @@ The following programs are needed for the initail install of the WirtBot and to 
 
 - [ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
 - [sshpass](https://gist.github.com/arunoda/7790979) (necessary to login via SSH to your servers root user via password for the setup)
-- [node](https://nodejs.org/en/download/) with `npm`
+- [node > 14](https://nodejs.org/en/download/) with `npm`
 
 
 ### Installer
 Alright, time to get the installer: `npm install -g @wirtbot/installer`. 
 
-Once installed run `wirt-installer` and the installer will now take you through the rest of the setup.
+Once installed run `wirtbot-installer` and the installer will now take you through the rest of the setup.
 After answering all the questions wait until the setup is done, this can take up to **20 minutes**. Just be patient and follow the things that are printed to the terminal if you like to know what is happening.
 
 And then you are done with the first part. Congrats, your private WirtBot is set up.
@@ -66,7 +66,7 @@ Good luck, have fun and maybe share a few cool projects you were able to put int
 
 Run `npm install -g @wirtbot/installer` to update the installer with the newest changes.
 
-Now run it with `wirt-installer` and choose the update option.
+Now run it with `wirtbot-installer` and choose the update option.
 
 ## Docker
 

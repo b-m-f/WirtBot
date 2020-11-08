@@ -18,9 +18,9 @@ Check out [this page](https://wirtbot.com/documentation/setup.html#docker)
 - **Install:**
   - [ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
   - [sshpass](https://gist.github.com/arunoda/7790979) (necessary to login via SSH to your servers root user via password for the setup)
-  - [node](https://nodejs.org/en/download/)
+  - [node > 14](https://nodejs.org/en/download/)
 
-- **Run:** `npm install -g @wirtbot/installer && wirt-installer`
+- **Run:** `npm install -g @wirtbot/installer && wirtbot-installer`
 - **Join the network with generated WireGuard® config**
 - **Assume control of WirtBot by importing generated initial configuration**
 - **Done**

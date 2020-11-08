@@ -3,6 +3,9 @@
   "version": "1.4.3",
   "author": "b-m-f <max@ehlers.berlin>",
   "license": "AGPL-3",
+  "engines": {
+    "node": ">= 14.0.0"
+  },
   "scripts": {
     "build": "vue-cli-service build",
     "build:test": "vue-cli-service build --mode=test",
