@@ -5,9 +5,9 @@ import { generateServerConfig, generateDeviceConfig, generateDNSFile } from '@wi
 import { getKeys, generateSigningKeys } from '@wirtbot/crypto'
 import { runAnsible } from './src/ansible'
 
-const configPath = "./wirt-installer.config.json"
+const configPath = "./wirtbot-installer.config.json"
 
-const config = new Configstore("wirt-installer", {}, { configPath });
+const config = new Configstore("wirtbot-installer", {}, { configPath });
 
 const update = async () => {
     const questionsUpdate = [

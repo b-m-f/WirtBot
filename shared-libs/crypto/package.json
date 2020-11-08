@@ -5,6 +5,9 @@
   "main": "index.js",
   "type": "module",
   "module": "index.js",
+  "engines": {
+    "node": ">= 14.0.0"
+  },
   "scripts": {
     "build": "wasm-pack build crate --out-name wirtbot_crypto_wasm  -- --locked",
     "test": "wasm-pack test crate --node"

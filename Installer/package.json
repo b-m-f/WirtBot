@@ -4,10 +4,13 @@
   "description": "Installation script for WirtBot",
   "main": "dist/installer.js",
   "bin": {
-    "wirt-installer": "dist/installer.js"
+    "wirtbot-installer": "dist/installer.js"
   },
   "directories": {
     "doc": "docs"
+  },
+  "engines": {
+    "node": ">= 14.0.0"
   },
   "scripts": {
     "build": "webpack-cli && node fix-webpack-require-on-wasm.js",
