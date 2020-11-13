@@ -110,4 +110,4 @@ services:
       - ./data:/v
 ```
 
-To see the most up to date version to run the WirtBot also check [this file](https://github.com/b-m-f/WirtBot/tree/master/build-automation/WirtBot/example.yml).
+To see the most up to date version to run the WirtBot also check [this file](https://github.com/b-m-f/WirtBot/tree/master/Build-Automation/WirtBot/example.yml).

@@ -4,7 +4,7 @@ services:
   wirtbot_unit_tests:
     build: 
       context: ../..
-      dockerfile: build-automation/Unit-Tests/Dockerfile
+      dockerfile: Build-Automation/Unit-Tests/Dockerfile
     restart: always
     environment:
       "PUBLIC_KEY": "1lLU3VhXsrSGMxESmqfY4m2oEVkpfEHyKlCQU6MMPsI="
