@@ -179,7 +179,6 @@ const install = async () => {
 }
 
 const main = async () => {
-    console.log(config.get('mode'))
     const updateOrInstallQuestions = [
         {
             type: config.get('mode') ? null : 'select',
