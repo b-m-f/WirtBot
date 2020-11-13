@@ -1,6 +1,6 @@
 {
   "name": "@wirtbot/config-generators",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "description": "Config generator library for use in Wirt",
   "main": "index.js",
   "scripts": {
