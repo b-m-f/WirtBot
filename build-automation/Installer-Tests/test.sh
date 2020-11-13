@@ -14,8 +14,6 @@ update_mock="$test_dir/ansible_mock.js"
 
 mv $update_mock /usr/bin/ansible-playbook
 chmod +x /usr/bin/ansible-playbook
-echo $(pwd)
-RUN ansible-playbook
 mv $test_dir/wirtbot-installer.config.json .
 
 node dist/installer.js

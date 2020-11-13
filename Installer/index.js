@@ -121,7 +121,7 @@ const install = async () => {
             const dns = backup.network.dns;
             const serverConfig = generateServerConfig(server, devices);
             const dnsConfig = generateDNSFile(server, devices, { dns });
-            await runAnsible(Object.assign({}, config.all, { password: response.password, update: false, serverConfig, dnsConfig }));
+            await runAnsible(Object.assign({}, config.all, { password: response.password || config.get('password'), update: false, serverConfig, dnsConfig }));
 
             const folderName = 'WirtBot\ Configurations'
             const folderExists = await existsSync(folderName)
@@ -163,7 +163,7 @@ const install = async () => {
 
             const serverConfig = generateServerConfig(server, devices);
             const dnsConfig = generateDNSFile(server, devices, { dns });
-            await runAnsible(Object.assign({}, config.all, { password: response.password, update: false, serverConfig, dnsConfig }));
+            await runAnsible(Object.assign({}, config.all, { password: response.password || config.get('password'), update: false, serverConfig, dnsConfig }));
 
 
             await fs.writeFile('UseThisWireGuardConfigurationToConnectToYourWirtBot.conf', deviceConfig, 'utf8');
