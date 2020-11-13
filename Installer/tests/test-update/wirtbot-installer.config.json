@@ -1,0 +1,10 @@
+{
+	"mode": "update",
+	"serverIP": "1.1.1.1",
+	"user": "wirtbot",
+	"sshKey": "ssh-ed25519 test123",
+	"sshPrivateKeyPath": "~/.ssh/wirtbot",
+	"wirtBotUIKey": "test123",
+	"hasBackup": false,
+	"password": "test"
+}

@@ -12,7 +12,7 @@ const config = new Configstore("wirtbot-installer", {}, { configPath });
 const update = async () => {
     const questionsUpdate = [
         {
-            type: 'password',
+            type: config.get('password') ? null : 'password',
             name: 'password',
             message: 'Password for the maintenance user'
         },
@@ -47,12 +47,12 @@ const install = async () => {
             message: 'Maintenance user name',
         },
         {
-            type: 'password',
+            type: config.get('password') ? null : 'password',
             name: 'password',
             message: 'Password for the maintenance user'
         },
         {
-            type: 'password',
+            type: config.get('password') ? null : 'password',
             name: 'password2',
             message: 'Password again'
         },
@@ -62,7 +62,7 @@ const install = async () => {
             message: 'Please paste the Public Key of the keypair you want to use for accessing the WirtBot via SSH'
         },
         {
-            type: 'toggle',
+            type: config.get('hasBackup') !== undefined ? null : 'toggle',
             name: "hasBackup",
             message: 'Do you have a backup?',
             active: 'yes',
@@ -70,7 +70,7 @@ const install = async () => {
             initial: false,
         },
         {
-            type: prev => prev == true ? 'text' : null,
+            type: prev => prev == true ? config.get('backupPath') ? null : 'text' : null,
             name: 'backupPath',
             message: 'Specify the relative path to the backup'
         },
@@ -86,9 +86,11 @@ const install = async () => {
                     process.exit(1);
                 }
             }
+            // These entries wont be saved into the config file
+            else if (entry === 'password2' || entry === 'hasBackup' || entry === "backupPath") {
+            }
             else {
                 config.set(entry, response[entry]);
-
             }
         });
 
@@ -97,12 +99,12 @@ const install = async () => {
         const devices = [];
         let server = undefined;
 
-        if (response['backupPath']) {
-            const backupFile = await fs.readFile(response['backupPath'], 'utf8');
+        if (response['backupPath'] || config.get('backupPath')) {
+            const backupFile = await fs.readFile(response['backupPath'] || config.get('backupPath'), 'utf8');
             const backup = JSON.parse(backupFile);
             allowedPublicKey = backup.keys.public;
             config.set("wirtBotUIKey", allowedPublicKey);
-
+            assert.match(args, /initial_dns_config=".*"/);
             server = {
                 ip: {
                     v4: config.get('serverIP').split('.')
@@ -177,9 +179,10 @@ const install = async () => {
 }
 
 const main = async () => {
+    console.log(config.get('mode'))
     const updateOrInstallQuestions = [
         {
-            type: 'select',
+            type: config.get('mode') ? null : 'select',
             name: 'value',
             message: 'Choose a mode',
             choices: [
@@ -191,7 +194,7 @@ const main = async () => {
 
     ]
     const updateOrInstall = await prompts(updateOrInstallQuestions);
-    if (updateOrInstall["value"] === 'install') {
+    if (updateOrInstall["value"] === 'install' || config.get('mode') === 'install') {
         try {
             await install();
             console.log("Installation complete")
@@ -199,17 +202,14 @@ const main = async () => {
             console.error(error)
         }
     }
-    if (updateOrInstall["value"] === 'update') {
+    if (updateOrInstall["value"] === 'update' || config.get('mode') === 'update') {
         try {
-
             await update();
             console.log("Ran update successfully")
         } catch (error) {
             console.error(error)
         }
     }
-
-
 };
 
 main();
