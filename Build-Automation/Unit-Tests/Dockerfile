@@ -42,19 +42,19 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
     && tar -xJf "node-v$NODE_VERSION-linux-$ARCH.tar.xz" -C /usr/local --strip-components=1 --no-same-owner \
     && rm "node-v$NODE_VERSION-linux-$ARCH.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt \
     && ln -s /usr/local/bin/node /usr/local/bin/nodejs 
+RUN mkdir /etc/wireguard
+RUN mkdir /etc/coredns/
+RUN touch /etc/wireguard/server.conf
+RUN touch /etc/coredns/Corefile
 
-WORKDIR /shared-libs/
-COPY shared-libs .
-RUN cd crypto && npm ci && npm run build
 
-WORKDIR /installer
-COPY Installer .
-COPY build-automation/Installer-Tests/tests tests
-COPY build-automation/Installer-Tests/test.sh test.sh
+COPY Core/ Core/
+COPY Website/ Website/
+COPY Installer/ Installer/
+COPY Interface Interface
+COPY Shared-Libs Shared-Libs
+COPY Makefile .
 
-RUN npm ci && npm run build
+RUN make dev-setup
 
-RUN chmod +x /installer/test.sh
-RUN chmod +x /installer/dist/installer.js
-
-ENTRYPOINT [ "bash", "/installer/test.sh" ]
+ENTRYPOINT ["make", "test-unit"]

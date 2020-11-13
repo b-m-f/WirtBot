@@ -8,7 +8,7 @@ COPY System-Tests/package.json  .
 COPY System-Tests/package-lock.json .
 RUN npm ci
 
-COPY build-automation/System-Tests/wait-for.sh wait-for.sh
+COPY Build-Automation/System-Tests/wait-for.sh wait-for.sh
 RUN chmod +x wait-for.sh
 
 COPY System-Tests/tests tests

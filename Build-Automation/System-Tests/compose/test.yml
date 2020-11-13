@@ -2,7 +2,7 @@ version: "3"
 services:
   test-runner:
     build: 
-      dockerfile: build-automation/System-Tests/Dockerfile
+      dockerfile: Build-Automation/System-Tests/Dockerfile
       context: ../../..
     container_name: test-runner
     command: ["bash", "/app/wait-for.sh", "chrome:4444", "--", "npm", "run", "test:ci"]
@@ -13,7 +13,7 @@ services:
       - ./test-server-conf:/etc/wireguard/server.conf
   test-wirtbot:
     build: 
-      dockerfile: build-automation/WirtBot/Dockerfile
+      dockerfile: Build-Automation/WirtBot/Dockerfile
       context: ../../..
       args:
         - environment=test

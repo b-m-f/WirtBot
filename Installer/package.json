@@ -41,8 +41,8 @@
   "dependencies": {},
   "devDependencies": {
     "@wasm-tool/wasm-pack-plugin": "1.3.1",
-    "@wirtbot/config-generators": "file:../shared-libs/config-generators",
-    "@wirtbot/crypto": "file:../shared-libs/crypto",
+    "@wirtbot/config-generators": "file:../Shared-Libs/config-generators",
+    "@wirtbot/crypto": "file:../Shared-Libs/crypto",
     "configstore": "5.0.1",
     "eslint": "^7.12.1",
     "prompts": "2.3.2",

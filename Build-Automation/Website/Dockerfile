@@ -1,9 +1,9 @@
 # APP
 FROM node:buster as app
 
-WORKDIR '/shared-libs'
-COPY shared-libs/styles styles
-COPY shared-libs/components components
+WORKDIR '/Shared-Libs'
+COPY Shared-Libs/styles styles
+COPY Shared-Libs/components components
 
 
 
@@ -22,4 +22,4 @@ RUN npm run build
 FROM nginx:alpine
 
 COPY --from=app /website/content/.vuepress/dist /website
-COPY build-automation/Website/nginx/nginx.conf /etc/nginx/nginx.conf
+COPY Build-Automation/Website/nginx/nginx.conf /etc/nginx/nginx.conf

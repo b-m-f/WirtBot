@@ -5,7 +5,7 @@ on:
     branches: [master]
     paths:
       - "Core/**"
-      - "shared-libs/**"
+      - "Shared-Libs/**"
       - "Interface/**"
       - "Installer/**"
 
