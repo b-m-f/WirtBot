@@ -7,8 +7,6 @@ export const runAnsible = async ({
     password,
     sshKey,
     wirtBotUIKey,
-    domain,
-    email,
     update,
     sshPrivateKeyPath,
     dnsConfig,
@@ -20,9 +18,6 @@ export const runAnsible = async ({
         "--extra-vars", `maintainer_username=${user}`,
         "--extra-vars", `maintainer_ssh_key="${sshKey}"`,
         "--extra-vars", `maintainer_password=${password}`,
-        "--extra-vars", `letsencrypt_email=${email}`,
-        "--extra-vars", `domain_name=${domain}`,
-        "--extra-vars", `update=true`,
         "--extra-vars", 'ansible_python_interpreter=/usr/bin/python3',
     ]
 
@@ -30,6 +25,7 @@ export const runAnsible = async ({
         `--extra-vars`, `ansible_become_pass=${password}`,
         '--private-key', `${sshPrivateKeyPath}`,
         `--user`, `${user}`,
+        "--extra-vars", `update=true`,
     ]
     const installArguments = [
         `--user`, `root`,

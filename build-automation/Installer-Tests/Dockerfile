@@ -49,6 +49,8 @@ RUN cd crypto && npm ci && npm run build
 
 WORKDIR /installer
 COPY Installer .
+COPY build-automation/Installer-Tests/tests tests
+COPY build-automation/Installer-Tests/test.sh test.sh
 
 RUN npm ci && npm run build
 
