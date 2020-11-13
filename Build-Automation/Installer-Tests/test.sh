@@ -1,5 +1,7 @@
 #! /bin/bash
 
+set -e
+
 test_dir="tests/test-install-with-ssh-password"
 install_mock="$test_dir/ansible_mock.js"
 
