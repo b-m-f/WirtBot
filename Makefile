@@ -36,6 +36,9 @@ test-unit:
 
 test-unit-ci:
 	docker-compose -f build-automation/Unit-Tests/test.yml up --abort-on-container-exit --build --remove-orphans
+test-installer:
+	docker-compose -f build-automation/Installer-Tests/test.yml up --abort-on-container-exit --build --remove-orphans
+
 
 
 ## Maintenance

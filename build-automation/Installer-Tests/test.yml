@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  wirtbot_installer_tests:
+    build: 
+      context: ../..
+      dockerfile: build-automation/Installer-Tests/Dockerfile
+    restart: always
+    container_name: wirtbot_installer_tests

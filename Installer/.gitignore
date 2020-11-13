@@ -1,3 +1,4 @@
 dist
 *.tgz
 UseThisWireGuardConfigurationToConnectToYourWirtBot.conf
+!tests/**/wirtbot-installer.config.json
