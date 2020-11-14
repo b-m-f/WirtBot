@@ -3,11 +3,11 @@
     <h1>{{ $t("dashboard.widgets.network.title") }}</h1>
     <div class="row">
       <label>{{ $t("dashboard.widgets.network.dnsName") }}</label>
-      <input
-        type="text"
-        name="dns-name"
+      <TextInput
         :value="network.dns.name"
-        @change="(e) => updateDNSName(e.target.value)"
+        name="dns-name"
+        required
+        @change="updateDNSName"
       />
     </div>
   </div>
