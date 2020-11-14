@@ -1,5 +1,5 @@
 <template>
-  <tr :class="{ mobile: isMobilePage, 'table-row': true }">
+  <tr :class="{ mobile: isMobilePage, 'table-row': true, device: true }">
     <td class="column-one">
       <label for="device-name">{{
         $t("dashboard.widgets.devices.labels.name")

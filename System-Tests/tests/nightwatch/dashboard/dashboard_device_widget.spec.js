@@ -15,7 +15,7 @@ module.exports = {
         await browser.setValue("input[name='device-name']", "test1");
         await browser.setValue("input[name='device-ipv4']", "2");
         await browser.setValue("select.device-type", "Linux");
-        browser.expect.elements(".table-row.device-overview").count.to.equal(1);
+        browser.expect.elements(".table-row.device").count.to.equal(1);
     },
     "Add complex device": async function (browser) {
         await browser.click("#add-device button");
@@ -27,7 +27,7 @@ module.exports = {
         await browser.setValue("input[name='additionalDNSServers']", "1.1.1.1,2.2.2.2");
         await browser.click("input[name='routed']");
         await browser.pause(2000) // REFACTOR: this is done to wait for the debouce that is on MTU and additionalDNSServers
-        browser.expect.elements(".table-row.device-overview").count.to.equal(2);
+        browser.expect.elements(".table-row.device").count.to.equal(2);
     },
     "Download and verify server configuration": async function (browser) {
         const downloadLocation = '/tmp/WirtTestDownloads/server.conf'
