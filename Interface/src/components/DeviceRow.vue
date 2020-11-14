@@ -21,16 +21,17 @@
         }}</label>
         <div class="value">
           <p>{{ subnet.v4 }}</p>
-          <input
-            type="number"
+          <NumberInput
             name="device-ipv4"
-            min="2"
-            max="255"
-            :placeholder="getNextHighestIPv4()"
-            :value="internalIP.v4"
-            required
-            @input="(e) => updateIP({ v4: e.target.value })"
             ref="ipv4-input"
+            :value="internalIP.v4"
+            @change="(ip) => updateIP({ v4: ip })"
+            :validate="checkIPv4"
+            :placeholder="`${getNextHighestIPv4()}`"
+            :invalidMessage="invalidIPv4Message"
+            :min="2"
+            :max="255"
+            required
           />
         </div>
       </div>
@@ -45,7 +46,6 @@
             name="device-ipv6"
             placeholder="0001-ffff"
             :value="internalIP.v6"
-            required
             @input="(e) => updateIP({ v6: e.target.value })"
             ref="ipv6-input"
           />
@@ -78,7 +78,7 @@
           name="mtu"
           :value="internalMTU"
           class="MTU"
-          @change="(e) => updateMTU(e.target.value)"
+          @change="updateMTU"
           :validate="validateMTU"
           :invalidMessage="$t('warnings.deviceMTU')"
           :placeholder="$t('dashboard.widgets.devices.placeholder.MTU')"
@@ -156,6 +156,7 @@ export default {
       internalRouted: this.$props.routed || false,
       internalAdditionalDNSServers: this.$props.additionalDNSServers || [],
       internalMTU: this.$props.MTU,
+      invalidIPv4Message: "",
     };
   },
   watch: {
@@ -227,12 +228,10 @@ export default {
       if (v4) {
         let ip;
         try {
-          ip = parseInt(v4);
           this.internalIP = { ...this.internalIP, v4: ip };
         } catch (error) {
           return;
         }
-        this.checkIPv4(ip);
       } else if (v6) {
         let ip;
         try {
@@ -285,37 +284,18 @@ export default {
       }, 1000);
       this.updatingMTU();
     },
-    async checkIPv4(ip) {
-      // remove invalidity from field
-      this.$refs["ipv4-input"].setCustomValidity("");
-
+    checkIPv4(ip) {
+      this.invalidIPv4Message = "";
       if (ip == 1) {
-        this.$store.dispatch(
-          "alerts/addWarning",
-          this.$t("warnings.deviceIpServer")
-        );
-        this.$refs["ipv4-input"].setCustomValidity(
-          this.$t("warnings.deviceIpServer")
-        );
-        this.$refs["ipv4-input"].reportValidity();
+        this.invalidIPv4Message = this.$t("warnings.deviceIpServer");
         return false;
       }
       const isIpUsed = this.devices.reduce((prev, next) => {
-        return (
-          prev ||
-          (next.ip.v4 == this.internalIP.v4 && next.id !== this.internalId)
-        );
+        return prev || (next.ip.v4 == ip && next.id !== this.internalId);
       }, false);
 
       if (isIpUsed) {
-        this.$store.dispatch(
-          "alerts/addWarning",
-          this.$t("warnings.deviceIpUsed")
-        );
-        this.$refs["ipv4-input"].setCustomValidity(
-          this.$t("warnings.deviceIpUsed")
-        );
-        this.$refs["ipv4-input"].reportValidity();
+        this.invalidIPv4Message = this.$t("warnings.deviceIpUsed");
         return false;
       } else {
         return true;
@@ -341,25 +321,6 @@ export default {
       }
     },
     async save() {
-      let ip4OK = false;
-      // default ipv6 to true since it is optional and doesnt need to be checked if it
-      // does not exist
-      let ip6OK = true;
-
-      if (this.internalIP.v4) {
-        ip4OK = await this.checkIPv4(this.internalIP.v4);
-        if (!ip4OK) {
-          return;
-        }
-      }
-
-      if (this.internalIP.v6) {
-        ip6OK = await this.checkIPv6(this.internalIP.v6);
-        if (!ip6OK) {
-          return;
-        }
-      }
-
       this.$emit("saved", {
         id: this.internalId,
         name: this.internalName,

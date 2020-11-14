@@ -7,36 +7,44 @@
     :min="$props.min"
     :max="$props.max"
     :placeholder="$props.placeholder"
-    @change="update"
+    :required="$props.required"
+    @change="(e) => update(e.target.value)"
   />
 </template>
 
 <script>
 export default {
   props: {
-    port: { type: Number, default: undefined },
     placeholder: { type: String, default: "1024-65636" },
     min: Number,
     max: Number,
     value: Number,
     validate: Function,
     invalidMessage: String,
+    required: Boolean,
   },
   data() {
     return { internalNumber: this.$props.value };
   },
+  watch: {
+    invalidMessage() {
+      // The external validation method might update the invalid message,
+      // in which case the update method needs to be called again to apply it to the input field
+      this.update(this.internalNumber);
+    },
+  },
   methods: {
-    update(event) {
+    update(number) {
       let newValue;
       this.$refs["input"].setCustomValidity("");
       try {
-        newValue = parseInt(event.target.value);
+        newValue = parseInt(number);
+        this.internalNumber = newValue;
         const valid = this.$props.validate(newValue);
         if (!valid) {
           this.$refs["input"].setCustomValidity(this.$props.invalidMessage);
           this.$refs["input"].reportValidity();
         } else {
-          this.internalNumber = newValue;
           this.$emit("change", newValue);
         }
       } catch (error) {
