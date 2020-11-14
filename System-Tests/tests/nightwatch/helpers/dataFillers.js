@@ -37,9 +37,9 @@ async function setServer(browser) {
     element.dispatchEvent(event);
   });
 
-  await browser.setValue("#server-widget input[name='port']", "1233");
+  await browser.setValue("#server-widget input[name='server-port']", "1233");
   await browser.execute(function () {
-    var element = document.querySelector("#server-widget input[name='port']");
+    var element = document.querySelector("#server-widget input[name='server-port']");
     var event = new Event("change");
     element.dispatchEvent(event);
   });
