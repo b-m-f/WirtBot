@@ -214,7 +214,6 @@ const store = new Vuex.Store({
     },
     async updateDNS({ state, commit }) {
       commit("updateDNSConfig", generateDNSFile(state.server, state.devices, state.network));
-      console.log(state.network)
       if (state.network.dns.name) {
         updateDNSConfigViaApi(state.network.dns.config, `wirtbot.${state.network.dns.name}`);
       } else {
