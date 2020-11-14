@@ -38,20 +38,32 @@ export default {
       let newValue;
       this.$refs["input"].setCustomValidity("");
       try {
-        newValue = parseInt(number);
-        this.internalNumber = newValue;
+        if (!number) {
+          if (this.$props.required) {
+            throw this.$t("warnings.required");
+          } else {
+            this.$emit("change", number);
+            return;
+          }
+        }
+        try {
+          newValue = parseInt(number);
+          this.internalNumber = newValue;
+        } catch (error) {
+          throw this.$t("warnings.notANumber");
+        }
         if (this.$props.validate) {
           const valid = this.$props.validate(newValue);
           if (!valid) {
-            this.$refs["input"].setCustomValidity(this.$props.invalidMessage);
-            this.$refs["input"].reportValidity();
+            throw this.$props.invalidMessage;
           } else {
             this.$emit("change", newValue);
+            return;
           }
-        } else {
-          this.$emit("change", newValue);
         }
       } catch (error) {
+        this.$refs["input"].setCustomValidity(error);
+        this.$refs["input"].reportValidity();
         return;
       }
     },

@@ -126,6 +126,8 @@
     "serverHostname": "Server hostname"
   },
   "warnings": {
+    "notANumber": "Not a valid number",
+    "required": "This is required",
     "deviceRemove": "Error when removing device: ",
     "deviceUpdate": "Error when updating device: ",
     "deviceAdd": "Error when adding device: ",
