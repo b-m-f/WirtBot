@@ -53,18 +53,13 @@
       <label for="device-type">{{
         $t("dashboard.widgets.devices.labels.type")
       }}</label>
-      <select
-        class="device-type"
+      <Select
         :required="true"
-        v-model="internalType"
-        :class="{
-          ['device-type']: true,
-        }"
-      >
-        <option :value="type" v-for="type in deviceTypes" :key="type">
-          {{ type }}
-        </option>
-      </select>
+        :selected="internalType"
+        :options="deviceTypes"
+        class="device-type"
+        @change="updateType"
+      />
     </td>
     <td class="column-four" v-if="expanded">
       <div class="mtu">
@@ -127,11 +122,12 @@
 import NumberInput from "components/Inputs/Number";
 import TextInput from "components/Inputs/Text";
 import CheckBox from "components/Inputs/CheckBox";
+import Select from "components/Inputs/Select";
 import { downloadText } from "../lib/download";
 import debounce from "lodash/debounce";
 
 export default {
-  components: { NumberInput, TextInput, CheckBox },
+  components: { NumberInput, TextInput, CheckBox, Select },
   props: {
     controls: Boolean,
     name: String,
