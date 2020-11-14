@@ -112,55 +112,6 @@
     "getStarted": "Get started",
     "about": "About"
   },
-  "tutorial": {
-    "welcome": {
-      "title": "Welcome!",
-      "explainer": "We'll guide you through a few simple steps to set-up your own private network. If you are familiar with WireGuard® and already have your own server set up, you might want to skip straight to your {{dashboard}}.",
-      "start": "I'm Ready"
-    },
-    "server": {
-      "question": "Do you already have a WireGuard® Server?",
-      "title": "Server set-up",
-      "yes": "Yes",
-      "no": "No",
-      "notAvailable": "At the moment you will need to set up your own server to continue. Please check the documentation for more information.",
-      "documentationLink": "Go to documentation",
-      "tooltip": "The server is responsible for establishing secure communication channels between your devices.",
-      "ip": "What is your servers public IP address?",
-      "hostname": "Please enter the hostname where your WirtBot® can be reached:",
-      "whatsAPort": "What is a Port?",
-      "port": "What is the port used for WireGuard®?",
-      "defaultPort": "Auto installation uses 10101",
-      "done": "Next..."
-    },
-    "noserver": {
-      "title": "Server set-up",
-      "needServer": "You will need a server to continue",
-      "optionInfo": "At the moment you will still have to do this setup yourself",
-      "selfSetup": {
-        "goToDocs": "Go to guide",
-        "returnHere": "Once your setup is finished return to the tutorial",
-        "key": "Key to use"
-      }
-    },
-    "devices": {
-      "done": "Done",
-      "header": "Add devices",
-      "description": "Great, your server is set up! Time to add devices to you want to connect to your network. Every device needs a name, an IP address where it can be found in the network, and the type of device it is.",
-      "next": "Next step",
-      "skip": "Skip this step",
-      "addDevice": "As soon as you save a device, a configuration will automatically be created and added to the table for you to download. There is no need to download everything right now, as you'll always be able to find them in your Dashboard.",
-      "save": "Save",
-      "finish": "Finish",
-      "finishEditHint": "You'll be able to edit or add more devices in your {{dashboard}}",
-      "firstDeviceAdded": "You've added your first device!"
-    },
-    "done": {
-      "congrats": "Congratulations! Your network is all set up.",
-      "info": "You can now view and edit your devices, or download your configuration files for use in the WireGuard® applications.",
-      "goToDashBoard": "Go to Dashboard"
-    }
-  },
   "settings": {
     "credits": "Made by <a href='https://ehlers.berlin'>Maximilian Ehlers</a>",
     "header": "Settings",
@@ -191,7 +142,8 @@
     "fileReaderApiNotSupported": "Your browser does not seem to support the FileReader API. Read more at https://developer.mozilla.org/en-US/docs/Web/API/File",
     "noFileSelected": "Please select a file to import first.",
     "noServer": "No server was configured.",
-    "wrongIPv6": "Not a correct IPv6 address"
+    "wrongIPv6": "Not a correct IPv6 address",
+    "serverPort": "Port must be between 1024 and 65636"
   },
   "infos": {
     "generatingKeys": "Keys are being generated"

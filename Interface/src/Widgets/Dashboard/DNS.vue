@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import IPInput from "components/IPInput";
+import IPInput from "components/Inputs/IP";
 
 export default {
   components: { IPInput },
