@@ -233,13 +233,13 @@ export default {
           "warnings.deviceAdditionalDNSServers"
         );
       }
+      return correct;
     },
     updateAdditionalDNSServers(serverString) {
       if (this.updatingAdditionalDNSServers) {
         this.updatingAdditionalDNSServers.cancel();
       }
       this.updatingAdditionalDNSServers = debounce(function () {
-        // split by comma
         this.internalAdditionalDNSServers = serverString
           .split(",")
           .map((entry) => {
