@@ -225,23 +225,7 @@ export default {
       this.internalType = type;
     },
     updateIP({ v4, v6 }) {
-      if (v4) {
-        let ip;
-        try {
-          this.internalIP = { ...this.internalIP, v4: ip };
-        } catch (error) {
-          return;
-        }
-      } else if (v6) {
-        let ip;
-        try {
-          ip = v6;
-          this.internalIP = { ...this.internalIP, v6: ip };
-          this.checkIPv6(ip);
-        } catch (error) {
-          return;
-        }
-      }
+      this.internalIP = { ...this.internalIP, v4, v6 };
     },
     validateAdditionalDNSServers(serverString) {
       const correct = /^([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3},?)+$/.test(

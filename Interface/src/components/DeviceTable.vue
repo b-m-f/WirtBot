@@ -97,10 +97,6 @@ export default {
       additionalDNSServers,
       MTU,
     }) {
-      if (!name || !type || (!ip.v4 && !ip.v6)) {
-        this.reportValidity();
-        return false;
-      }
       if (id) {
         return await this.updateDevice({
           ip,
