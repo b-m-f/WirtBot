@@ -1,11 +1,9 @@
 <template>
   <input
     ref="input"
-    :value="internalNumber"
-    type="number"
+    :value="internalText"
+    type="text"
     :name="$props.name"
-    :min="$props.min"
-    :max="$props.max"
     :placeholder="$props.placeholder"
     :required="$props.required"
     @change="(e) => update(e.target.value)"
@@ -16,40 +14,36 @@
 export default {
   props: {
     placeholder: String,
-    min: Number,
-    max: Number,
-    value: Number,
+    value: String,
     validate: Function,
     invalidMessage: String,
     required: Boolean,
   },
   data() {
-    return { internalNumber: this.$props.value };
+    return { internalText: this.$props.value };
   },
   watch: {
     invalidMessage() {
       // The external validation method might update the invalid message,
       // in which case the update method needs to be called again to apply it to the input field
-      this.update(this.internalNumber);
+      this.update(this.internalText);
     },
   },
   methods: {
-    update(number) {
-      let newValue;
+    update(text) {
       this.$refs["input"].setCustomValidity("");
       try {
-        newValue = parseInt(number);
-        this.internalNumber = newValue;
+        this.internalText = text;
         if (this.$props.validate) {
-          const valid = this.$props.validate(newValue);
+          const valid = this.$props.validate(text);
           if (!valid) {
             this.$refs["input"].setCustomValidity(this.$props.invalidMessage);
             this.$refs["input"].reportValidity();
           } else {
-            this.$emit("change", newValue);
+            this.$emit("change", text);
           }
         } else {
-          this.$emit("change", newValue);
+          this.$emit("change", text);
         }
       } catch (error) {
         return;
