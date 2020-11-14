@@ -191,9 +191,14 @@ const store = new Vuex.Store({
     async updateDeviceConfigs({ commit, state }) {
       const devices = await Promise.all(
         state.devices.map(async (device) => {
-          return await addConfigToDevice(device, state.server);
+          try {
+            return await addConfigToDevice(device, state.server);
+          } catch (error) {
+            console.error(error);
+            return device;
+          }
         })
-      );
+      ).filter(device => device.config);
       commit("updateDevices", devices);
     },
     async updateServerConfig({ commit, state, dispatch }) {
