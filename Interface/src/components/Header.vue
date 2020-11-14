@@ -37,13 +37,7 @@
             >
           </div>
         </div>
-        <div id="right">
-          <div id="dashboard">
-            <router-link :to="{ name: 'dashboard' }">
-              {{ $t("header.dashboard") }}
-            </router-link>
-          </div>
-        </div>
+        <div id="right"></div>
       </nav>
       <nav v-if="mobileNavigationExpanded" class="mobile-navigation">
         <div id="documentation">
@@ -61,11 +55,6 @@
             rel="noopener noreferrer"
             >GitHub</a
           >
-        </div>
-        <div id="dashboard">
-          <router-link :to="{ name: 'dashboard' }">
-            {{ $t("header.dashboard") }}
-          </router-link>
         </div>
       </nav>
     </div>
