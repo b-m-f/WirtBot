@@ -11,7 +11,7 @@ module.exports = {
     await browser.setValue("input[name='device-ipv4']", "4");
     await browser.setValue("select.device-type", "Linux");
 
-    await browser.assert.visible("#alerts .warning");
+    browser.expect("input[name='device-ipv4']").to.have.property('validity').to.have.property('valid').equals('false');
     await browser.pause(3000)
 
     browser.expect.elements(".device").count.to.equal(0);
@@ -58,7 +58,7 @@ module.exports = {
     );
   },
   "Test that two devices can not have the same ip": async function (browser) {
-    browser.expect.elements("#device-widget form .device-overview").count.to.equal(2);
+    browser.expect.elements("#device-widget form .device").count.to.equal(2);
 
     await browser.click("#add-device button");
     await browser.setValue("input[name='device-name']", "test3");
@@ -67,7 +67,7 @@ module.exports = {
     await browser.setValue("select.device-type", "Android");
 
 
-    await browser.assert.visible("#alerts .warning");
+    browser.expect("input[name='device-ipv4']").to.have.property('validity').to.have.property('valid').equals('false');
     browser.expect.elements("#device-widget form .device-overview").count.to.equal(2);
 
     await browser.pause(3000)

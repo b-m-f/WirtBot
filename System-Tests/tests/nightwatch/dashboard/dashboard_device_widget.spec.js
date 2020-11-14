@@ -48,7 +48,7 @@ module.exports = {
     },
     "Download and verify complex device configuration": async function (browser) {
         const downloadLocation = '/tmp/WirtTestDownloads/test2.conf'
-        await browser.click(".table-row.device-overview:last-child .download");
+        await browser.click(".table-row.device:last-child .download");
         await setTimeoutAsync(1000, 'waitForDownload').then(async () => {
             try {
                 const data = await fs.readFile(downloadLocation, "utf8")
@@ -87,23 +87,23 @@ module.exports = {
 
         await browser.setValue("input[name='device-name']", "mtu-test");
         await browser.setValue("input[name='MTU']", "20000");
-        await browser.assert.visible("#alerts .warning");
+        browser.expect("input[name='MTU']").to.have.property('validity').to.have.property('valid').equals('false');
         await browser.pause(3000)
         await browser.click("button.stop");
     },
     "additional DNS Servers must be a comma separated list of valid IPv4s": async function (browser) {
         await browser.click("#add-device button");
         await browser.setValue("input[name='additionalDNSServers']", "1.1.1.1,2.2.2.t");
-        await browser.assert.visible("#alerts .warning");
+        browser.expect("input[name='additionalDNSServers']").to.have.property('validity').to.have.property('valid').equals('false');
 
         await browser.setValue("input[name='additionalDNSServers']", "1.1.1.1,2.2.2.");
-        await browser.assert.visible("#alerts .warning");
+        browser.expect("input[name='additionalDNSServers']").to.have.property('validity').to.have.property('valid').equals('false');
         await browser.pause(3000)
 
         await browser.click("button.stop");
     },
     "correctly deletes device from config": async function (browser) {
-        await browser.click(".table-row.device-overview:first-child .delete");
+        await browser.click(".table-row.device:first-child .delete");
         await browser.pause(3000)
         await setTimeoutAsync(1000, 'waitForUpdate').then(async () => {
             try {
