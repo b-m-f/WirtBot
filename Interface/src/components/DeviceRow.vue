@@ -63,11 +63,11 @@
     </td>
     <td class="column-four">
       <div class="mtu">
-        <label for="mtu">
+        <label for="MTU">
           {{ $t("dashboard.widgets.devices.labels.MTU") }}
         </label>
         <NumberInput
-          name="mtu"
+          name="MTU"
           :value="internalMTU"
           class="MTU"
           @change="updateMTU"
