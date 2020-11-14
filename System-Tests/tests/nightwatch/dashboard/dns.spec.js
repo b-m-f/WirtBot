@@ -18,7 +18,6 @@ module.exports = {
         await browser.setValue("input[name='device-name']", "test1");
         await browser.setValue("input[name='device-ipv4']", "2");
         await browser.setValue("select.device-type", "Android");
-        await browser.click("button.save");
     },
     "Update DNS": async function (browser) {
         await browser.assert.value("#dns-widget input[name='1']", "1")
