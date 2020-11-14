@@ -17,7 +17,6 @@
             @saved="save"
             @cancel-new-device="cancelNewDevice"
             :class="{ even: index % 2 == 0 }"
-            :expanded="expanded"
           />
         </tbody>
       </table>
@@ -37,7 +36,6 @@
         @saved="save"
         @cancel-new-device="cancelNewDevice"
         :class="{ even: index % 2 == 0 }"
-        :expanded="expanded"
       />
     </form>
   </div>
@@ -49,7 +47,7 @@ import { guidGenerator } from "../lib/helpers";
 
 export default {
   components: { DeviceRow },
-  props: { devices: Array, expanded: Boolean },
+  props: { devices: Array },
   data() {
     return {};
   },

@@ -40,9 +40,7 @@
         "name": "Server name (optional):",
         "ip": "IP address:",
         "port": "WireGuard is listening at Port:",
-        "expert": "Expert",
-        "expertWarning": "You are in expert mode. Take care!",
-        "hostname": "Hostname:",
+        "hostname": "Hostname (optional):",
         "subnet": "Subnet:",
         "download": "Download config"
       },
@@ -55,8 +53,6 @@
       "devices": {
         "title": "My devices",
         "addDevice": "Add new device",
-        "expert": "Expert",
-        "expertWarning": "You are in expert mode. Take care!",
         "labels": {
           "routed": "Routed",
           "additionalDNSServers": "Additional DNS Servers",

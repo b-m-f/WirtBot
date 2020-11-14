@@ -31,9 +31,6 @@ import TextInput from "components/Inputs/Text";
 
 export default {
   components: { IPInput, CheckBox, TextInput },
-  props: {
-    expertMode: Boolean,
-  },
   computed: {
     dns() {
       return this.$store.state.network.dns;

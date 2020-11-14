@@ -4,7 +4,6 @@
     <DeviceTable
       :devices="devices"
       @device-saved="removeNewDevice"
-      :expanded="expertMode"
       @cancel-new-device="removeNewDevice"
     />
     <Button id="add-device" uppercase @click="addNewDevice">{{
@@ -23,9 +22,6 @@ export default {
     return {
       newDevice: undefined,
     };
-  },
-  props: {
-    expertMode: Boolean,
   },
   computed: {
     devices() {
@@ -51,23 +47,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#expert-mode {
-  & h2 {
-    text-align: center;
-    margin-bottom: 0;
-    margin-right: auto;
-  }
-  // set the height to be same as h2 even when h2 is not displayed
-  height: $heading-medium;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-
-  & label {
-    margin-right: $spacing-small;
-  }
-}
-
 #add-device {
   width: 100%;
 }
