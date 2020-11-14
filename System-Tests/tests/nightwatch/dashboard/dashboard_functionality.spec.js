@@ -10,7 +10,6 @@ module.exports = {
     await browser.setValue("input[name='device-name']", "test1");
     await browser.setValue("input[name='device-ipv4']", "4");
     await browser.setValue("select.device-type", "Linux");
-    await browser.click("button.save");
 
     await browser.assert.visible("#alerts .warning");
     await browser.pause(3000)
@@ -34,7 +33,6 @@ module.exports = {
     await browser.setValue("input[name='device-name']", "test1");
     await browser.setValue("input[name='device-ipv4']", "2");
     await browser.setValue("select.device-type", "Android");
-    await browser.click("button.save");
 
     browser.expect.elements("img.qr-code").count.to.equal(1);
   },
@@ -48,7 +46,6 @@ module.exports = {
     await browser.clearValue("input[name='device-ipv4']");
     await browser.setValue("input[name='device-ipv4']", "4");
     await browser.setValue("select.device-type", "iOS");
-    await browser.click("button.save");
 
     browser.expect.elements("img.qr-code").count.to.equal(2);
   },
@@ -69,7 +66,6 @@ module.exports = {
     await browser.setValue("input[name='device-ipv4']", "4");
     await browser.setValue("select.device-type", "Android");
 
-    await browser.click("button.save");
 
     await browser.assert.visible("#alerts .warning");
     browser.expect.elements("#device-widget form .device-overview").count.to.equal(2);
