@@ -3,13 +3,7 @@
     <h1>{{ $t("dashboard.widgets.server.title") }}</h1>
     <div class="row">
       <label>{{ $t("dashboard.widgets.server.name") }}</label>
-      <input
-        v-if="!server.name"
-        type="text"
-        name="name"
-        @change="(e) => updateName(e.target.value)"
-        :value="server.name"
-      />
+      <TextInput :value="server.name" name="name" @change="updateName" />
     </div>
     <div class="row">
       <label>{{ $t("dashboard.widgets.server.ip") }}</label>
@@ -20,12 +14,11 @@
     </div>
     <div class="row" v-if="expertMode">
       <label>{{ $t("dashboard.widgets.server.hostname") }}</label>
-      <input
-        type="text"
+      <TextInput
+        :value="server.hostname"
         name="hostname"
         id="hostname"
-        :value="server.hostname"
-        @change="(e) => updateHostname(e.target.value)"
+        @change="updateHostname"
       />
     </div>
     <div class="row">
@@ -41,12 +34,11 @@
     </div>
     <div class="row" v-if="expertMode">
       <label>{{ $t("dashboard.widgets.server.subnet") }}</label>
-      <input
-        type="text"
+      <TextInput
+        :value="server.subnet.V4"
         name="subnetV4"
-        id="subnetv4"
-        :value="server.subnet.v4"
-        @change="(e) => updateSubnet({ v4: e.target.value })"
+        id="subnetV4"
+        @change="(subnet) => updateSubnet({ v4: subnet })"
       />
     </div>
     <Button id="download" @click="downloadConfig" v-if="server.config">
@@ -57,12 +49,13 @@
 
 <script>
 import NumberInput from "components/Inputs/Number";
+import TextInput from "components/Inputs/Text";
 import IPInput from "components/Inputs/IP";
 import Button from "shared-components/Button";
 import { downloadText } from "../../lib/download";
 
 export default {
-  components: { NumberInput, IPInput, Button },
+  components: { NumberInput, IPInput, Button, TextInput },
   props: {
     expertMode: Boolean,
   },
