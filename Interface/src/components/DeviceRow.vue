@@ -23,7 +23,7 @@
             name="device-ipv4"
             :value="internalIP.v4"
             @change="(ip) => updateIP({ v4: ip })"
-            :validate="checkIPv4"
+            :validate="validateIPv4"
             :placeholder="`${getNextHighestIPv4()}`"
             :invalidMessage="invalidIPv4Message"
             :min="2"
@@ -43,7 +43,7 @@
             name="device-ipv6"
             placeholder="0001-ffff"
             @change="(ip) => updateIP({ v6: ip })"
-            :validate="checkIPv6"
+            :validate="validateIPv6"
             :invalidMessage="invalidIPv6Message"
           />
         </div>
@@ -260,7 +260,7 @@ export default {
       }, 1000);
       this.updatingMTU();
     },
-    checkIPv4(ip) {
+    validateIPv4(ip) {
       this.invalidIPv4Message = "";
       if (ip == 1) {
         this.invalidIPv4Message = this.$t("warnings.deviceIpServer");
@@ -273,11 +273,10 @@ export default {
       if (isIpUsed) {
         this.invalidIPv4Message = this.$t("warnings.deviceIpUsed");
         return false;
-      } else {
-        return true;
       }
+      return true;
     },
-    checkIPv6(ip) {
+    validateIPv6(ip) {
       try {
         if (!/^[0-9a-fA-F]+$/.test(ip)) {
           this.invalidIPv6Message = this.$t("warnings.wrongIPv6");
@@ -289,6 +288,7 @@ export default {
         if (!correct) {
           throw "IPv6 is out of range";
         }
+        return true;
       } catch (error) {
         this.invalidIPv6Message = this.$t("warnings.wrongIPv6");
         return false;
