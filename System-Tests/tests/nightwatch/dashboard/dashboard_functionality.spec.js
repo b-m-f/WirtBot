@@ -10,8 +10,8 @@ module.exports = {
     await browser.setValue("input[name='device-name']", "test1");
     await browser.setValue("input[name='device-ipv4']", "4");
     await browser.setValue("select.device-type", "Linux");
+    browser.expect.elements("#alerts li").count.to.equal(1);
 
-    browser.expect("input[name='device-ipv4']").to.have.property('validity').to.have.property('valid').equals('false');
     await browser.pause(3000)
 
     browser.expect.elements(".device").count.to.equal(0);
