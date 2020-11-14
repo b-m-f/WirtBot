@@ -51,6 +51,7 @@ export default {
             return;
           }
         }
+        this.$emit("change", text);
       } catch (error) {
         this.$refs["input"].setCustomValidity(error);
         this.$refs["input"].reportValidity();

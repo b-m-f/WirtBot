@@ -14,7 +14,9 @@
 </template>
 
 <script>
+import TextInput from "components/Inputs/Text";
 export default {
+  components: { TextInput },
   computed: {
     network() {
       return this.$store.state.network;

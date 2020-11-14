@@ -66,6 +66,7 @@ export default {
         this.$refs["input"].reportValidity();
         return;
       }
+      this.$emit("change", newValue);
     },
   },
 };

@@ -27,9 +27,10 @@
 <script>
 import IPInput from "components/Inputs/IP";
 import CheckBox from "components/Inputs/CheckBox";
+import TextInput from "components/Inputs/Text";
 
 export default {
-  components: { IPInput, CheckBox },
+  components: { IPInput, CheckBox, TextInput },
   props: {
     expertMode: Boolean,
   },
