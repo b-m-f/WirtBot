@@ -8,7 +8,7 @@
     :max="$props.max"
     :placeholder="$props.placeholder"
     :required="$props.required"
-    @change="(e) => update(e.target.value)"
+    @input="(e) => update(e.target.value)"
   />
 </template>
 
@@ -22,6 +22,7 @@ export default {
     validate: Function,
     invalidMessage: String,
     required: Boolean,
+    name: String,
   },
   data() {
     return { internalNumber: this.$props.value };
