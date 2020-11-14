@@ -1,6 +1,6 @@
 <template>
   <div id="device-table" :class="{ mobile: isMobilePage }">
-    <form ref="form" @submit.prevent="save">
+    <form ref="form" @submit.prevent="">
       <table v-if="!isMobilePage">
         <tbody>
           <DeviceRow
