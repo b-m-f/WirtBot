@@ -18,7 +18,7 @@ Make sure that `npm` and `g++` are installed.
 
 For `npm` I recommend [nvm](https://github.com/nvm-sh/nvm). To install `g++` please check how to do this on your OS.
 
-To install all the necessary dependencies first run `make dev-setup`.
+To install all the necessary dependencies first run `make -j dev-setup`.
 
 ### Runnin the WirtBot with Interface
 Run `make dev`, which will create a containerized WirtBot and run the Interface locally.
