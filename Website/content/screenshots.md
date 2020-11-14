@@ -1,8 +1,4 @@
-# Normal mode
+# One simple Dashboard to manage your network
 
-![screenshot of normal mode](./images/normal_mode.jpg)
+![screenshot of Dashboard](./images/dashboard.jpg)
 
-
-# Expert mode
-
-![screenshot of expert mode](./images/expert_mode.jpg)

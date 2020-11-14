@@ -19,7 +19,6 @@ module.exports = {
         browser.expect.elements(".table-row.device-overview").count.to.equal(1);
     },
     "Add complex device": async function (browser) {
-        await browser.click("#expert-mode #expert");
         await browser.click("#add-device button");
 
         await browser.setValue("input[name='device-name']", "test2");
