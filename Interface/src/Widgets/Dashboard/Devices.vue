@@ -26,7 +26,7 @@ export default {
   computed: {
     devices() {
       if (this.newDevice) {
-        return [this.newDevice, ...this.$store.state.devices];
+        return [...this.$store.state.devices, this.newDevice];
       } else {
         return [...this.$store.state.devices];
       }
