@@ -1,8 +1,5 @@
 <template>
-  <tr
-    v-if="editingMode"
-    :class="{ mobile: isMobilePage, 'table-row': true, editing: 'true' }"
-  >
+  <tr :class="{ mobile: isMobilePage, 'table-row': true }">
     <td class="column-one">
       <label for="device-name">{{
         $t("dashboard.widgets.devices.labels.name")
@@ -118,72 +115,13 @@
       </div>
     </td>
     <td class="column-six">
-      <button class="save" @click="save">Save</button>
-      <button class="stop" @click="stopEditingMode">Stop</button>
-    </td>
-  </tr>
-
-  <tr
-    v-else
-    :class="{
-      mobile: isMobilePage,
-      'table-row': true,
-      'device-overview': true,
-    }"
-  >
-    <td class="column-one">
-      <div class="name">
-        <label>{{ $t("dashboard.widgets.devices.labels.name") }}</label>
-        <p>{{ name }}</p>
-      </div>
-    </td>
-    <td class="column-two">
-      <div class="ip-v4">
-        <label>{{ $t("dashboard.widgets.devices.labels.ipv4") }}</label>
-        <p>{{ subnet.v4 }}{{ ip.v4 }}</p>
-      </div>
-      <!-- <p
-        :title="`${subnet.v6}${ip.v6}`"
-        v-if="expanded && ip.v6"
-      >{{ subnet.v6.substring(0, 4) }}::{{ ip.v6 }}</p>-->
-    </td>
-    <td class="column-three">
-      <div class="type">
-        <label>{{ $t("dashboard.widgets.devices.labels.type") }}</label>
-        <p>{{ type }}</p>
-      </div>
-    </td>
-    <td class="column-four">
-      <div class="routed">
-        <label>{{ $t("dashboard.widgets.devices.labels.routed") }}</label>
-        <p>{{ routed ? $t("global.words.yes") : $t("global.words.no") }}</p>
-      </div>
-    </td>
-    <td class="column-five">
-      <div class="MTU" v-if="expanded">
-        <label>{{ $t("dashboard.widgets.devices.labels.MTU") }}</label>
-        <p>{{ MTU }}</p>
-      </div>
-      <div class="additionalDNSServers" v-if="expanded">
-        <label>{{
-          $t("dashboard.widgets.devices.labels.additionalDNSServers")
-        }}</label>
-        <ul>
-          <li v-for="(server, index) in additionalDNSServers" :key="index">
-            {{ server }}
-          </li>
-        </ul>
-      </div>
-    </td>
-    <td class="column-six">
-      <button class="edit" @click="activateEditingMode">Edit</button>
-      <button class="delete" @click="deleteDevice">Delete</button>
       <img
         v-if="qr"
         class="qr-code"
         :src="qr"
         alt="QR Code for config of mobile devices"
       />
+      <button class="delete" @click="deleteDevice">Delete</button>
       <button class="download" @click="downloadConfig">Download</button>
     </td>
   </tr>
@@ -196,7 +134,6 @@ import debounce from "lodash/debounce";
 export default {
   props: {
     controls: Boolean,
-    edit: Boolean,
     name: String,
     ip: Object,
     type: String,
@@ -214,11 +151,36 @@ export default {
       internalType: this.$props.type || "Linux",
       internalId: this.$props.id,
       selectTouched: false,
-      internalEdit: this.$props.edit,
       internalRouted: this.$props.routed || false,
       internalAdditionalDNSServers: this.$props.additionalDNSServers || [],
       internalMTU: this.$props.MTU,
     };
+  },
+  watch: {
+    internalIP() {
+      this.save();
+    },
+    internalName() {
+      this.save();
+    },
+    internalType() {
+      this.save();
+    },
+    internalId() {
+      this.save();
+    },
+    selectTouched() {
+      this.save();
+    },
+    internalRouted() {
+      this.save();
+    },
+    internalAdditionalDNSServers() {
+      this.save();
+    },
+    internalMTU() {
+      this.save();
+    },
   },
   computed: {
     deviceTypes() {
@@ -229,9 +191,6 @@ export default {
     },
     subnet() {
       return this.$store.state.server.subnet;
-    },
-    editingMode() {
-      return this.edit || this.internalEdit;
     },
     isMobilePage() {
       return this.$store.state.websiteBeingViewedOnMobileDevice;
@@ -244,16 +203,6 @@ export default {
         (device) => device.id === this.internalId
       )["config"];
       downloadText(config, `${this.internalName}.conf`);
-    },
-    activateEditingMode() {
-      this.internalEdit = true;
-    },
-    stopEditingMode() {
-      this.internalEdit = false;
-
-      if (!this.id) {
-        this.$emit("cancel-new-device");
-      }
     },
     getNextHighestIPv4() {
       let nextHighest = 2;
@@ -268,7 +217,6 @@ export default {
     },
     deleteDevice() {
       this.$store.dispatch("removeDevice", { id: this.internalId });
-      this.stopEditingMode();
     },
     updateType(type) {
       this.internalType = type;
@@ -419,10 +367,6 @@ export default {
         }
       }
 
-      if (ip4OK && ip6OK) {
-        this.internalEdit = false;
-      }
-
       this.$emit("saved", {
         id: this.internalId,
         name: this.internalName,
@@ -439,55 +383,43 @@ export default {
 
 <style lang="scss" scoped>
 .routed {
+  display: flex;
+  justify-content: space-between;
   margin-bottom: $spacing-small;
 }
-.editing {
-  & .routed {
-    display: flex;
-    justify-content: space-between;
+.ip-input {
+  & .ip-v4 {
     margin-bottom: $spacing-small;
   }
-  & .ip-input {
-    & .ip-v4 {
-      margin-bottom: $spacing-small;
-    }
-    & .ip-v6,
-    .ip-v4 {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-
-      & .value {
-        display: flex;
-        flex-direction: row;
-      }
-      & input[type="number"] {
-        margin-left: $spacing-x-small;
-        width: 4rem;
-      }
-      & input[type="text"] {
-        margin-left: $spacing-x-small;
-        width: 4rem;
-      }
-    }
-  }
-
-  & .additionalDNSServers,
-  .mtu {
+  & .ip-v6,
+  .ip-v4 {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+
+    & .value {
+      display: flex;
+      flex-direction: row;
+    }
+    & input[type="number"] {
+      margin-left: $spacing-x-small;
+      width: 4rem;
+    }
+    & input[type="text"] {
+      margin-left: $spacing-x-small;
+      width: 4rem;
+    }
   }
 }
 
-.mobile {
-  &.editing {
-    & .ip-input {
-      display: flex !important;
-      flex-direction: column !important;
-    }
-  }
+.additionalDNSServers,
+.mtu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 
+.mobile {
   & .new-device {
     & .ip-input {
       flex-direction: column;
@@ -495,12 +427,8 @@ export default {
   }
 }
 
-.edit {
-}
 .delete {
   margin-top: $spacing-small;
-}
-.save {
 }
 
 .stop {
