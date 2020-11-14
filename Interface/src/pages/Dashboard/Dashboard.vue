@@ -7,13 +7,11 @@
           {{ $t("dashboard.widgets.devices.expertWarning") }}
         </h2>
         <label for="expert">{{ $t("dashboard.widgets.server.expert") }}</label>
-        <input
-          type="checkbox"
-          class="switch"
+        <CheckBox
           name="expert"
+          :checked="expertMode"
           id="expert"
-          :value="expertMode"
-          @change="(e) => updateExpertMode(e.target.checked)"
+          @change="updateExpertMode"
         />
       </div>
     </div>
@@ -56,6 +54,7 @@ import DeviceWidget from "../../Widgets/Dashboard/Devices";
 import SettingsWidget from "../../Widgets/Dashboard/Settings";
 import DNSWidget from "../../Widgets/Dashboard/DNS";
 import difference from "lodash/difference";
+import CheckBox from "components/Inputs/CheckBox";
 
 const availableWidgets = {
   network: NetworkWidget,
@@ -66,7 +65,7 @@ const availableWidgets = {
 };
 
 export default {
-  components: { AccentedCard, Card },
+  components: { AccentedCard, Card, CheckBox },
   data() {
     return {};
   },

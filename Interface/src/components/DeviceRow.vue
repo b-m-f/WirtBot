@@ -103,11 +103,10 @@
         <label for="routed">{{
           $t("dashboard.widgets.devices.labels.routed")
         }}</label>
-        <input
-          type="checkbox"
+        <CheckBox
           name="routed"
           :checked="internalRouted"
-          @change="internalRouted = !internalRouted"
+          @change="(bool) => (internalRouted = bool)"
         />
       </div>
     </td>
@@ -127,11 +126,12 @@
 <script>
 import NumberInput from "components/Inputs/Number";
 import TextInput from "components/Inputs/Text";
+import CheckBox from "components/Inputs/CheckBox";
 import { downloadText } from "../lib/download";
 import debounce from "lodash/debounce";
 
 export default {
-  components: { NumberInput, TextInput },
+  components: { NumberInput, TextInput, CheckBox },
   props: {
     controls: Boolean,
     name: String,

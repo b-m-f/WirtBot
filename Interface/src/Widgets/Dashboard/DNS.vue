@@ -10,12 +10,7 @@
     </div>
     <div class="row">
       <label for="tls">{{ $t("dashboard.widgets.dns.tls") }}</label>
-      <input
-        type="checkbox"
-        name="tls"
-        :checked="dns.tls"
-        @change="(e) => updateTls(e.target.checked)"
-      />
+      <CheckBox name="tls" :checked="dns.tls" @change="updateTls" />
     </div>
     <div class="row" v-if="tls">
       <label>{{ $t("dashboard.widgets.dns.tlsName") }}</label>
@@ -31,9 +26,10 @@
 
 <script>
 import IPInput from "components/Inputs/IP";
+import CheckBox from "components/Inputs/CheckBox";
 
 export default {
-  components: { IPInput },
+  components: { IPInput, CheckBox },
   props: {
     expertMode: Boolean,
   },
