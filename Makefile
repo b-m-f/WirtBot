@@ -3,7 +3,7 @@ SHELL := /bin/bash
 ## Development
 dev: dev-server dev-client
 dev-server:
-	docker-compose -f Build-Automation/WirtBot/compose/dev.yml up -d --build --remove-orphans 
+	cd ./Core && PUBLIC_KEY=1lLU3VhXsrSGMxESmqfY4m2oEVkpfEHyKlCQU6MMPsI= ALLOWED_ORIGIN=http://localhost:8080 RUST_LOG=debug MANAGED_DNS_ENABLED=1 cargo watch -x run || cd -
 dev-client: 
 	cd ./Interface && npm run dev
 dev-website: 
