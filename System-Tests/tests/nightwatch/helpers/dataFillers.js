@@ -8,7 +8,6 @@ async function setServer(browser) {
     message: "Setting Server data",
   });
 
-  await browser.click("#network-widget #edit");
   await browser.clearValue("#network-widget input[name='dns-name']");
   await browser.setValue("#network-widget input[name='dns-name']", "test");
 
@@ -18,8 +17,6 @@ async function setServer(browser) {
     element.dispatchEvent(event);
   });
 
-
-  await browser.click("#server-widget #edit");
 
   await browser.setValue("#server-widget input[name='1']", "1");
   await browser.setValue("#server-widget input[name='2']", "2");
@@ -47,7 +44,6 @@ async function setServer(browser) {
     element.dispatchEvent(event);
   });
 
-  await browser.click("#server-widget #edit");
   await browser.pause(300);
 }
 
