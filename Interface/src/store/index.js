@@ -57,7 +57,6 @@ const store = new Vuex.Store({
       messages: [],
       hiddenWidgets: [],
       firstUse: true,
-      expertMode: false
     },
   },
   mutations: {
@@ -117,9 +116,6 @@ const store = new Vuex.Store({
     },
     updateDNSConfig(state, config) {
       state.network.dns.config = config;
-    },
-    updateExpertMode(state, enabled) {
-      state.dashboard.expertMode = enabled;
     },
     updateDashboard(state, { messages, widgets }) {
       if (messages) {
@@ -199,9 +195,6 @@ const store = new Vuex.Store({
         })
       );
       commit("updateDevices", devices);
-    },
-    async updateExpertMode({ commit }, enabled) {
-      commit("updateExpertMode", enabled);
     },
     async updateServerConfig({ commit, state, dispatch }) {
       const config = generateServerConfig(

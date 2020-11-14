@@ -2,18 +2,6 @@
   <div :class="{ page: true, mobile: isMobilePage }">
     <div id="top-bar">
       <h1>{{ $t("dashboard.title") }}</h1>
-      <div id="expert-mode">
-        <h2 v-if="expertMode">
-          {{ $t("dashboard.widgets.devices.expertWarning") }}
-        </h2>
-        <label for="expert">{{ $t("dashboard.widgets.server.expert") }}</label>
-        <CheckBox
-          name="expert"
-          :checked="expertMode"
-          id="expert"
-          @change="updateExpertMode"
-        />
-      </div>
     </div>
     <AccentedCard
       padded
@@ -38,7 +26,7 @@
       v-for="(widget, index) in widgets"
       :key="`dashboard-widget-${index}`"
     >
-      <component :expertMode="expertMode" :is="widget"></component>
+      <component :is="widget"></component>
     </Card>
   </div>
 </template>
@@ -92,9 +80,6 @@ export default {
     isFirstUse() {
       return this.$store.state.dashboard.firstUse;
     },
-    expertMode() {
-      return this.$store.state.dashboard.expertMode;
-    },
   },
   methods: {
     downloadConfig(config) {
@@ -102,9 +87,6 @@ export default {
     },
     async removeMessage(message) {
       await this.$store.dispatch("removeDashboardMessage", message);
-    },
-    async updateExpertMode(enabled) {
-      await this.$store.dispatch("updateExpertMode", enabled);
     },
   },
   mounted() {
@@ -159,32 +141,6 @@ h1 {
 
   & h1 {
     margin-bottom: 0;
-  }
-}
-#expert-mode {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  height: $heading-medium;
-  & h2 {
-    text-align: center;
-    margin-bottom: 0;
-    margin-right: $spacing-medium;
-  }
-
-  & label {
-    margin-right: $spacing-small;
-  }
-}
-
-.mobile {
-  & #expert-mode {
-    & h2 {
-      display: none;
-    }
-    & input {
-      margin-right: $spacing-medium;
-    }
   }
 }
 </style>

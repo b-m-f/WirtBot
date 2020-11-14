@@ -12,7 +12,7 @@
         @change="({ ip, valid }) => updateIp({ ip: { v4: ip }, valid })"
       />
     </div>
-    <div class="row" v-if="expertMode">
+    <div class="row">
       <label>{{ $t("dashboard.widgets.server.hostname") }}</label>
       <TextInput
         :value="server.hostname"
@@ -32,7 +32,7 @@
         placeholder="1024-65636"
       />
     </div>
-    <div class="row" v-if="expertMode">
+    <div class="row">
       <label>{{ $t("dashboard.widgets.server.subnet") }}</label>
       <TextInput
         :value="server.subnet.V4"
@@ -56,9 +56,6 @@ import { downloadText } from "../../lib/download";
 
 export default {
   components: { NumberInput, IPInput, Button, TextInput },
-  props: {
-    expertMode: Boolean,
-  },
   computed: {
     server() {
       return this.$store.state.server;

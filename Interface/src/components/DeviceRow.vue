@@ -32,7 +32,7 @@
           />
         </div>
       </div>
-      <div v-if="expanded" class="ip-v6">
+      <div class="ip-v6">
         <label for="device-ipv6">{{
           $t("dashboard.widgets.devices.labels.ipv6")
         }}</label>
@@ -61,7 +61,7 @@
         @change="updateType"
       />
     </td>
-    <td class="column-four" v-if="expanded">
+    <td class="column-four">
       <div class="mtu">
         <label for="mtu">
           {{ $t("dashboard.widgets.devices.labels.MTU") }}
@@ -135,7 +135,6 @@ export default {
     type: String,
     id: String,
     qr: String,
-    expanded: Boolean,
     routed: Boolean,
     additionalDNSServers: Array,
     MTU: String,

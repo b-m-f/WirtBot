@@ -22,9 +22,6 @@ export default {
       return this.$store.state.network;
     },
   },
-  props: {
-    expertMode: Boolean,
-  },
   methods: {
     updateDNSName(name) {
       this.$store.dispatch("updateDNSName", name);
