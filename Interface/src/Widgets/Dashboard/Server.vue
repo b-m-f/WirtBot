@@ -61,11 +61,6 @@ import { downloadText } from "../../lib/download";
 
 export default {
   components: { NumberInput, IPInput, Button },
-  data() {
-    return {
-      edit: false,
-    };
-  },
   props: {
     expertMode: Boolean,
   },
@@ -78,11 +73,6 @@ export default {
     downloadConfig() {
       const config = this.server.config;
       downloadText(config, `server.conf`);
-    },
-    toggleEdit() {
-      if (!this.blocked) {
-        this.edit = !this.edit;
-      }
     },
     updateHostname(hostname) {
       this.$store.dispatch("updateServer", { hostname });
@@ -121,17 +111,6 @@ export default {
   padding: $spacing-small 0;
 }
 
-button#edit {
-  display: block;
-  margin-left: auto;
-  border: none;
-  color: $secondary;
-  text-decoration: underline;
-  border: none;
-  cursor: pointer;
-  padding: $spacing-medium;
-  background: $white;
-}
 #download {
   &.button {
     max-width: 20rem;

@@ -34,11 +34,6 @@ import IPInput from "components/Inputs/IP";
 
 export default {
   components: { IPInput },
-  data() {
-    return {
-      edit: false,
-    };
-  },
   props: {
     expertMode: Boolean,
   },
@@ -51,11 +46,6 @@ export default {
     },
   },
   methods: {
-    toggleEdit() {
-      if (!this.blocked) {
-        this.edit = !this.edit;
-      }
-    },
     updateIp({ ip, valid }) {
       if (valid) {
         this.$store.dispatch("updateDNSIp", { ip });
