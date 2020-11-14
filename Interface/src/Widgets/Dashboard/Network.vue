@@ -4,8 +4,8 @@
     <div class="row">
       <label>{{ $t("dashboard.widgets.network.dnsName") }}</label>
       <TextInput
-        :value="network.dns.name"
         name="dns-name"
+        :value="network.dns.name"
         required
         @change="updateDNSName"
       />

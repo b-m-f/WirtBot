@@ -71,6 +71,8 @@
           :value="internalMTU"
           class="MTU"
           @change="updateMTU"
+          :max="1800"
+          :min="1320"
           :validate="validateMTU"
           :invalidMessage="$t('warnings.deviceMTU')"
           :placeholder="$t('dashboard.widgets.devices.placeholder.MTU')"
@@ -137,7 +139,7 @@ export default {
     qr: String,
     routed: Boolean,
     additionalDNSServers: Array,
-    MTU: String,
+    MTU: Number,
   },
   data() {
     return {

@@ -18,6 +18,7 @@ export default {
     validate: Function,
     invalidMessage: String,
     required: Boolean,
+    name: String,
   },
   data() {
     return { internalText: this.$props.value };
