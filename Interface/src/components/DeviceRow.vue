@@ -4,15 +4,13 @@
       <label for="device-name">{{
         $t("dashboard.widgets.devices.labels.name")
       }}</label>
-      <input
-        type="text"
+      <TextInput
+        :value="internalName"
         name="device-name"
         class="name"
-        v-model="internalName"
         required
-        placeholder=" "
+        @change="(name) => (internalName = name)"
       />
-      <div v-if="expanded"></div>
     </td>
     <td class="column-two ip-input">
       <div class="ip-v4">
@@ -23,7 +21,6 @@
           <p>{{ subnet.v4 }}</p>
           <NumberInput
             name="device-ipv4"
-            ref="ipv4-input"
             :value="internalIP.v4"
             @change="(ip) => updateIP({ v4: ip })"
             :validate="checkIPv4"
@@ -41,13 +38,13 @@
         }}</label>
         <div class="value">
           <p :title="subnet.v6">{{ subnet.v6.substring(0, 4) }}::</p>
-          <input
-            type="text"
+          <TextInput
+            :value="internalIP.v6"
             name="device-ipv6"
             placeholder="0001-ffff"
-            :value="internalIP.v6"
-            @input="(e) => updateIP({ v6: e.target.value })"
-            ref="ipv6-input"
+            @change="(ip) => updateIP({ v6: ip })"
+            :validate="checkIPv6"
+            :invalidMessage="invalidIPv6Message"
           />
         </div>
       </div>
@@ -88,16 +85,16 @@
         <label for="additionalDNSServers">
           {{ $t("dashboard.widgets.devices.labels.additionalDNSServers") }}
         </label>
-        <input
-          type="text"
+        <TextInput
+          :value="internalAdditionalDNSServers.join(',')"
           name="additionalDNSServers"
           class="additionalDNSServers"
-          :value="internalAdditionalDNSServers"
           :placeholder="
             $t('dashboard.widgets.devices.placeholder.additionalDNSServers')
           "
-          @input="(e) => updateAdditionalDNSServers(e.target.value)"
-          ref="additionalDNSServers"
+          :validate="validateAdditionalDNSServers"
+          :invalidMessage="invalidAdditionalDNSServersMessage"
+          @change="updateAdditionalDNSServers"
         />
       </div>
     </td>
@@ -129,11 +126,12 @@
 
 <script>
 import NumberInput from "components/Inputs/Number";
+import TextInput from "components/Inputs/Text";
 import { downloadText } from "../lib/download";
 import debounce from "lodash/debounce";
 
 export default {
-  components: { NumberInput },
+  components: { NumberInput, TextInput },
   props: {
     controls: Boolean,
     name: String,
@@ -157,6 +155,8 @@ export default {
       internalAdditionalDNSServers: this.$props.additionalDNSServers || [],
       internalMTU: this.$props.MTU,
       invalidIPv4Message: "",
+      invalidIPv6Message: "",
+      invalidAdditionalDNSServersMessage: "",
     };
   },
   watch: {
@@ -243,32 +243,27 @@ export default {
         }
       }
     },
-    updateAdditionalDNSServers(serverString) {
+    validateAdditionalDNSServers(serverString) {
       const correct = /^([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3},?)+$/.test(
         serverString
       );
+      if (!correct) {
+        this.invalidAdditionalDNSServersMessage = this.$t(
+          "warnings.deviceAdditionalDNSServers"
+        );
+      }
+    },
+    updateAdditionalDNSServers(serverString) {
       if (this.updatingAdditionalDNSServers) {
         this.updatingAdditionalDNSServers.cancel();
       }
       this.updatingAdditionalDNSServers = debounce(function () {
-        try {
-          if (correct) {
-            // split by comma
-            this.internalAdditionalDNSServers = serverString
-              .split(",")
-              .map((entry) => {
-                return entry.trim();
-              });
-          } else {
-            throw "Error";
-          }
-        } catch (error) {
-          this.$refs["additionalDNSServers"].reportValidity();
-          this.$store.dispatch(
-            "alerts/addWarning",
-            this.$t("warnings.deviceAdditionalDNSServers")
-          );
-        }
+        // split by comma
+        this.internalAdditionalDNSServers = serverString
+          .split(",")
+          .map((entry) => {
+            return entry.trim();
+          });
       }, 1300);
       this.updatingAdditionalDNSServers();
     },
@@ -302,21 +297,19 @@ export default {
       }
     },
     checkIPv6(ip) {
-      // remove invalidity from field
-      this.$refs["ipv6-input"].setCustomValidity("");
-      if (!/^[0-9a-fA-F]+$/.test(ip)) {
-        this.$refs["ipv6-input"].setCustomValidity(
-          this.$t("warnings.wrongIPv6")
-        );
-        this.$refs["ipv6-input"].reportValidity();
-        return false;
-      }
       try {
+        if (!/^[0-9a-fA-F]+$/.test(ip)) {
+          this.invalidIPv6Message = this.$t("warnings.wrongIPv6");
+          throw "IPv6 has wrong format";
+        }
         const parsedIPv6 = parseInt(ip, 16);
 
-        return parsedIPv6 < 65535 && parsedIPv6 > 1;
+        const correct = parsedIPv6 < 65535 && parsedIPv6 > 1;
+        if (!correct) {
+          throw "IPv6 is out of range";
+        }
       } catch (error) {
-        console.error(error);
+        this.invalidIPv6Message = this.$t("warnings.wrongIPv6");
         return false;
       }
     },

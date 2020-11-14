@@ -34,18 +34,26 @@ export default {
       this.$refs["input"].setCustomValidity("");
       try {
         this.internalText = text;
+        if (!text) {
+          if (this.$props.required) {
+            throw this.$t("warnings.required");
+          } else {
+            this.$emit("change", text);
+            return;
+          }
+        }
         if (this.$props.validate) {
           const valid = this.$props.validate(text);
           if (!valid) {
-            this.$refs["input"].setCustomValidity(this.$props.invalidMessage);
-            this.$refs["input"].reportValidity();
+            throw this.$props.invalidMessage;
           } else {
             this.$emit("change", text);
+            return;
           }
-        } else {
-          this.$emit("change", text);
         }
       } catch (error) {
+        this.$refs["input"].setCustomValidity(error);
+        this.$refs["input"].reportValidity();
         return;
       }
     },
