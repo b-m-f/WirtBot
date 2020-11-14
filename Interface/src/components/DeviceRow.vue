@@ -74,14 +74,14 @@
         <label for="mtu">
           {{ $t("dashboard.widgets.devices.labels.MTU") }}
         </label>
-        <input
-          type="text"
-          name="MTU"
-          class="MTU"
+        <NumberInput
+          name="mtu"
           :value="internalMTU"
+          class="MTU"
+          @change="(e) => updateMTU(e.target.value)"
+          :validate="validateMTU"
+          :invalidMessage="$t('warnings.deviceMTU')"
           :placeholder="$t('dashboard.widgets.devices.placeholder.MTU')"
-          @input="(e) => updateMTU(e.target.value)"
-          ref="MTU"
         />
       </div>
       <div class="additionalDNSServers">
@@ -128,10 +128,12 @@
 </template>
 
 <script>
+import NumberInput from "components/Inputs/Number";
 import { downloadText } from "../lib/download";
 import debounce from "lodash/debounce";
 
 export default {
+  components: { NumberInput },
   props: {
     controls: Boolean,
     name: String,
@@ -271,24 +273,15 @@ export default {
       }, 1300);
       this.updatingAdditionalDNSServers();
     },
+    validateMTU(mtu) {
+      return mtu >= 1320 && parseInt(mtu) < 1800;
+    },
     updateMTU(mtu) {
       if (this.updatingMTU) {
         this.updatingMTU.cancel();
       }
       this.updatingMTU = debounce(function () {
-        try {
-          if (parseInt(mtu) >= 1320 && parseInt(mtu) < 1800) {
-            this.internalMTU = mtu;
-          } else {
-            throw "Error";
-          }
-        } catch (error) {
-          this.$refs["MTU"].reportValidity();
-          this.$store.dispatch(
-            "alerts/addWarning",
-            this.$t("warnings.deviceMTU")
-          );
-        }
+        this.internalMTU = mtu;
       }, 1000);
       this.updatingMTU();
     },

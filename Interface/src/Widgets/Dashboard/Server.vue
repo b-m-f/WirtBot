@@ -31,10 +31,12 @@
     <div class="row">
       <label>{{ $t("dashboard.widgets.server.port") }}</label>
       <NumberInput
+        name="server-port"
         :value="server.port"
         @change="updatePort"
         :validate="validatePort"
         :invalidMessage="$t('warnings.serverPort')"
+        placeholder="1024-65636"
       />
     </div>
     <div class="row" v-if="expertMode">
