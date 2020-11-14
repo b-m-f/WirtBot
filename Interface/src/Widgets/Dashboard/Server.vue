@@ -4,66 +4,52 @@
     <div class="row">
       <label>{{ $t("dashboard.widgets.server.name") }}</label>
       <input
-        v-if="!server.name || edit"
+        v-if="!server.name"
         type="text"
         name="name"
         @change="(e) => updateName(e.target.value)"
         :value="server.name"
       />
-      <p v-else>{{ server.name }}</p>
     </div>
     <div class="row">
       <label>{{ $t("dashboard.widgets.server.ip") }}</label>
       <IPInput
-        v-if="edit"
         :ip="server.ip.v4"
         @change="({ ip, valid }) => updateIp({ ip: { v4: ip }, valid })"
       />
-      <p v-else>{{ server.ip.v4.join(".") }}</p>
     </div>
     <div class="row" v-if="expertMode">
       <label>{{ $t("dashboard.widgets.server.hostname") }}</label>
       <input
-        v-if="edit"
         type="text"
         name="hostname"
         id="hostname"
         :value="server.hostname"
         @change="(e) => updateHostname(e.target.value)"
       />
-      <p v-else>{{ server.hostname }}</p>
     </div>
     <div class="row">
       <label>{{ $t("dashboard.widgets.server.port") }}</label>
       <NumberInput
-        v-if="edit"
         :value="server.port"
         @change="updatePort"
         :validate="validatePort"
         :invalidMessage="$t('warnings.serverPort')"
       />
-      <p v-else>{{ server.port }}</p>
     </div>
     <div class="row" v-if="expertMode">
       <label>{{ $t("dashboard.widgets.server.subnet") }}</label>
       <input
-        v-if="edit"
         type="text"
         name="subnetV4"
         id="subnetv4"
         :value="server.subnet.v4"
         @change="(e) => updateSubnet({ v4: e.target.value })"
       />
-      <p v-else>{{ server.subnet.v4 }}</p>
     </div>
     <Button id="download" @click="downloadConfig" v-if="server.config">
       {{ $t("dashboard.widgets.server.download") }}
     </Button>
-
-    <button id="edit" @click="toggleEdit">
-      <span v-if="edit">{{ $t("dashboard.stopEdit") }}</span>
-      <span v-else>{{ $t("dashboard.edit") }}</span>
-    </button>
   </div>
 </template>
 

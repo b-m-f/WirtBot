@@ -22,8 +22,6 @@
     "donation": "Donations for the server costs of the WirtBot website are appreciated and accepted via <a target='_blank' rel='noopener noreferrer' href='https://ethereum.org/' >Ethereum</a> address {{address}}"
   },
   "dashboard": {
-    "edit": "Edit",
-    "stopEdit": "Stop editing",
     "widgets": {
       "network": {
         "title": "Network settings",
@@ -100,7 +98,6 @@
     "downloadConfig": "Config",
     "add": "Add",
     "delete": "Del",
-    "edit": "Edit",
     "routeThroughInternet": "Routed",
     "config": "Config"
   },
