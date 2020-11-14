@@ -35,7 +35,13 @@
     </div>
     <div class="row">
       <label>{{ $t("dashboard.widgets.server.port") }}</label>
-      <PortInput v-if="edit" :port="server.port" @change="updatePort" />
+      <NumberInput
+        v-if="edit"
+        :value="server.port"
+        @change="updatePort"
+        :validate="validatePort"
+        :invalidMessage="$t('warnings.serverPort')"
+      />
       <p v-else>{{ server.port }}</p>
     </div>
     <div class="row" v-if="expertMode">
@@ -62,13 +68,13 @@
 </template>
 
 <script>
-import PortInput from "components/PortInput";
-import IPInput from "components/IPInput";
+import NumberInput from "components/Inputs/Number";
+import IPInput from "components/Inputs/IP";
 import Button from "shared-components/Button";
 import { downloadText } from "../../lib/download";
 
 export default {
-  components: { PortInput, IPInput, Button },
+  components: { NumberInput, IPInput, Button },
   data() {
     return {
       edit: false,
@@ -109,15 +115,13 @@ export default {
         this.blocked = true;
       }
     },
-    updatePort({ port, valid }) {
-      if (valid) {
-        this.$store.dispatch("updateServer", { port });
-        this.blocked = false;
-      } else {
-        this.blocked = true;
-      }
+    validatePort(port) {
+      return port > 1024 && port < 65636;
     },
-    // updateName(name) {},
+    updatePort(port) {
+      this.$store.dispatch("updateServer", { port });
+      this.blocked = false;
+    },
   },
 };
 </script>
