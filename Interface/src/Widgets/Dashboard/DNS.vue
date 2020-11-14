@@ -19,11 +19,11 @@
     </div>
     <div class="row" v-if="tls">
       <label>{{ $t("dashboard.widgets.dns.tlsName") }}</label>
-      <input
-        type="text"
-        name="tlsname"
-        @change="(e) => updateTlsName(e.target.value)"
+      <TextInput
         :value="dns.tlsName"
+        name="tlsname"
+        required
+        @change="updateTlsName"
       />
     </div>
   </div>
