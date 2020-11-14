@@ -115,7 +115,9 @@
         alt="QR Code for config of mobile devices"
       />
       <button class="delete" @click="deleteDevice">Delete</button>
-      <button class="download" @click="downloadConfig">Download</button>
+      <button v-if="$props.config" class="download" @click="downloadConfig">
+        Download
+      </button>
     </td>
   </tr>
 </template>
@@ -140,6 +142,7 @@ export default {
     routed: Boolean,
     additionalDNSServers: Array,
     MTU: Number,
+    config: String,
   },
   data() {
     return {

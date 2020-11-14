@@ -189,7 +189,7 @@ const store = new Vuex.Store({
       }
     },
     async updateDeviceConfigs({ commit, state }) {
-      const devices = await Promise.all(
+      let devices = await Promise.all(
         state.devices.map(async (device) => {
           try {
             return await addConfigToDevice(device, state.server);
@@ -198,7 +198,9 @@ const store = new Vuex.Store({
             return device;
           }
         })
-      ).filter(device => device.config);
+      )
+      // unfinished devices setups are excluded here
+      devices = devices.filter(device => device.config);
       commit("updateDevices", devices);
     },
     async updateServerConfig({ commit, state, dispatch }) {
@@ -233,6 +235,7 @@ const store = new Vuex.Store({
     ) {
       try {
         const keys = await getKeys();
+        console.log(ip)
         const newDevice = await addConfigToDevice(
           { id, keys, name, ip, type, routed, additionalDNSServers, MTU },
           state.server

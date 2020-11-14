@@ -12,21 +12,22 @@ module.exports = {
     "Add new device": async function (browser) {
         await browser.click("#add-device button");
 
+        await browser.setValue(".device:first-child input[name='device-ipv4']", 2);
         await browser.setValue(".device:first-child input[name='device-name']", "test1");
-        await browser.setValue(".device:first-child input[name='device-ipv4']", "2");
         await browser.setValue(".device:first-child select.device-type", "Linux");
+        await browser.pause(2000) // REFACTOR: this is done to wait for the debounce on the inputs
         browser.expect.elements(".table-row.device").count.to.equal(1);
     },
     "Add complex device": async function (browser) {
         await browser.click("#add-device button");
 
+        await browser.setValue(".device:last-child input[name='device-ipv4']", 3);
         await browser.setValue(".device:last-child input[name='device-name']", "test2");
-        await browser.setValue(".device:last-child input[name='device-ipv4']", "3");
         await browser.setValue(".device:last-child select.device-type", "Linux");
         await browser.setValue(".device:last-child input[name='MTU']", "1320");
         await browser.setValue(".device:last-child input[name='additionalDNSServers']", "1.1.1.1,2.2.2.2");
         await browser.click(".device:last-child input[name='routed']");
-        await browser.pause(2000) // REFACTOR: this is done to wait for the debouce that is on MTU and additionalDNSServers
+        await browser.pause(2000) // REFACTOR: this is done to wait for the debounce on the inputs
         browser.expect.elements(".table-row.device").count.to.equal(2);
     },
     "Download and verify server configuration": async function (browser) {
