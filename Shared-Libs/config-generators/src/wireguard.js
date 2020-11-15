@@ -1,14 +1,14 @@
 export function generateDeviceConfig({ ip, keys, routed, additionalDNSServers, MTU }, server) {
   let allowedIps = "";
   if (routed) {
-    allowedIps = "0.0.0.0/0, ::/0";
+    allowedIps = "0.0.0.0/0,::/0";
   } else {
     if (ip.v4) {
       allowedIps = `${server.subnet.v4}0/24`;
     }
     if (ip.v6) {
       if (ip.v4) {
-        allowedIps = `${allowedIps}, `;
+        allowedIps = `${allowedIps},`;
       }
       allowedIps = `${allowedIps}${server.subnet.v6}:/64`;
     }
@@ -107,7 +107,7 @@ PublicKey = ${device.keys.public}`;
     if (device.ip.v4 && device.ip.v6) {
       configs = `${configs}
 [Peer]
-AllowedIPs = ${subnet.v4}${device.ip.v4}/32, ${subnet.v6}${device.ip.v6}::/128
+AllowedIPs = ${subnet.v4}${device.ip.v4}/32,${subnet.v6}${device.ip.v6}::/128
 PublicKey = ${device.keys.public}`;
     }
   }
@@ -135,7 +135,7 @@ ${configs}`;
   }
   if (devicesNeedV6 && devicesNeedV4) {
     return `[Interface]
-Address = ${subnet.v4}1, ${subnet.v6}0001
+Address = ${subnet.v4}1,${subnet.v6}0001
 ListenPort = ${port}
 PrivateKey = ${keys.private}
 ${configs}`;

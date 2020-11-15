@@ -113,13 +113,13 @@ PersistentKeepalive = 25`
     };
     expect(generateDeviceConfig(device, server)).toBe(
       `[Interface]
-Address = 10.10.10.2, 1010:1010:1010:1010:0002
+Address = 10.10.10.2,1010:1010:1010:1010:0002
 PrivateKey = test
 DNS = 10.10.10.1
 
 [Peer]
 Endpoint = [FFFF:1010]:11111
-AllowedIPs = 10.10.10.0/24, 1010:1010:1010:1010::/64
+AllowedIPs = 10.10.10.0/24,1010:1010:1010:1010::/64
 PublicKey = test
 
 ## keep connection alive behind NAT
@@ -186,12 +186,12 @@ PublicKey = test`
     };
     expect(generateServerConfig(server, [device])).toBe(
       `[Interface]
-Address = 10.10.10.1, 1010:1010:1010:1010:0001
+Address = 10.10.10.1,1010:1010:1010:1010:0001
 ListenPort = 11111
 PrivateKey = test
 
 [Peer]
-AllowedIPs = 10.10.10.2/32, 1010:1010:1010:1010:0002::/128
+AllowedIPs = 10.10.10.2/32,1010:1010:1010:1010:0002::/128
 PublicKey = test`
     );
   });
