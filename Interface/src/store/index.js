@@ -235,7 +235,6 @@ const store = new Vuex.Store({
     ) {
       try {
         const keys = await getKeys();
-        console.log(ip)
         const newDevice = await addConfigToDevice(
           { id, keys, name, ip, type, routed, additionalDNSServers, MTU },
           state.server
