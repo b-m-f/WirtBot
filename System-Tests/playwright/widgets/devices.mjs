@@ -114,5 +114,4 @@ export const downloadConfig = async (page, name) => {
     const downloadButton = await device.$("button.download");
     await downloadButton.click();
     return downloadPath;
-
 };
