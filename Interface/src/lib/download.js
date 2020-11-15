@@ -1,15 +1,21 @@
 export function downloadText(text, filename) {
-  const blob = new Blob([text], { type: "text/plain" });
+  const blob = new Blob([text], { type: "octet/stream" });
   if (window.navigator.msSaveOrOpenBlob) {
     window.navigator.msSaveBlob(blob, filename);
   } else {
-    const elem = window.document.createElement("a");
-    elem.href = window.URL.createObjectURL(blob);
-    elem.download = filename;
-    document.body.appendChild(elem);
-    elem.click();
-    document.body.removeChild(elem);
+    const a = document.createElement("a");
+    a.style = "display: none";
+    document.body.appendChild(a);
+    a.style = "display: none";
+
+    const url = window.URL.createObjectURL(blob);
+    a.href = url;
+    a.download = filename;
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
   }
+
 }
 
 export function downloadFile(file, filename) {
