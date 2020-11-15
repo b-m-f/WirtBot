@@ -1,9 +1,7 @@
-
 import * as assert from "assert";
 import { promises as fsPromises } from "fs";
 const { readFile } = fsPromises;
 
-import { setDNSName } from "./widgets/network.mjs";
 import { addServer, downloadConfig as downloadServerConfig } from "./widgets/server.mjs";
 import { addNewDevice, downloadConfig as downloadDeviceConfig } from "./widgets/devices.mjs";
 
@@ -15,7 +13,6 @@ export default async (browser) => {
         const page = await browser.newPage();
         await page.goto("http://localhost:8080/");
 
-        await setDNSName(page, "test");
         await addServer(page, { ip: [1, 2, 3, 4], port: 1234 });
         await addNewDevice(page, { ip: { v4: 2 }, name: "test-1", type: "Android" });
 

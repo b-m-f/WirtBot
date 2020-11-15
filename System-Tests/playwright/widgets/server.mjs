@@ -19,15 +19,15 @@ const setPort = async (widget, port) => {
 };
 const setName = async (widget, name) => {
     const input = await widget.$("input[name='server-name']");
-    await input.type(name);
+    await input.fill(name);
 };
 const setHostname = async (widget, hostname) => {
     const input = await widget.$("input[name='server-hostname']");
-    await input.type(hostname);
+    await input.fill(hostname);
 };
 const setSubnet = async (widget, subnet) => {
-    const input = await widget.$("input[name='server-subnet']");
-    await input.type(subnet);
+    const input = await widget.$("input[name='server-subnet-v4']");
+    await input.fill(subnet);
 };
 
 export const addServer = async (page, { ip, port, hostname, subnet, name }) => {
@@ -51,6 +51,9 @@ export const addServer = async (page, { ip, port, hostname, subnet, name }) => {
         const widget = await serverWidget(page);
         await setSubnet(widget, subnet);
     }
+};
+export const updateServer = async (page, server) => {
+    addServer(page, server);
 };
 
 export const downloadConfig = async (page) => {
