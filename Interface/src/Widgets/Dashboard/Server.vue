@@ -3,7 +3,7 @@
     <h1>{{ $t("dashboard.widgets.server.title") }}</h1>
     <div class="row">
       <label>{{ $t("dashboard.widgets.server.name") }}</label>
-      <TextInput :value="server.name" name="name" @change="updateName" />
+      <TextInput :value="server.name" name="server-name" @change="updateName" />
     </div>
     <div class="row">
       <label>{{ $t("dashboard.widgets.server.ip") }}</label>
@@ -16,8 +16,8 @@
       <label>{{ $t("dashboard.widgets.server.hostname") }}</label>
       <TextInput
         :value="server.hostname"
-        name="hostname"
-        id="hostname"
+        name="server-hostname"
+        id="server-hostname"
         @change="updateHostname"
       />
     </div>
@@ -35,9 +35,9 @@
     <div class="row">
       <label>{{ $t("dashboard.widgets.server.subnet") }}</label>
       <TextInput
-        :value="server.subnet.V4"
-        name="subnetV4"
-        id="subnetV4"
+        :value="server.subnet.v4"
+        name="server-subnet-v4"
+        id="server-subnet-v4"
         @change="(subnet) => updateSubnet({ v4: subnet })"
       />
     </div>
@@ -69,8 +69,13 @@ export default {
     updateHostname(hostname) {
       this.$store.dispatch("updateServer", { hostname });
     },
-    updateSubnet(subnet) {
-      this.$store.dispatch("updateServer", { subnet });
+    updateSubnet({ v4, v6 }) {
+      if (v4) {
+        this.$store.dispatch("updateServer", { ...this.server.subnet, v4 });
+      }
+      if (v6) {
+        this.$store.dispatch("updateServer", { ...this.server.subnet, v6 });
+      }
     },
     updateName(name) {
       this.$store.dispatch("updateServer", { name });
