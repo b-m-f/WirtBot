@@ -11,9 +11,11 @@
   },
   "dependencies": {
     "chromedriver": "85.0.0",
+    "eslint": "^7.13.0",
     "fibers": "5.0.0",
     "glob": "7.1.6",
     "nightwatch": "1.5.0",
+    "playwright": "1.6.1",
     "webpack-bundle-analyzer": "3.9.0"
   },
   "repository": {
@@ -28,9 +30,5 @@
   "bugs": {
     "url": "https://github.com/b-m-f/WirtBot/issues"
   },
-  "homepage": "https://github.com/b-m-f/WirtBot#readme",
-  "devDependencies": {
-    "eslint": "^7.13.0",
-    "playwright": "^1.6.1"
-  }
+  "homepage": "https://github.com/b-m-f/WirtBot#readme"
 }
