@@ -2,14 +2,29 @@ export const deviceWidget = async (page) => {
     return await page.$("css=#device-widget");
 }
 
-const setIP = async (device, ip) => {
+const setIPv4 = async (device, ip) => {
     const input = await device.$("input[name='device-ipv4']")
     await input.type(ip.toString())
+}
+
+const setIPv6 = async (device, ip) => {
+    const input = await device.$("input[name='device-ipv6']")
+    await input.fill(ip.toString())
 }
 
 const setName = async (device, name) => {
     const input = await device.$("input[name='device-name']")
     await input.fill(name)
+}
+
+const setAdditionalDNSServers = async (device, servers) => {
+    const input = await device.$("input[name='additionalDNSServers']")
+    await input.fill(servers)
+}
+
+const setMTU = async (device, MTU) => {
+    const input = await device.$("input[name='MTU']")
+    await input.type(MTU)
 }
 
 const setType = async (device, type) => {
@@ -23,26 +38,49 @@ const getDeviceByName = async (page, name) => {
     return await widget.$(`data-name=${name}`);
 }
 
-export const addNewDevice = async (page, { ip, name, type }) => {
+
+export const addNewDevice = async (page, { ip: { v4, v6 }, name, type, additionalDNSServers, MTU }) => {
     const widget = await deviceWidget(page);
     const addDeviceButton = await widget.$('#add-device');
     await addDeviceButton.click();
-    let device = await widget.$('.device:last-child')
     // Vue might rerender and remove the old handle from the DOM
     // Because of this the device is refetched before every change
-    await setIP(device, ip);
-    device = await widget.$('.device:last-child')
-    await setName(device, name);
-    device = await widget.$('.device:last-child')
-    await setType(device, type);
+    if (v4) {
+        let device = await widget.$('.device:last-child')
+        await setIPv4(device, v4);
+    }
+    if (v6) {
+        let device = await widget.$('.device:last-child')
+        await setIPv6(device, v6);
+    }
+    if (name) {
+        let device = await widget.$('.device:last-child')
+        await setName(device, name);
+    }
+    if (type) {
+        let device = await widget.$('.device:last-child')
+        await setType(device, type);
+    }
+    if (additionalDNSServers) {
+        let device = await widget.$('.device:last-child')
+        await setAdditionalDNSServers(device, additionalDNSServers);
+    }
+    if (MTU) {
+        let device = await widget.$('.device:last-child')
+        await setMTU(device, MTU);
+    }
 }
 
-export const updateDevice = async (page, oldName, { ip, name, type }) => {
+export const updateDevice = async (page, oldName, { ip: { v4, v6 }, name, type, additionalDNSServers, MTU }) => {
     // Vue might rerender and remove the old handle from the DOM
     // Because of this the device is refetched before every change
-    if (ip) {
+    if (v4) {
         let device = await getDeviceByName(page, oldName)
-        await setIP(device, ip);
+        await setIPv4(device, v4);
+    }
+    if (v6) {
+        let device = await getDeviceByName(page, oldName)
+        await setIPv6(device, v6);
     }
     if (name) {
         let device = await getDeviceByName(page, oldName)
@@ -51,5 +89,13 @@ export const updateDevice = async (page, oldName, { ip, name, type }) => {
     if (type) {
         let device = await getDeviceByName(page, oldName)
         await setType(device, type);
+    }
+    if (additionalDNSServers) {
+        let device = await getDeviceByName(page, oldName)
+        await setAdditionalDNSServers(device, additionalDNSServers);
+    }
+    if (MTU) {
+        let device = await getDeviceByName(page, oldName)
+        await setMTU(device, MTU);
     }
 }
