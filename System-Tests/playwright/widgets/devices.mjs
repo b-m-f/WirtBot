@@ -24,7 +24,7 @@ const setAdditionalDNSServers = async (device, servers) => {
 
 const setMTU = async (device, MTU) => {
     const input = await device.$("input[name='MTU']");
-    await input.type(MTU);
+    await input.type(MTU.toString());
 };
 
 const setType = async (device, type) => {

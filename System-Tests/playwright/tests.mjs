@@ -1,25 +1,30 @@
 import process from "process";
 import { firefox, chromium } from "playwright";
-import simple_network from "./test_creating_simple_network.mjs";
+import simple_network from "./test_creating_simple_network.spec.mjs";
+import complex_network from "./test_creating_complex_network.spec.mjs";
 
 const tests = async () => {
     const browsers = {
-        firefox: await firefox.launch({ headless: false, slowMo: 50 }),
-        chromium: await chromium.launch({ headless: false, slowMo: 50 })
+        firefox: await firefox.launch({ headless: true }),
+        chromium: await chromium.launch({ headless: true })
     };
     for (const key of Object.keys(browsers)) {
         try {
-            const browserContext = await browsers[key].newContext({ acceptDownloads: true });
-            await simple_network(browserContext);
+            const testSuites = [
+                simple_network,
+                complex_network
+            ];
+            for (const suite of testSuites) {
+                let browserContext = await browsers[key].newContext({ acceptDownloads: true });
+                await suite(browserContext);
+            }
             browsers[key].close();
             console.log(`All tests in browser ${key} ran successfully`);
-
         } catch (error) {
             browsers[key].close();
             console.log(`Tests in browser ${key} failed`);
             throw "Tests failed";
         }
-
     }
 };
 
