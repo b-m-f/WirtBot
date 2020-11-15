@@ -1,5 +1,8 @@
 <template>
-  <tr :class="{ mobile: isMobilePage, 'table-row': true, device: true }">
+  <tr
+    :class="{ mobile: isMobilePage, 'table-row': true, device: true }"
+    ref="device"
+  >
     <td class="column-one">
       <label for="device-name">{{
         $t("dashboard.widgets.devices.labels.name")
@@ -163,7 +166,8 @@ export default {
     internalIP() {
       this.save();
     },
-    internalName() {
+    internalName(newValue) {
+      this.$refs["device"].setAttribute("data", `name: ${newValue}`);
       this.save();
     },
     internalType() {

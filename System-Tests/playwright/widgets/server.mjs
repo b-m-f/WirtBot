@@ -19,3 +19,18 @@ export const setPort = async (page, port) => {
     const input = await widget.$("input[name='server-port']")
     await input.type(port.toString());
 }
+export const setName = async (page, name) => {
+    const widget = await serverWidget(page);
+    const input = await widget.$("input[name='server-name']")
+    await input.type(name);
+}
+export const setHostname = async (page, hostname) => {
+    const widget = await serverWidget(page);
+    const input = await widget.$("input[name='server-hostname']")
+    await input.type(hostname);
+}
+export const setSubnet = async (page, subnet) => {
+    const widget = await serverWidget(page);
+    const input = await widget.$("input[name='server-subnet']")
+    await input.type(subnet);
+}
