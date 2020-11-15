@@ -6,7 +6,7 @@
     :name="$props.name"
     :placeholder="$props.placeholder"
     :required="$props.required"
-    @change="(e) => update(e.target.value)"
+    @input="(e) => update(e.target.value)"
   />
 </template>
 
