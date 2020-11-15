@@ -26,6 +26,4 @@ export default async (browser) => {
     const serverConfig = await readFile(`${wirtBotFileDir}/server.conf`);
     console.log(deviceConfig);
     console.log(serverConfig);
-
-    await browser.close();
 };
