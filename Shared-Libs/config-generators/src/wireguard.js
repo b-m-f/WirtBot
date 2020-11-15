@@ -52,7 +52,7 @@ PersistentKeepalive = 25`;
     return `[Interface]
 Address = ${server.subnet.v6}${ip.v6}
 PrivateKey = ${keys.private}
-DNS = ${server.subnet.v6}1${additionalDNSServers ? `,${additionalDNSServers.join(',')}` : ``}
+DNS = ${server.subnet.v6}0001${additionalDNSServers ? `,${additionalDNSServers.join(',')}` : ``}
 ${MTU ? `MTU = ${MTU}
 `: ``}
 [Peer]

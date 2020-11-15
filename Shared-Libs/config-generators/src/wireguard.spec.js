@@ -62,7 +62,7 @@ PersistentKeepalive = 25`
       `[Interface]
 Address = 1010:1010:1010:1010:0002
 PrivateKey = test
-DNS = 1010:1010:1010:1010:1
+DNS = 1010:1010:1010:1010:0001
 
 [Peer]
 Endpoint = 1.1.1.1:11111
@@ -88,7 +88,7 @@ PersistentKeepalive = 25`
       `[Interface]
 Address = 1010:1010:1010:1010:0002
 PrivateKey = test
-DNS = 1010:1010:1010:1010:1
+DNS = 1010:1010:1010:1010:0001
 
 [Peer]
 Endpoint = [FFFF:1010]:11111
