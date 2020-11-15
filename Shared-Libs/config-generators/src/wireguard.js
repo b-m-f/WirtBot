@@ -65,7 +65,7 @@ PersistentKeepalive = 25`;
   }
   if (ip.v4 && ip.v6) {
     return `[Interface]
-Address = ${server.subnet.v4}${ip.v4}, ${server.subnet.v6}${ip.v6}
+Address = ${server.subnet.v4}${ip.v4},${server.subnet.v6}${ip.v6}
 PrivateKey = ${keys.private}
 DNS = ${server.subnet.v4}1${additionalDNSServers ? `,${additionalDNSServers.join(',')}` : ``}
 ${MTU ? `MTU = ${MTU}
