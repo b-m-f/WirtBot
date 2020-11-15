@@ -12,7 +12,7 @@
         name="device-name"
         class="name"
         required
-        @change="(name) => (internalName = name)"
+        @change="updateName"
       />
     </td>
     <td class="column-two ip-input">
@@ -166,8 +166,7 @@ export default {
     internalIP() {
       this.save();
     },
-    internalName(newValue) {
-      this.$refs["device"].setAttribute("data", `name: ${newValue}`);
+    internalName() {
       this.save();
     },
     internalType() {
@@ -230,6 +229,9 @@ export default {
     },
     updateIP({ v4, v6 }) {
       this.internalIP = { ...this.internalIP, v4, v6 };
+    },
+    updateName(name) {
+      this.internalName = name;
     },
     validateAdditionalDNSServers(serverString) {
       const correct = /^([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3},?)+$/.test(
@@ -302,6 +304,7 @@ export default {
       }
     },
     async save() {
+      this.$refs["device"].setAttribute("data-name", `${this.internalName}`);
       this.$emit("saved", {
         id: this.internalId,
         name: this.internalName,
