@@ -69,6 +69,8 @@ export const addNewDevice = async (page, { ip: { v4, v6 }, name, type, additiona
         let device = await widget.$(".device:last-child");
         await setMTU(device, MTU);
     }
+    // wait to propagate changes to the Core
+    await page.waitForTimeout(3000);
 };
 
 export const updateDevice = async (page, oldName, { ip: { v4, v6 }, name, type, additionalDNSServers, MTU }) => {
@@ -98,6 +100,8 @@ export const updateDevice = async (page, oldName, { ip: { v4, v6 }, name, type, 
         let device = await getDeviceByName(page, oldName);
         await setMTU(device, MTU);
     }
+    // wait to propagate changes to the Core
+    await page.waitForTimeout(3000);
 };
 
 export const downloadConfig = async (page, name) => {
