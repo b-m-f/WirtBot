@@ -6,7 +6,8 @@
   "scripts": {
     "test:local": "mkdir -p /tmp/WirtTestDownloads && find tests -wholename 'tests/nightwatch/**/*.spec.js'  | TEST_URL=localhost:8080 entr nightwatch",
     "test:headless:watch": "find tests -wholename 'tests/nightwatch/**/*.spec.js'  | TEST_URL=test-interface entr nightwatch --env integration",
-    "test:ci": "TEST_URL=wirtbot.test nightwatch --env integration"
+    "test:ci": "TEST_URL=wirtbot.test nightwatch --env integration",
+    "test:new": "node playwright/tests.mjs"
   },
   "dependencies": {
     "chromedriver": "85.0.0",
@@ -27,5 +28,8 @@
   "bugs": {
     "url": "https://github.com/b-m-f/WirtBot/issues"
   },
-  "homepage": "https://github.com/b-m-f/WirtBot#readme"
+  "homepage": "https://github.com/b-m-f/WirtBot#readme",
+  "devDependencies": {
+    "playwright": "^1.6.1"
+  }
 }
