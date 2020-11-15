@@ -27,7 +27,6 @@ export default {
   },
   methods: {
     update(event) {
-      console.log(event.target.value);
       this.$emit("change", event.target.value);
     },
   },
