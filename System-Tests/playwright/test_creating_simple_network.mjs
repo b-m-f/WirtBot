@@ -8,7 +8,7 @@ import { addNewDevice } from './widgets/devices.mjs'
 
 
 export default async () => {
-	const browser = await chromium.launch({ headless: false, slowMo: 50 });
+	const browser = await chromium.launch({ headless: false, slowMo: 50, downloadsPath: "/tmp/WirtBotTests" });
 	// Create pages, interact with UI elements, assert values
 	const page = await browser.newPage();
 	await page.goto('http://localhost:8080/');
@@ -16,7 +16,6 @@ export default async () => {
 	await setDNSName(page, 'test');
 	await setIP(page, [1, 2, 3, 4]);
 	await setPort(page, 1234);
-
 	await addNewDevice(page, { ip: { v4: 2 }, name: 'test-1', type: 'Android' })
 
 	await page.waitForTimeout(2000)
