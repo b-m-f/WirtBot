@@ -22,8 +22,24 @@ export default async (browser) => {
 
     const filePath = await downloadConfig(page, "test-1");
 
-    const deviceConfig = await readFile(`${filePath}`);
-    const serverConfig = await readFile(`${wirtBotFileDir}/server.conf`);
+    const deviceConfig = await readFile(`${filePath}`, "utf-8");
+    const serverConfig = await readFile(`${wirtBotFileDir}/server.conf`, "utf-8");
+
+
+    try {
+        assert.match(deviceConfig, /.*DNS = 10\.10\.0\.1,1\.1\.1\.1,2\.2\.2\.2.*/);
+        assert.match(deviceConfig, /.*MTU = 1320.*/);
+        assert.match(serverConfig, /.*ListenPort = 1233.*/);
+
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+
+
+    // backup
+    // let json = JSON.parse(data);
+    // assert(typeof json.deviceTypes === 'object')
     console.log(deviceConfig);
     console.log(serverConfig);
 };
