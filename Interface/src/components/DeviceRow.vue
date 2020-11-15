@@ -10,7 +10,6 @@
       <TextInput
         :value="internalName"
         name="device-name"
-
         class="name"
         required
         @change="updateName"
@@ -26,7 +25,7 @@
           <NumberInput
             name="device-ipv4"
             :value="internalIP.v4"
-            @change="(ip) => updateIP({ v4: ip })"
+            @change="(ip) => updateIP({ v4: ip, v6: internalIP.v6 })"
             :validate="validateIPv4"
             :placeholder="`${getNextHighestIPv4()}`"
             :invalidMessage="invalidIPv4Message"
@@ -46,7 +45,7 @@
             :value="internalIP.v6"
             name="device-ipv6"
             placeholder="0001-ffff"
-            @change="(ip) => updateIP({ v6: ip })"
+            @change="(ip) => updateIP({ v4: internalIP.v4, v6: ip })"
             :validate="validateIPv6"
             :invalidMessage="invalidIPv6Message"
           />
@@ -294,7 +293,7 @@ export default {
         }
         const parsedIPv6 = parseInt(ip, 16);
 
-        const correct = parsedIPv6 < 65535 && parsedIPv6 > 1;
+        const correct = parsedIPv6 < 65636 && parsedIPv6 > 1;
         if (!correct) {
           throw "IPv6 is out of range";
         }
