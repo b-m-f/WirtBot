@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/b-m-f/WirtBot#readme",
   "devDependencies": {
+    "eslint": "^7.13.0",
     "playwright": "^1.6.1"
   }
 }
