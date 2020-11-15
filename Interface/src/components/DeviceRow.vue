@@ -1,7 +1,7 @@
 <template>
   <tr
     :class="{ mobile: isMobilePage, 'table-row': true, device: true }"
-    ref="device"
+    :data-name="internalName"
   >
     <td class="column-one">
       <label for="device-name">{{
@@ -10,6 +10,7 @@
       <TextInput
         :value="internalName"
         name="device-name"
+
         class="name"
         required
         @change="updateName"
@@ -304,7 +305,6 @@ export default {
       }
     },
     async save() {
-      this.$refs["device"].setAttribute("data-name", `${this.internalName}`);
       this.$emit("saved", {
         id: this.internalId,
         name: this.internalName,
