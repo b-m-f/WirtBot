@@ -71,10 +71,14 @@ export default {
     },
     updateSubnet({ v4, v6 }) {
       if (v4) {
-        this.$store.dispatch("updateServer", { ...this.server.subnet, v4 });
+        this.$store.dispatch("updateServer", {
+          subnet: { ...this.server.subnet, v4 },
+        });
       }
       if (v6) {
-        this.$store.dispatch("updateServer", { ...this.server.subnet, v6 });
+        this.$store.dispatch("updateServer", {
+          subnet: { ...this.server.subnet, v6 },
+        });
       }
     },
     updateName(name) {
