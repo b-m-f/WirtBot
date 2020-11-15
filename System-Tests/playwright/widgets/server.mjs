@@ -52,3 +52,16 @@ export const addServer = async (page, { ip, port, hostname, subnet, name }) => {
         await setSubnet(widget, subnet);
     }
 };
+
+export const downloadConfig = async (page) => {
+    const widget = await serverWidget(page);
+    const downloadPath = new Promise((res) => {
+        page.on("download", dl => {
+            dl.path().then(res);
+        });
+    });
+    const downloadButton = await widget.$("#download");
+    await downloadButton.click();
+    return downloadPath;
+
+};
