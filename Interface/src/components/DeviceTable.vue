@@ -75,15 +75,18 @@ export default {
       }
     },
     async save({ type, id, ip, name, routed, additionalDNSServers, MTU }) {
-      await this.saveDevice({
-        ip,
-        type,
-        name,
-        id,
-        routed,
-        additionalDNSServers,
-        MTU,
-      });
+      // Only save if all required attributes have been provided
+      if (type && ip && name) {
+        await this.saveDevice({
+          ip,
+          type,
+          name,
+          id,
+          routed,
+          additionalDNSServers,
+          MTU,
+        });
+      }
     },
     reportValidity() {
       this.$refs.form.reportValidity();
