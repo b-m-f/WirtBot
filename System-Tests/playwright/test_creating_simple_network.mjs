@@ -17,7 +17,7 @@ export default async () => {
 	await setIP(page, [1, 2, 3, 4]);
 	await setPort(page, 1234);
 
-	await addNewDevice(page, { ip: 2, name: 'test-1', type: 'Android' })
+	await addNewDevice(page, { ip: { v4: 2 }, name: 'test-1', type: 'Android' })
 
 	await page.waitForTimeout(2000)
 
