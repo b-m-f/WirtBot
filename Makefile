@@ -3,7 +3,12 @@ SHELL := /bin/bash
 ## Development
 dev: dev-server dev-client
 dev-server:
-	cd ./Core && PUBLIC_KEY=1lLU3VhXsrSGMxESmqfY4m2oEVkpfEHyKlCQU6MMPsI= ALLOWED_ORIGIN=http://localhost:8080 RUST_LOG=debug MANAGED_DNS_ENABLED=1 cargo watch -x run || cd -
+	cd ./Core && \
+	PUBLIC_KEY=1lLU3VhXsrSGMxESmqfY4m2oEVkpfEHyKlCQU6MMPsI= \
+	ALLOWED_ORIGIN=http://localhost:8080 \
+	RUST_LOG=debug MANAGED_DNS_ENABLED=1 \
+	MANAGED_DNS_DEVICE_FILE=/tmp/WirtBotTests/Corefile \
+	CONFIG_PATH=/tmp/WirtBotTests/server.conf cargo watch -x run || cd -
 dev-client: 
 	cd ./Interface && npm run dev
 dev-website: 
