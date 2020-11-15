@@ -20,16 +20,19 @@ export default async (browser) => {
         await addServer(page, { ip: [1, 2, 3, 4], port: 1234, subnet: "10.11.0.", name: "test" });
         await addNewDevice(page, { ip: { v4: 2 }, name: "test-1", type: "Android", additionalDNSServers: "2.2.2.2", MTU: 1500 });
         await addNewDevice(page, { ip: { v4: 3, v6: "ffff" }, name: "test-2", type: "Linux", additionalDNSServers: "4.4.4.4,5.5.5.5", MTU: 1320 });
+        await addNewDevice(page, { ip: { v6: "fffa" }, name: "test-3", type: "Linux" });
 
         const deviceConfigPathOne = await downloadDeviceConfig(page, "test-1");
 
         await updateServer(page, { hostname: "test.test" });
 
         const deviceConfigPathTwo = await downloadDeviceConfig(page, "test-2");
+        const deviceConfigPathThree = await downloadDeviceConfig(page, "test-3");
         const serverConfigPath = await downloadServerConfig(page);
 
         const deviceConfigOne = await readFile(`${deviceConfigPathOne}`, "utf-8");
         const deviceConfigTwo = await readFile(`${deviceConfigPathTwo}`, "utf-8");
+        const deviceConfigThree = await readFile(`${deviceConfigPathThree}`, "utf-8");
         const serverConfig = await readFile(`${serverConfigPath}`, "utf-8");
         const serverConfigFromCore = await readFile(`${wirtBotFileDir}/server.conf`, "utf-8");
         const dnsConfigFromCore = await readFile(`${wirtBotFileDir}/Corefile`, "utf-8");
@@ -45,8 +48,12 @@ export default async (browser) => {
         assert.match(deviceConfigTwo, /.*DNS = 10.11.0.1,4.4.4.4,5.5.5.5/);
         assert.match(deviceConfigTwo, /.*MTU = 1320/);
 
+        assert.match(deviceConfigThree, /.*Endpoint = test.test:1234/);
+        assert.match(deviceConfigThree, /.*Address = 1010:1010:1010:1010:fffa/);
+        assert.match(deviceConfigThree, /.*DNS = 1010:1010:1010:1010:0001/);
+
         assert.match(serverConfig, /.*ListenPort = 1234/);
-        assert.match(serverConfig, /.*Address = 10.11.0.1/);
+        assert.match(serverConfig, /.*Address = 10.11.0.1,1010:1010:1010:1010:0001/);
         assert.strictEqual(serverConfig, serverConfigFromCore);
 
         assert.match(dnsConfigFromCore, /.*test-1.different-zone.test/);
