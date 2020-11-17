@@ -2,6 +2,29 @@ export const deviceWidget = async (page) => {
     return await page.$("css=#device-widget");
 };
 
+export const getConfig = async (device) => {
+    const v4Input = await device.$("input[name='device-ipv4']");
+    const v4 = await v4Input.evaluate(e => e.value)
+
+    const v6Input = await device.$("input[name='device-ipv6']");
+    const v6 = await v6Input.evaluate(e => e.value)
+
+    const additionalDNSServersInput = await device.$("input[name='additionalDNSServers']");
+    const additionalDNSServers = await additionalDNSServersInput.evaluate(e => e.value)
+
+    const nameInput = await device.$("input[name='device-name']");
+    const name = await nameInput.evaluate(e => e.value)
+
+    const mtuInput = await device.$("input[name='MTU']");
+    const mtu = await mtuInput.evaluate(e => e.value)
+
+    const typeSelect = await device.$(".device-type");
+    const type = await typeSelect.evaluate(e => e.value)
+
+    return { type, name, mtu, additionalDNSServers, ip: { v4, v6 } }
+
+};
+
 const setIPv4 = async (device, ip) => {
     const input = await device.$("input[name='device-ipv4']");
     await input.type(ip.toString());

@@ -2,7 +2,7 @@ export const serverWidget = async (page) => {
     return await page.$("css=#server-widget");
 };
 
-export const getServerConfig = async (page) => {
+export const getConfig = async (page) => {
     const widget = await serverWidget(page);
 
     const portInput = await widget.$("input[name='server-port']");
