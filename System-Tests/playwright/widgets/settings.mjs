@@ -13,3 +13,15 @@ export const downloadBackup = async (page) => {
     await downloadButton.click();
     return downloadPath;
 };
+
+export const importBackup = async (page, backupPath) => {
+    const widget = await settingsWidget(page);
+    console.log(widget)
+    const input = await widget.$("#import input");
+    const importButton = await widget.$("#import button");
+
+    await input.setInputFiles(backupPath);
+    await importButton.click();
+
+
+};
