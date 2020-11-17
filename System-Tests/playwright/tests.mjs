@@ -1,19 +1,22 @@
 import process from "process";
 import { firefox, chromium } from "playwright";
-import simple_network from "./test_creating_simple_network.spec.mjs";
-import complex_network from "./test_creating_complex_network.spec.mjs";
 
-const tests = async () => {
+const testRunner = async (testPaths) => {
     const browsers = {
         firefox: await firefox.launch({ headless: true }),
         chromium: await chromium.launch({ headless: true })
     };
+    let testSuites = [];
+    try {
+        testSuites = [
+            await Promise.all(testPaths.map(async test => (await import(`./${test}`))))
+        ].map(module => module[0].default);
+    } catch (error) {
+        console.log(error);
+
+    }
     for (const key of Object.keys(browsers)) {
         try {
-            const testSuites = [
-                simple_network,
-                complex_network
-            ];
             for (const suite of testSuites) {
                 let browserContext = await browsers[key].newContext({ acceptDownloads: true });
                 await suite(browserContext);
@@ -30,7 +33,8 @@ const tests = async () => {
 
 const main = async () => {
     try {
-        await tests();
+        const testPaths = process.argv.slice(2);
+        await testRunner(testPaths);
     } catch (error) {
         console.error(error);
         process.exit(1);
