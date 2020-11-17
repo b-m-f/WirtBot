@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="settings-widget">
     <h1>{{ $t("dashboard.widgets.settings.title") }}</h1>
     <div class="row">
       <label>{{ $t("dashboard.widgets.settings.publicKey") }}</label>
@@ -12,8 +12,8 @@
         {{ $t("dashboard.widgets.settings.export") }}
       </Button>
       <div id="import">
-        <input type="file" @change="updateFile" />
-        <Button @click.prevent="importBackup" id="import">{{
+        <input type="file" @input="updateFile" />
+        <Button @click.prevent="importBackup">{{
           $t("dashboard.widgets.settings.import")
         }}</Button>
       </div>
@@ -57,7 +57,9 @@ export default {
       );
       element.setAttribute(
         "download",
-        "dasboard-backup-" + new Date().toISOString().replace(" ", "-") + ".json"
+        "dasboard-backup-" +
+          new Date().toISOString().replace(" ", "-") +
+          ".json"
       );
 
       element.style.display = "none";
