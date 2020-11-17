@@ -7,21 +7,27 @@ export const dnsWidget = async (page) => {
 export const getConfig = async (page) => {
     const dns = await dnsWidget(page);
     const dnsTLSNameInput = await dns.$("input[name='tlsname']");
-    const dnsTLSEnabled = await dns.$("input[name='tls']");
+    const dnsTLSCheckbox = await dns.$("input[name='tls']");
     const dnsIP1 = await dns.$("input[name='1']");
     const dnsIP2 = await dns.$("input[name='2']");
     const dnsIP3 = await dns.$("input[name='3']");
     const dnsIP4 = await dns.$("input[name='4']");
 
+    const tlsEnabled = await dnsTLSCheckbox.evaluate(e => e.checked);
+
+    console.log(tlsEnabled);
+
     return {
         tlsName: await dnsTLSNameInput.evaluate(e => e.value),
-        tls: await dnsTLSEnabled.evaluate(e => e.value),
-        ip: [
-            await dnsIP1.evaluate(e => e.value),
-            await dnsIP2.evaluate(e => e.value),
-            await dnsIP3.evaluate(e => e.value),
-            await dnsIP4.evaluate(e => e.value)
-        ]
+        tls: tlsEnabled,
+        ip: {
+            v4: [
+                await dnsIP1.evaluate(e => parseInt(e.value)),
+                await dnsIP2.evaluate(e => parseInt(e.value)),
+                await dnsIP3.evaluate(e => parseInt(e.value)),
+                await dnsIP4.evaluate(e => parseInt(e.value))
+            ]
+        }
     };
 };
 
@@ -37,13 +43,11 @@ export const enableDNSTLS = async (page) => {
     await checkbox.check();
 };
 
-
 export const disableDNSTLS = async (page) => {
     const dns = await dnsWidget(page);
     const checkbox = await dns.$("input[name='tls']");
     await checkbox.uncheck();
 };
-
 
 export const setDNSIP = async (page, ip) => {
     const dns = await dnsWidget(page);

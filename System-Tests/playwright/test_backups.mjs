@@ -1,5 +1,4 @@
-
-import * as assert from "assert";
+import assert from "assert";
 import { promises as fsPromises } from "fs";
 import { importBackup } from "./widgets/settings.mjs";
 import { getConfig as getServerConfig } from "./widgets/server.mjs";
@@ -25,6 +24,7 @@ export default async (browser) => {
 
             try {
                 const json = JSON.parse(await readFile(backup));
+                console.log(json);
                 const serverConfig = await getServerConfig(page);
 
                 const deviceConfig1 = await getDeviceConfig(await page.$(".device[data-name='test-1']"));
@@ -34,11 +34,17 @@ export default async (browser) => {
 
                 const networkConfig = await getNetworkConfig(page);
 
-                console.log(serverConfig);
-                console.log(deviceConfig1);
-                console.log(deviceConfig2);
-                console.log(dnsConfig);
-                console.log(networkConfig);
+                // console.log(serverConfig);
+                // console.log(deviceConfig1);
+                // console.log(deviceConfig2);
+                // console.log(networkConfig);
+
+                assert(
+                    dnsConfig.ip.v4.join(",") ==
+                    json.network.dns.ip.v4.join(",")
+                );
+                assert.strictEqual(dnsConfig.tls, json.network.dns.tls);
+                assert.strictEqual(dnsConfig.tlsName, json.network.dns.tlsName);
 
             } catch (error) {
                 console.error(error);
