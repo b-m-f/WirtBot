@@ -3,7 +3,7 @@ import { firefox, chromium } from "playwright";
 
 const testRunner = async (testPaths) => {
     const browsers = {
-        firefox: await firefox.launch({ headless: true }),
+        firefox: await firefox.launch({ headless: false }),
         chromium: await chromium.launch({ headless: true })
     };
     let testSuites = [];

@@ -2,6 +2,37 @@ export const serverWidget = async (page) => {
     return await page.$("css=#server-widget");
 };
 
+export const getServerConfig = async (page) => {
+    const widget = await serverWidget(page);
+
+    const portInput = await widget.$("input[name='server-port']");
+    const port = await portInput.evaluate(e => e.value);
+
+    const ip1Input = await widget.$("input[name='1']");
+    const ip1 = await ip1Input.evaluate(e => e.value);
+
+    const ip2Input = await widget.$("input[name='2']");
+    const ip2 = await ip2Input.evaluate(e => e.value);
+
+    const ip3Input = await widget.$("input[name='3']");
+    const ip3 = await ip3Input.evaluate(e => e.value);
+
+    const ip4Input = await widget.$("input[name='4']");
+    const ip4 = await ip4Input.evaluate(e => e.value);
+
+    const nameInput = await widget.$("input[name='server-name']",);
+    const name = await nameInput.evaluate(e => e.value);
+
+    const hostnameInput = await widget.$("input[name='server-hostname']",);
+    const hostname = await hostnameInput.evaluate(e => e.value);
+
+    const subnetInput = await widget.$("input[name='server-subnet-v4']",);
+    const subnet = await subnetInput.evaluate(e => e.value);
+
+    return { ip: [ip1, ip2, ip3, ip4], port, name, hostname, subnet };
+
+};
+
 const setIP = async (widget, ip) => {
     const one = await widget.$("input[name='1']");
     const two = await widget.$("input[name='2']");
