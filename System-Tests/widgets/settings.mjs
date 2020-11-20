@@ -16,7 +16,6 @@ export const downloadBackup = async (page) => {
 
 export const importBackup = async (page, backupPath) => {
     const widget = await settingsWidget(page);
-    console.log(widget)
     const input = await widget.$("#import input");
     const importButton = await widget.$("#import button");
 

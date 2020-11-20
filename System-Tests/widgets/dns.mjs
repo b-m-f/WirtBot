@@ -15,8 +15,6 @@ export const getConfig = async (page) => {
 
     const tlsEnabled = await dnsTLSCheckbox.evaluate(e => e.checked);
 
-    console.log(tlsEnabled);
-
     return {
         tlsName: await dnsTLSNameInput.evaluate(e => e.value),
         tls: tlsEnabled,
