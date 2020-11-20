@@ -4,7 +4,7 @@
     type="checkbox"
     :name="$props.name"
     :checked="$props.checked"
-    @change="(e) => update(e.target.checked)"
+    @input="(e) => update(e.target.checked)"
   />
 </template>
 

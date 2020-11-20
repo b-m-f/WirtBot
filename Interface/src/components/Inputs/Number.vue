@@ -24,8 +24,10 @@ export default {
     required: Boolean,
     name: String,
   },
-  data() {
-    return { internalNumber: this.$props.value };
+  computed: {
+    internalNumber() {
+      return this.$props.value || null;
+    },
   },
   watch: {
     invalidMessage() {

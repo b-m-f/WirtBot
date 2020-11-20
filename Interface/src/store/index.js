@@ -99,20 +99,13 @@ const store = new Vuex.Store({
     updateDevices(state, devices) {
       state.devices = devices;
     },
-    updateDNSName(state, name) {
-      state.network.dns.name = name;
-    },
-    updateDNSTls(state, { tlsName, tls }) {
-      state.network.dns.tls = tls;
-      state.network.dns.tlsName = tlsName;
-    },
-    updateDNSIp(state, { v4, v6 }) {
-      if (v4) {
-        state.network.dns.ip = Object.assign({}, state.network.dns.ip, { v4 });
-      }
-      if (v6) {
-        state.network.dns.ip = Object.assign({}, state.network.dns.ip, { v6 });
-      }
+    updateDNS(state, dns) {
+      Object.keys(dns).forEach((key) => {
+        if (dns[key] !== undefined && dns[key] !== null) {
+          state.network.dns[key] = dns[key];
+          state.network.dns[key] = dns[key]
+        }
+      });
     },
     updateDNSConfig(state, config) {
       state.network.dns.config = config;
@@ -125,6 +118,25 @@ const store = new Vuex.Store({
         state.dashboard.widgets = widgets;
       }
     },
+    resetServer(state) {
+      state.server = {
+        ip: { v4: [undefined, undefined, undefined, undefined], v6: "" },
+        port: undefined,
+        keys: undefined,
+        config: "",
+        subnet: { v4: "10.10.0.", v6: "1010:1010:1010:1010:" },
+        hostname: "",
+      }
+    },
+    resetDevices(state) {
+      state.devices = []
+    },
+    resetDNS(state) {
+      state.network.dns = {
+        name: "wirt.internal", config: "", ip: { v4: [1, 1, 1, 1] },
+        tlsName: "cloudflare-dns.com", tls: true
+      }
+    }
   },
   actions: {
     async generateKeys({ commit }) {
@@ -135,15 +147,15 @@ const store = new Vuex.Store({
       commit("disableFirstUse");
     },
     async updateDNSName({ commit, dispatch }, name) {
-      commit("updateDNSName", name);
+      commit("updateDNS", { name });
       dispatch("updateDNS");
     },
     async updateDNSIp({ commit, dispatch }, { v4, v6 }) {
-      commit("updateDNSIp", { v4, v6 });
+      commit("updateDNS", { ip: { v4, v6 } });
       dispatch("updateDNS");
     },
     async updateDNSTls({ commit, dispatch }, { tlsName, tls }) {
-      commit("updateDNSTls", { tlsName, tls });
+      commit("updateDNS", { tlsName, tls });
       if (tls == true && tlsName) {
         dispatch("updateDNS");
       }
@@ -283,7 +295,7 @@ const store = new Vuex.Store({
       commit("updateDevices", devices);
       dispatch("updateServerConfig", devices);
     },
-    removeDevice({ dispatch, commit }, { id }) {
+    async removeDevice({ dispatch, commit }, { id }) {
       try {
         commit("removeDevice", id);
         dispatch("alerts/addSuccess", i18n.t("success.deviceRemoved"));
@@ -298,9 +310,24 @@ const store = new Vuex.Store({
         console.error(error);
       }
     },
-    removeDevicesWithoutId({ commit }) {
+    async removeDevicesWithoutId({ commit }) {
       commit("removeDevicesWithoutId");
     },
+    async replaceState({ dispatch, commit }, newState) {
+      // Clean the complete state first
+      commit("resetDevices")
+      commit("resetServer")
+      commit("resetDNS")
+
+      commit("setKeys", newState.keys);
+      await dispatch("updateServer", newState.server);
+      newState.devices.forEach(async device => {
+        await dispatch("addDevice", device);
+      })
+      await dispatch("updateDNSName", newState.network.dns.name);
+      await dispatch("updateDNSTls", newState.network.dns);
+      await dispatch("updateDNSIp", newState.network.dns.ip);
+    }
   },
 
   plugins: [createPersistedState({

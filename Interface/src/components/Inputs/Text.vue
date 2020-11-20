@@ -20,8 +20,10 @@ export default {
     required: Boolean,
     name: String,
   },
-  data() {
-    return { internalText: this.$props.value };
+  computed: {
+    internalText() {
+      return this.$props.value || "";
+    },
   },
   watch: {
     invalidMessage() {
