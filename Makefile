@@ -1,8 +1,9 @@
 SHELL := /bin/bash
 
 ## Development
-dev: dev-server dev-client
+dev: dev-client dev-server
 dev-server:
+	mkdir /tmp/WirtBotTests && \
 	cd ./Core && \
 	PUBLIC_KEY=1lLU3VhXsrSGMxESmqfY4m2oEVkpfEHyKlCQU6MMPsI= \
 	ALLOWED_ORIGIN=http://localhost:8080 \
