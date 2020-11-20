@@ -13,9 +13,9 @@
       <CheckBox name="tls" :checked="dns.tls" @change="updateTls" />
     </div>
     <div class="row" v-if="tls">
-      <label>{{ $t("dashboard.widgets.dns.tlsName") }}</label>
+      <label for="tlsname">{{ $t("dashboard.widgets.dns.tlsName") }}</label>
       <TextInput
-        :value="dns.tlsName"
+        :value="tlsName"
         name="tlsname"
         required
         @change="updateTlsName"
@@ -37,6 +37,9 @@ export default {
     },
     tls() {
       return this.dns.tls;
+    },
+    tlsName() {
+      return this.dns.tlsName;
     },
   },
   methods: {

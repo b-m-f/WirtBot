@@ -18,11 +18,6 @@
         }}</Button>
       </div>
     </div>
-    <div class="row">
-      <Button @click.prevent="updateUi" id="update-ui">{{
-        $t("dashboard.widgets.settings.updateUi")
-      }}</Button>
-    </div>
   </div>
 </template>
 
@@ -69,18 +64,7 @@ export default {
 
       document.body.removeChild(element);
     },
-    updateUi() {
-      try {
-        const settings = window.localStorage.getItem("vuex");
-        const backup = upgradeBackup(settings);
-        window.localStorage.setItem("vuex", backup);
-        this.$store.replaceState(JSON.parse(backup));
-        this.$forceUpdate();
-      } catch (error) {
-        this.$store.dispatch("alerts/addWarning", error);
-      }
-    },
-    importBackup() {
+    async importBackup() {
       if (!this.file) {
         this.$store.dispatch(
           "alerts/addWarning",
@@ -89,17 +73,14 @@ export default {
       }
       try {
         const reader = new FileReader();
-        reader.onload = (e) => {
-          let backup = upgradeBackup(e.target.result);
+        reader.onload = async (e) => {
+          let backup = JSON.parse(upgradeBackup(e.target.result));
 
-          window.localStorage.setItem("vuex", backup);
-          this.$store.replaceState(JSON.parse(backup));
+          this.$store.dispatch("replaceState", backup);
           this.$store.dispatch(
             "alerts/addSuccess",
             this.$t("settings.imported")
           );
-          // Reload the page after import
-          this.$forceUpdate();
         };
         reader.readAsText(this.file);
         reader.onerror = (e) => {
