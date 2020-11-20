@@ -4,16 +4,12 @@
   "description": "This package is responsible for testing the WirtBot as a whole",
   "main": "index.js",
   "scripts": {
-    "test:local": "mkdir -p /tmp/WirtTestDownloads && find tests -wholename 'tests/nightwatch/**/*.spec.js'  | TEST_URL=localhost:8080 entr nightwatch",
-    "test:headless:watch": "find tests -wholename 'tests/nightwatch/**/*.spec.js'  | TEST_URL=test-interface entr nightwatch --env integration",
-    "test:ci": "TEST_URL=wirtbot.test nightwatch --env integration",
-    "test:new": "node playwright/tests.mjs"
+    "test": "./run_all_tests.sh"
   },
   "dependencies": {
     "chromedriver": "85.0.0",
     "eslint": "^7.13.0",
     "fibers": "5.0.0",
-    "glob": "7.1.6",
     "nightwatch": "1.5.0",
     "playwright": "1.6.1",
     "webpack-bundle-analyzer": "3.9.0"
@@ -30,5 +26,6 @@
   "bugs": {
     "url": "https://github.com/b-m-f/WirtBot/issues"
   },
-  "homepage": "https://github.com/b-m-f/WirtBot#readme"
+  "homepage": "https://github.com/b-m-f/WirtBot#readme",
+  "devDependencies": {}
 }

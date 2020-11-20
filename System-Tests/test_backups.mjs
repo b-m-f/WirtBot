@@ -24,7 +24,6 @@ export default async (browser) => {
 
             try {
                 const json = JSON.parse(await readFile(backup));
-                console.log(json);
                 const serverConfig = await getServerConfig(page);
 
                 const deviceConfig1 = await getDeviceConfig(await page.$(".device[data-name='test-1']"));
@@ -47,8 +46,7 @@ export default async (browser) => {
                 assert.strictEqual(dnsConfig.tlsName, json.network.dns.tlsName);
 
             } catch (error) {
-                console.error(error);
-
+                console.error("Error:", error);
             }
 
 
