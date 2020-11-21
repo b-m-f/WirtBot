@@ -1,7 +1,7 @@
 <template>
   <input
     ref="input"
-    :value="internalNumber"
+    :value="internalNumber || this.$props.number"
     type="number"
     :name="$props.name"
     :min="$props.min"
@@ -24,10 +24,10 @@ export default {
     required: Boolean,
     name: String,
   },
-  computed: {
-    internalNumber() {
-      return this.$props.value || null;
-    },
+  data() {
+    return {
+      internalNumber: null,
+    };
   },
   watch: {
     invalidMessage() {
