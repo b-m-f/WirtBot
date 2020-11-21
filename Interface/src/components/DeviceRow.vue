@@ -150,7 +150,7 @@ export default {
   data() {
     return {
       internalIP: this.$props.ip || {},
-      internalName: this.$props.name,
+      internalName: this.$props.name || "",
       internalType: this.$props.type || "Linux",
       internalId: this.$props.id,
       selectTouched: false,

@@ -1,9 +1,9 @@
-
 import * as assert from "assert";
 import { promises as fsPromises } from "fs";
 import process from "process";
 const { readFile } = fsPromises;
 import util from "util";
+
 
 import { setDNSName } from "./widgets/network.mjs";
 import { updateServer, addServer, downloadConfig as downloadServerConfig } from "./widgets/server.mjs";
@@ -17,7 +17,9 @@ export default async (browser) => {
         const page = await browser.newPage();
         await page.goto(process.env.URL);
 
-        await setDNSName(page, "different-zone.test");
+        await setDNSName(page, "test");
+        // The DNS name has to set to .test to work in CI where the wirtbot is in the .test zone
+        // Check the Build-Automation directory for more info
         await addServer(page, { ip: [1, 2, 3, 4], port: 1234, subnet: "10.11.0.", name: "test" });
         await addNewDevice(page, { ip: { v4: 2 }, name: "test-1", type: "Android", additionalDNSServers: "2.2.2.2", MTU: 1500 });
         await addNewDevice(page, { ip: { v4: 3, v6: "ffff" }, name: "test-2", type: "Linux", additionalDNSServers: "4.4.4.4,5.5.5.5", MTU: 1320 });
@@ -35,6 +37,7 @@ export default async (browser) => {
         const deviceConfigTwo = await readFile(`${deviceConfigPathTwo}`, "utf-8");
         const deviceConfigThree = await readFile(`${deviceConfigPathThree}`, "utf-8");
         const serverConfig = await readFile(`${serverConfigPath}`, "utf-8");
+
         const serverConfigFromCore = await readFile(`${wirtBotFileDir}/server.conf`, "utf-8");
         const dnsConfigFromCore = await readFile(`${wirtBotFileDir}/Corefile`, "utf-8");
 
@@ -57,8 +60,8 @@ export default async (browser) => {
         assert.match(serverConfig, /.*Address = 10.11.0.1,1010:1010:1010:1010:0001/);
         assert.strictEqual(serverConfig, serverConfigFromCore);
 
-        assert.match(dnsConfigFromCore, /.*test-1.different-zone.test/);
-        assert.match(dnsConfigFromCore, /.*test-2.different-zone.test/);
+        assert.match(dnsConfigFromCore, /.*test-1.test/);
+        assert.match(dnsConfigFromCore, /.*test-2.test/);
 
     } catch (error) {
         console.error(error);

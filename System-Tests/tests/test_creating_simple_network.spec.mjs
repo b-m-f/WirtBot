@@ -3,6 +3,7 @@ import { promises as fsPromises } from "fs";
 const { readFile } = fsPromises;
 import process from "process";
 
+import { setDNSName } from "./widgets/network.mjs";
 import { addServer, downloadConfig as downloadServerConfig } from "./widgets/server.mjs";
 import { addNewDevice, downloadConfig as downloadDeviceConfig } from "./widgets/devices.mjs";
 
@@ -14,6 +15,9 @@ export default async (browser) => {
         const page = await browser.newPage();
         await page.goto(process.env.URL);
 
+        await setDNSName(page, "test");
+        // The DNS name has to set to .test to work in CI where the wirtbot is in the .test zone
+        // Check the Build-Automation directory for more info
         await addServer(page, { ip: [1, 2, 3, 4], port: 1234 });
         await addNewDevice(page, { ip: { v4: 2 }, name: "test-1", type: "Android" });
 

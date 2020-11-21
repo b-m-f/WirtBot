@@ -1,8 +1,8 @@
 [Interface]
 Address = 10.10.0.1
-ListenPort = 1233
-PrivateKey = qPTBUSC1YTXu+PRoxx1MJfh2vxmLxdyGy7h70jhX/mM=
+ListenPort = 1234
+PrivateKey = oKU/VZt3Sz5A5OoJb8NvVagXB8Fa4we7PKfw/y+S/1k=
 
 [Peer]
 AllowedIPs = 10.10.0.2/32
-PublicKey = BE28RBU2f2py/4bYB7xfNy4e4TKpA0+MQDb4ScmmeF0=
+PublicKey = ETRZaBHbVHTiyuNzql7uRgRT3ENQ/3BHceZ3IteBqCQ=

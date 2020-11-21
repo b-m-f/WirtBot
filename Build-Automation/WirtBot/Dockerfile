@@ -103,7 +103,6 @@ COPY Build-Automation/WirtBot/service-files/fix-core-permissions /etc/fix-attrs.
 COPY Build-Automation/WirtBot/service-files/fix-wireguard-permissions /etc/fix-attrs.d/02-fix-wireguard-permissions
 ## This avoids file ownership changes that would require changing them back on the host on the next build
 ARG environment=production
-RUN if [ "$environment" = "test" ] ; then rm /etc/fix-attrs.d/02-fix-wireguard-permissions ; fi
 
 # WireGuard
 ## Make sure to mount a WireGuard config to /etc/wireguard/server.conf

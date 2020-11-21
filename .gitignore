@@ -3,3 +3,6 @@ wirtbot-installer.config.json
 **/target
 ImportThisFileIntoYourWirtBotInterface.json
 testwirtbot.conf
+Build-Automation/System-Tests/compose/test-server-conf
+Build-Automation/System-Tests/compose/test-Corefile
+
