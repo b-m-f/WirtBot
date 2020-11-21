@@ -4,7 +4,8 @@
   "description": "This package is responsible for testing the WirtBot as a whole",
   "main": "index.js",
   "scripts": {
-    "test": "./run_all_tests.sh"
+    "test": "URL=http://localhost:8080 ./run_all_tests.sh",
+    "test:ci": "URL=http://wirtbot.test ./run_all_tests.sh"
   },
   "dependencies": {
     "chromedriver": "85.0.0",
