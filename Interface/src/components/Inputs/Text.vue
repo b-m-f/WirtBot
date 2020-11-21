@@ -36,7 +36,6 @@ export default {
     update(text) {
       this.$refs["input"].setCustomValidity("");
       try {
-        this.internalText = text;
         if (!text) {
           if (this.$props.required) {
             throw this.$t("warnings.required");

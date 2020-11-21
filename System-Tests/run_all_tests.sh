@@ -1,4 +1,6 @@
 #! /bin/bash
+set -ex
+
 cd tests/
 for test in test_*
 do
