@@ -22,7 +22,7 @@ export default async (browser) => {
         // Check the Build-Automation directory for more info
         await addServer(page, { ip: [1, 2, 3, 4], port: 1234, subnet: "10.11.0.", name: "test" });
         await addNewDevice(page, { ip: { v4: 2 }, name: "test-1", type: "Android", additionalDNSServers: "2.2.2.2", MTU: 1500 });
-        await addNewDevice(page, { ip: { v4: 3, v6: "ffff" }, name: "test-2", type: "Linux", additionalDNSServers: "4.4.4.4,5.5.5.5", MTU: 1320 });
+        await addNewDevice(page, { ip: { v4: 3, v6: "fffe" }, name: "test-2", type: "Linux", additionalDNSServers: "4.4.4.4,5.5.5.5", MTU: 1320 });
         await addNewDevice(page, { ip: { v6: "fffa" }, name: "test-3", type: "Linux" });
 
         const deviceConfigPathOne = await downloadDeviceConfig(page, "test-1");
@@ -48,7 +48,7 @@ export default async (browser) => {
         assert.match(deviceConfigOne, /.*MTU = 1500/);
 
         assert.match(deviceConfigTwo, /.*Endpoint = test.test:1234/);
-        assert.match(deviceConfigTwo, /.*Address = 10.11.0.3,1010:1010:1010:1010:ffff/);
+        assert.match(deviceConfigTwo, /.*Address = 10.11.0.3,1010:1010:1010:1010:fffe/);
         assert.match(deviceConfigTwo, /.*DNS = 10.11.0.1,4.4.4.4,5.5.5.5/);
         assert.match(deviceConfigTwo, /.*MTU = 1320/);
 
