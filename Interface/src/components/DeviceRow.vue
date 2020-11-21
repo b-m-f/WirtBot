@@ -44,7 +44,7 @@
           <TextInput
             :value="internalIP.v6"
             name="device-ipv6"
-            placeholder="0001-ffff"
+            placeholder="0002-fffe"
             @change="(ip) => updateIP({ v4: internalIP.v4, v6: ip })"
             :validate="validateIPv6"
             :invalidMessage="invalidIPv6Message"
@@ -287,7 +287,7 @@ export default {
     },
     validateIPv6(ip) {
       try {
-        if (!/^[0-9a-fA-F]+$/.test(ip)) {
+        if (!/^[0-9a-fA-F]{3}[2-9a-eA-E]$/.test(ip)) {
           this.invalidIPv6Message = this.$t("warnings.wrongIPv6");
           throw "IPv6 has wrong format";
         }

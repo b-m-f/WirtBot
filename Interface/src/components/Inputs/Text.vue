@@ -1,7 +1,7 @@
 <template>
   <input
     ref="input"
-    :value="internalText"
+    :value="internalText || $props.value"
     type="text"
     :name="$props.name"
     :placeholder="$props.placeholder"
@@ -20,10 +20,10 @@ export default {
     required: Boolean,
     name: String,
   },
-  computed: {
-    internalText() {
-      return this.$props.value || "";
-    },
+  data() {
+    return {
+      internalText: "",
+    };
   },
   watch: {
     invalidMessage() {
@@ -35,6 +35,7 @@ export default {
   methods: {
     update(text) {
       this.$refs["input"].setCustomValidity("");
+      this.internalText = text;
       try {
         if (!text) {
           if (this.$props.required) {
