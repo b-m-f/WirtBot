@@ -4,7 +4,7 @@ import { firefox, chromium } from "playwright";
 const testRunner = async (testPaths) => {
     const browsers = {
         firefox: await firefox.launch({ headless: true }),
-        chromium: await chromium.launch({ headless: true,args: ['--disable-dev-shm-usage']})
+        chromium: await chromium.launch({ headless: true, args: ['--disable-dev-shm-usage'] })
     };
     let testSuites = [];
     try {

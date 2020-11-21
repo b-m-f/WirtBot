@@ -24,12 +24,12 @@ export const getConfig = async (device) => {
     return { type, name, mtu, additionalDNSServers, ip: { v4, v6 } };
 };
 
-const setIPv4 = async (device, ip) => {
+export const setIPv4 = async (device, ip) => {
     const input = await device.$("input[name='device-ipv4']");
-    await input.type(ip.toString());
+    await input.fill(ip.toString());
 };
 
-const setIPv6 = async (device, ip) => {
+export const setIPv6 = async (device, ip) => {
     const input = await device.$("input[name='device-ipv6']");
     await input.fill(ip.toString());
 };
