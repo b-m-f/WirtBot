@@ -1,6 +1,7 @@
 import * as assert from "assert";
 import { promises as fsPromises } from "fs";
 const { readFile } = fsPromises;
+import process from "process";
 
 import { addServer, downloadConfig as downloadServerConfig } from "./widgets/server.mjs";
 import { addNewDevice, downloadConfig as downloadDeviceConfig } from "./widgets/devices.mjs";
@@ -11,7 +12,7 @@ const wirtBotFileDir = "/tmp/WirtBotTests";
 export default async (browser) => {
     try {
         const page = await browser.newPage();
-        await page.goto("http://localhost:8080/");
+        await page.goto(process.env.URL);
 
         await addServer(page, { ip: [1, 2, 3, 4], port: 1234 });
         await addNewDevice(page, { ip: { v4: 2 }, name: "test-1", type: "Android" });

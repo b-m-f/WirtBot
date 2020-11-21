@@ -1,6 +1,7 @@
 
 import * as assert from "assert";
 import { promises as fsPromises } from "fs";
+import process from "process";
 const { readFile } = fsPromises;
 import util from "util";
 
@@ -14,7 +15,7 @@ const wirtBotFileDir = "/tmp/WirtBotTests";
 export default async (browser) => {
     try {
         const page = await browser.newPage();
-        await page.goto("http://localhost:8080/");
+        await page.goto(process.env.URL);
 
         await setDNSName(page, "different-zone.test");
         await addServer(page, { ip: [1, 2, 3, 4], port: 1234, subnet: "10.11.0.", name: "test" });

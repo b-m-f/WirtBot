@@ -1,5 +1,4 @@
-FROM node:latest
-
+FROM mcr.microsoft.com/playwright:focal
 # fails when installing from package.json
 
 # build the app
@@ -8,10 +7,7 @@ COPY System-Tests/package.json  .
 COPY System-Tests/package-lock.json .
 RUN npm ci
 
-COPY Build-Automation/System-Tests/wait-for.sh wait-for.sh
-RUN chmod +x wait-for.sh
 
-COPY System-Tests/tests tests
-COPY System-Tests/nightwatch.conf.js .
-
-CMD ["npm", "run", "test:ci"]
+COPY System-Tests/tests/ tests/
+COPY System-Tests/run_all_tests.sh run_all_tests.sh
+CMD ["npm", "run", "test"]

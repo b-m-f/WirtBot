@@ -1,5 +1,6 @@
 import assert from "assert";
 import { promises as fsPromises } from "fs";
+import process from "process";
 import { importBackup } from "./widgets/settings.mjs";
 import { getConfig as getServerConfig } from "./widgets/server.mjs";
 import { getConfig as getDeviceConfig } from "./widgets/devices.mjs";
@@ -15,7 +16,7 @@ const { readFile } = fsPromises;
 export default async (browser) => {
     try {
         const page = await browser.newPage();
-        await page.goto("http://localhost:8080/");
+        await page.goto(process.env.URL);
 
         let backups = ["./backups/1.4.5.json"];
 

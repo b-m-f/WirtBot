@@ -5,12 +5,11 @@ services:
       dockerfile: Build-Automation/System-Tests/Dockerfile
       context: ../../..
     container_name: test-runner
-    command: ["bash", "/app/wait-for.sh", "chrome:4444", "--", "npm", "run", "test:ci"]
-    depends_on: ["chrome", "test-wirtbot"]
+    command: ["npm", "run", "test:ci"]
+    depends_on: ["test-wirtbot"]
     volumes:
-      - download_folder:/tmp/WirtTestDownloads
-      - ./test-Corefile:/dns/Corefile
-      - ./test-server-conf:/etc/wireguard/server.conf
+      - ./test-Corefile:/tmp/WirtBotTests/Corefile
+      - ./test-server-conf:/tmp/WirtBotTests/server.conf
   test-wirtbot:
     build: 
       dockerfile: Build-Automation/WirtBot/Dockerfile
@@ -18,8 +17,6 @@ services:
       args:
         - environment=test
     container_name: wirtbot.test
-    cap_add:
-      - NET_ADMIN
     volumes:
       - ./test-server-conf:/etc/wireguard/server.conf
       - ./test-Corefile:/dns/Corefile
@@ -31,15 +28,8 @@ services:
       - "ALLOWED_ORIGIN=http://wirtbot.test"
       - "RUST_LOG=debug"
       - "MANAGED_DNS_ENABLED=1"
-      - "MANAGED_DNS_DEVICE_FILE=/dns/Corefile"
-      - "CONFIG_PATH=/etc/wireguard/server.conf"
-  chrome:
-    build: 
-      dockerfile: ChromeDockerfile
-      context: ..
-    container_name: chrome
-    volumes:
-      - download_folder:/tmp/WirtTestDownloads
+      - "MANAGED_DNS_DEVICE_FILE=/tmp/WirtBotTests/Corefile"
+      - "CONFIG_PATH=/tmp/WirtBotTests/server.conf"
 
 volumes:
   download_folder:
