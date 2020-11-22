@@ -60,7 +60,9 @@
           "ipv4": "IPv4",
           "ipv6": "IPv6",
           "name": "Name",
-          "type": "Device"
+          "type": "Device",
+          "download": "Download",
+          "delete": "Delete"
         },
         "placeholder": {
           "additionalDNSServers": "Comma seperated",
