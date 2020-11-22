@@ -117,9 +117,16 @@
         :src="qr"
         alt="QR Code for config of mobile devices"
       />
-      <button class="delete" @click="deleteDevice">Delete</button>
-      <button v-if="$props.config" class="download" @click="downloadConfig">
-        Download
+      <button type="button" class="delete" @click="deleteDevice">
+        {{ $t("dashboard.widgets.devices.labels.delete") }}
+      </button>
+      <button
+        type="button"
+        v-if="$props.config"
+        class="download"
+        @click="downloadConfig"
+      >
+        {{ $t("dashboard.widgets.devices.labels.download") }}
       </button>
     </td>
   </tr>
@@ -222,7 +229,11 @@ export default {
       return nextHighest;
     },
     deleteDevice() {
-      this.$store.dispatch("removeDevice", { id: this.internalId });
+      if (!this.internalId) {
+        this.$emit("cancel-new-device");
+      } else {
+        this.$store.dispatch("removeDevice", { id: this.internalId });
+      }
     },
     updateType(type) {
       this.internalType = type;

@@ -39,6 +39,9 @@ const testRunner = async (testPaths) => {
 
 const main = async () => {
     try {
+        if (!process.env.URL) {
+            throw "Please defined the Interface url with the URL environment variable";
+        }
         const testPaths = process.argv.slice(2);
         await testRunner(testPaths);
     } catch (error) {

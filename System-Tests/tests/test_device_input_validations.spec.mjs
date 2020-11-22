@@ -60,6 +60,14 @@ export default async (browser) => {
         });
         assert.strictEqual(valid, false);
 
+        // Pressing enter does not remove device. 
+        const firstDeviceNameBeforePressingEnter = await page.$eval(".device:first-child input[name='device-name']", e => e.value);
+        await page.focus(".device[data-name='test-1'] input[name='device-ipv6']");
+        await page.keyboard.press("Enter");
+        const firstDeviceNameAfterPressingEnter = await page.$eval(".device:first-child input[name='device-name']", e => e.value);
+        assert.strictEqual(firstDeviceNameAfterPressingEnter, firstDeviceNameBeforePressingEnter);
+
+
 
 
 
