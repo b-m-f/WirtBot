@@ -1,7 +1,7 @@
 <template>
   <input
     ref="input"
-    :value="internalNumber || this.$props.number"
+    :value="internalNumber || this.$props.value"
     type="number"
     :name="$props.name"
     :min="$props.min"
