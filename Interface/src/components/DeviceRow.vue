@@ -1,14 +1,14 @@
 <template>
   <tr
     :class="{ mobile: isMobilePage, 'table-row': true, device: true }"
-    :data-name="internalName"
+    :data-name="this.device.name"
   >
     <td class="column-one">
       <label for="device-name">{{
         $t("dashboard.widgets.devices.labels.name")
       }}</label>
       <TextInput
-        :value="internalName"
+        :value="$props.name"
         name="device-name"
         class="name"
         required
@@ -24,8 +24,8 @@
           <p>{{ subnet.v4 }}</p>
           <NumberInput
             name="device-ipv4"
-            :value="internalIP.v4"
-            @change="(ip) => updateIP({ v4: ip, v6: internalIP.v6 })"
+            :value="$props.ip.v4"
+            @change="(ip) => updateIP({ v4: ip, v6: this.device.ip.v6 })"
             :validate="validateIPv4"
             :placeholder="`${getNextHighestIPv4()}`"
             :invalidMessage="invalidIPv4Message"
@@ -42,10 +42,10 @@
         <div class="value">
           <p :title="subnet.v6">{{ subnet.v6.substring(0, 4) }}::</p>
           <TextInput
-            :value="internalIP.v6"
+            :value="$props.ip.v6"
             name="device-ipv6"
             placeholder="0002-fffe"
-            @change="(ip) => updateIP({ v4: internalIP.v4, v6: ip })"
+            @change="(ip) => updateIP({ v4: this.device.ip.v4, v6: ip })"
             :validate="validateIPv6"
             :invalidMessage="invalidIPv6Message"
           />
@@ -58,7 +58,7 @@
       }}</label>
       <Select
         :required="true"
-        :selected="internalType"
+        :selected="$props.type"
         :options="deviceTypes"
         class="device-type"
         @change="updateType"
@@ -71,7 +71,7 @@
         </label>
         <NumberInput
           name="MTU"
-          :value="internalMTU"
+          :value="$props.MTU"
           class="MTU"
           @change="updateMTU"
           :max="1800"
@@ -86,7 +86,7 @@
           {{ $t("dashboard.widgets.devices.labels.additionalDNSServers") }}
         </label>
         <TextInput
-          :value="internalAdditionalDNSServers.join(',')"
+          :value="$props.additionalDNSServers.join(',')"
           name="additionalDNSServers"
           class="additionalDNSServers"
           :placeholder="
@@ -105,8 +105,8 @@
         }}</label>
         <CheckBox
           name="routed"
-          :checked="internalRouted"
-          @change="(bool) => (internalRouted = bool)"
+          :checked="$props.routed"
+          @change="(bool) => save({ ...this.device, routed: bool })"
         />
       </div>
     </td>
@@ -156,44 +156,10 @@ export default {
   },
   data() {
     return {
-      internalIP: this.$props.ip || {},
-      internalName: this.$props.name || "",
-      internalType: this.$props.type || "Linux",
-      internalId: this.$props.id,
-      selectTouched: false,
-      internalRouted: this.$props.routed || false,
-      internalAdditionalDNSServers: this.$props.additionalDNSServers || [],
-      internalMTU: this.$props.MTU,
       invalidIPv4Message: "",
       invalidIPv6Message: "",
       invalidAdditionalDNSServersMessage: "",
     };
-  },
-  watch: {
-    internalIP() {
-      this.save();
-    },
-    internalName() {
-      this.save();
-    },
-    internalType() {
-      this.save();
-    },
-    internalId() {
-      this.save();
-    },
-    selectTouched() {
-      this.save();
-    },
-    internalRouted() {
-      this.save();
-    },
-    internalAdditionalDNSServers() {
-      this.save();
-    },
-    internalMTU() {
-      this.save();
-    },
   },
   computed: {
     deviceTypes() {
@@ -208,14 +174,27 @@ export default {
     isMobilePage() {
       return this.$store.state.websiteBeingViewedOnMobileDevice;
     },
+    device() {
+      return {
+        name: this.$props.name,
+        ip: this.$props.ip,
+        type: this.$props.type,
+        id: this.$props.id,
+        qr: this.$props.qr,
+        routed: this.$props.routed,
+        additionalDNSServers: this.$props.additionalDNSServers,
+        MTU: this.$props.MTU,
+        config: this.$props.config,
+      };
+    },
   },
   mounted() {},
   methods: {
     downloadConfig() {
       const config = this.devices.find(
-        (device) => device.id === this.internalId
+        (device) => device.id === this.device.id
       )["config"];
-      downloadText(config, `${this.internalName}.conf`);
+      downloadText(config, `${this.device.name}.conf`);
     },
     getNextHighestIPv4() {
       let nextHighest = 2;
@@ -229,20 +208,20 @@ export default {
       return nextHighest;
     },
     deleteDevice() {
-      if (!this.internalId) {
+      if (!this.device.id) {
         this.$emit("cancel-new-device");
       } else {
-        this.$store.dispatch("removeDevice", { id: this.internalId });
+        this.$store.dispatch("removeDevice", { id: this.device.id });
       }
     },
     updateType(type) {
-      this.internalType = type;
+      this.save({ ...this.device, type });
     },
     updateIP({ v4, v6 }) {
-      this.internalIP = { ...this.internalIP, v4, v6 };
+      this.save({ ...this.device, ip: { v4, v6 } });
     },
     updateName(name) {
-      this.internalName = name;
+      this.save({ ...this.device, name });
     },
     validateAdditionalDNSServers(serverString) {
       const correct = /^([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3},?)+$/.test(
@@ -260,11 +239,10 @@ export default {
         this.updatingAdditionalDNSServers.cancel();
       }
       this.updatingAdditionalDNSServers = debounce(function () {
-        this.internalAdditionalDNSServers = serverString
-          .split(",")
-          .map((entry) => {
-            return entry.trim();
-          });
+        const servers = serverString.split(",").map((entry) => {
+          return entry.trim();
+        });
+        this.save({ ...this.device, additionalDNSServers: servers });
       }, 1300);
       this.updatingAdditionalDNSServers();
     },
@@ -276,7 +254,7 @@ export default {
         this.updatingMTU.cancel();
       }
       this.updatingMTU = debounce(function () {
-        this.internalMTU = mtu;
+        this.save({ ...this.device, mtu });
       }, 1000);
       this.updatingMTU();
     },
@@ -287,7 +265,7 @@ export default {
         return false;
       }
       const isIpUsed = this.devices.reduce((prev, next) => {
-        return prev || (next.ip.v4 == ip && next.id !== this.internalId);
+        return prev || (next.ip.v4 == ip && next.id !== this.device.id);
       }, false);
 
       if (isIpUsed) {
@@ -314,16 +292,8 @@ export default {
         return false;
       }
     },
-    async save() {
-      this.$emit("saved", {
-        id: this.internalId,
-        name: this.internalName,
-        type: this.internalType,
-        ip: this.internalIP,
-        routed: this.internalRouted,
-        additionalDNSServers: this.internalAdditionalDNSServers,
-        MTU: this.internalMTU,
-      });
+    async save(device) {
+      this.$emit("saved", device);
     },
   },
 };
