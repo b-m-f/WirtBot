@@ -139,6 +139,7 @@ import CheckBox from "components/Inputs/CheckBox";
 import Select from "components/Inputs/Select";
 import { downloadText } from "../lib/download";
 import debounce from "lodash/debounce";
+import merge from "lodash/merge";
 
 export default {
   components: { NumberInput, TextInput, CheckBox, Select },
@@ -293,8 +294,7 @@ export default {
       }
     },
     async save(device) {
-      this.internalDeviceCacheForNewDevices = Object.assign(
-        {},
+      this.internalDeviceCacheForNewDevices = merge(
         this.internalDeviceCacheForNewDevices,
         device
       );
