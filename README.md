@@ -68,6 +68,8 @@ You want to help out making WirtBot better? **AWESOME**!
 
 Please feel free to open up an issue here in Github to discuss what you would want to do, and what kind of help I can give you.
 
+Next check out [CONTRIBUTING.md](./CONTRIBUTING.md).
+
 If you want to learn about the inner workings of the system check out the [developer documentation](https://wirtbot.com/developer-documentation/).
 
 I also encourage you to ask questions! My goal is to document as many of those questions as I can, to allow more people to understand what is going on in the code.
