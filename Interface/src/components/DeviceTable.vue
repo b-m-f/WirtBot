@@ -140,7 +140,8 @@ export default {
       display: grid;
       grid-gap: $spacing-medium;
       grid-template-areas: "one two three " "four five six";
-      grid-template-columns: calc(33.3% - #{$spacing-medium})
+      grid-template-columns:
+        calc(33.3% - #{$spacing-medium})
         calc(33.3% - #{$spacing-medium}) calc(33.3% - #{$spacing-medium});
       padding-top: $spacing-medium;
       padding-bottom: $spacing-medium;

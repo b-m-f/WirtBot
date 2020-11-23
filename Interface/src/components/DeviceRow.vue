@@ -177,12 +177,12 @@ export default {
     device() {
       return {
         name: this.$props.name,
-        ip: this.$props.ip,
+        ip: this.$props.ip || { v4: undefined, v6: undefined },
         type: this.$props.type,
         id: this.$props.id,
         qr: this.$props.qr,
         routed: this.$props.routed,
-        additionalDNSServers: this.$props.additionalDNSServers,
+        additionalDNSServers: this.$props.additionalDNSServers || [],
         MTU: this.$props.MTU,
         config: this.$props.config,
       };
@@ -215,13 +215,13 @@ export default {
       }
     },
     updateType(type) {
-      this.save({ ...this.device, type });
+      this.save({ type });
     },
     updateIP({ v4, v6 }) {
-      this.save({ ...this.device, ip: { v4, v6 } });
+      this.save({ ip: { v4, v6 } });
     },
     updateName(name) {
-      this.save({ ...this.device, name });
+      this.save({ name });
     },
     validateAdditionalDNSServers(serverString) {
       const correct = /^([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3},?)+$/.test(
@@ -242,7 +242,7 @@ export default {
         const servers = serverString.split(",").map((entry) => {
           return entry.trim();
         });
-        this.save({ ...this.device, additionalDNSServers: servers });
+        this.save({ additionalDNSServers: servers });
       }, 1300);
       this.updatingAdditionalDNSServers();
     },
@@ -254,7 +254,7 @@ export default {
         this.updatingMTU.cancel();
       }
       this.updatingMTU = debounce(() => {
-        this.save({ ...this.device, MTU: mtu });
+        this.save({ MTU: mtu });
       }, 1000);
       this.updatingMTU();
     },
@@ -293,7 +293,15 @@ export default {
       }
     },
     async save(device) {
-      this.$emit("saved", device);
+      this.internalDeviceCacheForNewDevices = Object.assign(
+        {},
+        this.internalDeviceCacheForNewDevices,
+        device
+      );
+      this.$emit("saved", {
+        ...this.device,
+        ...this.internalDeviceCacheForNewDevices,
+      });
     },
   },
 };
