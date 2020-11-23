@@ -29,12 +29,6 @@ module.exports = {
           ],
           "/developer-documentation/": [
             ["", "WirtBot developer documentation"],
-            ["system-architecture", "System Architecture"],
-            ["interface", "Interface"],
-            ["wirtbot", "WirtBot"],
-            ["system-tests", "System Tests"],
-            ["contributing", "Contributing"],
-            ["code-of-conduct", "Code of Conduct"],
           ],
         },
         nav: [

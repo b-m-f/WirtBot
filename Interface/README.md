@@ -1,4 +1,3 @@
-
 # Interface
 
 ![Architecture diagram](Architecture_diagram.jpg)
@@ -44,5 +43,4 @@ In the vue components this is done with the following `<styles>` section.
 ```
 
 All the **global variables** will be available.
-
 
