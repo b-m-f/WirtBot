@@ -18,6 +18,7 @@ module.exports = {
             ["what-can-i-do-with-wirt", "What can you do with Wirt?"],
             ["setup", "Setup"],
             ["join-a-network", "Join a network"],
+            ["system-overview", "System Overview"],
             ["faq", "FAQ"],
             ["issues", "New features & Bugs"],
           ],
@@ -26,10 +27,7 @@ module.exports = {
             ["8-11-20", "8.11.20: New name for installer binary"],
             ["31-10-20", "31.10.20: All aboard the container"],
             ["21-10-20", "21.10.20: Please update your installer"],
-          ],
-          "/system-overview/": [
-            ["", "WirtBot developer documentation"],
-          ],
+          ]
         },
         nav: [
           { text: "Github", link: "https://github.com/b-m-f/WirtBot" },
