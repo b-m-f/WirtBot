@@ -8,7 +8,7 @@
         $t("dashboard.widgets.devices.labels.name")
       }}</label>
       <TextInput
-        :value="$props.name"
+        :value="device.name"
         name="device-name"
         class="name"
         required
@@ -24,7 +24,7 @@
           <p>{{ subnet.v4 }}</p>
           <NumberInput
             name="device-ipv4"
-            :value="$props.ip.v4"
+            :value="device.ip.v4"
             @change="(ip) => updateIP({ v4: ip, v6: this.device.ip.v6 })"
             :validate="validateIPv4"
             :placeholder="`${getNextHighestIPv4()}`"
@@ -42,7 +42,7 @@
         <div class="value">
           <p :title="subnet.v6">{{ subnet.v6.substring(0, 4) }}::</p>
           <TextInput
-            :value="$props.ip.v6"
+            :value="device.ip.v6"
             name="device-ipv6"
             placeholder="0002-fffe"
             @change="(ip) => updateIP({ v4: this.device.ip.v4, v6: ip })"
@@ -58,7 +58,7 @@
       }}</label>
       <Select
         :required="true"
-        :selected="$props.type"
+        :selected="device.type"
         :options="deviceTypes"
         class="device-type"
         @change="updateType"
@@ -71,7 +71,7 @@
         </label>
         <NumberInput
           name="MTU"
-          :value="$props.MTU"
+          :value="device.MTU"
           class="MTU"
           @change="updateMTU"
           :max="1800"
@@ -86,7 +86,7 @@
           {{ $t("dashboard.widgets.devices.labels.additionalDNSServers") }}
         </label>
         <TextInput
-          :value="$props.additionalDNSServers.join(',')"
+          :value="device.additionalDNSServers.join(',')"
           name="additionalDNSServers"
           class="additionalDNSServers"
           :placeholder="
@@ -105,7 +105,7 @@
         }}</label>
         <CheckBox
           name="routed"
-          :checked="$props.routed"
+          :checked="device.routed"
           @change="(bool) => save({ ...this.device, routed: bool })"
         />
       </div>
@@ -122,7 +122,7 @@
       </button>
       <button
         type="button"
-        v-if="$props.config"
+        v-if="device.config"
         class="download"
         @click="downloadConfig"
       >
@@ -238,7 +238,7 @@ export default {
       if (this.updatingAdditionalDNSServers) {
         this.updatingAdditionalDNSServers.cancel();
       }
-      this.updatingAdditionalDNSServers = debounce(function () {
+      this.updatingAdditionalDNSServers = debounce(() => {
         const servers = serverString.split(",").map((entry) => {
           return entry.trim();
         });
@@ -253,8 +253,8 @@ export default {
       if (this.updatingMTU) {
         this.updatingMTU.cancel();
       }
-      this.updatingMTU = debounce(function () {
-        this.save({ ...this.device, mtu });
+      this.updatingMTU = debounce(() => {
+        this.save({ ...this.device, MTU: mtu });
       }, 1000);
       this.updatingMTU();
     },
