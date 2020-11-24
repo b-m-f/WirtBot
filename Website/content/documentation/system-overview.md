@@ -1,5 +1,9 @@
 # System Overview
 
+This page is supposed to give an overview of the different functionalities of the system.
+
+Want more details? Please ask over on [GitHub](https://github.com/b-m-f/WirtBot).
+
 ## Interaction with the system
 
 - Change in browser
@@ -13,3 +17,10 @@
 
 
 ## Installation
+
+- Get VPS with root
+- Install and run installer
+    - questions -> ansible
+    - create configs
+- Connect with created config
+- Import Backup
