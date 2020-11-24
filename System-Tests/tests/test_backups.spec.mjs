@@ -34,11 +34,6 @@ export default async (browser) => {
 
                 const networkConfig = await getNetworkConfig(page);
 
-                // console.log(serverConfig);
-                // console.log(deviceConfig1);
-                // console.log(deviceConfig2);
-                // console.log(networkConfig);
-
                 assert(
                     dnsConfig.ip.v4.join(",") ==
                     json.network.dns.ip.v4.join(",")
@@ -46,15 +41,31 @@ export default async (browser) => {
                 assert.strictEqual(dnsConfig.tls, json.network.dns.tls);
                 assert.strictEqual(dnsConfig.tlsName, json.network.dns.tlsName);
 
+                assert.strictEqual(networkConfig.name, json.network.dns.name);
+
+                assert.strictEqual(serverConfig.name, json.server.name);
+                assert.deepStrictEqual(serverConfig.ip, json.server.ip);
+                assert.strictEqual(serverConfig.hostname, json.server.hostname);
+                assert.deepStrictEqual(serverConfig.subnet, json.server.subnet);
+                assert.strictEqual(serverConfig.port, json.server.port);
+
+                // How could the mapping from device in backup and from browser be more transparent
+                assert.deepStrictEqual(deviceConfig1.ip, json.devices[1].ip);
+                assert.strictEqual(deviceConfig1.name, json.devices[1].name);
+                assert.strictEqual(deviceConfig1.MTU, json.devices[1].MTU);
+                assert.strictEqual(deviceConfig1.type, json.devices[1].type);
+                assert.deepStrictEqual(deviceConfig1.additionalDNSServers, json.devices[1].additionalDNSServers);
+
+                assert.deepStrictEqual(deviceConfig2.ip, json.devices[0].ip);
+                assert.strictEqual(deviceConfig2.name, json.devices[0].name);
+                assert.strictEqual(deviceConfig2.MTU, json.devices[0].MTU);
+                assert.strictEqual(deviceConfig2.type, json.devices[0].type);
+                assert.deepStrictEqual(deviceConfig2.additionalDNSServers, json.devices[0].additionalDNSServers);
+
             } catch (error) {
                 console.error("Error:", error);
             }
-
-
-
         }
-
-
 
     } catch (error) {
         console.error(error);

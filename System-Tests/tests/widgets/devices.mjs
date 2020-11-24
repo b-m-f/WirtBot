@@ -16,12 +16,16 @@ export const getConfig = async (device) => {
     const name = await nameInput.evaluate(e => e.value);
 
     const mtuInput = await device.$("input[name='MTU']");
-    const mtu = await mtuInput.evaluate(e => e.value);
+    const MTU = await mtuInput.evaluate(e => e.value);
 
     const typeSelect = await device.$(".device-type");
     const type = await typeSelect.evaluate(e => e.value);
 
-    return { type, name, mtu, additionalDNSServers, ip: { v4, v6 } };
+    return {
+        type, name, MTU: parseInt(MTU) || undefined,
+        additionalDNSServers: additionalDNSServers ? additionalDNSServers.split(",") : [],
+        ip: { v4: parseInt(v4), v6 }
+    };
 };
 
 export const setIPv4 = async (device, ip) => {
