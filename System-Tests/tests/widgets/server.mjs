@@ -29,7 +29,11 @@ export const getConfig = async (page) => {
     const subnetInput = await widget.$("input[name='server-subnet-v4']",);
     const subnet = await subnetInput.evaluate(e => e.value);
 
-    return { ip: [ip1, ip2, ip3, ip4], port, name, hostname, subnet };
+    return {
+        ip: { v4: [ip1, ip2, ip3, ip4].map(ip => parseInt(ip)), v6: "" }, port: parseInt(port),
+        name, hostname,
+        subnet: { v4: subnet, v6: "1010:1010:1010:1010:" }
+    };
 
 };
 

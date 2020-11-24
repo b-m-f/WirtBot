@@ -67,11 +67,6 @@ export default async (browser) => {
         const firstDeviceNameAfterPressingEnter = await page.$eval(".device:first-child input[name='device-name']", e => e.value);
         assert.strictEqual(firstDeviceNameAfterPressingEnter, firstDeviceNameBeforePressingEnter);
 
-
-
-
-
-
     } catch (error) {
         console.error(error);
         throw error;
