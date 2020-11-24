@@ -35,7 +35,6 @@ module.exports = {
           { text: "Documentation", link: "/documentation/" },
           { text: "Screenshots", link: "/screenshots" },
           { text: "Announcements", link: "/announcements/" },
-          { text: "Developer Documentation", link: "/developer-documentation/" },
           { text: "About", link: "/about" }
         ],
       },
