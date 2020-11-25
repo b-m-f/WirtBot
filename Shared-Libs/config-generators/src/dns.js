@@ -2,7 +2,7 @@
 export function generateDNSFile(server, clients, network) {
     const tls = network.dns.tls;
     const tlsName = network.dns.tlsName;
-    const dnsV4 = network.dns.ip.v4 || "1.1.1.1";
+    const dnsV4 = network.dns.ip.v4 || [1, 1, 1, 1];
     const dnsV6 = network.dns.ip.v6;
     const deviceNames = clients.map(client => {
         client.name = client.name.split(' ').join('-');

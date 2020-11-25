@@ -23,7 +23,7 @@
         <div class="value">
           <p>{{ subnet.v4 }}</p>
           <NumberInput
-            name="device-ipv4"
+            :name="'device-ipv4'"
             :value="device.ip.v4"
             @change="(ip) => updateIP({ v4: ip, v6: this.device.ip.v6 })"
             :validate="validateIPv4"

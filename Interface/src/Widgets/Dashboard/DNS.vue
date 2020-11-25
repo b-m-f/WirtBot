@@ -45,10 +45,7 @@ export default {
   methods: {
     updateIp({ ip, valid }) {
       if (valid) {
-        this.$store.dispatch("updateDNSIp", { ip });
-        this.blocked = false;
-      } else {
-        this.blocked = true;
+        this.$store.dispatch("updateDNSIp", ip);
       }
     },
     updateTls(active) {
