@@ -7,7 +7,7 @@ import util from "util";
 
 
 import { setDNSName } from "./widgets/network.mjs";
-import { setDNSTlsName, enableDNSTLS, setDNSIP, disableDNSTLS } from "./widgets/dns.mjs";
+import { setDNSTlsName, enableDNSTLS, setDNSIP, disableDNSTLS, getValidity as getDNSValidity } from "./widgets/dns.mjs";
 import { addServer } from "./widgets/server.mjs";
 import { addNewDevice } from "./widgets/devices.mjs";
 
@@ -24,7 +24,14 @@ export default async (browser) => {
         // Check the Build-Automation directory for more info
         await enableDNSTLS(page);
         await setDNSIP(page, [1, 2, 3, 4]);
+
+        await setDNSTlsName(page, "https://testdns.test");
+        let dnsValid = await getDNSValidity(page);
+        assert.strictEqual(dnsValid.name, false);
+
         await setDNSTlsName(page, "testdns.test");
+        dnsValid = await getDNSValidity(page);
+        assert.strictEqual(dnsValid.name, true);
 
 
         await addServer(page, { ip: [1, 2, 3, 4], port: 1234, subnet: "10.11.0.", name: "test" });
