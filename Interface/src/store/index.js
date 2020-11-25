@@ -156,9 +156,10 @@ const store = new Vuex.Store({
     },
     async updateDNSTls({ commit, dispatch }, { tlsName, tls }) {
       commit("updateDNS", { tlsName, tls });
-      if (tls == true && tlsName) {
-        dispatch("updateDNS");
+      if (tls == true && !tlsName) {
+        return;
       }
+      dispatch("updateDNS");
     },
     async addDashboardMessage({ state, commit }, message) {
       commit("updateDashboard", {

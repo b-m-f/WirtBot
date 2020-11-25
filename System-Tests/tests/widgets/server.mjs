@@ -88,7 +88,7 @@ export const addServer = async (page, { ip, port, hostname, subnet, name }) => {
     }
 };
 export const updateServer = async (page, server) => {
-    addServer(page, server);
+    await addServer(page, server);
 };
 
 export const downloadConfig = async (page) => {
