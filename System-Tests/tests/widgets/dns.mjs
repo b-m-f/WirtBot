@@ -53,8 +53,8 @@ export const setDNSIP = async (page, ip) => {
     const two = await dns.$("input[name='2']");
     const three = await dns.$("input[name='3']");
     const four = await dns.$("input[name='4']");
-    await one.fill(ip[0]);
-    await two.fill(ip[1]);
-    await three.fill(ip[2]);
-    await four.fill(ip[3]);
+    await one.fill(ip[0].toString());
+    await two.fill(ip[1].toString());
+    await three.fill(ip[2].toString());
+    await four.fill(ip[3].toString());
 };
