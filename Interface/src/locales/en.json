@@ -48,7 +48,8 @@
         "title": "DNS",
         "ip": "IP address of DNS server to use for resolving names",
         "tls": "Use DNSoverTLS ?",
-        "tlsName": "Specify the hostname for the DNSoverTLS server"
+        "tlsName": "Specify the hostname for the DNSoverTLS server",
+        "invalidTLSName": "Enter the name without any protocols"
       },
       "devices": {
         "title": "My devices",

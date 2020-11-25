@@ -18,6 +18,8 @@
         :value="tlsName"
         name="tlsname"
         required
+        :invalidMessage="$t('dashboard.widgets.dns.invalidTLSName')"
+        :validate="validateDNSTLSName"
         @change="updateTlsName"
       />
     </div>
@@ -53,6 +55,16 @@ export default {
     },
     updateTlsName(name) {
       this.$store.dispatch("updateDNSTls", { tlsName: name, tls: true });
+    },
+    validateDNSTLSName(name) {
+      if (
+        name.includes("https://") ||
+        name.includes("http://") ||
+        name.includes("tls://")
+      ) {
+        return false;
+      }
+      return true;
     },
   },
 };
