@@ -1,50 +1,45 @@
 <template>
   <div id="ip-inputs">
-    <input
+    <NumberInput
       ref="ip-1"
-      type="number"
-      name="1"
-      min="1"
-      max="255"
+      :name="'1'"
+      :min="1"
+      :max="255"
       v-on:keyup.enter="() => focusNext(2)"
-      placeholder="000"
+      :placeholder="'000'"
       @change="(e) => updateIp(e, 0)"
       :value="this.ip[0]"
     />
     <span>.</span>
-    <input
+    <NumberInput
       ref="ip-2"
-      type="number"
-      name="2"
-      min="0"
-      max="255"
+      :name="'2'"
+      :min="0"
+      :max="255"
       v-on:keyup.enter="() => focusNext(3)"
-      placeholder="000"
+      :placeholder="'000'"
       @change="(e) => updateIp(e, 1)"
       :value="this.ip[1]"
     />
     <span>.</span>
-    <input
+    <NumberInput
       ref="ip-3"
-      type="number"
-      name="3"
-      min="0"
-      max="255"
+      :name="'3'"
+      :min="0"
+      :max="255"
       v-on:keyup.enter="() => focusNext(4)"
-      placeholder="000"
+      :placeholder="'000'"
       @change="(e) => updateIp(e, 2)"
       :value="this.ip[2]"
     />
     <span>.</span>
-    <input
+    <NumberInput
       ref="ip-4"
-      type="number"
-      name="4"
-      id
-      min="1"
-      max="255"
+      :name="'4'"
+      :min="1"
+      :max="255"
       v-on:keyup.enter="() => focusNext(5)"
-      placeholder="000"
+      :placeholder="'000'"
       @change="(e) => updateIp(e, 3)"
       :value="this.ip[3]"
     />
@@ -52,7 +47,9 @@
 </template>
 
 <script>
+import NumberInput from "components/Inputs/Number";
 export default {
+  components: { NumberInput },
   props: {
     ip: {
       type: Array,
@@ -66,10 +63,10 @@ export default {
         this.$refs[map[next]].focus();
       }
     },
-    updateIp(event, index) {
+    updateIp(ip, index) {
       let newValue;
       try {
-        newValue = parseInt(event.target.value);
+        newValue = parseInt(ip);
       } catch (error) {
         return;
       }
