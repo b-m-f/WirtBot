@@ -7,7 +7,7 @@
 - name: do not allow Pass Auth
   replace:
     dest: "/etc/ssh/sshd_config"
-    regexp: "PasswordAuthentication yes"
+    regexp: "#PasswordAuthentication yes"
     replace: "PasswordAuthentication no"
 
 - name: only allow maintainer to ssh in
