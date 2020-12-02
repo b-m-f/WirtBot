@@ -1,0 +1,31 @@
+## Network:
+
+#Port 22
+#AddressFamily any
+#ListenAddress 10.10.0.1 This cant be set yet, since SSHD starts before the WirtBot docker will create the interface
+#ListenAddress ::
+
+## Authentication:
+PermitRootLogin no
+MaxAuthTries 3
+ChallengeResponseAuthentication no
+UsePAM no
+PubkeyAuthentication yes
+PermitEmptyPasswords no
+PasswordAuthentication no
+AllowUsers {{ maintainer_username }}
+
+
+## Others:
+X11Forwarding yes
+PrintMotd no
+
+# no default banner path
+#Banner none
+
+# Allow client to pass locale environment variables
+AcceptEnv LANG LC_*
+
+# override default of no subsystems
+Subsystem sftp	/usr/lib/openssh/sftp-server
+

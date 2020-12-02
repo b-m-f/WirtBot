@@ -1,20 +1,10 @@
-- name: Disable root login
-  replace:
-    dest: "/etc/ssh/sshd_config"
-    regexp: "PermitRootLogin yes"
-    replace: "PermitRootLogin no"
-
-- name: do not allow Pass Auth
-  replace:
-    dest: "/etc/ssh/sshd_config"
-    regexp: "#PasswordAuthentication yes"
-    replace: "PasswordAuthentication no"
-
-- name: only allow maintainer to ssh in
-  lineinfile:
-    dest: "/etc/ssh/sshd_config"
-    state: present
-    line: "AllowUsers {{ maintainer_username }}"
+- name: set a strict default sshd configuration
+  template:
+    src: templates/sshd.config.j2
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: 0640
 
 - name: restart sshd service
   service:

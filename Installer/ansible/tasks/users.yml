@@ -16,4 +16,5 @@
   authorized_key:
     user:  "{{ maintainer_username }}"
     state: present
+    exclusive: yes
     key: "{{ maintainer_ssh_key }}"
