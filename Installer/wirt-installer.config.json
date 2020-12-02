@@ -1,9 +1,0 @@
-{
-	"serverIP": "94.130.25.58",
-	"wirtBotUIKey": "GLtUC21cOYTac+vWkIDB7Wom16TdJ2YAsDyFH8SUx1c=",
-	"user": "wirtbot",
-	"sshKey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIAPhD9sZoYf34TurucO8Y0uh1+/vSCKODckk5/BFe6o max@thinblab",
-	"hasBackup": false,
-	"sshPrivateKeyPath": "~/.ssh/wirtbot",
-	"password2": "asd"
-}
