@@ -184,7 +184,7 @@ const store = new Vuex.Store({
       commit("updateDashboard", { widgets: widgetsWithoutWidget });
     },
     async updateServer({ state, commit, dispatch }, server) {
-      if (!state.server.keys) {
+      if (!state.server.keys && !server.keys) {
         server.keys = await getKeys();
       }
       commit("updateServer", server);
@@ -244,10 +244,12 @@ const store = new Vuex.Store({
     },
     async addDevice(
       { commit, dispatch, state },
-      { id, name, ip, type, routed, additionalDNSServers, MTU }
+      { id, name, ip, type, routed, additionalDNSServers, MTU, keys }
     ) {
       try {
-        const keys = await getKeys();
+        if (!keys) {
+          keys = await getKeys();
+        }
         const newDevice = await addConfigToDevice(
           { id, keys, name, ip, type, routed, additionalDNSServers, MTU },
           state.server

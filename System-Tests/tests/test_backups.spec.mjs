@@ -67,8 +67,16 @@ export default async (browser) => {
 
             const downloadedDeviceConfig = await readFile(`${deviceConfigPath}`, "utf-8");
             const downloadedServerConfig = await readFile(`${serverConfigPath}`, "utf-8");
-            assert.deepStrictEqual(downloadedDeviceConfig.keys, json.devices[0].keys);
-            assert.deepStrictEqual(downloadedServerConfig.keys, 2);
+
+            const devicePrivateKeyFromDownloadedConfig = downloadedDeviceConfig
+                .match(/PrivateKey = .*/)[0]
+                .replace("PrivateKey = ", "");
+            const serverPrivateKeyFromDownloadedConfig = downloadedServerConfig
+                .match(/PrivateKey = .*/)[0]
+                .replace("PrivateKey = ", "");
+
+            assert.deepStrictEqual(devicePrivateKeyFromDownloadedConfig, json.devices[1].keys.private);
+            assert.deepStrictEqual(serverPrivateKeyFromDownloadedConfig, json.server.keys.private);
 
         }
 
