@@ -30,7 +30,7 @@ COPY Interface/.env Interface/.env
 COPY Interface/.env.development Interface/.env.development
 
 # Compile and package wasm
-RUN cd Shared-Libs/crypto && npm ci && npm run build && cd -
+RUN cd Shared-Libs/crypto && npm ci && npm run build
 
 # Build interface
 WORKDIR '/wirtbot/Interface'
