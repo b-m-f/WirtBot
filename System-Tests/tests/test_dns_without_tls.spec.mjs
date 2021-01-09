@@ -53,9 +53,4 @@ export default async (browser) => {
         console.error(error);
         throw error;
     }
-
-
-    // backup
-    // let json = JSON.parse(data);
-    // assert(typeof json.deviceTypes === 'object')
 };
