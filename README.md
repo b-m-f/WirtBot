@@ -8,9 +8,17 @@
 
 Welcome to the [WirtBot](https://wirtbot.com) repository.
 
-## Run in Docker
+## What is this for?
 
-Check out [this page](https://wirtbot.com/documentation/setup.html#docker)
+Think of it as your LAN extended over the whole internet, but only accessible to your devices.
+
+- Do you want **replace your [GoogleDrive, AppleCloud etc.]** with [Nextcloud](https://nextcloud.com/)?
+- Want to **safely resolve DNS**?
+- Developing an App/Website on your machine and want to **show it off live on your phone via the internet**?
+- Have loads of **IOT devices** that you want to be able to **communicate safely** with each other?
+
+A WirtBot got you covered. 
+
 
 
 ## Setup WirtBot VPS
@@ -25,19 +33,12 @@ Check out [this page](https://wirtbot.com/documentation/setup.html#docker)
 - **Assume control of WirtBot by importing generated initial configuration**
 - **Done**
 
-## What is this for?
+## Run in Docker
 
-Think of it as your LAN extended over the whole internet, but only accessible to your devices.
-
-- Do you want **replace your [GoogleDrive, AppleCloud etc.]** with [Nextcloud](https://nextcloud.com/)?
-- Want to **safely resolve DNS**?
-- Developing an App/Website on your machine and want to **show it off live on your phone via the internet**?
-- Have loads of **IOT devices** that you want to be able to **communicate safely** with each other?
-
-A WirtBot got you covered. 
+Check out [this page](https://wirtbot.com/documentation/setup.html#docker)
 
 
-## How?
+## How is the WirtBot built?
 
 **WirtBot** is a system/robot that is designed after the UNIX philosophy. 
 Many small parts that do a job and do it well. Putting special importance into correct configuration.
