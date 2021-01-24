@@ -227,19 +227,44 @@ const store = new Vuex.Store({
       dispatch("sendConfigUpdatesToAPI");
       dispatch("updateDNS");
     },
-    async updateDNS({ state, commit }) {
+    async updateDNS({ state, commit, dispatch }) {
       commit("updateDNSConfig", generateDNSFile(state.server, state.devices, state.network));
+      let success = false;
       if (state.network.dns.name) {
-        updateDNSConfigViaApi(state.network.dns.config, `wirtbot.${state.network.dns.name}`);
+        success = await updateDNSConfigViaApi(state.network.dns.config, `wirtbot.${state.network.dns.name}`);
       } else {
-        updateDNSConfigViaApi(state.network.dns.config, `${state.server.subnet.v4}1`);
+        success = await updateDNSConfigViaApi(state.network.dns.config, `${state.server.subnet.v4}1`);
+      }
+      if (success) {
+        dispatch(
+          "alerts/addSuccess",
+          `${i18n.t("success.updateSuccessDNS")}`
+        );
+
+      } else {
+        dispatch(
+          "alerts/addWarning",
+          `${i18n.t("warnings.updateFailDNS")}`
+        );
       }
     },
-    async sendConfigUpdatesToAPI({ state }) {
+    async sendConfigUpdatesToAPI({ state, dispatch }) {
+      let success = false;
       if (state.network.dns.name) {
-        updateServerViaApi(state.server.config, `wirtbot.${state.network.dns.name}`);
+        success = await updateServerViaApi(state.server.config, `wirtbot.${state.network.dns.name}`);
       } else {
-        updateServerViaApi(state.server.config, `${state.server.subnet.v4}1`);
+        success = await updateServerViaApi(state.server.config, `${state.server.subnet.v4}1`);
+      }
+      if (success) {
+        dispatch(
+          "alerts/addSuccess",
+          `${i18n.t("success.updateSuccessConfig")}`
+        );
+      } else {
+        dispatch(
+          "alerts/addWarning",
+          `${i18n.t("warnings.updateFailConfig")}`
+        );
       }
     },
     async addDevice(

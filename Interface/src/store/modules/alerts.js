@@ -18,12 +18,19 @@ export default {
     }
   },
   actions: {
-    add({ commit }, { message, type }) {
+    add({ state, commit, dispatch }, { message, type }) {
       const id = new Date().getTime();
-      commit("add", { message, type, id });
-      window.setTimeout(() => {
-        commit("remove", id);
-      }, 2000);
+      const existingAlert = state.alerts.find(item => item.message === message)
+      if (existingAlert) {
+        commit("remove", existingAlert.id);
+        dispatch("add", { message, type })
+      } else {
+        commit("add", { message, type, id });
+        window.setTimeout(() => {
+          commit("remove", id);
+        }, 2000);
+
+      }
     },
     addInfo({ dispatch }, message) {
       dispatch("add", { type: "info", message });
