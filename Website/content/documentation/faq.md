@@ -15,9 +15,5 @@ Make sure that you have connected to you server via SSH at least once succesfull
 ## Who is building this?
 
 My name is [Maximilian Ehlers](https://ehlers.berlin). A developer living in Berlin.
-I am currently back in university to finish my masters degree and develop this system simultaneously.
 
-Responsible for the UI is [Tabitha Tan](https://tabithatxc.com), a UX developer from Singapore.
-
-
-
+The initial UI design from is [Tabitha Tan](https://tabithatxc.com), a UX researcher from Singapore.
