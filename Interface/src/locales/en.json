@@ -141,7 +141,9 @@
     "noFileSelected": "Please select a file to import first.",
     "noServer": "No server was configured.",
     "wrongIPv6": "Not a correct IPv6 address",
-    "serverPort": "Port must be between 1024 and 65636"
+    "serverPort": "Port must be between 1024 and 65636",
+    "updateFailDNS": "Error when updating the DNS records on the WirtBot. Please check the browser console for more info",
+    "updateFailConfig": "Error when updating the config on the WirtBot. Please check the browser console for more info"
   },
   "infos": {
     "generatingKeys": "Keys are being generated"
@@ -149,7 +151,9 @@
   "success": {
     "deviceRemoved": "Device removed",
     "keysGenerated": "Keys were generated successfully.",
-    "copyToClipBoard": "Copied"
+    "copyToClipBoard": "Copied",
+    "updateSuccessDNS": "DNS successfully updated",
+    "updateSuccessConfig": "Config successfully updated"
   },
   "errors": {
     "backupNotCompatible": "The backup has a newer version than the app and is not comptaible",

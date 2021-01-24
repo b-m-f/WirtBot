@@ -96,7 +96,7 @@ export const addNewDevice = async (page, { ip: { v4, v6 }, name, type, additiona
         await setMTU(device, MTU);
     }
     // wait to propagate changes to the Core
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(1000);
 };
 
 export const updateDevice = async (page, oldName, { ip: { v4, v6 }, name, type, additionalDNSServers, MTU }) => {
