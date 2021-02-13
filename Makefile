@@ -18,7 +18,6 @@ dev-setup:
 	cd ./Shared-Libs/crypto && npm ci && npm run build && cd - && \
 	cd ./Shared-Libs/config-generators && npm ci && npm run build && cd - && \
 	cd ./Website && npm ci && cd - && \
-	cd ./Installer && npm ci && cd - && \
 	cd ./Interface && npm ci && cd -
 
 ## Run complete WirtBot
@@ -40,13 +39,10 @@ test-unit:
 	cd ./Shared-Libs/crypto && npm run test && cd - && \
 	cd ./Shared-Libs/config-generators && npm run test && cd - && \
 	cd ./Website && npm run test && cd - && \
-	cd ./Installer && npm run test && cd - && \
 	cd ./Interface && npm run test && cd -
 
 test-unit-ci:
 	docker-compose -f Build-Automation/Unit-Tests/test.yml up --abort-on-container-exit --build --remove-orphans
-test-installer:
-	docker-compose -f Build-Automation/Installer-Tests/test.yml up --abort-on-container-exit --build --remove-orphans
 
 
 
