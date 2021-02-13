@@ -1,6 +1,4 @@
 **/node_modules
 **/target
 testwirtbot.conf
-Build-Automation/System-Tests/compose/test-server-conf
-Build-Automation/System-Tests/compose/test-Corefile
 
