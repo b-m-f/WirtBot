@@ -6,6 +6,7 @@ import { getConfig as getServerConfig, downloadConfig as downloadServerConfig } 
 import { getConfig as getDeviceConfig, downloadConfig as downloadDeviceConfig } from "./widgets/devices.mjs";
 import { getConfig as getDNSConfig } from "./widgets/dns.mjs";
 import { getConfig as getNetworkConfig } from "./widgets/network.mjs";
+import { skipInitialConfig } from "./widgets/initial_setup.mjs"
 
 
 const { readFile } = fsPromises;
@@ -17,6 +18,7 @@ export default async (browser) => {
     try {
         const page = await browser.newPage();
         await page.goto(process.env.URL);
+        await skipInitialConfig(page);
 
         let backups = ["./backups/1.4.5.json"];
 
