@@ -21,6 +21,11 @@
     "privacy": "Privacy & cookies",
     "donation": "Donations for the server costs of the WirtBot website are appreciated and accepted via <a target='_blank' rel='noopener noreferrer' href='https://ethereum.org/' >Ethereum</a> address {{address}}"
   },
+  "firstUse": {
+    "welcome": "Welcome to this WirtBot",
+    "pleaseAddConfig": "Please paste the initial config provided by the WirtBot core",
+    "connect": "Connect to WirtBot"
+  },
   "dashboard": {
     "widgets": {
       "network": {

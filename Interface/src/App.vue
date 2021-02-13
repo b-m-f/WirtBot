@@ -3,9 +3,10 @@
   <div :class="{ app: true, mobile: isMobilePage, desktop: !isMobilePage }">
     <Header />
     <Alerts id="alerts" />
-    <main id="app-window">
+    <main id="app-window" v-if="isConnectedToWirtBot">
       <router-view></router-view>
     </main>
+    <FirstUse v-else>lets go</FirstUse>
     <Footer></Footer>
   </div>
 </template>
@@ -14,12 +15,14 @@
 import Header from "components/Header";
 import Footer from "components/Footer";
 import Alerts from "components/Alerts";
+import FirstUse from "./pages/FirstUse/FirstUse";
 import { assumedWidthThresholdToBeMobileDevice } from "./variables";
+
 export default {
   props: {
     source: String,
   },
-  components: { Header, Alerts, Footer },
+  components: { Header, Alerts, Footer, FirstUse },
   data: () => ({
     drawer: null,
     file: null,
@@ -31,6 +34,9 @@ export default {
     isMobilePage() {
       return this.$store.state.websiteBeingViewedOnMobileDevice;
     },
+    isConnectedToWirtBot(){
+      return this.$store.state.dashboard.firstUse || this.$store.state.keys.private && this.$store.state.keys.public
+    }
   },
   beforeCreate() {
     if (window.innerWidth < assumedWidthThresholdToBeMobileDevice) {
