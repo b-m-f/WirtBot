@@ -31,7 +31,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   modules: { alerts },
   state: {
-    version: "1.5.8",
+    version: "2.0.0",
     keys: { public: undefined, private: undefined },
     server: {
       ip: { v4: [undefined, undefined, undefined, undefined], v6: "" },
