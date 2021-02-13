@@ -2,7 +2,6 @@
 sidebarDepth: 2
 ---
 
-
 # What is WirtBot®?
 
 The WirtBot is a system designed to take you into Cyberspace safely.
@@ -15,8 +14,6 @@ It has a few properties that make this safe and secure:
 - Stealthy as Sam Fisher. Its there, but no one will know. No open ports except for WireGuard, which can not be port-scanned.
 - High speed. By having WireGuard integrated directly into the Linux Kernel, which a WirtBot uses, your network will be blazing fast.
 
-Convinced? Want a WirtBot?
+Convinced and want a WirtBot?
 
-Check out [this page](/documentation/setup) to set one up with the provided installer. Its completely free (Except for the server/VPS you need to rent)! 
-
-Still got questions? Reach me at `contact at wirt.network`.
+Check out [this page](/documentation/setup) to set one up. Its completely free (Except for the server/VPS you run it on)!

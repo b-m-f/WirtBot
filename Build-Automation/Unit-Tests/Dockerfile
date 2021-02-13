@@ -50,7 +50,6 @@ RUN touch /etc/coredns/Corefile
 
 COPY Core/ Core/
 COPY Website/ Website/
-COPY Installer/ Installer/
 COPY Interface Interface
 COPY Shared-Libs Shared-Libs
 COPY Makefile .
