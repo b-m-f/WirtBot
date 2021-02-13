@@ -31,12 +31,7 @@ export default {
   components: { Button },
   computed: {
     publicKey() {
-      if (this.$store.state.keys) {
-        return this.$store.state.keys["public_key"];
-      } else {
-        this.$store.dispatch("generateKeys");
-        return "";
-      }
+      return this.$store.state.keys["public"];
     },
   },
   methods: {

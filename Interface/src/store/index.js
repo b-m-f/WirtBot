@@ -32,7 +32,7 @@ const store = new Vuex.Store({
   modules: { alerts },
   state: {
     version: "1.5.8",
-    keys: undefined,
+    keys: { public: undefined, private: undefined },
     server: {
       ip: { v4: [undefined, undefined, undefined, undefined], v6: "" },
       port: undefined,
@@ -139,6 +139,9 @@ const store = new Vuex.Store({
     }
   },
   actions: {
+    async setKeys({ commit }, keys) {
+      commit("setKeys", keys);
+    },
     async generateKeys({ commit }) {
       const keys = await generateSigningKeys();
       commit("setKeys", keys);
