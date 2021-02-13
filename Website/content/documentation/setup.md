@@ -1,78 +1,14 @@
 # Setup
 
+## Dependencies
 
+To set up a WirtBot you must first make sure that your machine has the following dependencies installed:
 
-## WirtBot® VPS
+- Linux Kernel > 5.6 or the WireGuard® Kernel Module
+- Docker
+- docker-compose
 
-So you want a WirtBot, I can totally understand that.
-
-You will need a few things to be able to set one up.
-
-### Prerequisites
-- A server with a public IP on the internet. Simply rent a cheap VPS
-- Root access on this server
-- Knowledge of how to execute commands on the terminal
-
-When that is all sorted make sure that you have an SSH key. 
-If you do not have one yet you can follow [this tutorial](https://www.ssh.com/ssh/keygen/).
-You will need the content of the `.pub` file that will be created. The installer will ask for the contents of that file.
-
-
-### Dependencies
-
-The following programs are needed for the initail install of the WirtBot and to keep it up to date later on.
-
-- [ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
-- [sshpass](https://gist.github.com/arunoda/7790979) (necessary to login via SSH to your servers root user via password for the setup)
-- [node > 14](https://nodejs.org/en/download/) with `npm`
-
-
-### Installer
-Alright, time to get the installer: `npm install -g @wirtbot/installer`. 
-
-Once installed run `wirtbot-installer` and the installer will now take you through the rest of the setup.
-After answering all the questions wait until the setup is done, this can take up to **20 minutes**. Just be patient and follow the things that are printed to the terminal if you like to know what is happening.
-
-And then you are done with the first part. Congrats, your private WirtBot is set up.
-
-**The installer will have created a few files in the directory you ran it in. Save them to make future updating a breeze!**
-
-### First access
-But how do you access it? After all the WirtBot is completely hidden on the normal internet.
-
-Simple: during the setup an initial network is set up automatically that you can join with the `UseThisWireGuardConfigurationToConnectToYourWirtBot.conf` file that was created by the installer.
-Use this with the WireGuard® client for your system, you can check [this site](/documentation/join-a-network) and hopefully it will have a guide for your operating system as well.
-
-To test that everything worked head to [wirtbot.wirt.internal](http://wirtbot.wirt.internal). 
-This should be taking you to the, still empty, WirtBot interface.
-
-### Getting some data into the interface
-
-So the Dashboard is empty, but a network already exists. How do get access to that information?
-
-At the bottom you will find the `import` functionality.
-Choose the `ImportThisFileIntoYourWirtBotInterface.json` that the installer created and import it.
-
-**Do not skip this import, besides the initial network configuration this imports cryptographic keys that make sure that only your computer can configure the WirtBot, and everyone else in your network simply sees an empty Dashboard**.
-
-
-Congrats. You are done, or well, ready to go and build the network of your dreams!
-
-
-
-Good luck, have fun and maybe share a few cool projects you were able to put into existence.
-
-#### Updating
-
-Run `npm install -g @wirtbot/installer` to update the installer with the newest changes.
-
-Now run it with `wirtbot-installer` and choose the update option.
-
-## Docker
-
-The WirtBot docker image needs **NET_ADMIN** capabilities and:
-
-- Linux Kernel > 5.6 || WireGuard® Kernel Module
+## Initial setup
 
 Here is an example `docker-compose.yml` for a WirtBot with DNS:
 
@@ -83,6 +19,7 @@ services:
   WirtBot:
     image: bmff/wirtbot:test
     network_mode: host
+    container_name: WirtBot
     ports:
       - 80:80
       - 3030:3030
@@ -94,7 +31,6 @@ services:
       - /etc/wireguard:/etc/wireguard
       - ./data:/dns
     environment:
-      - "PUBLIC_KEY={{ wirtui_public_key }}"
       - "PORT=3030"
       - "MANAGED_DNS_ENABLED=1"
       - "MANAGED_DNS_DEVICE_FILE=/dns/Corefile"
@@ -102,6 +38,7 @@ services:
   coredns:
     network_mode: host
     image: coredns/coredns
+    container_name: WirtBotDNS
     ports:
       - 53:53/udp
     restart: "unless-stopped"
@@ -110,4 +47,27 @@ services:
       - ./data:/v
 ```
 
-To see the most up to date version to run the WirtBot also check [this file](https://github.com/b-m-f/WirtBot/tree/master/Build-Automation/WirtBot/example.yml).
+Copy this configuration into a file on the machine and run `docker-compose up -d`.
+Docker will now take care of downloading the WirtBot and CoreDNS containers and wiring them up.
+
+You can check the progress with `docker logs -f WirtBot`.
+Once the setup is finished you should see a message like this:
+
+```
+A new keypair for communication between Core and UI was generated
+Please import the following text into your dashboard to take control of this WirtBot
+```
+
+followed by a long string.
+
+To take control of the WirtBot via your browser you can now reach the Interface at the IP address of your machine in the browser.
+Simple paste the above mentioned string into the input box that should be shown to you and click on the `Connect` button.
+
+Done. You are now in control of the WirtBot via your browser.
+
+## Setting up your network
+
+Now it is time to set up your network. Fill out the server section first, according to your needs. In the example configuration WireGuard will be listening at Port 10101.
+
+After adding the server go ahead and add as many devices as you want.
+Once the network is established you might want to start closin down the Interface via Firewall rules.
