@@ -1,2 +1,0 @@
-- Public and private keys are always base64 encoded
-- All payloads must be signed with private key of the UI
