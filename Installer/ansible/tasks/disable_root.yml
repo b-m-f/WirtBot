@@ -1,2 +1,0 @@
-- name: disable root account by deleting its password
-  command: passwd -dl root
