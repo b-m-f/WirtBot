@@ -70,4 +70,19 @@ Done. You are now in control of the WirtBot via your browser.
 Now it is time to set up your network. Fill out the server section first, according to your needs. In the example configuration WireGuard will be listening at Port 10101.
 
 After adding the server go ahead and add as many devices as you want.
-Once the network is established you might want to start closin down the Interface via Firewall rules.
+
+You should also take note of the **Public Key** that is shown to you in the **Settings** section of the Dasboard.
+In order to stay in control of the WirtBot when it restarts you must tell it to keep trusting this Key.
+
+Do this by adding it to the environment variables in the `docker-compose` file like so:
+
+```
+    environment:
+      - "PUBLIC_KEY=your_public_key_from_the_settings_section"
+      - "PORT=3030"
+      - "MANAGED_DNS_ENABLED=1"
+      - "MANAGED_DNS_DEVICE_FILE=/dns/Corefile"
+      - "CONFIG_PATH=/etc/wireguard/server.conf"
+```
+
+Now that the network is established you might want to start closing down the Interface and WirtBot via Firewall rules.

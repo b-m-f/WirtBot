@@ -10,21 +10,18 @@ in this order.
 
 To guarantee that only the user who owns the WirtBot can update it, the Interface's public key has to be provided when running the WirtBot to verify payloads with the Interface's signature.
 
-
 ## Compilation
 
 - Install rust and cargo with https://rustup.rs/
 - `cargo build --release`
 
-
 ## Configuration options
 
 The WirtBot is configured with environment variables:
 
-- **PUBLIC_KEY**: Public key of Interface
-
 ### Optional
 
+- **PUBLIC_KEY**: Public key of Interface. Will create a keypair if ommited
 - **HOST**: the host address to listen on
 - **PORT**: the port to listen on
 - **CONFIG_PATH**: path to WireGuard configuration
