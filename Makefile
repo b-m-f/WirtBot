@@ -5,7 +5,6 @@ dev: dev-client dev-server
 dev-server:
 	rm -rf /tmp/WirtBotTests && mkdir /tmp/WirtBotTests && \
 	cd ./Core && \
-	PUBLIC_KEY=1lLU3VhXsrSGMxESmqfY4m2oEVkpfEHyKlCQU6MMPsI= \
 	ALLOWED_ORIGIN=http://localhost:8080 \
 	RUST_LOG=debug MANAGED_DNS_ENABLED=1 \
 	MANAGED_DNS_DEVICE_FILE=/tmp/WirtBotTests/Corefile \

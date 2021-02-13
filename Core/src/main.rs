@@ -1,6 +1,10 @@
-use base64::decode;
-use ed25519_dalek::{Digest, PublicKey, Sha512, Signature, PUBLIC_KEY_LENGTH, SIGNATURE_LENGTH};
+use base64::{decode, encode};
+use ed25519_dalek::{
+    Digest, Keypair, PublicKey, Sha512, Signature, PUBLIC_KEY_LENGTH, SIGNATURE_LENGTH,
+};
+use rand::rngs::OsRng;
 use serde::{Deserialize, Serialize};
+use serde_json::json;
 use std::convert::Infallible;
 use std::env;
 use std::fs::OpenOptions;
@@ -113,7 +117,21 @@ fn get_key() -> String {
     let key = "PUBLIC_KEY";
     match env::var(key) {
         Ok(val) => return val,
-        Err(_) => panic!("No public key was specified"),
+        Err(_) => {
+            let mut csprng = OsRng {};
+            let keypair: Keypair = Keypair::generate(&mut csprng);
+            std::println!("A new keypair for communication between Core and UI was generated");
+
+            let new_conf = json!({
+                "keys": {
+                    "private": base64::encode(keypair.secret),
+                    "public": base64::encode(keypair.public)
+                },
+            });
+            std::println!("Please import the following text into your dashboard to take control of this WirtBot");
+            std::println!("{}", base64::encode(new_conf.to_string()));
+            return base64::encode(keypair.public);
+        }
     }
 }
 
