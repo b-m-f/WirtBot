@@ -66,13 +66,13 @@
       </h1>
       <ul>
         <li>
-          <h2>1. Build a WirtBot</h2>
+          <h2>1. Start a WirtBot with Docker</h2>
           <div>
             <p></p>
           </div>
         </li>
         <li>
-          <h2>2. Configure your WirtBot using the WirtUI</h2>
+          <h2>2. Configure your WirtBot using its Browser Interfacer</h2>
           <div>
             <p></p>
           </div>
