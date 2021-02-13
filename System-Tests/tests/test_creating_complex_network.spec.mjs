@@ -9,6 +9,7 @@ import { setDNSName } from "./widgets/network.mjs";
 import { setDNSTlsName, enableDNSTLS, setDNSIP } from "./widgets/dns.mjs";
 import { updateServer, addServer, downloadConfig as downloadServerConfig } from "./widgets/server.mjs";
 import { addNewDevice, downloadConfig as downloadDeviceConfig } from "./widgets/devices.mjs";
+import { skipInitialConfig } from "./widgets/initial_setup.mjs"
 
 // This is where the Core writes its updates
 const wirtBotFileDir = "/tmp/WirtBotTests";
@@ -17,6 +18,7 @@ export default async (browser) => {
     try {
         const page = await browser.newPage();
         await page.goto(process.env.URL);
+        await skipInitialConfig(page);
 
         await setDNSName(page, "test");
         // The DNS name has to set to .test to work in CI where the wirtbot is in the .test zone
