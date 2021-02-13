@@ -23,6 +23,7 @@ module.exports = {
             ["issues", "New features & Bugs"],
           ],
           "/announcements/": [
+            ["update-4", "Update 4: WirtBot weight loss and a nasty bug"],
             ["update-3", "Update 3: With confidence into the unknown"],
             ["22-11-20", "22.11.20: Installer change and major Interface + System-Tests refactor"],
             ["8-11-20", "8.11.20: New name for installer binary"],
