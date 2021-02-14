@@ -24,8 +24,5 @@
   "bugs": {
     "url": "https://github.com/b-m-f/WirtBot/issues"
   },
-  "homepage": "https://github.com/b-m-f/WirtBot#readme",
-  "dependencies": {
-    "wasm-pack": "0.9.1"
-  }
+  "homepage": "https://github.com/b-m-f/WirtBot#readme"
 }

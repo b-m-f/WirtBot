@@ -1,5 +1,5 @@
 ### Image to build the Interface
-FROM amd64/node:buster as interface
+FROM node:buster as interface
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -30,6 +30,7 @@ COPY Interface/.env Interface/.env
 COPY Interface/.env.development Interface/.env.development
 
 # Compile and package wasm
+RUN cargo install wasm-pack
 RUN cd Shared-Libs/crypto && npm ci && npm run build
 
 # Build interface
@@ -42,7 +43,7 @@ RUN npm ci && npm run build
 
 
 ### Image to build WirtBot
-FROM arm64v8/rust:slim as builder
+FROM rust:slim as builder
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -54,7 +55,7 @@ COPY Core/Cargo.lock Cargo.lock
 RUN cargo build --release --target-dir /builder/artifact
 
 ### Build necessary tooling
-FROM arm64v8/debian:buster-slim as wireguard
+FROM debian:buster-slim as wireguard
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt update && apt upgrade -yy
 RUN apt-get install make gcc xz-utils -yy

@@ -30,6 +30,7 @@ COPY Interface/.env Interface/.env
 COPY Interface/.env.development Interface/.env.development
 
 # Compile and package wasm
+RUN cargo install wasm-pack
 RUN cd Shared-Libs/crypto && npm ci && npm run build
 
 # Build interface
