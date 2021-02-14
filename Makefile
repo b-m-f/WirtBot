@@ -4,6 +4,8 @@ SHELL := /bin/bash
 dev: dev-client dev-server
 dev-server:
 	rm -rf /tmp/WirtBotTests && mkdir /tmp/WirtBotTests && \
+	touch /tmp/WirtBotTests/server.conf && \
+	touch /tmp/WirtBotTests/Corefile && \
 	cd ./Core && \
 	ALLOWED_ORIGIN=http://localhost:8080 \
 	RUST_LOG=debug MANAGED_DNS_ENABLED=1 \
