@@ -1,6 +1,6 @@
 {
   "name": "@wirtbot/website",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "author": "b-m-f <max@ehlers.berlin>",
   "description": "Documentation for https://wirtbot.com",
   "main": "index.js",
