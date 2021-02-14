@@ -63,7 +63,7 @@ WORKDIR /
 
 ENV WG_TOOLS="wireguard-tools-1.0.20200827"
 
-COPY Build-Automation/WirtBot/$WG_TOOLS.tar.xz .
+COPY Build-Automation/WirtBot/$WG_TOOLS.tar.xz ./$WG_TOOLS.tar.xz
 RUN tar xf $WG_TOOLS.tar.xz
 RUN cd $WG_TOOLS/src && make && mv wg / && mv wg-quick/linux.bash /wg-quick && cd /
 
@@ -75,7 +75,7 @@ RUN apt update && apt upgrade -yy
 RUN apt-get install nginx inotify-tools iproute2 -yy
 
 # Set up the s6 overlay init system
-COPY Build-Automation/WirtBot/s6-overlay-amd64-installer-2.1.0.2 /tmp/s6-overlay-amd64-installer
+COPY Build-Automation/WirtBot/s6-overlay-amd64-installer-2.2.0.1 /tmp/s6-overlay-amd64-installer
 RUN chmod +x /tmp/s6-overlay-amd64-installer
 RUN /tmp/s6-overlay-amd64-installer /
 
