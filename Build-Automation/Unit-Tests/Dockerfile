@@ -54,6 +54,7 @@ COPY Interface Interface
 COPY Shared-Libs Shared-Libs
 COPY Makefile .
 
+RUN npm i -g wasm-pack
 RUN make dev-setup
 
 ENTRYPOINT ["make", "test-unit"]
