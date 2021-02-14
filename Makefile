@@ -49,4 +49,4 @@ test-unit-ci:
 update-versions:
 	./update_version.sh
 tag-release:
-	git tag $$(cat .version)
+	git tag v$$(cat .version)
