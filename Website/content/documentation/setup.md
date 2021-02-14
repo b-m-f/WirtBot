@@ -17,7 +17,7 @@ version: "3.4"
 
 services:
   WirtBot:
-    image: bmff/wirtbot:test
+    image: bmff/wirtbot:latest
     network_mode: host
     container_name: WirtBot
     ports:
