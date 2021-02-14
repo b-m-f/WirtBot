@@ -1,8 +1,8 @@
 [Interface]
 Address = 10.11.0.1
 ListenPort = 1234
-PrivateKey = GAIbT2kUdPyuBH7QsbPOlx2TCaNfyKNw6+gEZEoLTVY=
+PrivateKey = aEYrLAUI9YaGN8zm1Dkj/5n4m7PKY3f05BulPIIUXVs=
 
 [Peer]
 AllowedIPs = 10.11.0.2/32
-PublicKey = HUusIlP4xCIYkjMLkyLzU979T/HonsoZsCGNh4PqMWY=
+PublicKey = rQC0eUNPDOb3nEmcgkkf13ishklyZS0ex8R0x0Ak5GQ=
