@@ -45,11 +45,17 @@ Making sure that keys are only regenerated when needed took care of this issue.
 
 Alerts have been added to show up when the configuration on the WirtBot has been updated successfully or failed for some reason.
 
+### Relative Routing
+
+To properly function behind any kind of proxy you might want to use for the interface the routing mode is now set to relative routing.
+
+This should make it possible to proxy to and from the Interface without problems.
+
 ## End
 
 Thats it. Well except for the updated setup documentation that is.
 
-And what is next, now that there is less to take care of? 
+And what is next, now that there is less to take care of?
 
 I am thinking of Metrics, but it might take another couple of months.
 
