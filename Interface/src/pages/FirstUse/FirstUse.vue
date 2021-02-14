@@ -11,6 +11,13 @@
       >
         {{ $t("firstUse.connect") }}
       </button>
+      <button
+        type="button"
+        class="skip"
+        @click="skip"
+      >
+        {{ $t("firstUse.useBackup") }}
+      </button>
   </div>
 </template>
 
@@ -34,6 +41,10 @@ export default {
       connectWirtBot(){
           const keys = JSON.parse(atob(this.config)).keys;
           this.$store.dispatch("setKeys", keys);
+          this.$store.dispatch("disableFirstUse" );
+      },
+      skip(){
+          this.$store.dispatch("disableFirstUse" );
       }
   },
   mounted() {

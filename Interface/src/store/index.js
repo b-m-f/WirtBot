@@ -14,7 +14,6 @@ async function addConfigToDevice(newDevice, server) {
   const config = generateDeviceConfig(newDevice, server);
   if (newDevice.type === "Android" || newDevice.type === "iOS") {
     const qr = await QRCode.toDataURL(config);
-
     return Object.assign({}, newDevice, {
       config,
       qr,

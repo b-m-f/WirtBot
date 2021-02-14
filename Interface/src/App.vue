@@ -35,7 +35,7 @@ export default {
       return this.$store.state.websiteBeingViewedOnMobileDevice;
     },
     isConnectedToWirtBot(){
-      return this.$store.state.dashboard.firstUse || this.$store.state.keys.private && this.$store.state.keys.public
+      return !this.$store.state.dashboard.firstUse || this.$store.state.keys.private && this.$store.state.keys.public
     }
   },
   beforeCreate() {

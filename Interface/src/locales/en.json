@@ -24,7 +24,8 @@
   "firstUse": {
     "welcome": "Welcome to this WirtBot",
     "pleaseAddConfig": "Please paste the initial config provided by the WirtBot core",
-    "connect": "Connect to WirtBot"
+    "connect": "Connect to WirtBot",
+    "useBackup": "Skip and use backup"
   },
   "dashboard": {
     "widgets": {
