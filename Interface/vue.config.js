@@ -4,6 +4,7 @@ const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
 
 module.exports = {
+  publicPath: "./",
   transpileDependencies: [],
   css: {
     loaderOptions: {
