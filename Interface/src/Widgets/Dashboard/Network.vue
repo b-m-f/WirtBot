@@ -10,6 +10,15 @@
         @change="updateDNSName"
       />
     </div>
+    <div class="row">
+      <label>{{ $t("dashboard.widgets.network.apiServerHost") }}</label>
+      <TextInput
+        name="api-name"
+        :value="network.api.host"
+        required
+        @change="updateAPIHost"
+      />
+    </div>
   </div>
 </template>
 
@@ -26,6 +35,10 @@ export default {
     updateDNSName(name) {
       this.$store.dispatch("updateDNSName", name);
     },
+    updateAPIHost(name){
+      this.$store.dispatch("updateAPIHost", name);
+
+    }
   },
 };
 </script>
