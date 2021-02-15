@@ -124,13 +124,13 @@ fn get_key() -> String {
 
             let new_conf = json!({
                 "keys": {
-                    "private": base64::encode(keypair.secret),
-                    "public": base64::encode(keypair.public)
+                    "private": base64::encode(keypair.secret.to_bytes()),
+                    "public": base64::encode(keypair.public.to_bytes())
                 },
             });
             std::println!("Please import the following text into your dashboard to take control of this WirtBot");
             std::println!("{}", base64::encode(new_conf.to_string()));
-            return base64::encode(keypair.public);
+            return base64::encode(keypair.public.to_bytes());
         }
     }
 }
@@ -240,13 +240,13 @@ fn update_device_dns_entries(
 
 #[tokio::main]
 async fn main() {
-    let public_key_base64 = get_key();
-    info!("Loaded public key: {}", public_key_base64);
-    let public_key = decode_public_key_base64(public_key_base64);
-
     // Setup server
     pretty_env_logger::init();
     let log = warp::log("wirt::api");
+    let public_key_base64 = get_key();
+    info!("Loaded public key: {}", public_key_base64);
+    let public_key = decode_public_key_base64(public_key_base64);
+    std::println!("{:?}", public_key);
 
     let allowed_origin: String =
         env::var("ALLOWED_ORIGIN").unwrap_or("http://wirtbot.wirt.internal".into());
