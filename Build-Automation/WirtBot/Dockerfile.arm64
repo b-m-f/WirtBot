@@ -27,7 +27,7 @@ COPY Interface/public Interface/public
 COPY Interface/babel.config.js Interface/babel.config.js
 COPY Interface/vue.config.js Interface/vue.config.js
 COPY Interface/.env Interface/.env
-COPY Interface/.env.development Interface/.env.development
+COPY Interface/.env.test Interface/.env.test
 
 # Compile and package wasm
 RUN cargo install wasm-pack
@@ -38,7 +38,7 @@ WORKDIR '/wirtbot/Interface'
 ## Inject keys into the test interface by doing this, that way the Interface can talk to the WirtBot Core
 ## Which will start with the corresponding public key
 ARG environment=production
-RUN if [ "$environment" = "test" ] ; then rm .env && mv .env.development .env; fi
+RUN if [ "$environment" = "test" ] ; then rm .env && mv .env.test .env; fi
 RUN npm ci && npm run build
 
 

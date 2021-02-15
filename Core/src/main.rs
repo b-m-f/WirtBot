@@ -87,6 +87,7 @@ async fn handle_rejection(err: Rejection) -> Result<impl Reply, Infallible> {
         code = StatusCode::INTERNAL_SERVER_ERROR;
         message = "UNHANDLED_REJECTION";
     }
+    info!("{}", message);
 
     let json = warp::reply::json(&ErrorMessage {
         code: code.as_u16(),
@@ -246,10 +247,8 @@ async fn main() {
     let public_key_base64 = get_key();
     info!("Loaded public key: {}", public_key_base64);
     let public_key = decode_public_key_base64(public_key_base64);
-    std::println!("{:?}", public_key);
 
-    let allowed_origin: String =
-        env::var("ALLOWED_ORIGIN").unwrap_or("http://wirtbot.wirt.internal".into());
+    let allowed_origin: String = env::var("ALLOWED_ORIGIN").unwrap();
     let cors = warp::cors()
         .allow_origin(&allowed_origin[..])
         .allow_methods(vec!["POST"])
@@ -293,13 +292,13 @@ async fn main() {
                     .run((host, port))
                     .await
             }
-            Err(e) => {
+            Err(_e) => {
                 info! {"Running server in HTTP mode"};
                 warp::serve(routes).run((host, port)).await
             }
         },
 
-        Err(e) => {
+        Err(_e) => {
             info! {"Running server in HTTP mode"};
             warp::serve(routes).run((host, port)).await
         }
