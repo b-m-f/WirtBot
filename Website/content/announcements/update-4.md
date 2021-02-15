@@ -51,6 +51,12 @@ To properly function behind any kind of proxy you might want to use for the inte
 
 This should make it possible to proxy to and from the Interface without problems.
 
+### Custom API Endpoint
+
+Since the ansible script and automatic network creation on install are gone it is necessary to be able to specify where updates should be send.
+
+The interface now has an option to specify the hostname/IP of the WirtBot.
+
 ## End
 
 Thats it. Well except for the updated setup documentation that is.

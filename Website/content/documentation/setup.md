@@ -31,6 +31,7 @@ services:
       - /etc/wireguard:/etc/wireguard
       - ./data:/dns
     environment:
+      - "ALLOWED_ORIGIN=IP/HOSTNAME_OF_THE_WIRTBOT_HOST_MACHINE"
       - "PORT=3030"
       - "MANAGED_DNS_ENABLED=1"
       - "MANAGED_DNS_DEVICE_FILE=/dns/Corefile"
@@ -47,7 +48,7 @@ services:
       - ./data:/v
 ```
 
-Copy this configuration into a file on the machine and run `docker-compose up -d`.
+Copy this configuration into a file on the machine, update the "ALLOWED_ORIGIN" variable and run `docker-compose up -d`.
 Docker will now take care of downloading the WirtBot and CoreDNS containers and wiring them up.
 
 You can check the progress with `docker logs -f WirtBot`.
@@ -62,6 +63,8 @@ followed by a long string.
 
 To take control of the WirtBot via your browser you can now reach the Interface at the IP address of your machine in the browser.
 Simple paste the above mentioned string into the input box that should be shown to you and click on the `Connect` button.
+
+The last thing to do is to set the Hostname/IP Address of the machine that WirtBot is running on as the API endpoint. You can do this in the network part of the Dashboard.
 
 Done. You are now in control of the WirtBot via your browser.
 

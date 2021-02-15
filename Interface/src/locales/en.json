@@ -31,7 +31,8 @@
     "widgets": {
       "network": {
         "title": "Network settings",
-        "dnsName": "DNS name to access services in network via their name"
+        "dnsName": "DNS name to access services in network via their name",
+        "apiServerHost":"WirtBot API host"
       },
       "settings": {
         "title": "Settings",

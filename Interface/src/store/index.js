@@ -48,8 +48,9 @@ const store = new Vuex.Store({
     network: {
       dns: {
         name: "wirt.internal", config: "", ip: { v4: [1, 1, 1, 1] },
-        tlsName: "cloudflare-dns.com", tls: true
-      }
+        tlsName: "cloudflare-dns.com", tls: true,
+      },
+      api: { host: `wirtbot.wirt.internal` }
     },
     dashboard: {
       // Messages have to be defined in pages/Dashboard/messages.js
@@ -102,7 +103,13 @@ const store = new Vuex.Store({
       Object.keys(dns).forEach((key) => {
         if (dns[key] !== undefined && dns[key] !== null) {
           state.network.dns[key] = dns[key];
-          state.network.dns[key] = dns[key]
+        }
+      });
+    },
+    updateAPI(state, api) {
+      Object.keys(api).forEach((key) => {
+        if (api[key] !== undefined && api[key] !== null) {
+          state.network.api[key] = api[key];
         }
       });
     },
@@ -118,6 +125,7 @@ const store = new Vuex.Store({
       }
     },
     resetServer(state) {
+      // TODO: create a default state and simply load that in
       state.server = {
         ip: { v4: [undefined, undefined, undefined, undefined], v6: "" },
         port: undefined,
@@ -151,6 +159,9 @@ const store = new Vuex.Store({
     async updateDNSName({ commit, dispatch }, name) {
       commit("updateDNS", { name });
       dispatch("updateDNS");
+    },
+    async updateAPIHost({ commit }, host) {
+      commit("updateAPI", { host });
     },
     async updateDNSIp({ commit, dispatch }, { v4, v6 }) {
       commit("updateDNS", { ip: { v4, v6 } });
