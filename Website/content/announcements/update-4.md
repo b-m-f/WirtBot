@@ -57,6 +57,12 @@ Since the ansible script and automatic network creation on install are gone it i
 
 The interface now has an option to specify the hostname/IP of the WirtBot.
 
+### Multiarch
+
+WirtBot can now run on both AMD64 and ARM64.
+
+Unfortunately this makes the build-pipeline quite slow, but hey atleast you can now run the WirtBot on ARM devices if you want.
+
 ## End
 
 Thats it. Well except for the updated setup documentation that is.
