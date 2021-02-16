@@ -18,3 +18,9 @@ export const setDNSName = async (page, name) => {
     const zoneNameInput = await network.$("input[name='dns-name']");
     await zoneNameInput.fill(name);
 };
+
+export const setAPIHost = async (page, host) => {
+    const network = await networkWidget(page);
+    const hostInput = await network.$("input[name='api-host']");
+    await hostInput.fill(host);
+};

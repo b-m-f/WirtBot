@@ -13,7 +13,7 @@
     <div class="row">
       <label>{{ $t("dashboard.widgets.network.apiServerHost") }}</label>
       <TextInput
-        name="api-name"
+        name="api-host"
         :value="network.api.host"
         required
         @change="updateAPIHost"
