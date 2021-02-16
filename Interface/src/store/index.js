@@ -242,12 +242,7 @@ const store = new Vuex.Store({
     },
     async updateDNS({ state, commit, dispatch }) {
       commit("updateDNSConfig", generateDNSFile(state.server, state.devices, state.network));
-      let success = false;
-      if (state.network.dns.name) {
-        success = await updateDNSConfigViaApi(state.network.dns.config, `wirtbot.${state.network.dns.name}`);
-      } else {
-        success = await updateDNSConfigViaApi(state.network.dns.config, `${state.server.subnet.v4}1`);
-      }
+      const success = await updateDNSConfigViaApi(state.network.dns.config, state.network.api.host);
       if (success) {
         dispatch(
           "alerts/addSuccess",
@@ -262,12 +257,7 @@ const store = new Vuex.Store({
       }
     },
     async sendConfigUpdatesToAPI({ state, dispatch }) {
-      let success = false;
-      if (state.network.dns.name) {
-        success = await updateServerViaApi(state.server.config, `wirtbot.${state.network.dns.name}`);
-      } else {
-        success = await updateServerViaApi(state.server.config, `${state.server.subnet.v4}1`);
-      }
+      const success = await updateServerViaApi(state.server.config, state.network.api.host);
       if (success) {
         dispatch(
           "alerts/addSuccess",
