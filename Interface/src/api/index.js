@@ -37,11 +37,7 @@ export async function updateServerConfig(config, host) {
       keys.private = process.env.VUE_APP_PRIVATE_KEY;
     }
     const messageWithSignature = await sign(config, keys);
-    if (process.env.NODE_ENV === "development") {
-      await post(`http://localhost:3030/update`, messageWithSignature);
-    } else {
-      await post(`http://${host}:3030/update`, messageWithSignature);
-    }
+    await post(`http://${host}/update`, messageWithSignature);
     return true;
   } catch (e) {
     console.error(e);
@@ -60,11 +56,7 @@ export async function updateDNSConfig(config, host) {
       keys.private = process.env.VUE_APP_PRIVATE_KEY;
     }
     const messageWithSignature = await sign(config, keys);
-    if (process.env.NODE_ENV === "development") {
-      await post(`http://localhost:3030/update-device-dns-entries`, messageWithSignature);
-    } else {
-      await post(`http://${host}:3030/update-device-dns-entries`, messageWithSignature);
-    }
+    await post(`http://${host}/update-device-dns-entries`, messageWithSignature);
     return true;
   } catch (e) {
     console.error(e);

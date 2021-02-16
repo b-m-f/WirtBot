@@ -5,7 +5,7 @@ const { readFile } = fsPromises;
 import util from "util";
 
 
-import { setDNSName } from "./widgets/network.mjs";
+import { setDNSName, setAPIHost } from "./widgets/network.mjs";
 import { setDNSTlsName, enableDNSTLS, setDNSIP } from "./widgets/dns.mjs";
 import { updateServer, addServer, downloadConfig as downloadServerConfig } from "./widgets/server.mjs";
 import { addNewDevice, downloadConfig as downloadDeviceConfig } from "./widgets/devices.mjs";
@@ -20,6 +20,7 @@ export default async (browser) => {
         await page.goto(process.env.URL);
         await skipInitialConfig(page);
 
+        await setAPIHost(page, process.env.API);
         await setDNSName(page, "test");
         // The DNS name has to set to .test to work in CI where the wirtbot is in the .test zone
         // Check the Build-Automation directory for more info

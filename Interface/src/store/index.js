@@ -50,7 +50,7 @@ const store = new Vuex.Store({
         name: "wirt.internal", config: "", ip: { v4: [1, 1, 1, 1] },
         tlsName: "cloudflare-dns.com", tls: true,
       },
-      api: { host: `wirtbot.wirt.internal` }
+      api: { host: `wirtbot.wirt.internal:3030` }
     },
     dashboard: {
       // Messages have to be defined in pages/Dashboard/messages.js
