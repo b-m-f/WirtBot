@@ -24,9 +24,12 @@ You can find all available functionality in the `Makefile` in the root of the re
 
 ### Dependencies
 
-Make sure that `npm` and `g++` are installed.
+Make sure that `npm`, `g++`, `rustup` and `wasm-pack` are installed.
 
-For `npm` I recommend [nvm](https://github.com/nvm-sh/nvm). To install `g++` please check how to do this on your OS.
+- For `npm` I recommend [nvm](https://github.com/nvm-sh/nvm). 
+- To install `g++` please check how to do this on your OS.
+- To install `rustup` run `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh` and add `$HOME/.cargo/bin` to your PATH
+- To install wasm-pack run ` curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh`
 
 To install all the necessary dependencies first run `make -j dev-setup`.
 
