@@ -27,8 +27,8 @@ Check out [this page](https://wirtbot.com/documentation/setup.html)
 
 **WirtBot** is a system/robot that is designed after the UNIX philosophy.
 Many small parts that do a job and do it well. Putting special importance into correct configuration.
-Everything is controlled via a UI that focusses on **ease of use** and all is glued together using Infrastructure as code.
-If you set it up you can rest assured that it is done properly.
+Everything is controlled via a UI that focusses on **ease of use**.
+To round things off the whole WirtBot is running inside of one container, making setup easy and straightforward.
 
 Ready to get started?
 
