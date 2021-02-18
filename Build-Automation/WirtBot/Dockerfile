@@ -32,7 +32,6 @@ COPY Interface/.env.test Interface/.env.test
 # Compile and package wasm
 RUN cargo install wasm-pack
 RUN cd Shared-Libs/crypto && npm ci && npm run build
-
 # Build interface
 WORKDIR '/wirtbot/Interface'
 ## Inject keys into the test interface by doing this, that way the Interface can talk to the WirtBot Core
@@ -77,8 +76,13 @@ RUN apt-get install nginx inotify-tools iproute2 -yy
 
 # Set up the s6 overlay init system
 COPY Build-Automation/WirtBot/s6-overlay-amd64-installer-2.1.0.2 /tmp/s6-overlay-amd64-installer
-RUN chmod +x /tmp/s6-overlay-amd64-installer
-RUN /tmp/s6-overlay-amd64-installer /
+COPY Build-Automation/WirtBot/s6-overlay-aarch64-installer-2.1.0.2 /tmp/s6-overlay-aarch64-installer
+
+# see https://docs.docker.com/engine/reference/builder/#automatic-platform-args-in-the-global-scope
+ARG TARGETPLATFORM
+
+RUN chmod +x /tmp/s6-overlay-amd64-installer && /tmp/s6-overlay-amd64-installer /
+RUN if [ "$TARGETPLATFORM" = "linux/arm64" ] ; then rm /tmp/s6-overlay-amd64-installer && chmod +x /tmp/s6-overlay-aarch64-installer && /tmp/s6-overlay-aarch64-installer /; fi
 
 
 WORKDIR /
