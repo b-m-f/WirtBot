@@ -88,7 +88,8 @@ RUN if [ "$TARGETPLATFORM" = "linux/arm64" ] ; then rm /tmp/s6-overlay-amd64-ins
 WORKDIR /
 
 # Interface
-RUN useradd -r -s /bin/false interface
+RUN addgroup --gid ${INTERFACE_GID:-1002} interface
+RUN useradd --gid ${INTERFACE_GID:-1002} --uid ${INTERFACE_UID:-1002} -r -s /bin/false interface
 RUN ln -sf /dev/stdout /var/log/nginx/access.log && ln -sf /dev/stderr /var/log/nginx/error.log
 COPY Build-Automation/WirtBot/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY --from=interface /wirtbot/Interface/dist /interface
@@ -99,7 +100,8 @@ COPY Build-Automation/WirtBot/service-files/interface /etc/services.d/interface/
 COPY Build-Automation/WirtBot/service-files/finisher /etc/services.d/interface/finish
 
 # WirtBot Core
-RUN useradd -r -s /bin/false core
+RUN addgroup --gid ${CORE_GID:-1001} core
+RUN useradd --gid ${CORE_GID:-1001} --uid ${CORE_UID:-1001} -r -s /bin/false core
 
 COPY --from=builder /builder/artifact/release/wirtbot /usr/bin/wirtbot-core
 COPY Build-Automation/WirtBot/service-files/core /etc/services.d/core/run
