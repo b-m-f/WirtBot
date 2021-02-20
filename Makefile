@@ -23,7 +23,9 @@ dev-setup:
 
 ## Run complete WirtBot
 run-test-wirtbot: 
-	docker-compose -f Build-Automation/WirtBot/compose/example.yml up --abort-on-container-exit --build --remove-orphans
+	sudo chown $$USER Build-Automation/WirtBot/compose/test-server.conf && \
+	docker-compose -f Build-Automation/WirtBot/compose/example.yml up --abort-on-container-exit --build --remove-orphans && \
+	sudo chown $$USER Build-Automation/WirtBot/compose/test-server.conf
 connect-test-wirtbot:
 	cp testwirtbot.conf.example testwirtbot.conf && \
 	sed -i  "s@Endpoint = development_wirtbot:10101@Endpoint = $(shell docker inspect development_wirtbot | grep -e "IPAddress\": \"[0-9].*\"" | cut -d '"' -f 4):10101@" testwirtbot.conf && \
@@ -33,9 +35,9 @@ connect-test-wirtbot:
 ## Tests
 ### This cleans up the server conf, because the container changes it with chmod
 test-system: 
-	sudo chown $$USER Build-Automation/System-Tests/compose/test-server-conf && \
+	sudo chown $$USER Build-Automation/System-Tests/compose/test-server.conf && \
 	docker-compose -f Build-Automation/System-Tests/compose/test.yml up --abort-on-container-exit --build --remove-orphans && \
-	sudo chown $$USER Build-Automation/System-Tests/compose/test-server-conf
+	sudo chown $$USER Build-Automation/System-Tests/compose/test-server.conf
 test-unit:
 	cd ./Shared-Libs/crypto && npm run test && cd - && \
 	cd ./Shared-Libs/config-generators && npm run test && cd - && \

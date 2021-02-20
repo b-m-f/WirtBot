@@ -36,6 +36,10 @@ services:
       - "MANAGED_DNS_ENABLED=1"
       - "MANAGED_DNS_DEVICE_FILE=/dns/Corefile"
       - "CONFIG_PATH=/etc/wireguard/server.conf"
+      - "INTERFACE_UID=1002"
+      - "INTERFACE_GID=1002"
+      - "CORE_UID=1001"
+      - "CORE_GID=1001"
   coredns:
     network_mode: host
     image: coredns/coredns

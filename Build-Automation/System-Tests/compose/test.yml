@@ -1,7 +1,7 @@
 version: "3"
 services:
   test-runner:
-    build: 
+    build:
       dockerfile: Build-Automation/System-Tests/Dockerfile
       context: ../../..
     container_name: test-runner
@@ -9,16 +9,16 @@ services:
     depends_on: ["test-wirtbot"]
     volumes:
       - ./test-Corefile:/tmp/WirtBotTests/Corefile
-      - ./test-server-conf:/tmp/WirtBotTests/server.conf
+      - ./test-server.conf:/tmp/WirtBotTests/server.conf
   test-wirtbot:
-    build: 
+    build:
       dockerfile: Build-Automation/WirtBot/Dockerfile
       context: ../../..
       args:
         - environment=test
     container_name: wirtbot.test
     volumes:
-      - ./test-server-conf:/etc/wireguard/server.conf
+      - ./test-server.conf:/etc/wireguard/server.conf
       - ./test-Corefile:/dns/Corefile
     ports:
       - 10101:10101/udp
