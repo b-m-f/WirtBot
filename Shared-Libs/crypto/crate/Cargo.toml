@@ -1,6 +1,6 @@
 [package]
 name = "wirtbot-crypto-rust-wasm"
-version = "2.2.5"
+version = "2.2.6"
 authors = ["b-m-f <max@ehlers.berlin>"]
 edition = "2018"
 license = "AGPL-3"
