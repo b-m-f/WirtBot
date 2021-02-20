@@ -31,7 +31,7 @@ services:
       - /etc/wireguard:/etc/wireguard
       - ./data:/dns
     environment:
-      - "ALLOWED_ORIGIN=IP/HOSTNAME_OF_THE_WIRTBOT_HOST_MACHINE"
+      - "ALLOWED_ORIGIN=http://IP/HOSTNAME_OF_THE_WIRTBOT_HOST_MACHINE"
       - "PORT=3030"
       - "MANAGED_DNS_ENABLED=1"
       - "MANAGED_DNS_DEVICE_FILE=/dns/Corefile"
