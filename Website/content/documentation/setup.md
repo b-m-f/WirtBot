@@ -12,15 +12,12 @@ To set up a WirtBot you must first make sure that your machine has the following
 
 Here is an example `docker-compose.yml` for a WirtBot with DNS:
 
-### Host Mode
-
 ```
 version: "3.4"
 
 services:
   WirtBot:
     image: bmff/wirtbot:latest
-    network_mode: host
     container_name: WirtBot
     ports:
       - 53:53
@@ -30,8 +27,6 @@ services:
     restart: "unless-stopped"
     cap_add:
       - NET_ADMIN
-    volumes:
-      - /etc/wireguard:/etc/wireguard
     environment:
       - "ALLOWED_ORIGIN=http://IP/HOSTNAME_OF_THE_WIRTBOT_HOST_MACHINE"
       - "PORT=3030"
@@ -81,7 +76,6 @@ Do this by adding it to the environment variables in the `docker-compose` file l
       - "PUBLIC_KEY=your_public_key_from_the_settings_section"
       - "PORT=3030"
       - "MANAGED_DNS_ENABLED=1"
-      - "MANAGED_DNS_DEVICE_FILE=/dns/Corefile"
       - "CONFIG_PATH=/etc/wireguard/server.conf"
 ```
 
@@ -89,3 +83,30 @@ Run `docker-compose up -d` again to start the WirtBot with the given public key.
 
 Now that the network is established and the configuration persisted you might want to start closing down the Interface and WirtBot via Firewall rules.
 You should also make a Backup via the UI and keep it in safe place.
+
+## Advanced
+
+### Securing the WirtBot after setup
+
+In order to make the WirtBot interace and API hidden on the Host machine simply **remove the port bindings** for port **80** and **3030**.
+
+Both will still be reachable via the network that was created with the WirtBot at `wirtbot.CHOSEN_INTERNAL_ZONE_NAME`
+
+**Make sure to update the api location in the Dashboard**.
+
+### Host mode for more speed
+
+In order to bypass a few network loops between the Host machine and the WirtBot container you can set
+
+```
+network_mode: host
+```
+
+in your `docker-compose.yml` file. This will directly bind the Host ports to the container and in addition the WireGuard interface will be created directly on the host as well.
+
+### Mounting the configuration files to the host
+
+For backup purposes you can mount the following files:
+
+- WireGuard config: `/etc/wireguard/server.conf`
+- CoreDNS config: `/etc/coredns/Corefile`
