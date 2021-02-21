@@ -79,7 +79,7 @@ Now it is time to set up your network. Fill out the server section first, accord
 After adding the server go ahead and add as many devices as you want.
 
 You should also take note of the **Public Key** that is shown to you in the **Settings** section of the Dasboard.
-In order to stay in control of the WirtBot when it restarts you must tell it to keep trusting this Key.
+In order to stay in control of the WirtBot when it restarts you **MUST** tell it to keep trusting this Key.
 
 Do this by adding it to the environment variables in the `docker-compose` file like so:
 
@@ -92,4 +92,7 @@ Do this by adding it to the environment variables in the `docker-compose` file l
       - "CONFIG_PATH=/etc/wireguard/server.conf"
 ```
 
-Now that the network is established you might want to start closing down the Interface and WirtBot via Firewall rules.
+Run `docker-compose up -d` again to start the WirtBot with the given public key.
+
+Now that the network is established and the configuration persisted you might want to start closing down the Interface and WirtBot via Firewall rules.
+You should also make a Backup via the UI and keep it in safe place.
