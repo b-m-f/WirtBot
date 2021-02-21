@@ -19,7 +19,7 @@ services:
     container_name: wirtbot.test
     volumes:
       - ./test-server.conf:/etc/wireguard/server.conf
-      - ./test-Corefile:/dns/Corefile
+      - ./test-Corefile:/etc/coredns/Corefile
     ports:
       - 10101:10101/udp
     environment:
@@ -28,7 +28,6 @@ services:
       - "ALLOWED_ORIGIN=http://wirtbot.test"
       - "RUST_LOG=debug"
       - "MANAGED_DNS_ENABLED=1"
-      - "MANAGED_DNS_DEVICE_FILE=/dns/Corefile"
       - "CONFIG_PATH=/etc/wireguard/server.conf"
 
 volumes:

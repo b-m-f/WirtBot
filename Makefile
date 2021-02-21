@@ -36,7 +36,9 @@ connect-test-wirtbot:
 ### This cleans up the server conf, because the container changes it with chmod
 test-system: 
 	sudo chown $$USER Build-Automation/System-Tests/compose/test-server.conf && \
+	sudo chown $$USER Build-Automation/System-Tests/compose/test-Corefile && \
 	docker-compose -f Build-Automation/System-Tests/compose/test.yml up --abort-on-container-exit --build --remove-orphans && \
+	sudo chown $$USER Build-Automation/System-Tests/compose/test-Corefile && \
 	sudo chown $$USER Build-Automation/System-Tests/compose/test-server.conf
 test-unit:
 	cd ./Shared-Libs/crypto && npm run test && cd - && \
