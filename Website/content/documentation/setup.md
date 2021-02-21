@@ -12,6 +12,8 @@ To set up a WirtBot you must first make sure that your machine has the following
 
 Here is an example `docker-compose.yml` for a WirtBot with DNS:
 
+### Host Mode
+
 ```
 version: "3.4"
 
@@ -21,6 +23,7 @@ services:
     network_mode: host
     container_name: WirtBot
     ports:
+      - 53:53
       - 80:80
       - 3030:3030
       - 10101:10101/udp
@@ -29,27 +32,17 @@ services:
       - NET_ADMIN
     volumes:
       - /etc/wireguard:/etc/wireguard
-      - ./data:/dns
     environment:
       - "ALLOWED_ORIGIN=http://IP/HOSTNAME_OF_THE_WIRTBOT_HOST_MACHINE"
       - "PORT=3030"
       - "MANAGED_DNS_ENABLED=1"
-      - "MANAGED_DNS_DEVICE_FILE=/dns/Corefile"
       - "CONFIG_PATH=/etc/wireguard/server.conf"
+      - "DNS_UID=1003"
+      - "DNS_GID=1003"
       - "INTERFACE_UID=1002"
       - "INTERFACE_GID=1002"
       - "CORE_UID=1001"
       - "CORE_GID=1001"
-  coredns:
-    network_mode: host
-    image: coredns/coredns
-    container_name: WirtBotDNS
-    ports:
-      - 53:53/udp
-    restart: "unless-stopped"
-    working_dir: /v
-    volumes:
-      - ./data:/v
 ```
 
 Copy this configuration into a file on the machine, update the "ALLOWED_ORIGIN" variable and run `docker-compose up -d`.

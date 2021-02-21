@@ -78,7 +78,7 @@ RUN apt-get install nginx inotify-tools iproute2 -yy
 COPY Build-Automation/WirtBot/s6-overlay-amd64-installer-2.1.0.2 /tmp/s6-overlay-amd64-installer
 COPY Build-Automation/WirtBot/s6-overlay-aarch64-installer-2.1.0.2 /tmp/s6-overlay-aarch64-installer
 
-# see https://docs.docker.com/engine/reference/builder/#automatic-platform-args-in-the-global-scope
+## see https://docs.docker.com/engine/reference/builder/#automatic-platform-args-in-the-global-scope
 ARG TARGETPLATFORM
 
 RUN chmod +x /tmp/s6-overlay-amd64-installer && /tmp/s6-overlay-amd64-installer /
@@ -99,20 +99,36 @@ RUN chown -R interface:interface /interface
 COPY Build-Automation/WirtBot/service-files/interface /etc/services.d/interface/run
 COPY Build-Automation/WirtBot/service-files/finisher /etc/services.d/interface/finish
 
+# Core DNS
+RUN addgroup --gid ${DNS_GID:-1003} coredns
+RUN useradd --gid ${DNS_GID:-1003} --uid ${DNS_UID:-1003} -r -s /bin/false coredns
+RUN mkdir -p /etc/coredns && touch /etc/coredns/Corefile
+
+## Make the Corefile writable by all members of the coredns group
+RUN chmod 660 /etc/coredns/Corefile
+
+## Copy the coredns binary from the official coredns docker image
+COPY --from=coredns/coredns /coredns /usr/bin/coredns
+
+COPY Build-Automation/WirtBot/service-files/dns /etc/services.d/coredns/run
+COPY Build-Automation/WirtBot/service-files/finisher /etc/services.d/coredns/finish
+## Set permissions after container spawn, this ensures that even if files are mounted in, they will still be writable
+COPY Build-Automation/WirtBot/service-files/fix-dns-permissions /etc/fix-attrs.d/01-fix-dns-permissions
+
 # WirtBot Core
 RUN addgroup --gid ${CORE_GID:-1001} core
-RUN useradd --gid ${CORE_GID:-1001} --uid ${CORE_UID:-1001} -r -s /bin/false core
+## Add core user to coredns group as well to be able to change the Corefile
+RUN useradd --gid ${CORE_GID:-1001} --groups ${DNS_GID:-1003} --uid ${CORE_UID:-1001} -r -s /bin/false core
+RUN mkdir -p /etc/wireguard && touch /etc/wireguard/server.conf
 
 COPY --from=builder /builder/artifact/release/wirtbot /usr/bin/wirtbot-core
 COPY Build-Automation/WirtBot/service-files/core /etc/services.d/core/run
 COPY Build-Automation/WirtBot/service-files/finisher /etc/services.d/core/finish
-COPY Build-Automation/WirtBot/service-files/fix-core-permissions /etc/fix-attrs.d/01-fix-core-permissions
+## Set permissions after container spawn, this ensures that even if files are mounted in, they will still be writable
 COPY Build-Automation/WirtBot/service-files/fix-wireguard-permissions /etc/fix-attrs.d/02-fix-wireguard-permissions
-## This avoids file ownership changes that would require changing them back on the host on the next build
-ARG environment=production
+
 
 # WireGuard
-## Make sure to mount a WireGuard config to /etc/wireguard/server.conf
 COPY --from=wireguard /wg .
 COPY --from=wireguard /wg-quick .
 RUN chmod +x wg wg-quick && mv wg wg-quick /usr/bin
@@ -129,6 +145,7 @@ COPY Build-Automation/WirtBot/service-files/clean-up /etc/cont-finish.d/clean
 
 EXPOSE 3030
 EXPOSE 80
+EXPOSE 53
 
 
 ENTRYPOINT ["/init"]
