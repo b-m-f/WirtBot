@@ -1,4 +1,3 @@
-#!/usr/bin/execlineb -P
-with-contenv
+#!/usr/bin/with-contenv sh
 s6-setuidgid coredns
-coredns
+coredns -conf $MANAGED_DNS_DEVICE_FILE
