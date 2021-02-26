@@ -57,11 +57,8 @@ Please feel free to open up an issue here in Github to discuss what you would wa
 
 Next check out [CONTRIBUTING.md](./CONTRIBUTING.md).
 
-If you want to learn about the inner workings of the system check out the [developer documentation](https://wirtbot.com/developer-documentation/).
-
-I also encourage you to ask questions! My goal is to document as many of those questions as I can, to allow more people to understand what is going on in the code.
-
-For an overview of things that need help check the [issues](https://github.com/b-m-f/WirtBot/issues).
+For more information about the different parts that make up the WirtBot check out the READMEs in the folders of the project.
+Documentation is always ongoing. If you feel like things do not make sense just open a GitHub issue :)
 
 ## LICENSE
 
