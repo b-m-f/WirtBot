@@ -72,7 +72,7 @@ RUN cd $WG_TOOLS/src && make && mv wg / && mv wg-quick/linux.bash /wg-quick && c
 FROM debian:buster-slim
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt update && apt upgrade -yy
-RUN apt-get install nginx inotify-tools iproute2 -yy
+RUN apt-get install -yy nginx inotify-tools iproute2 
 
 # Set up the s6 overlay init system
 COPY Build-Automation/WirtBot/s6-overlay-amd64-installer-2.1.0.2 /tmp/s6-overlay-amd64-installer
@@ -100,6 +100,8 @@ COPY Build-Automation/WirtBot/service-files/interface /etc/services.d/interface/
 COPY Build-Automation/WirtBot/service-files/finisher /etc/services.d/interface/finish
 
 # Core DNS
+## CA-certificates are needed for correct DNSoverTLS forwarding of DNS requests
+RUN apt-get install -yy ca-certificates
 RUN addgroup --gid ${DNS_GID:-1003} coredns
 RUN useradd --gid ${DNS_GID:-1003} --uid ${DNS_UID:-1003} -r -s /bin/false coredns
 RUN mkdir -p /etc/coredns
