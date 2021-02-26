@@ -28,6 +28,7 @@ services:
       - "ALLOWED_ORIGIN=http://wirtbot.test"
       - "RUST_LOG=debug"
       - "MANAGED_DNS_ENABLED=1"
+      - "MANAGED_DNS_DEVICE_FILE=/etc/coredns/Corefile"
       - "CONFIG_PATH=/etc/wireguard/server.conf"
 
 volumes:
