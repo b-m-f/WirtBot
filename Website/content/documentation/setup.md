@@ -31,6 +31,7 @@ services:
       - "ALLOWED_ORIGIN=http://IP/HOSTNAME_OF_THE_WIRTBOT_HOST_MACHINE"
       - "PORT=3030"
       - "MANAGED_DNS_ENABLED=1"
+      - "MANAGED_DNS_DEVICE_FILE=/etc/coredns/Corefile"
       - "CONFIG_PATH=/etc/wireguard/server.conf"
       - "DNS_UID=1003"
       - "DNS_GID=1003"
