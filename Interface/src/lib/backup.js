@@ -14,6 +14,9 @@ export function upgradeBackup(backupAsJSONString) {
     throw Error(i18n.t("errors.backupNotCompatible"));
   }
 
+  // Set to the current version of the app where it is now being imported in
+  backup.version = appVersion;
+
   // Check that all devices have an ID
   // This should only trigger when backups are changed manually
   updatedBackup.devices = backup.devices.map(device => {

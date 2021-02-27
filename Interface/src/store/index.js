@@ -4,9 +4,15 @@ import createPersistedState from "vuex-persistedstate";
 import QRCode from "qrcode";
 import i18n from "../i18n";
 import { generateSigningKeys, getKeys } from "@wirtbot/crypto";
-import { generateDNSFile, generateDeviceConfig, generateServerConfig } from "@wirtbot/config-generators";
-import { updateServerConfig as updateServerViaApi, updateDNSConfig as updateDNSConfigViaApi } from "../api";
-
+import {
+  generateDNSFile,
+  generateDeviceConfig,
+  generateServerConfig,
+} from "@wirtbot/config-generators";
+import {
+  updateServerConfig as updateServerViaApi,
+  updateDNSConfig as updateDNSConfigViaApi,
+} from "../api";
 
 import alerts from "./modules/alerts";
 
@@ -25,12 +31,25 @@ async function addConfigToDevice(newDevice, server) {
   });
 }
 
+const version = "2.3.3";
+
+const versionFromAppPlugin = (store) => {
+  store.subscribe((mutation, state) => {
+    if (
+      state.version !== version ||
+      (mutation.action === "setVersion" && mutation.payload !== version)
+    ) {
+      store.commit("setVersion", version);
+    }
+  });
+};
+
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
   modules: { alerts },
   state: {
-    version: "2.3.2",
+    version: version,
     keys: { public: undefined, private: undefined },
     server: {
       ip: { v4: [undefined, undefined, undefined, undefined], v6: "" },
@@ -47,10 +66,13 @@ const store = new Vuex.Store({
     websiteBeingViewedOnMobileDevice: undefined,
     network: {
       dns: {
-        name: "wirt.internal", config: "", ip: { v4: [1, 1, 1, 1] },
-        tlsName: "cloudflare-dns.com", tls: true,
+        name: "wirt.internal",
+        config: "",
+        ip: { v4: [1, 1, 1, 1] },
+        tlsName: "cloudflare-dns.com",
+        tls: true,
       },
-      api: { host: `wirtbot.wirt.internal:3030` }
+      api: { host: `wirtbot.wirt.internal:3030` },
     },
     dashboard: {
       // Messages have to be defined in pages/Dashboard/messages.js
@@ -133,17 +155,23 @@ const store = new Vuex.Store({
         config: "",
         subnet: { v4: "10.10.0.", v6: "1010:1010:1010:1010:" },
         hostname: "",
-      }
+      };
     },
     resetDevices(state) {
-      state.devices = []
+      state.devices = [];
     },
     resetDNS(state) {
       state.network.dns = {
-        name: "wirt.internal", config: "", ip: { v4: [1, 1, 1, 1] },
-        tlsName: "cloudflare-dns.com", tls: true
-      }
-    }
+        name: "wirt.internal",
+        config: "",
+        ip: { v4: [1, 1, 1, 1] },
+        tlsName: "cloudflare-dns.com",
+        tls: true,
+      };
+    },
+    setVersion(state, version) {
+      state.version = version;
+    },
   },
   actions: {
     async setKeys({ commit }, keys) {
@@ -224,9 +252,9 @@ const store = new Vuex.Store({
             return device;
           }
         })
-      )
+      );
       // unfinished devices setups are excluded here
-      devices = devices.filter(device => device.config);
+      devices = devices.filter((device) => device.config);
       commit("updateDevices", devices);
     },
     async updateServerConfig({ commit, state, dispatch }) {
@@ -235,39 +263,38 @@ const store = new Vuex.Store({
         state.devices.filter((device) => device.ip && device.keys)
       );
       commit("updateServerConfig", config);
-      // Since the server config gets updated with every device change, this is a place to trigger remote updates 
+      // Since the server config gets updated with every device change, this is a place to trigger remote updates
       // on the WirtBot
       dispatch("sendConfigUpdatesToAPI");
       dispatch("updateDNS");
     },
     async updateDNS({ state, commit, dispatch }) {
-      commit("updateDNSConfig", generateDNSFile(state.server, state.devices, state.network));
-      const success = await updateDNSConfigViaApi(state.network.dns.config, state.network.api.host);
+      commit(
+        "updateDNSConfig",
+        generateDNSFile(state.server, state.devices, state.network)
+      );
+      const success = await updateDNSConfigViaApi(
+        state.network.dns.config,
+        state.network.api.host
+      );
       if (success) {
-        dispatch(
-          "alerts/addSuccess",
-          `${i18n.t("success.updateSuccessDNS")}`
-        );
-
+        dispatch("alerts/addSuccess", `${i18n.t("success.updateSuccessDNS")}`);
       } else {
-        dispatch(
-          "alerts/addWarning",
-          `${i18n.t("warnings.updateFailDNS")}`
-        );
+        dispatch("alerts/addWarning", `${i18n.t("warnings.updateFailDNS")}`);
       }
     },
     async sendConfigUpdatesToAPI({ state, dispatch }) {
-      const success = await updateServerViaApi(state.server.config, state.network.api.host);
+      const success = await updateServerViaApi(
+        state.server.config,
+        state.network.api.host
+      );
       if (success) {
         dispatch(
           "alerts/addSuccess",
           `${i18n.t("success.updateSuccessConfig")}`
         );
       } else {
-        dispatch(
-          "alerts/addWarning",
-          `${i18n.t("warnings.updateFailConfig")}`
-        );
+        dispatch("alerts/addWarning", `${i18n.t("warnings.updateFailConfig")}`);
       }
     },
     async addDevice(
@@ -346,32 +373,33 @@ const store = new Vuex.Store({
     },
     async replaceState({ dispatch, commit }, newState) {
       // Clean the complete state first
-      commit("resetDevices")
-      commit("resetServer")
-      commit("resetDNS")
+      commit("resetDevices");
+      commit("resetServer");
+      commit("resetDNS");
 
       commit("setKeys", newState.keys);
       await dispatch("updateServer", newState.server);
-      newState.devices.forEach(async device => {
+      newState.devices.forEach(async (device) => {
         await dispatch("addDevice", device);
-      })
+      });
       await dispatch("updateDNSName", newState.network.dns.name);
       await dispatch("updateDNSTls", newState.network.dns);
       await dispatch("updateDNSIp", newState.network.dns.ip);
-    }
+    },
   },
 
-  plugins: [createPersistedState({
-    filter(stateChange) {
-      if (stateChange.type.includes("alerts/")) {
-        return false;
-      }
-      else {
-        return true;
-      }
-    }
-  })],
+  plugins: [
+    createPersistedState({
+      filter(stateChange) {
+        if (stateChange.type.includes("alerts/")) {
+          return false;
+        } else {
+          return true;
+        }
+      },
+    }),
+    versionFromAppPlugin,
+  ],
 });
-
 
 export default store;
