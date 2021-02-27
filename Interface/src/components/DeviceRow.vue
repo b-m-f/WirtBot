@@ -318,10 +318,11 @@ export default {
         this.internalDeviceCacheForNewDevices,
         device
       );
-      this.$emit("saved", {
-        ...this.device,
-        ...this.internalDeviceCacheForNewDevices,
-      });
+      const newDevice = merge(
+        this.device,
+        this.internalDeviceCacheForNewDevices
+      );
+      this.$emit("saved", newDevice);
     },
   },
 };
