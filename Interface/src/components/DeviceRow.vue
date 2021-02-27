@@ -13,6 +13,10 @@
         class="name"
         required
         @change="updateName"
+        :class="{
+          required:
+            !this.internalDeviceCacheForNewDevices.name && !this.$props.name,
+        }"
       />
     </td>
     <td class="column-two ip-input">
@@ -32,6 +36,10 @@
             :min="2"
             :max="255"
             required
+            :class="{
+              required:
+                !this.internalDeviceCacheForNewDevices.ip.v4 && !this.$props.ip,
+            }"
           />
         </div>
       </div>
@@ -61,6 +69,10 @@
         :selected="device.type"
         :options="deviceTypes"
         class="device-type"
+        :class="{
+          required:
+            !this.internalDeviceCacheForNewDevices.type && !this.$props.type,
+        }"
         @change="updateType"
       />
     </td>
@@ -160,6 +172,14 @@ export default {
       invalidIPv4Message: "",
       invalidIPv6Message: "",
       invalidAdditionalDNSServersMessage: "",
+      internalDeviceCacheForNewDevices: {
+        name: undefined,
+        ip: { v4: undefined, v6: undefined },
+        type: undefined,
+        routed: undefined,
+        additionalDNSServers: undefined,
+        MTU: undefined,
+      },
     };
   },
   computed: {
@@ -367,5 +387,9 @@ export default {
   align-self: center;
   margin-bottom: $spacing-medium;
   margin-top: $spacing-medium;
+}
+
+.required {
+  border: dotted $border-medium $primary;
 }
 </style>
