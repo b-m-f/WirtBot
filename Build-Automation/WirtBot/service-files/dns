@@ -1,3 +1,3 @@
 #!/usr/bin/with-contenv sh
 s6-setuidgid coredns
-coredns -conf $MANAGED_DNS_DEVICE_FILE
+coredns -conf /etc/coredns/Corefile
