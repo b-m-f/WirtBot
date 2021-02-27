@@ -23,6 +23,10 @@ A WirtBot got you covered.
 
 Check out [this page](https://wirtbot.com/documentation/setup.html)
 
+## Questions?
+
+Head over to the [subreddit](https://www.reddit.com/r/WirtBot/)
+
 ## How is the WirtBot built?
 
 **WirtBot** is a system/robot that is designed after the UNIX philosophy.
