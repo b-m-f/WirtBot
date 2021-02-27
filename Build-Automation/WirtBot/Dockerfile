@@ -122,7 +122,8 @@ COPY Build-Automation/WirtBot/service-files/fix-dns-permissions /etc/fix-attrs.d
 RUN addgroup --gid ${CORE_GID:-1001} core
 ## Add core user to coredns group as well to be able to change the Corefile
 RUN useradd --gid ${CORE_GID:-1001} --groups ${DNS_GID:-1003} --uid ${CORE_UID:-1001} -r -s /bin/false core
-RUN mkdir -p /etc/wireguard && touch /etc/wireguard/server.conf
+RUN mkdir -p /etc/wireguard
+COPY Build-Automation/WirtBot/service-files/initial-wireguard-config /etc/wireguard/server.conf
 
 COPY --from=builder /builder/artifact/release/wirtbot /usr/bin/wirtbot-core
 COPY Build-Automation/WirtBot/service-files/core /etc/services.d/core/run
