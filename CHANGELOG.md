@@ -2,6 +2,8 @@
 - Sets initial dummy WirtBot config in container to bind the correct port.
 - Makes setup easier by removing flags that only matter for container internal settings.
 - Fix backup <=> version error. The interface got its version from saved state rather than from the actual Interface version that is running
+- Highlights required inputs when adding device
+- Makes sure that a missing IP is caught when trying to add a device
 
 ## 2.3.2
 Fixes DNSoverTLS forwarding
