@@ -74,7 +74,8 @@
         },
         "placeholder": {
           "additionalDNSServers": "Comma seperated",
-          "MTU": "1320-1800"
+          "MTU": "1320-1800",
+          "selectType": "Select device type"
         }
       }
     },

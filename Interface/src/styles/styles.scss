@@ -111,7 +111,8 @@ input {
       left: 0;
       top: 0;
       position: absolute;
-      transition: transform var(--d-t, 0.3s) var(--d-t-e, ease), opacity var(--d-o, 0.2s);
+      transition: transform var(--d-t, 0.3s) var(--d-t-e, ease),
+        opacity var(--d-o, 0.2s);
     }
     &:checked {
       --b: var(--active);
@@ -196,12 +197,6 @@ input {
         }
       }
     }
-  }
-}
-
-select {
-  &:invalid {
-    border: solid $border-small $accent;
   }
 }
 
