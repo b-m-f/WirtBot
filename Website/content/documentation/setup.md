@@ -39,6 +39,13 @@ services:
       - "INTERFACE_GID=1002"
       - "CORE_UID=1001"
       - "CORE_GID=1001"
+    volumes:
+      - wireguard-data:/etc/wireguard
+      - coredns-data:/etc/coredns
+volumes:
+  wireguard-data:
+  coredns-data:
+
 ```
 
 Copy this configuration into a file on the machine, update the "ALLOWED_ORIGIN" variable and run `docker-compose up -d`.
