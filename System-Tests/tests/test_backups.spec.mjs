@@ -16,13 +16,15 @@ const { readFile } = fsPromises;
 
 export default async (browser) => {
     try {
-        const page = await browser.newPage();
+        let page = await browser.newPage();
         await page.goto(process.env.URL);
         await skipInitialConfig(page);
 
-        let backups = ["./backups/1.4.5.json"];
+        let backups = ["./backups/1.4.5.json", "./backups/2.3.3.json"];
 
         for (const backup of backups) {
+            page = await browser.newPage();
+            await page.goto(process.env.URL);
             await importBackup(page, backup);
 
             const json = JSON.parse(await readFile(backup));
@@ -79,7 +81,6 @@ export default async (browser) => {
 
             assert.deepStrictEqual(devicePrivateKeyFromDownloadedConfig, json.devices[1].keys.private);
             assert.deepStrictEqual(serverPrivateKeyFromDownloadedConfig, json.server.keys.private);
-
         }
 
     } catch (error) {

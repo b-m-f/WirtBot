@@ -2,6 +2,7 @@
   <div :class="{ page: true, mobile: isMobilePage }">
     <div id="top-bar">
       <h1>{{ $t("dashboard.title") }}</h1>
+      <h2>v{{ version }}</h2>
     </div>
     <AccentedCard
       padded
@@ -79,6 +80,9 @@ export default {
     },
     isFirstUse() {
       return this.$store.state.dashboard.firstUse;
+    },
+    version() {
+      return this.$store.state.version;
     },
   },
   methods: {
