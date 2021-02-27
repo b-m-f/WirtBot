@@ -1,5 +1,5 @@
 import process from "process";
-import { isContext } from "vm";
+import { firefox, chromium } from "playwright";
 
 const testRunner = async (testPaths) => {
   const browsers = {
