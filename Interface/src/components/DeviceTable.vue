@@ -76,6 +76,10 @@ export default {
     },
     async save({ type, id, ip, name, routed, additionalDNSServers, MTU }) {
       // Only save if all required attributes have been provided
+      console.log(ip);
+      console.log(name);
+      console.log(type);
+      console.log(additionalDNSServers);
       if (type && (ip.v4 || ip.v6) && name) {
         await this.saveDevice({
           ip,
