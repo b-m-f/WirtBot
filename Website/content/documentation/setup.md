@@ -77,11 +77,9 @@ In order to stay in control of the WirtBot when it restarts you **MUST** tell it
 Do this by adding it to the environment variables in the `docker-compose` file like so:
 
 ```
-    environment:
-      - "PUBLIC_KEY=your_public_key_from_the_settings_section"
-      - "PORT=3030"
-      - "MANAGED_DNS_ENABLED=1"
-      - "CONFIG_PATH=/etc/wireguard/server.conf"
+environment:
+  - "PUBLIC_KEY=your_public_key_from_the_settings_section"
+  - "MANAGED_DNS_ENABLED=1"
 ```
 
 Run `docker-compose up -d` again to start the WirtBot with the given public key.
@@ -111,7 +109,7 @@ in your `docker-compose.yml` file. This will directly bind the Host ports to the
 
 ### Mounting the configuration files to the host
 
-For backup purposes you can mount the following files:
+For backup purposes you can mount the following files to your host:
 
 - WireGuard config: `/etc/wireguard/server.conf`
 - CoreDNS config: `/etc/coredns/Corefile`
