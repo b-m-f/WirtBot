@@ -36,7 +36,6 @@
 import { downloadText } from "../../lib/download";
 import AccentedCard from "shared-components/AccentedCard";
 import Card from "shared-components/Card";
-import { WHY_NO_LOGIN, REGULAR_BACKUP } from "../../lib/messages";
 import NetworkWidget from "../../Widgets/Dashboard/Network";
 import ServerWidget from "../../Widgets/Dashboard/Server";
 import DeviceWidget from "../../Widgets/Dashboard/Devices";
@@ -92,6 +91,22 @@ export default {
   },
   mounted() {
     if (this.isFirstUse) {
+      const REGULAR_BACKUP = {
+        title: this.$t("dashboard.messages.regularBackup.title"),
+        text: this.$t("dashboard.messages.regularBackup.text"),
+        link: {
+          url: "/docs/interface#backup",
+          text: this.$t("dashboard.messages.regularBackup.link"),
+        },
+      };
+      const WHY_NO_LOGIN = {
+        title: this.$t("dashboard.messages.whyNoLogin.title"),
+        text: this.$t("dashboard.messages.whyNoLogin.text"),
+        link: {
+          url: "/docs/interface#authentication",
+          text: this.$t("dashboard.messages.whyNoLogin.link"),
+        },
+      };
       this.$store.dispatch("disableFirstUse");
       this.$store.dispatch("addDashboardMessage", WHY_NO_LOGIN);
       this.$store.dispatch("addDashboardMessage", REGULAR_BACKUP);

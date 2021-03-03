@@ -19,24 +19,15 @@
         </ul>
       </div>
     </div>
-    <p id="donation" v-html="donationMessage"></p>
+    <p id="donation" :v-html="$t('footer.donation')"></p>
   </footer>
 </template>
 
 <script>
 import Button from "shared-components/Button";
-import { getTranslationWithVariables } from "../lib/helpers";
+
 export default {
   components: { Button },
-  computed: {
-    donationMessage() {
-      return getTranslationWithVariables(
-        "footer.donation",
-        "address",
-        "<pre>0x39DF85776c626117B945afECF08C4DD262817522</pre>"
-      );
-    },
-  },
   methods: {
     contact() {
       window.location = "mailto:contact@wirt.network";

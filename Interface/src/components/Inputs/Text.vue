@@ -1,5 +1,6 @@
 <template>
   <input
+    v-if="!$props.multiline"
     ref="input"
     :value="internalText || $props.value"
     type="text"
@@ -8,6 +9,15 @@
     :required="$props.required"
     @input="(e) => update(e.target.value)"
   />
+  <textarea
+    v-else
+    :name="$props.name"
+    ref="input"
+    :value="internalText || $props.value"
+    :placeholder="$props.placeholder"
+    :required="$props.required"
+    @input="(e) => update(e.target.value)"
+  ></textarea>
 </template>
 
 <script>
@@ -19,6 +29,7 @@ export default {
     invalidMessage: String,
     required: Boolean,
     name: String,
+    multiline: Boolean,
   },
   data() {
     return {
