@@ -1,71 +1,69 @@
 
 <template>
   <div id="page">
-      <h1>{{$t("firstUse.welcome")}}</h1>
-      <h3>{{$t("firstUse.pleaseAddConfig")}}</h3>
-      <TextInput id="input" :value="config" @change="updateConfig"> </TextInput>
-      <button
-        type="button"
-        class="submit"
-        @click="connectWirtBot"
-      >
-        {{ $t("firstUse.connect") }}
-      </button>
-      <button
-        type="button"
-        class="skip"
-        @click="skip"
-      >
-        {{ $t("firstUse.useBackup") }}
-      </button>
+    <h1>{{ $t("firstUse.welcome") }}</h1>
+    <h3>{{ $t("firstUse.pleaseAddConfig") }}</h3>
+    <textarea
+      id="input"
+      :value="config"
+      @change="(e) => updateConfig(e.target.value)"
+    >
+    </textarea>
+    <button type="button" class="submit" @click="connectWirtBot">
+      {{ $t("firstUse.connect") }}
+    </button>
+    <button type="button" class="skip" @click="skip">
+      {{ $t("firstUse.useBackup") }}
+    </button>
   </div>
 </template>
 
 <script>
-
-import TextInput from "components/Inputs/Text"
-
 export default {
-  components: {TextInput },
+  components: {},
   data() {
     return {
-        config: ""
+      config: "",
     };
   },
-  computed: {
-  },
+  computed: {},
   methods: {
-      updateConfig(text){
-          this.config = text; 
-      },
-      connectWirtBot(){
-          const keys = JSON.parse(atob(this.config)).keys;
-          this.$store.dispatch("setKeys", keys);
-          this.$store.dispatch("disableFirstUse" );
-      },
-      skip(){
-          this.$store.dispatch("disableFirstUse" );
+    updateConfig(text) {
+      this.config = text;
+    },
+    connectWirtBot() {
+      try {
+        const keys = JSON.parse(atob(this.config)).keys;
+        this.$store.dispatch("setKeys", keys);
+        this.$store.dispatch("disableFirstUse");
+      } catch (error) {
+        this.$store.dispatch(
+          "alerts/addWarning",
+          `${this.$t("warnings.failedToParseInitialData")}`
+        );
       }
+    },
+    skip() {
+      this.$store.dispatch("disableFirstUse");
+    },
   },
-  mounted() {
-  },
+  mounted() {},
 };
 </script>
 
 <style lang="scss" scoped>
 #page {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 #input {
-    margin-top: $spacing-medium;
-    width: 30vw;
-    height: 10rem;
+  margin-top: $spacing-medium;
+  width: 30vw;
+  height: 10rem;
 }
 
 button {
-    margin-top: $spacing-medium;
-
+  margin-top: $spacing-medium;
 }
 </style>

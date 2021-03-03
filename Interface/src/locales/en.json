@@ -19,7 +19,7 @@
     "documentation": "Documentation",
     "imprint": "Imprint",
     "privacy": "Privacy & cookies",
-    "donation": "Donations for the server costs of the WirtBot website are appreciated and accepted via <a target='_blank' rel='noopener noreferrer' href='https://ethereum.org/' >Ethereum</a> address {{address}}"
+    "donation": "Donations for the server costs of the WirtBot website are appreciated and accepted via <a target='_blank' rel='noopener noreferrer' href='https://ethereum.org/' >Ethereum</a> address <pre>0x39DF85776c626117B945afECF08C4DD262817522</pre>"
   },
   "firstUse": {
     "welcome": "Welcome to this WirtBot",
@@ -151,7 +151,8 @@
     "wrongIPv6": "Not a correct IPv6 address",
     "serverPort": "Port must be between 1024 and 65636",
     "updateFailDNS": "Error when updating the DNS records on the WirtBot. Please check the browser console for more info",
-    "updateFailConfig": "Error when updating the config on the WirtBot. Please check the browser console for more info"
+    "updateFailConfig": "Error when updating the config on the WirtBot. Please check the browser console for more info",
+    "failedToParseInitialData": "Error parsing the provided data. Please make sure you copied it from your WirtBot Core correctly"
   },
   "infos": {
     "generatingKeys": "Keys are being generated"

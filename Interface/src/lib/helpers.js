@@ -1,10 +1,3 @@
-import i18n from "../i18n";
-
-export function getTranslationWithVariables(key, template, replacement) {
-  return i18n.t(key).replace(`{{${template}}}`, replacement);
-}
-
-
 // https://stackoverflow.com/questions/6860853/generate-random-string-for-div-id/6860916#6860916
 export function guidGenerator() {
   var S4 = function () {
