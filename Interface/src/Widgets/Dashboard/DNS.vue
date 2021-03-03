@@ -1,7 +1,7 @@
 <template>
   <div id="dns-widget">
     <h1>{{ $t("dashboard.widgets.dns.title") }}</h1>
-    <div class="row">
+    <div class="row ip">
       <label>{{ $t("dashboard.widgets.dns.ip") }}</label>
       <IPInput
         :ip="dns.ip.v4"
@@ -77,5 +77,11 @@ export default {
   display: flex;
   justify-content: space-between;
   padding: $spacing-small 0;
+}
+
+@media screen and (max-width: $tablet-width) {
+  .row.ip label {
+    max-width: 44%;
+  }
 }
 </style>
