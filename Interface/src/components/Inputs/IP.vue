@@ -75,15 +75,15 @@ export default {
       newIp[index] = newValue;
 
       if (newValue > 255) {
-      this.$emit("change", { ip: newIp, valid: false});
+        this.$emit("change", { ip: newIp, valid: false });
         return;
       }
       if ((index == 3 || index == 0) && newValue < 1) {
-      this.$emit("change", { ip: newIp, valid: false});
+        this.$emit("change", { ip: newIp, valid: false });
         return;
       }
       if (newValue < 0) {
-      this.$emit("change", { ip: newIp, valid: false});
+        this.$emit("change", { ip: newIp, valid: false });
         return;
       }
 
@@ -106,7 +106,7 @@ export default {
   max-width: 100%;
 
   & input {
-    width: 5rem;
+    width: 3rem;
   }
 }
 </style>

@@ -76,4 +76,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+input {
+  max-width: 6rem;
+}
 </style>
