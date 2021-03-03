@@ -1,5 +1,5 @@
 <template>
-  <footer :class="{ mobile: isMobilePage }">
+  <footer>
     <div class="button-and-links">
       <div>
         <Button @click.prevent="contact" empty>{{
@@ -29,9 +29,6 @@ import { getTranslationWithVariables } from "../lib/helpers";
 export default {
   components: { Button },
   computed: {
-    isMobilePage() {
-      return this.$store.state.websiteBeingViewedOnMobileDevice;
-    },
     donationMessage() {
       return getTranslationWithVariables(
         "footer.donation",
@@ -54,14 +51,6 @@ footer {
   flex-direction: column;
   margin-top: $spacing-large;
   padding: $spacing-large 0;
-
-  &.mobile {
-    & .button-and-links {
-      & .button {
-        max-width: 10rem;
-      }
-    }
-  }
 
   & .button-and-links {
     display: flex;

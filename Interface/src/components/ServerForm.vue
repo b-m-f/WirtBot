@@ -1,5 +1,5 @@
 <template>
-  <form :class="{ server: true, mobile: isMobilePage }">
+  <form :class="{ server: true }">
     <div class="field ip">
       <label for="server-ip" @submit.prevent>IP</label>
       <div class="ip-inputs">
@@ -121,10 +121,7 @@ export default {
   computed: {
     server() {
       return this.$store.state.server;
-    },
-    isMobilePage() {
-      return this.$store.state.websiteBeingViewedOnMobileDevice;
-    },
+    }
   },
   methods: {
     async updateServer(serverData) {
@@ -228,24 +225,6 @@ export default {
     input {
       margin-left: auto;
       max-width: 7rem;
-    }
-  }
-}
-
-.server.mobile {
-  max-width: 100%;
-  & .ip {
-    flex-direction: column;
-    & .ip-inputs {
-      margin-left: 0;
-    }
-  }
-
-  & .port {
-    flex-direction: column;
-
-    & input {
-      margin-left: 0;
     }
   }
 }

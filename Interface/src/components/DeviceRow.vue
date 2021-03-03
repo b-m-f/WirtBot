@@ -1,6 +1,6 @@
 <template>
   <tr
-    :class="{ mobile: isMobilePage, 'table-row': true, device: true }"
+    :class="{ 'table-row': true, device: true }"
     :data-name="this.device.name"
   >
     <td class="column-one">
@@ -192,9 +192,6 @@ export default {
     subnet() {
       return this.$store.state.server.subnet;
     },
-    isMobilePage() {
-      return this.$store.state.websiteBeingViewedOnMobileDevice;
-    },
     device() {
       return {
         name: this.$props.name,
@@ -364,14 +361,6 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-}
-
-.mobile {
-  & .new-device {
-    & .ip-input {
-      flex-direction: column;
-    }
-  }
 }
 
 .delete {

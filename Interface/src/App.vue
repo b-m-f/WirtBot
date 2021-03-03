@@ -1,6 +1,6 @@
 <template>
   <!-- Document how to use these classes in every component for device specific styling  -->
-  <div :class="{ app: true, mobile: isMobilePage, desktop: !isMobilePage }">
+  <div :class="{ app: true }">
     <Header />
     <Alerts id="alerts" />
     <main id="app-window" v-if="isConnectedToWirtBot">
@@ -16,7 +16,6 @@ import Header from "components/Header";
 import Footer from "components/Footer";
 import Alerts from "components/Alerts";
 import FirstUse from "./pages/FirstUse/FirstUse";
-import { assumedWidthThresholdToBeMobileDevice } from "./variables";
 
 export default {
   props: {
@@ -31,25 +30,8 @@ export default {
     alerts() {
       return this.$store.getters["alerts/alerts"];
     },
-    isMobilePage() {
-      return this.$store.state.websiteBeingViewedOnMobileDevice;
-    },
     isConnectedToWirtBot(){
       return !this.$store.state.dashboard.firstUse || this.$store.state.keys.private && this.$store.state.keys.public
-    }
-  },
-  beforeCreate() {
-    if (window.innerWidth < assumedWidthThresholdToBeMobileDevice) {
-      this.$store.commit("setMobileView");
-    } else {
-      this.$store.commit("setNotMobileView");
-    }
-  },
-  updated() {
-    if (window.innerWidth < assumedWidthThresholdToBeMobileDevice) {
-      this.$store.commit("setMobileView");
-    } else {
-      this.$store.commit("setNotMobileView");
     }
   },
   methods: {
@@ -87,17 +69,6 @@ export default {
   top: $spacing-small;
   right: $spacing-small;
   width: 30vw;
-}
-
-.mobile {
-  &.app {
-    display: flex;
-    flex-direction: column;
-  }
-
-  & #app-window {
-    width: 100%;
-  }
 }
 
 .desktop {

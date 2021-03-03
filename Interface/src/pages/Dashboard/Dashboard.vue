@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ page: true, mobile: isMobilePage }">
+  <div :class="{ page: true }">
     <div id="top-bar">
       <h1>{{ $t("dashboard.title") }}</h1>
       <h2>v{{ version }}</h2>
@@ -23,7 +23,6 @@
     </AccentedCard>
     <Card
       class="widget"
-      :padded="!isMobilePage"
       v-for="(widget, index) in widgets"
       :key="`dashboard-widget-${index}`"
     >
@@ -74,9 +73,6 @@ export default {
     },
     server() {
       return this.$store.state.server;
-    },
-    isMobilePage() {
-      return this.$store.state.websiteBeingViewedOnMobileDevice;
     },
     isFirstUse() {
       return this.$store.state.dashboard.firstUse;
