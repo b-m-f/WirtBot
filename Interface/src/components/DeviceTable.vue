@@ -123,17 +123,28 @@ export default {
       grid-template-areas: "one two three " "four five six";
       grid-template-columns:
         calc(33.3% - #{$spacing-medium})
-        calc(33.3% - #{$spacing-medium}) calc(33.3% - #{$spacing-medium});
+        calc(33.3% - #{$spacing-medium}) calc(33.3%);
       padding-top: $spacing-medium;
       padding-bottom: $spacing-medium;
+      padding-left: $spacing-small;
+      padding-right: $spacing-small;
       &.even {
         background-color: $grey-light;
+      }
+      @media screen and (max-width: $mobile-width) {
+        grid-template-areas: "one" "two" "three" "four" "five" "six";
+        grid-template-columns: 100%;
+      }
+      @media screen and (min-width: $mobile-width) and (max-width: $tablet-width) {
+        grid-template-areas: "one two" "three four" "five six";
+        grid-template-columns: calc(50% - #{$spacing-medium}) calc(50%);
       }
     }
   }
   & .column-one {
     display: flex;
     justify-content: flex-start;
+    align-content: center;
     flex-direction: column;
     grid-area: one;
   }
