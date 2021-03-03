@@ -1,35 +1,32 @@
 <template>
   <header id="app-header">
-    <div
-      :class="{ container: true }"
-    >
-      <nav>
-        <div id="left">
-          <div id="logo">
-            <router-link to="/">
-              <img src="logo.svg" alt="WirtBot logo" />
-            </router-link>
-          </div>
-          <div id="documentation">
-            <a
-              href="https://wirtbot.com/documentation"
-              target="_blank"
-              rel="noopener noreferrer"
-              >{{ $t("header.documentation") }}</a
-            >
-          </div>
-          <div id="github">
-            <a
-              href="https://github.com/b-m-f/WirtBot"
-              target="_blank"
-              rel="noopener noreferrer"
-              >GitHub</a
-            >
-          </div>
+    <nav>
+      <div id="left">
+        <div id="logo">
+          <router-link to="/">
+            <img src="logo.svg" alt="WirtBot logo" />
+          </router-link>
         </div>
-        <div id="right"></div>
-      </nav>
-    </div>
+      </div>
+      <div id="right">
+        <div id="documentation">
+          <a
+            href="https://wirtbot.com/documentation"
+            target="_blank"
+            rel="noopener noreferrer"
+            >{{ $t("header.documentation") }}</a
+          >
+        </div>
+        <div id="github">
+          <a
+            href="https://github.com/b-m-f/WirtBot"
+            target="_blank"
+            rel="noopener noreferrer"
+            >GitHub</a
+          >
+        </div>
+      </div>
+    </nav>
   </header>
 </template>
 
@@ -45,83 +42,82 @@ export default {
   min-height: 4rem;
   margin-top: $spacing-medium;
   width: 100%;
-}
-#logo {
-  display: flex;
-  align-items: center;
-  height: 100%;
-  margin-right: $spacing-x-large;
-
-  & img {
-    height: 4rem;
-    width: 10rem;
-    &:hover {
-      background: $secondary;
-    }
-    &:focus {
-      background: $secondary;
-    }
-  }
+  justify-content: center;
 }
 
-.container {
-  width: calc(100% - #{$spacing-medium});
-
-  display: flex;
+nav {
   & a {
     color: $black;
     text-decoration: none;
   }
-}
+  width: calc(100% - #{$spacing-medium});
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-transform: uppercase;
+  flex-wrap: 1;
 
-.desktop {
-  &.container {
-    & nav {
-      width: 100%;
+  & a {
+    font-size: $heading-medium;
+    &:hover {
+      color: $secondary;
+    }
+    &:focus {
+      color: $secondary;
+    }
+    &.router-link-active {
+      color: $secondary;
+    }
+  }
+
+  & .button {
+    max-width: 14rem;
+    height: 2rem;
+  }
+  & #left {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    & #logo {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      text-transform: uppercase;
-      flex-wrap: 1;
+      height: 100%;
+      margin-right: $spacing-x-large;
 
-      & a {
-        font-size: $heading-medium;
+      & img {
+        height: 4rem;
+        width: 10rem;
         &:hover {
-          color: $secondary;
+          background: $secondary;
         }
         &:focus {
-          color: $secondary;
-        }
-        &.router-link-active {
-          color: $secondary;
+          background: $secondary;
         }
       }
+    }
+    & div {
+      margin-right: $spacing-medium;
 
-      & .button {
-        max-width: 14rem;
-        height: 2rem;
+      &:last-child {
+        margin-right: 0;
       }
-      & #left {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        & div {
-          margin-right: $spacing-medium;
+    }
+  }
 
-          &:last-child {
-            margin-right: 0;
-          }
-        }
-      }
+  & #right {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 
-      & #right {
-        display: flex;
-        align-items: center;
+    @media screen and (max-width: $mobile-width) {
+      flex-direction: column;
+    }
 
-        & .button {
-          margin-left: $spacing-medium;
-        }
-      }
+    & .button {
+      margin-left: $spacing-medium;
     }
   }
 }

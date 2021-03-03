@@ -23,6 +23,7 @@
     </AccentedCard>
     <Card
       class="widget"
+      padded
       v-for="(widget, index) in widgets"
       :key="`dashboard-widget-${index}`"
     >
