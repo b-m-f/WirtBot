@@ -1,7 +1,7 @@
 <template>
-  <div id="device-table" :class="{ mobile: isMobilePage }">
+  <div id="device-table">
     <form ref="form">
-      <table v-if="!isMobilePage">
+      <table>
         <tbody>
           <DeviceRow
             v-for="(device, index) in devices"
@@ -21,24 +21,6 @@
           />
         </tbody>
       </table>
-      <DeviceRow
-        v-else
-        v-for="(device, index) in devices"
-        :key="device.id || 'newDevice'"
-        ref="mobile-row"
-        :qr="device.qr"
-        :id="device.id"
-        :ip="device.ip"
-        :config="device.config"
-        :type="device.type"
-        :name="device.name"
-        :additionalDNSServers="device.additionalDNSServers"
-        :MTU="device.MTU"
-        :routed="device.routed"
-        @saved="save"
-        @cancel-new-device="cancelNewDevice"
-        :class="{ even: index % 2 == 0 }"
-      />
     </form>
   </div>
 </template>
@@ -52,11 +34,6 @@ export default {
   props: { devices: Array },
   data() {
     return {};
-  },
-  computed: {
-    isMobilePage() {
-      return this.$store.state.websiteBeingViewedOnMobileDevice;
-    },
   },
   methods: {
     cancelNewDevice() {
@@ -151,63 +128,6 @@ export default {
       padding-bottom: $spacing-medium;
       &.even {
         background-color: $grey-light;
-      }
-    }
-  }
-  &.mobile {
-    & form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      & tr {
-        width: 30%;
-        min-width: 18rem;
-        margin-top: $spacing-small;
-        margin-left: $spacing-small;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        justify-content: center;
-        padding: 0;
-
-        &.table-row {
-          border: $grey-light $border-small solid;
-          padding: $spacing-medium;
-
-          & .column-one {
-            padding-left: 0;
-            flex-direction: row;
-            & p {
-              font-size: $heading-medium;
-            }
-          }
-          & .column-two {
-            flex-direction: row;
-            padding-top: $spacing-small;
-          }
-          & .column-three {
-            padding-top: $spacing-small;
-            flex-direction: row;
-          }
-          & .column-four {
-            padding-top: $spacing-small;
-            flex-direction: column;
-          }
-          & .column-five {
-            flex-direction: column;
-            padding-right: 0;
-            padding-top: $spacing-small;
-          }
-          & .column-six {
-            flex-direction: column;
-            padding-right: 0;
-            padding-top: $spacing-small;
-          }
-          &.even {
-            background-color: $grey-light;
-          }
-        }
       }
     }
   }

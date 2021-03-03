@@ -63,7 +63,6 @@ const store = new Vuex.Store({
       /* {ip: {v4, v6}, name, type, id}*/
     ],
     deviceTypes: ["Android", "Windows", "MacOS", "iOS", "Linux", "FreeBSD"],
-    websiteBeingViewedOnMobileDevice: undefined,
     network: {
       dns: {
         name: "wirt.internal",
@@ -90,12 +89,6 @@ const store = new Vuex.Store({
     },
     setKeys(state, keys) {
       state.keys = keys;
-    },
-    setMobileView(state) {
-      state.websiteBeingViewedOnMobileDevice = true;
-    },
-    setNotMobileView(state) {
-      state.websiteBeingViewedOnMobileDevice = false;
     },
     updateServer(state, server) {
       Object.keys(server).forEach((key) => {
