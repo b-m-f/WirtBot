@@ -1,3 +1,9 @@
+## 2.4.0
+- New Make task to spawn local setup, that is not dockerized to speed up writing tests
+- Removes all JS detection of mobile screen size and uses media-queries only
+- A few UI bugs have been squashed
+- IPv4 is not an array of 4 numbers, but simply a string now. This makes it easier to pass around, as verification happens on the input component where it enters the system and stays in line with IPv6 being a string
+
 ## 2.3.3
 - Sets initial dummy WirtBot config in container to bind the correct port.
 - Makes setup easier by removing flags that only matter for container internal settings.
