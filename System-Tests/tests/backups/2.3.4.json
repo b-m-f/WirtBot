@@ -1,0 +1,102 @@
+{
+    "version": "2.3.4",
+    "keys": {
+        "private": "5mulHuvASgsqAR282LC4nTKoALXpqJWfOTcpQseXRYg=",
+        "public": "1lLU3VhXsrSGMxESmqfY4m2oEVkpfEHyKlCQU6MMPsI="
+    },
+    "server": {
+        "ip": {
+            "v4": "1.1.1.1",
+            "v6": ""
+        },
+        "port": 2222,
+        "keys": {
+            "private": "YC8IspdWLqD1SfyExpGE+S0mu40syGlHAUwEByNf63g=",
+            "public": "RIMGQ17oPmWYasDezHvT7fyE7oCPcLaMaAN9dDesajU="
+        },
+        "config": "[Interface]\nAddress = 10.10.0.1,1010:1010:1010:1010:0001\nListenPort = 2222\nPrivateKey = YC8IspdWLqD1SfyExpGE+S0mu40syGlHAUwEByNf63g=\n\n[Peer]\nAllowedIPs = 10.10.0.3/32,1010:1010:1010:1010:fff::/128\nPublicKey = dYht532ICp23xA/OeXY3w5RR61Q335CTXCb5+QTn9jQ=\n[Peer]\nAllowedIPs = 10.10.0.2/32,1010:1010:1010:1010:fffa::/128\nPublicKey = MOmIaXZf6MjAmkQDlSo7Mz2YSEqA0IMBLsn/xS9AoSA=",
+        "subnet": {
+            "v4": "10.10.0.",
+            "v6": "1010:1010:1010:1010:"
+        },
+        "hostname": "test-server",
+        "name": "test-server",
+        "v4": "10.21.0.",
+        "v6": "1010:1010:1010:1010:"
+    },
+    "devices": [
+        {
+            "id": "7eebebc9-a9e6-a94a-9007-662a48b59f13",
+            "keys": {
+                "private": "oOZopvMc5ctucmWaPunB/Lhn8pBOO6CsKu/0cP32bFE=",
+                "public": "dYht532ICp23xA/OeXY3w5RR61Q335CTXCb5+QTn9jQ="
+            },
+            "name": "test-2",
+            "ip": {
+                "v6": "fff",
+                "v4": 3
+            },
+            "type": "Linux",
+            "routed": false,
+            "additionalDNSServers": [
+                "999.9.9.9"
+            ],
+            "config": "[Interface]\nAddress = 10.10.0.3,1010:1010:1010:1010:fff\nPrivateKey = oOZopvMc5ctucmWaPunB/Lhn8pBOO6CsKu/0cP32bFE=\nDNS = 10.10.0.1,999.9.9.9\n\n[Peer]\nEndpoint = test-server:2222\nAllowedIPs = 10.10.0.0/24,1010:1010:1010:1010::/64\nPublicKey = RIMGQ17oPmWYasDezHvT7fyE7oCPcLaMaAN9dDesajU=\n\n## keep connection alive behind NAT\nPersistentKeepalive = 25"
+        },
+        {
+            "id": "b5332729-7523-d75b-341e-4a1905d8f705",
+            "keys": {
+                "private": "GJ81qQnRNtcLOIhGaApU3Yg+cIJQIWvAmk1pdQyl4WM=",
+                "public": "MOmIaXZf6MjAmkQDlSo7Mz2YSEqA0IMBLsn/xS9AoSA="
+            },
+            "name": "test-1",
+            "ip": {
+                "v4": 2,
+                "v6": "fffa"
+            },
+            "type": "Android",
+            "routed": true,
+            "additionalDNSServers": [],
+            "MTU": 1400,
+            "config": "[Interface]\nAddress = 10.10.0.2,1010:1010:1010:1010:fffa\nPrivateKey = GJ81qQnRNtcLOIhGaApU3Yg+cIJQIWvAmk1pdQyl4WM=\nDNS = 10.10.0.1,\nMTU = 1400\n\n[Peer]\nEndpoint = test-server:2222\nAllowedIPs = 0.0.0.0/0,::/0\nPublicKey = RIMGQ17oPmWYasDezHvT7fyE7oCPcLaMaAN9dDesajU=\n\n## keep connection alive behind NAT\nPersistentKeepalive = 25",
+            "qr": "data:image/png;base64,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"
+        }
+    ],
+    "deviceTypes": [
+        "Android",
+        "Windows",
+        "MacOS",
+        "iOS",
+        "Linux",
+        "FreeBSD"
+    ],
+    "network": {
+        "dns": {
+            "name": "wirt.intensasdwq",
+            "config": "",
+            "ip": {
+                "v4": "1.1.1.1"
+            },
+            "tlsName": "test-test.test",
+            "tls": true
+        },
+        "api": {
+            "host": "localhost:3030"
+        }
+    },
+    "dashboard": {
+        "messages": [],
+        "hiddenWidgets": [],
+        "firstUse": false
+    },
+    "alerts": {
+        "alerts": [
+            {
+                "message": "Your backup has been imported successfully!",
+                "type": "success",
+                "id": 1614887819960
+            }
+        ]
+    },
+    "websiteBeingViewedOnMobileDevice": true
+}

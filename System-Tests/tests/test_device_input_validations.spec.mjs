@@ -4,12 +4,10 @@ const { readFile } = fsPromises;
 import process from "process";
 
 import { setDNSName } from "./widgets/network.mjs";
-import { addServer, downloadConfig as downloadServerConfig } from "./widgets/server.mjs";
-import { addNewDevice, downloadConfig as downloadDeviceConfig, setIPv6, setIPv4 } from "./widgets/devices.mjs";
+import { addServer } from "./widgets/server.mjs";
+import { addNewDevice, setIPv6, setIPv4 } from "./widgets/devices.mjs";
 import { skipInitialConfig } from "./widgets/initial_setup.mjs"
 
-// This is where the Core writes its updates
-const wirtBotFileDir = "/tmp/WirtBotTests";
 
 export default async (browser) => {
     try {
@@ -20,7 +18,7 @@ export default async (browser) => {
         await setDNSName(page, "test");
         // The DNS name has to set to .test to work in CI where the wirtbot is in the .test zone
         // Check the Build-Automation directory for more info
-        await addServer(page, { ip: [1, 2, 3, 4], port: 1234 });
+        await addServer(page, { ip: "1.2.3.4", port: 1234 });
 
         // devices cant have same ip
         await addNewDevice(page, { ip: { v4: 2 }, name: "test-1", type: "Android" });

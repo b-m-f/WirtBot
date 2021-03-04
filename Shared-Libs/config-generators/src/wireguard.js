@@ -29,7 +29,7 @@ export function generateDeviceConfig({ ip, keys, routed, additionalDNSServers, M
     if (server.ip.v6 || (server.ip.v6 && server.ip.v4)) {
       endpoint = `[${server.ip.v6}]:${server.port}`;
     } else {
-      endpoint = `${server.ip.v4.join(".")}:${server.port}`;
+      endpoint = `${server.ip.v4}:${server.port}`;
     }
   }
 

@@ -2,7 +2,7 @@
 export function generateDNSFile(server, clients, network) {
     const tls = network.dns.tls;
     const tlsName = network.dns.tlsName;
-    const dnsV4 = network.dns.ip.v4 || [1, 1, 1, 1];
+    const dnsV4 = network.dns.ip.v4 || "1.1.1.1";
     const dnsV6 = network.dns.ip.v6;
     const deviceNames = clients.map(client => {
         client.name = client.name.split(' ').join('-');
@@ -36,13 +36,13 @@ export function generateDNSFile(server, clients, network) {
 
     const forwardConfig = () => {
         if (tls) {
-            return `forward . ${dnsV4 ? `tls://` + dnsV4.join(".") + " " : ""}${dnsV6 ? `tls://` + dnsV6 + "" : ""}{
+            return `forward . ${dnsV4 ? `tls://` + dnsV4 + " " : ""}${dnsV6 ? `tls://` + dnsV6 + "" : ""}{
        except ${network.dns.name} lan local home fritz.box
        tls_servername ${tlsName}
        health_check 5s
     }`
         } else {
-            return `forward . ${dnsV4 ? dnsV4.join(".") + "" : ""}${dnsV6 ? dnsV6 : ""} {
+            return `forward . ${dnsV4 ? dnsV4 + "" : ""}${dnsV6 ? dnsV6 : ""} {
        except ${network.dns.name} lan local home fritz.box
        health_check 5s
     }`

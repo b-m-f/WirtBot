@@ -20,7 +20,7 @@ export default async (browser) => {
         await page.goto(process.env.URL);
         await skipInitialConfig(page);
 
-        let backups = ["./backups/1.4.5.json", "./backups/2.3.3.json"];
+        let backups = ["./backups/1.4.5.json", "./backups/2.3.3.json", "./backups/2.3.4.json"];
 
         for (const backup of backups) {
             page = await browser.newPage();
@@ -37,9 +37,14 @@ export default async (browser) => {
 
             const networkConfig = await getNetworkConfig(page);
 
-            assert(
-                dnsConfig.ip.v4.join(",") ==
-                json.network.dns.ip.v4.join(",")
+            if (json.version < "2.3.4") {
+                json.network.dns.ip.v4 = json.network.dns.ip.v4.join(".")
+                json.server.ip.v4 = json.server.ip.v4.join(".")
+            }
+
+            assert.strictEqual(
+                dnsConfig.ip.v4,
+                json.network.dns.ip.v4
             );
             assert.strictEqual(dnsConfig.tls, json.network.dns.tls);
             assert.strictEqual(dnsConfig.tlsName, json.network.dns.tlsName);

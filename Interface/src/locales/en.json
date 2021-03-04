@@ -32,7 +32,7 @@
       "network": {
         "title": "Network settings",
         "dnsName": "DNS name to access services in network via their name",
-        "apiServerHost":"WirtBot API host"
+        "apiServerHost": "WirtBot API host"
       },
       "settings": {
         "title": "Settings",
@@ -148,6 +148,7 @@
     "fileReaderApiNotSupported": "Your browser does not seem to support the FileReader API. Read more at https://developer.mozilla.org/en-US/docs/Web/API/File",
     "noFileSelected": "Please select a file to import first.",
     "noServer": "No server was configured.",
+    "wrongIPv4": "Not a correct IPv4 address",
     "wrongIPv6": "Not a correct IPv6 address",
     "serverPort": "Port must be between 1024 and 65636",
     "updateFailDNS": "Error when updating the DNS records on the WirtBot. Please check the browser console for more info",

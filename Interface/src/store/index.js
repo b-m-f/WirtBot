@@ -31,7 +31,7 @@ async function addConfigToDevice(newDevice, server) {
   });
 }
 
-const version = "2.3.3";
+const version = "2.3.4";
 
 const versionFromAppPlugin = (store) => {
   store.subscribe((mutation, state) => {
@@ -45,41 +45,42 @@ const versionFromAppPlugin = (store) => {
 };
 
 Vue.use(Vuex);
+const initialState = {
+  version: version,
+  keys: { public: undefined, private: undefined },
+  server: {
+    ip: { v4: "", v6: "" },
+    port: undefined,
+    keys: undefined,
+    config: "",
+    subnet: { v4: "10.10.0.", v6: "1010:1010:1010:1010:" },
+    hostname: "",
+  },
+  devices: [
+    /* {ip: {v4, v6}, name, type, id}*/
+  ],
+  deviceTypes: ["Android", "Windows", "MacOS", "iOS", "Linux", "FreeBSD"],
+  network: {
+    dns: {
+      name: "wirt.internal",
+      config: "",
+      ip: { v4: "1.1.1.1" },
+      tlsName: "cloudflare-dns.com",
+      tls: true,
+    },
+    api: { host: `wirtbot.wirt.internal:3030` },
+  },
+  dashboard: {
+    // Messages have to be defined in pages/Dashboard/messages.js
+    messages: [],
+    hiddenWidgets: [],
+    firstUse: true,
+  },
+};
 
 const store = new Vuex.Store({
   modules: { alerts },
-  state: {
-    version: version,
-    keys: { public: undefined, private: undefined },
-    server: {
-      ip: { v4: [undefined, undefined, undefined, undefined], v6: "" },
-      port: undefined,
-      keys: undefined,
-      config: "",
-      subnet: { v4: "10.10.0.", v6: "1010:1010:1010:1010:" },
-      hostname: "",
-    },
-    devices: [
-      /* {ip: {v4, v6}, name, type, id}*/
-    ],
-    deviceTypes: ["Android", "Windows", "MacOS", "iOS", "Linux", "FreeBSD"],
-    network: {
-      dns: {
-        name: "wirt.internal",
-        config: "",
-        ip: { v4: [1, 1, 1, 1] },
-        tlsName: "cloudflare-dns.com",
-        tls: true,
-      },
-      api: { host: `wirtbot.wirt.internal:3030` },
-    },
-    dashboard: {
-      // Messages have to be defined in pages/Dashboard/messages.js
-      messages: [],
-      hiddenWidgets: [],
-      firstUse: true,
-    },
-  },
+  state: initialState,
   mutations: {
     disableFirstUse(state) {
       state.dashboard.firstUse = false;
@@ -141,26 +142,13 @@ const store = new Vuex.Store({
     },
     resetServer(state) {
       // TODO: create a default state and simply load that in
-      state.server = {
-        ip: { v4: [undefined, undefined, undefined, undefined], v6: "" },
-        port: undefined,
-        keys: undefined,
-        config: "",
-        subnet: { v4: "10.10.0.", v6: "1010:1010:1010:1010:" },
-        hostname: "",
-      };
+      state.server = initialState.server
     },
     resetDevices(state) {
-      state.devices = [];
+      state.devices = initialState.devices;
     },
     resetDNS(state) {
-      state.network.dns = {
-        name: "wirt.internal",
-        config: "",
-        ip: { v4: [1, 1, 1, 1] },
-        tlsName: "cloudflare-dns.com",
-        tls: true,
-      };
+      state.network.dns = initialState.network.dns
     },
     setVersion(state, version) {
       state.version = version;

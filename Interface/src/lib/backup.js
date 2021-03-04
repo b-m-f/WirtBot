@@ -14,8 +14,13 @@ export function upgradeBackup(backupAsJSONString) {
     throw Error(i18n.t("errors.backupNotCompatible"));
   }
 
+  if (backupVersion < "2.3.4") {
+    updatedBackup.server.ip.v4 = backup.server.ip.v4.join(".")
+    updatedBackup.network.dns.ip.v4 = backup.network.dns.ip.v4.join(".")
+  }
+
   // Set to the current version of the app where it is now being imported in
-  backup.version = appVersion;
+  updatedBackup.version = appVersion;
 
   // Check that all devices have an ID
   // This should only trigger when backups are changed manually

@@ -2,11 +2,22 @@ SHELL := /bin/bash
 
 ## Development
 dev: dev-client dev-server
+dev-tests: dev-client dev-tests-server
 dev-server:
 	rm -rf /tmp/WirtBotTests && mkdir /tmp/WirtBotTests && \
 	touch /tmp/WirtBotTests/server.conf && \
 	touch /tmp/WirtBotTests/Corefile && \
 	cd ./Core && \
+	ALLOWED_ORIGIN=http://localhost:8080 \
+	RUST_LOG=debug MANAGED_DNS_ENABLED=1 \
+	MANAGED_DNS_DEVICE_FILE=/tmp/WirtBotTests/Corefile \
+	CONFIG_PATH=/tmp/WirtBotTests/server.conf cargo watch -x run || cd -
+dev-tests-server:
+	rm -rf /tmp/WirtBotTests && mkdir /tmp/WirtBotTests && \
+	touch /tmp/WirtBotTests/server.conf && \
+	touch /tmp/WirtBotTests/Corefile && \
+	cd ./Core && \
+	PUBLIC_KEY=1lLU3VhXsrSGMxESmqfY4m2oEVkpfEHyKlCQU6MMPsI= \
 	ALLOWED_ORIGIN=http://localhost:8080 \
 	RUST_LOG=debug MANAGED_DNS_ENABLED=1 \
 	MANAGED_DNS_DEVICE_FILE=/tmp/WirtBotTests/Corefile \
@@ -48,7 +59,6 @@ test-unit:
 
 test-unit-ci:
 	docker-compose -f Build-Automation/Unit-Tests/test.yml up --abort-on-container-exit --build --remove-orphans
-
 
 
 ## Maintenance
