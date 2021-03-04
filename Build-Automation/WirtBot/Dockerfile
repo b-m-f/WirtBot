@@ -71,7 +71,7 @@ RUN cd $WG_TOOLS/src && make && mv wg / && mv wg-quick/linux.bash /wg-quick && c
 ### This is where the final image starts
 FROM debian:buster-slim
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt update && apt upgrade -yy
+RUN apt-get update && apt-get upgrade -y
 RUN apt-get install -yy nginx inotify-tools iproute2 
 
 # Set up the s6 overlay init system
