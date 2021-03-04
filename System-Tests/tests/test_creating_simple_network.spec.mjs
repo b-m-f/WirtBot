@@ -21,7 +21,7 @@ export default async (browser) => {
         await setDNSName(page, "test");
         // The DNS name has to set to .test to work in CI where the wirtbot is in the .test zone
         // Check the Build-Automation directory for more info
-        await addServer(page, { ip: [1, 2, 3, 4], port: 1234 });
+        await addServer(page, { ip: "1.2.3.4", port: 1234 });
         await addNewDevice(page, { ip: { v4: 2 }, name: "test-1", type: "Android" });
 
         const numberOfSuccessAlertsForDNSAndConfig = await page.$$eval("#alerts .success", (items) => items.length);

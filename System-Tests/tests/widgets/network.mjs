@@ -1,5 +1,3 @@
-import assert from "assert";
-
 export const networkWidget = async (page) => {
     return await page.$("css=#network-widget");
 };

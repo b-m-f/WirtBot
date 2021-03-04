@@ -25,11 +25,11 @@ export default async (browser) => {
         // The DNS name has to set to .test to work in CI where the wirtbot is in the .test zone
         // Check the Build-Automation directory for more info
         await enableDNSTLS(page);
-        await setDNSIP(page, [1, 2, 3, 4]);
+        await setDNSIP(page, "1.2.3.4");
         await setDNSTlsName(page, "testdns.test");
 
 
-        await addServer(page, { ip: [1, 2, 3, 4], port: 1234, subnet: "10.11.0.", name: "test" });
+        await addServer(page, { ip: "1.2.3.4", port: 1234, subnet: "10.11.0.", name: "test" });
         await addNewDevice(page, { ip: { v4: 2 }, name: "test-1", type: "Android", additionalDNSServers: "2.2.2.2", MTU: 1500 });
         await addNewDevice(page, { ip: { v4: 3, v6: "fffe" }, name: "test-2", type: "Linux", additionalDNSServers: "4.4.4.4,5.5.5.5", MTU: 1320 });
         await addNewDevice(page, { ip: { v6: "fffa" }, name: "test-3", type: "Linux" });

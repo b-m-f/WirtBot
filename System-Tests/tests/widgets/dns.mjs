@@ -1,5 +1,3 @@
-import assert from "assert";
-
 export const dnsWidget = async (page) => {
     return await page.$("css=#dns-widget");
 };
@@ -15,10 +13,7 @@ export const getConfig = async (page) => {
     const dns = await dnsWidget(page);
     const dnsTLSNameInput = await dns.$("input[name='tlsname']");
     const dnsTLSCheckbox = await dns.$("input[name='tls']");
-    const dnsIP1 = await dns.$("input[name='1']");
-    const dnsIP2 = await dns.$("input[name='2']");
-    const dnsIP3 = await dns.$("input[name='3']");
-    const dnsIP4 = await dns.$("input[name='4']");
+    const dnsIP = await dns.$("input[name='ip-input']");
 
     const tlsEnabled = await dnsTLSCheckbox.evaluate(e => e.checked);
 
@@ -26,12 +21,7 @@ export const getConfig = async (page) => {
         tlsName: await dnsTLSNameInput.evaluate(e => e.value),
         tls: tlsEnabled,
         ip: {
-            v4: [
-                await dnsIP1.evaluate(e => parseInt(e.value)),
-                await dnsIP2.evaluate(e => parseInt(e.value)),
-                await dnsIP3.evaluate(e => parseInt(e.value)),
-                await dnsIP4.evaluate(e => parseInt(e.value))
-            ]
+            v4: await dnsIP.evaluate(e => e.value),
         }
     };
 };
@@ -56,12 +46,6 @@ export const disableDNSTLS = async (page) => {
 
 export const setDNSIP = async (page, ip) => {
     const dns = await dnsWidget(page);
-    const one = await dns.$("input[name='1']");
-    const two = await dns.$("input[name='2']");
-    const three = await dns.$("input[name='3']");
-    const four = await dns.$("input[name='4']");
-    await one.fill(ip[0].toString());
-    await two.fill(ip[1].toString());
-    await three.fill(ip[2].toString());
-    await four.fill(ip[3].toString());
+    const input = await dns.$("input[name='ip-input']");
+    await input.fill(ip);
 };

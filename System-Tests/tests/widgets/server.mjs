@@ -8,17 +8,8 @@ export const getConfig = async (page) => {
     const portInput = await widget.$("input[name='server-port']");
     const port = await portInput.evaluate(e => e.value);
 
-    const ip1Input = await widget.$("input[name='1']");
-    const ip1 = await ip1Input.evaluate(e => e.value);
-
-    const ip2Input = await widget.$("input[name='2']");
-    const ip2 = await ip2Input.evaluate(e => e.value);
-
-    const ip3Input = await widget.$("input[name='3']");
-    const ip3 = await ip3Input.evaluate(e => e.value);
-
-    const ip4Input = await widget.$("input[name='4']");
-    const ip4 = await ip4Input.evaluate(e => e.value);
+    const ipInput = await widget.$("input[name='ip-input']");
+    const ip = await ipInput.evaluate(e => e.value);
 
     const nameInput = await widget.$("input[name='server-name']",);
     const name = await nameInput.evaluate(e => e.value);
@@ -30,7 +21,7 @@ export const getConfig = async (page) => {
     const subnet = await subnetInput.evaluate(e => e.value);
 
     return {
-        ip: { v4: [ip1, ip2, ip3, ip4].map(ip => parseInt(ip)), v6: "" }, port: parseInt(port),
+        ip: { v4: ip, v6: "" }, port: parseInt(port),
         name, hostname,
         subnet: { v4: subnet, v6: "1010:1010:1010:1010:" }
     };
@@ -38,14 +29,8 @@ export const getConfig = async (page) => {
 };
 
 const setIP = async (widget, ip) => {
-    const one = await widget.$("input[name='1']");
-    const two = await widget.$("input[name='2']");
-    const three = await widget.$("input[name='3']");
-    const four = await widget.$("input[name='4']");
-    await one.type(ip[0].toString());
-    await two.type(ip[1].toString());
-    await three.type(ip[2].toString());
-    await four.type(ip[3].toString());
+    const input = await widget.$("input[name='ip-input']");
+    await input.fill(ip);
 };
 
 const setPort = async (widget, port) => {
