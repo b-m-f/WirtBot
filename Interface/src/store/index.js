@@ -4,11 +4,8 @@ import createPersistedState from "vuex-persistedstate";
 import QRCode from "qrcode";
 import i18n from "../i18n";
 import { generateSigningKeys, getKeys } from "@wirtbot/crypto";
-import {
-  generateDNSFile,
-  generateDeviceConfig,
-  generateServerConfig,
-} from "@wirtbot/config-generators";
+import { generateDNSFile } from "../lib/dns";
+import { generateDeviceConfig, generateServerConfig } from "../lib/wireguard";
 import {
   updateServerConfig as updateServerViaApi,
   updateDNSConfig as updateDNSConfigViaApi,
@@ -142,13 +139,13 @@ const store = new Vuex.Store({
     },
     resetServer(state) {
       // TODO: create a default state and simply load that in
-      state.server = initialState.server
+      state.server = initialState.server;
     },
     resetDevices(state) {
       state.devices = initialState.devices;
     },
     resetDNS(state) {
-      state.network.dns = initialState.network.dns
+      state.network.dns = initialState.network.dns;
     },
     setVersion(state, version) {
       state.version = version;
