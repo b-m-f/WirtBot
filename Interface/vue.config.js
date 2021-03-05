@@ -2,6 +2,7 @@ const path = require("path");
 const webpack = require("webpack");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
+const WasmPackPlugin = require("@wasm-tool/wasm-pack-plugin");
 
 module.exports = {
   publicPath: "./",
@@ -46,6 +47,13 @@ module.exports = {
           })
       )
       .end()
+      .plugin("wasm")
+      .use(
+        new WasmPackPlugin({
+          crateDirectory: `${__dirname}/src/lib/crate`,
+        })
+      )
+      .end()
       .module.rule("md")
       .test(/\.md/)
       .use("vue-loader")
@@ -57,11 +65,12 @@ module.exports = {
         raw: true,
       });
 
-
     config.resolve.alias
-      .set('shared-styles', path.join(__dirname, '../Shared-Libs/styles'))
-      .set('shared-components', path.join(__dirname, "../Shared-Libs/components"))
-      .set('components', path.join(__dirname, "src/components"));
-
+      .set("shared-styles", path.join(__dirname, "../Shared-Libs/styles"))
+      .set(
+        "shared-components",
+        path.join(__dirname, "../Shared-Libs/components")
+      )
+      .set("components", path.join(__dirname, "src/components"));
   },
 };

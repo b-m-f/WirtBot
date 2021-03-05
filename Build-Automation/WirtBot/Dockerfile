@@ -16,7 +16,6 @@ WORKDIR '/wirtbot'
 ENV NODE_ENV production
 
 # Install all dependecies via workspaces first
-COPY Shared-Libs/crypto Shared-Libs/crypto
 COPY Shared-Libs/components Shared-Libs/components
 COPY Shared-Libs/styles Shared-Libs/styles
 COPY Interface/package.json  Interface/package.json
@@ -30,7 +29,6 @@ COPY Interface/.env.test Interface/.env.test
 
 # Compile and package wasm
 RUN cargo install wasm-pack
-RUN cd Shared-Libs/crypto && npm ci && npm run build
 # Build interface
 WORKDIR '/wirtbot/Interface'
 ## Inject keys into the test interface by doing this, that way the Interface can talk to the WirtBot Core

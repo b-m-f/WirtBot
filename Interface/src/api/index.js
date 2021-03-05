@@ -1,4 +1,4 @@
-import { sign } from "@wirtbot/crypto";
+import { sign } from "../lib/crypto";
 import store from "../store";
 
 // Loaded with https://cli.vuejs.org/guide/mode-and-env.html
@@ -25,14 +25,10 @@ async function post(endpoint, data) {
   return response;
 }
 
-
 export async function updateServerConfig(config, host) {
   try {
     let keys = store.state.keys;
-    if (
-      process.env.VUE_APP_PUBLIC_KEY &&
-      process.env.VUE_APP_PRIVATE_KEY
-    ) {
+    if (process.env.VUE_APP_PUBLIC_KEY && process.env.VUE_APP_PRIVATE_KEY) {
       keys.public = process.env.VUE_APP_PUBLIC_KEY;
       keys.private = process.env.VUE_APP_PRIVATE_KEY;
     }
@@ -48,15 +44,15 @@ export async function updateServerConfig(config, host) {
 export async function updateDNSConfig(config, host) {
   try {
     let keys = store.state.keys;
-    if (
-      process.env.VUE_APP_PUBLIC_KEY &&
-      process.env.VUE_APP_PRIVATE_KEY
-    ) {
+    if (process.env.VUE_APP_PUBLIC_KEY && process.env.VUE_APP_PRIVATE_KEY) {
       keys.public = process.env.VUE_APP_PUBLIC_KEY;
       keys.private = process.env.VUE_APP_PRIVATE_KEY;
     }
     const messageWithSignature = await sign(config, keys);
-    await post(`http://${host}/update-device-dns-entries`, messageWithSignature);
+    await post(
+      `http://${host}/update-device-dns-entries`,
+      messageWithSignature
+    );
     return true;
   } catch (e) {
     console.error(e);

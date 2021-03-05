@@ -3,7 +3,7 @@ import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
 import QRCode from "qrcode";
 import i18n from "../i18n";
-import { generateSigningKeys, getKeys } from "@wirtbot/crypto";
+import { generateSigningKeys, getKeys } from "../lib/crypto";
 import { generateDNSFile } from "../lib/dns";
 import { generateDeviceConfig, generateServerConfig } from "../lib/wireguard";
 import {
