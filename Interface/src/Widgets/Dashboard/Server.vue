@@ -33,12 +33,25 @@
       />
     </div>
     <div class="row">
-      <label>{{ $t("dashboard.widgets.server.subnet") }}</label>
+      <label>{{ $t("dashboard.widgets.server.subnetv4") }}</label>
       <TextInput
         :value="server.subnet.v4"
         name="server-subnet-v4"
         id="server-subnet-v4"
         @change="(subnet) => updateSubnet({ v4: subnet })"
+        :invalidMessage="$t('warnings.wrongIPv4Subnet')"
+        :validate="validSubnetV4"
+      />
+    </div>
+    <div class="row">
+      <label>{{ $t("dashboard.widgets.server.subnetv6") }}</label>
+      <TextInput
+        :value="server.subnet.v6"
+        name="server-subnet-v6"
+        id="server-subnet-v6"
+        @change="(subnet) => updateSubnet({ v6: subnet })"
+        :invalidMessage="$t('warnings.wrongIPv6Subnet')"
+        :validate="validSubnetV6"
       />
     </div>
     <Button id="download" @click="downloadConfig" v-if="server.config">
@@ -46,7 +59,7 @@
     </Button>
   </div>
 </template>
-
+aaa
 <script>
 import NumberInput from "components/Inputs/Number";
 import TextInput from "components/Inputs/Text";
@@ -69,13 +82,101 @@ export default {
     updateHostname(hostname) {
       this.$store.dispatch("updateServer", { hostname });
     },
+    validSubnetV4(subnet) {
+      const parts = subnet.split(".").map((part) => {
+        console.log(part);
+        try {
+          return parseInt(part);
+        } catch (error) {
+          return -1;
+        }
+      });
+
+      if (parts.length !== 3) {
+        return false;
+      }
+      if (parts[0] < 1) {
+        return false;
+      }
+
+      for (let part of parts) {
+        if (part > 255 || part < 0) {
+          return false;
+        }
+      }
+
+      return true;
+    },
+    validSubnetV6(subnet) {
+      const parts = subnet.split(":");
+      // Make sure that at least the first part is given correctly
+      try {
+        const firstPart = parseInt(parts[0], 16);
+        if (firstPart < 1 || firstPart > 65535) {
+          return false;
+        }
+      } catch (error) {
+        return false;
+      }
+
+      // take care of shorthand syntax
+      const potentialShortHandIndex = parts.findIndex((part) => {
+        // empty string would occur if a split between two : has no element
+        return part === "";
+      });
+      if (potentialShortHandIndex > -1) {
+        if (potentialShortHandIndex === parts.length - 1) {
+          parts.splice(parts.length - 1, 1);
+        } else {
+          parts.splice(potentialShortHandIndex, 1);
+          const amountToBeInserted = 8 - parts.length;
+          const newParts = [...Array(amountToBeInserted)].map(() => "0000");
+          parts.splice(potentialShortHandIndex, 0, ...newParts);
+        }
+      }
+      // append 0000 if not all 8 parts were given
+      if (parts.length < 8) {
+        const amountToBeInserted = 8 - parts.length;
+        const newParts = [...Array(amountToBeInserted)].map(() => "0000");
+        for (let part of newParts) {
+          parts.push(part);
+        }
+      }
+
+      // If there is still an empty string in the end, it means that shorthand was used and a colon put at then end
+      // which can not work
+      if (parts[parts.length - 1] === "") {
+        return false;
+      }
+
+      const partsAsInt = parts.map((part) => {
+        if (!part.match(/^[0-9A-Fa-f]{1,4}$/)) {
+          return -1;
+        }
+        try {
+          return parseInt(part, 16);
+        } catch (error) {
+          return -1;
+        }
+      });
+
+      for (let part of partsAsInt) {
+        console.log(part);
+        if (part > 65535 || part < 0) {
+          return false;
+        }
+      }
+
+      return true;
+    },
+
     updateSubnet({ v4, v6 }) {
-      if (v4) {
+      if (v4 && this.validSubnetV4(v4)) {
         this.$store.dispatch("updateServer", {
           subnet: { ...this.server.subnet, v4 },
         });
       }
-      if (v6) {
+      if (v6 && this.validSubnetV6(v6)) {
         this.$store.dispatch("updateServer", {
           subnet: { ...this.server.subnet, v6 },
         });
