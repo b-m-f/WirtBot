@@ -48,7 +48,8 @@
         "ip": "IP address:",
         "port": "WireGuard is listening at Port:",
         "hostname": "Hostname (optional):",
-        "subnet": "Subnet:",
+        "subnetv4": "Subnet v4:",
+        "subnetv6": "Subnet v6:",
         "download": "Download config"
       },
       "dns": {
@@ -150,6 +151,8 @@
     "noServer": "No server was configured.",
     "wrongIPv4": "Not a correct IPv4 address",
     "wrongIPv6": "Not a correct IPv6 address",
+    "wrongIPv4Subnet": "Not a correct IPv4 subnet",
+    "wrongIPv6Subnet": "Not a correct IPv6 subnet",
     "serverPort": "Port must be between 1024 and 65636",
     "updateFailDNS": "Error when updating the DNS records on the WirtBot. Please check the browser console for more info",
     "updateFailConfig": "Error when updating the config on the WirtBot. Please check the browser console for more info",
