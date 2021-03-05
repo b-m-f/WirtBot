@@ -15,8 +15,12 @@ export function upgradeBackup(backupAsJSONString) {
   }
 
   if (backupVersion < "2.3.4") {
-    updatedBackup.server.ip.v4 = backup.server.ip.v4.join(".")
-    updatedBackup.network.dns.ip.v4 = backup.network.dns.ip.v4.join(".")
+    updatedBackup.server.ip.v4 = backup.server.ip.v4.join(".");
+    updatedBackup.network.dns.ip.v4 = backup.network.dns.ip.v4.join(".");
+  }
+  if (backupVersion < "2.5.0") {
+    updatedBackup.server.subnet.v4.slice(0, -1);
+    updatedBackup.server.subnet.v6.slice(0, -1);
   }
 
   // Set to the current version of the app where it is now being imported in
@@ -24,12 +28,12 @@ export function upgradeBackup(backupAsJSONString) {
 
   // Check that all devices have an ID
   // This should only trigger when backups are changed manually
-  updatedBackup.devices = backup.devices.map(device => {
+  updatedBackup.devices = backup.devices.map((device) => {
     if (!device.id) {
       device.id = `${guidGenerator()}-generated-at-import`;
     }
-    return device
-  })
+    return device;
+  });
 
   return JSON.stringify(Object.assign({}, store.state, updatedBackup));
 }
