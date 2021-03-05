@@ -1,10 +1,15 @@
+import { expandIPv6 } from "./ipUtil";
+
 export function generateDeviceConfig(
   { ip, keys, routed, additionalDNSServers, MTU },
   server
 ) {
+  if (server.subnet.v6) {
+    server.subnet.v6 = expandIPv6(server.subnet.v6);
+  }
   let allowedIps = "";
   if (routed) {
-    allowedIps = "0.0.0.0/0,::/0";
+    allowedIps = "0.0.0.0/0,0001:0000:0000:0000:0000:0000:0000/0";
   } else {
     if (ip.v4) {
       allowedIps = `${server.subnet.v4}.0/24`;
@@ -13,7 +18,7 @@ export function generateDeviceConfig(
       if (ip.v4) {
         allowedIps = `${allowedIps},`;
       }
-      allowedIps = `${allowedIps}${server.subnet.v6}:/64`;
+      allowedIps = `${allowedIps}${server.subnet.v6}/64`;
     }
   }
   if (
@@ -61,7 +66,7 @@ PersistentKeepalive = 25`;
     return `[Interface]
 Address = ${server.subnet.v6}:${ip.v6}
 PrivateKey = ${keys.private}
-DNS = ${server.subnet.v6}0001${
+DNS = ${server.subnet.v6}:0001${
       additionalDNSServers ? `,${additionalDNSServers.join(",")}` : ``
     }
 ${
@@ -82,7 +87,7 @@ PersistentKeepalive = 25`;
     return `[Interface]
 Address = ${server.subnet.v4}.${ip.v4},${server.subnet.v6}:${ip.v6}
 PrivateKey = ${keys.private}
-DNS = ${server.subnet.v4}1${
+DNS = ${server.subnet.v4}.1${
       additionalDNSServers ? `,${additionalDNSServers.join(",")}` : ``
     }
 ${
@@ -106,6 +111,10 @@ export function generateServerConfig({ port, keys, subnet }, devices) {
   let devicesNeedV4 = false;
   let devicesNeedV6 = false;
 
+  if (subnet.v6) {
+    subnet.v6 = expandIPv6(subnet.v6);
+  }
+
   for (let device of devices) {
     if (!devicesNeedV6 && device.ip.v6) {
       devicesNeedV6 = true;
@@ -122,13 +131,13 @@ PublicKey = ${device.keys.public}`;
     if (!device.ip.v4 && device.ip.v6) {
       configs = `${configs}
 [Peer]
-AllowedIPs = ${subnet.v6}${device.ip.v6}::/128
+AllowedIPs = ${subnet.v6}:${device.ip.v6}/128
 PublicKey = ${device.keys.public}`;
     }
     if (device.ip.v4 && device.ip.v6) {
       configs = `${configs}
 [Peer]
-AllowedIPs = ${subnet.v4}.${device.ip.v4}/32,${subnet.v6}:${device.ip.v6}::/128
+AllowedIPs = ${subnet.v4}.${device.ip.v4}/32,${subnet.v6}:${device.ip.v6}/128
 PublicKey = ${device.keys.public}`;
     }
   }
