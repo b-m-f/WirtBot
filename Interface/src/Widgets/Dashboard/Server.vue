@@ -84,9 +84,11 @@ export default {
     },
     validSubnetV4(subnet) {
       const parts = subnet.split(".").map((part) => {
-        console.log(part);
         try {
-          return parseInt(part);
+          const number = parseInt(part);
+          if (isNaN(number)) {
+            throw "Not a number";
+          }
         } catch (error) {
           return -1;
         }
@@ -118,6 +120,7 @@ export default {
       } catch (error) {
         return false;
       }
+      console.log(parts);
 
       // take care of shorthand syntax
       const potentialShortHandIndex = parts.findIndex((part) => {
@@ -125,27 +128,21 @@ export default {
         return part === "";
       });
       if (potentialShortHandIndex > -1) {
-        if (potentialShortHandIndex === parts.length - 1) {
-          parts.splice(parts.length - 1, 1);
-        } else {
-          parts.splice(potentialShortHandIndex, 1);
-          const amountToBeInserted = 8 - parts.length;
-          const newParts = [...Array(amountToBeInserted)].map(() => "0000");
-          parts.splice(potentialShortHandIndex, 0, ...newParts);
+        if (parts[parts.length - 1] === "") {
+          if (potentialShortHandIndex === parts.length - 1) {
+            // only 1 colon was appended
+            return false;
+          }
+          parts.pop();
         }
-      }
-      // append 0000 if not all 8 parts were given
-      if (parts.length < 8) {
-        const amountToBeInserted = 8 - parts.length;
+        parts.splice(potentialShortHandIndex, 1);
+        const amountToBeInserted = 7 - parts.length;
         const newParts = [...Array(amountToBeInserted)].map(() => "0000");
-        for (let part of newParts) {
-          parts.push(part);
-        }
+        parts.splice(potentialShortHandIndex, 0, ...newParts);
       }
 
-      // If there is still an empty string in the end, it means that shorthand was used and a colon put at then end
-      // which can not work
-      if (parts[parts.length - 1] === "") {
+      if (parts.length !== 7) {
+        // no shorthand was given and also not enough parts
         return false;
       }
 
@@ -161,7 +158,6 @@ export default {
       });
 
       for (let part of partsAsInt) {
-        console.log(part);
         if (part > 65535 || part < 0) {
           return false;
         }

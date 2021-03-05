@@ -3,9 +3,9 @@ import { generateDeviceConfig, generateServerConfig } from "./wireguard";
 describe("WireGuard device generation", () => {
   it("works for simple IPv4 setup", () => {
     const server = {
-      ip: { v4: [1, 1, 1, 1] },
+      ip: { v4: "1.1.1.1" },
       port: 11111,
-      subnet: { v4: "10.10.10." },
+      subnet: { v4: "10.10.10" },
       keys: { private: "test", public: "test" },
     };
     const device = { ip: { v4: 2 }, keys: { public: "test", private: "test" } };
@@ -26,9 +26,9 @@ PersistentKeepalive = 25`
   });
   it("defaulting to IPv6 endpoint", () => {
     const server = {
-      ip: { v4: [1, 1, 1, 1], v6: "FFFF:1010" },
+      ip: { v4: "1.1.1.1", v6: "FFFF:1010" },
       port: 11111,
-      subnet: { v4: "10.10.10.", v6: "1010:1010:1010:1010:" },
+      subnet: { v4: "10.10.10", v6: "1010:1010:1010:1010" },
       keys: { private: "test", public: "test" },
     };
     const device = { ip: { v4: 2 }, keys: { public: "test", private: "test" } };
@@ -49,9 +49,9 @@ PersistentKeepalive = 25`
   });
   it("works IP6 in tunnel, IPv4 endpoint", () => {
     const server = {
-      ip: { v4: [1, 1, 1, 1] },
+      ip: { v4: "1.1.1.1" },
       port: 11111,
-      subnet: { v6: "1010:1010:1010:1010:" },
+      subnet: { v6: "1010:1010:1010:1010" },
       keys: { private: "test", public: "test" },
     };
     const device = {
@@ -102,7 +102,7 @@ PersistentKeepalive = 25`
 
   it("works for combined IPv4 IPv6", () => {
     const server = {
-      ip: { v4: [1, 1, 1, 1], v6: "FFFF:1010" },
+      ip: { v4: "1.1.1.1", v6: "FFFF:1010" },
       port: 11111,
       subnet: { v4: "10.10.10.", v6: "1010:1010:1010:1010:" },
       keys: { private: "test", public: "test" },
@@ -132,7 +132,7 @@ describe("WireGuard server generation", () => {
   // Inspect the raw component options
   it("works for simple ipv4 setup", () => {
     const server = {
-      ip: { v4: [1, 1, 1, 1] },
+      ip: { v4: "1.1.1.1" },
       port: 11111,
       subnet: { v4: "10.10.10.", v6: "1010:1010:1010:1010:" },
       keys: { private: "test", public: "test" },
@@ -175,7 +175,7 @@ PublicKey = test`
 
   it("works for combined ipv4 and ipv6 setup", () => {
     const server = {
-      ip: { v4: [1, 1, 1, 1], v6: "FFFF:1010" },
+      ip: { v4: "1.1.1.1", v6: "FFFF:1010" },
       port: 11111,
       subnet: { v4: "10.10.10.", v6: "1010:1010:1010:1010:" },
       keys: { private: "test", public: "test" },
@@ -200,7 +200,7 @@ PublicKey = test`
 describe("WireGuard edge cases", () => {
   it("uses hostname if provided", () => {
     const server = {
-      ip: { v4: [1, 1, 1, 1] },
+      ip: { v4: "1.1.1.1" },
       hostname: "test",
       port: 11111,
       subnet: { v4: "10.10.10." },
@@ -224,12 +224,16 @@ PersistentKeepalive = 25`
   });
   it("works with additional DNS servers", () => {
     const server = {
-      ip: { v4: [1, 1, 1, 1] },
+      ip: { v4: "1.1.1.1" },
       port: 11111,
       subnet: { v4: "10.10.10." },
       keys: { private: "test", public: "test" },
     };
-    const device = { ip: { v4: 2 }, keys: { public: "test", private: "test" }, additionalDNSServers: ["1.1.1.1"] };
+    const device = {
+      ip: { v4: 2 },
+      keys: { public: "test", private: "test" },
+      additionalDNSServers: ["1.1.1.1"],
+    };
     expect(generateDeviceConfig(device, server)).toBe(
       `[Interface]
 Address = 10.10.10.2
@@ -247,12 +251,17 @@ PersistentKeepalive = 25`
   });
   it("works with MTU", () => {
     const server = {
-      ip: { v4: [1, 1, 1, 1] },
+      ip: { v4: "1.1.1.1" },
       port: 11111,
       subnet: { v4: "10.10.10." },
       keys: { private: "test", public: "test" },
     };
-    const device = { ip: { v4: 2 }, keys: { public: "test", private: "test" }, additionalDNSServers: ["1.1.1.1"], MTU: "1320" };
+    const device = {
+      ip: { v4: 2 },
+      keys: { public: "test", private: "test" },
+      additionalDNSServers: ["1.1.1.1"],
+      MTU: "1320",
+    };
     expect(generateDeviceConfig(device, server)).toBe(
       `[Interface]
 Address = 10.10.10.2
