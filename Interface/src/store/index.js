@@ -50,7 +50,7 @@ const initialState = {
     port: undefined,
     keys: undefined,
     config: "",
-    subnet: { v4: "10.10.0.", v6: "1010:1010:1010:1010:" },
+    subnet: { v4: "10.10.0", v6: "1010:1010:1010:1010:0000:0000:0000" },
     hostname: "",
   },
   devices: [
@@ -89,11 +89,13 @@ const store = new Vuex.Store({
       state.keys = keys;
     },
     updateServer(state, server) {
+      console.log(state.server.subnet.v4);
       Object.keys(server).forEach((key) => {
         if (server[key] !== undefined && server[key] !== null) {
           state.server[key] = server[key];
         }
       });
+      console.log(state.server.subnet.v4);
     },
     removeDevicesWithoutId(state) {
       state.devices = state.devices.filter((device) => device.id);
@@ -102,6 +104,7 @@ const store = new Vuex.Store({
       state.devices = state.devices.filter((device) => device.id !== id);
     },
     addDevice(state, device) {
+      console.log(state.server.subnet.v4);
       state.devices = [...state.devices, device];
     },
     updateServerConfig(state, config) {
@@ -110,7 +113,12 @@ const store = new Vuex.Store({
       });
     },
     updateDevices(state, devices) {
-      state.devices = devices;
+      for (let device of devices) {
+        const indexOfDeviceInState = state.devices.findIndex(
+          (deviceInState) => deviceInState.id === device.id
+        );
+        state.devices.splice(indexOfDeviceInState, 1, device);
+      }
     },
     updateDNS(state, dns) {
       Object.keys(dns).forEach((key) => {
@@ -209,16 +217,7 @@ const store = new Vuex.Store({
       commit("updateServer", server);
       await dispatch("updateServerConfig");
       // only rebuild device configs if necessary parts of the server config changed
-      if (
-        server.ip ||
-        server.port ||
-        server.keys ||
-        server.hostname ||
-        server.hostname === "" ||
-        server.subnet
-      ) {
-        await dispatch("updateDeviceConfigs");
-      }
+      await dispatch("updateDeviceConfigs");
     },
     async updateDeviceConfigs({ commit, state }) {
       let devices = await Promise.all(
@@ -231,8 +230,6 @@ const store = new Vuex.Store({
           }
         })
       );
-      // unfinished devices setups are excluded here
-      devices = devices.filter((device) => device.config);
       commit("updateDevices", devices);
     },
     async updateServerConfig({ commit, state, dispatch }) {
@@ -288,7 +285,7 @@ const store = new Vuex.Store({
           state.server
         );
         commit("addDevice", newDevice);
-        dispatch("updateServerConfig");
+        await dispatch("updateServerConfig");
       } catch (error) {
         if (error.message === "No Server") {
           dispatch(
