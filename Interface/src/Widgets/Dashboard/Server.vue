@@ -120,7 +120,6 @@ export default {
       } catch (error) {
         return false;
       }
-      console.log(parts);
 
       // take care of shorthand syntax
       const potentialShortHandIndex = parts.findIndex((part) => {
@@ -169,12 +168,12 @@ export default {
     updateSubnet({ v4, v6 }) {
       if (v4 && this.validSubnetV4(v4)) {
         this.$store.dispatch("updateServer", {
-          subnet: { ...this.server.subnet, v4 },
+          subnet: Object.assign({}, { v4 }),
         });
       }
       if (v6 && this.validSubnetV6(v6)) {
         this.$store.dispatch("updateServer", {
-          subnet: { ...this.server.subnet, v6 },
+          subnet: Object.assign({}, { v6 }),
         });
       }
     },

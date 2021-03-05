@@ -7,10 +7,9 @@ export function generateDNSFile(server, clients, network) {
   const dnsV4 = network.dns.ip.v4 || "1.1.1.1";
   const dnsV6 = network.dns.ip.v6;
 
-  const subnet = Object.assign({}, server.subnet);
   // expand IPv6 subnet
-  if (subnet.v6) {
-    subnet.v6 = expandIPv6(subnet.v6);
+  if (server.subnet.v6) {
+    server.subnet.v6 = expandIPv6(server.subnet.v6);
   }
 
   const deviceNames = clients.map((client) => {
@@ -20,26 +19,26 @@ export function generateDNSFile(server, clients, network) {
     }
 
     if (client.ip.v6 && client.ip.v4) {
-      return `${subnet.v4}.${client.ip.v4} ${client.name}.${network.dns.name}
-        ${subnet.v6}:${client.ip.v6} ${client.name}.${network.dns.name}`;
+      return `${server.subnet.v4}.${client.ip.v4} ${client.name}.${network.dns.name}
+        ${server.subnet.v6}:${client.ip.v6} ${client.name}.${network.dns.name}`;
     }
     if (client.ip.v6 && !client.ip.v4) {
-      return `${subnet.v6}:${client.ip.v6} ${client.name}.${network.dns.name}`;
+      return `${server.subnet.v6}:${client.ip.v6} ${client.name}.${network.dns.name}`;
     }
     if (!client.ip.v6 && client.ip.v4) {
-      return `${subnet.v4}.${client.ip.v4} ${client.name}.${network.dns.name}`;
+      return `${server.subnet.v4}.${client.ip.v4} ${client.name}.${network.dns.name}`;
     }
   });
   const serverName = () => {
-    if (subnet.v6 && subnet.v4) {
-      return `${subnet.v4}.1 ${server.name}.${network.dns.name}
-        ${subnet.v6}:1 ${server.name}.${network.dns.name}`;
+    if (server.subnet.v6 && server.subnet.v4) {
+      return `${server.subnet.v4}.1 ${server.name}.${network.dns.name}
+        ${server.subnet.v6}:1 ${server.name}.${network.dns.name}`;
     }
-    if (subnet.v6 && !subnet.v4) {
-      return `${subnet.v6}:1 ${server.name}.${network.dns.name}`;
+    if (server.subnet.v6 && !server.subnet.v4) {
+      return `${server.subnet.v6}:1 ${server.name}.${network.dns.name}`;
     }
-    if (!subnet.v6 && subnet.v4) {
-      return `${subnet.v4}.1 ${server.name}.${network.dns.name}`;
+    if (!server.subnet.v6 && server.subnet.v4) {
+      return `${server.subnet.v4}.1 ${server.name}.${network.dns.name}`;
     }
   };
 
