@@ -16,7 +16,6 @@ WORKDIR '/wirtbot'
 ENV NODE_ENV production
 
 # Install all dependecies via workspaces first
-COPY Shared-Libs/config-generators Shared-Libs/config-generators
 COPY Shared-Libs/crypto Shared-Libs/crypto
 COPY Shared-Libs/components Shared-Libs/components
 COPY Shared-Libs/styles Shared-Libs/styles

@@ -28,7 +28,6 @@ dev-website:
 	cd ./Website && npm run dev
 dev-setup:
 	cd ./Shared-Libs/crypto && npm ci && npm run build && cd - && \
-	cd ./Shared-Libs/config-generators && npm ci && npm run build && cd - && \
 	cd ./Website && npm ci && cd - && \
 	cd ./Interface && npm ci && cd -
 
@@ -53,7 +52,6 @@ test-system:
 	sudo chown $$USER Build-Automation/System-Tests/compose/test-server.conf
 test-unit:
 	cd ./Shared-Libs/crypto && npm run test && cd - && \
-	cd ./Shared-Libs/config-generators && npm run test && cd - && \
 	cd ./Website && npm run test && cd - && \
 	cd ./Interface && npm run test && cd -
 
