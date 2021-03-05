@@ -10,11 +10,13 @@ import {
   updateServerConfig as updateServerViaApi,
   updateDNSConfig as updateDNSConfigViaApi,
 } from "../api";
+import merge from "lodash/merge";
+import cloneDeep from "lodash/cloneDeep";
 
 import alerts from "./modules/alerts";
 
 async function addConfigToDevice(newDevice, server) {
-  const config = generateDeviceConfig(newDevice, server);
+  const config = generateDeviceConfig(cloneDeep(newDevice), cloneDeep(server));
   if (newDevice.type === "Android" || newDevice.type === "iOS") {
     const qr = await QRCode.toDataURL(config);
     return Object.assign({}, newDevice, {
@@ -76,6 +78,7 @@ const initialState = {
 };
 
 const store = new Vuex.Store({
+  strict: true,
   modules: { alerts },
   state: initialState,
   mutations: {
@@ -89,13 +92,7 @@ const store = new Vuex.Store({
       state.keys = keys;
     },
     updateServer(state, server) {
-      console.log(state.server.subnet.v4);
-      Object.keys(server).forEach((key) => {
-        if (server[key] !== undefined && server[key] !== null) {
-          state.server[key] = server[key];
-        }
-      });
-      console.log(state.server.subnet.v4);
+      state.server = merge(state.server, cloneDeep(server));
     },
     removeDevicesWithoutId(state) {
       state.devices = state.devices.filter((device) => device.id);
@@ -104,11 +101,10 @@ const store = new Vuex.Store({
       state.devices = state.devices.filter((device) => device.id !== id);
     },
     addDevice(state, device) {
-      console.log(state.server.subnet.v4);
       state.devices = [...state.devices, device];
     },
     updateServerConfig(state, config) {
-      state.server = Object.assign({}, state.server, {
+      state.server = merge(state.server, {
         config: config,
       });
     },
@@ -121,18 +117,10 @@ const store = new Vuex.Store({
       }
     },
     updateDNS(state, dns) {
-      Object.keys(dns).forEach((key) => {
-        if (dns[key] !== undefined && dns[key] !== null) {
-          state.network.dns[key] = dns[key];
-        }
-      });
+      state.network.dns = merge(state.network.dns, dns);
     },
     updateAPI(state, api) {
-      Object.keys(api).forEach((key) => {
-        if (api[key] !== undefined && api[key] !== null) {
-          state.network.api[key] = api[key];
-        }
-      });
+      state.network.api = merge((state.network.api, api));
     },
     updateDNSConfig(state, config) {
       state.network.dns.config = config;
@@ -172,21 +160,21 @@ const store = new Vuex.Store({
     },
     async updateDNSName({ commit, dispatch }, name) {
       commit("updateDNS", { name });
-      dispatch("updateDNS");
+      await dispatch("updateDNS");
     },
     async updateAPIHost({ commit }, host) {
       commit("updateAPI", { host });
     },
     async updateDNSIp({ commit, dispatch }, { v4, v6 }) {
       commit("updateDNS", { ip: { v4, v6 } });
-      dispatch("updateDNS");
+      await dispatch("updateDNS");
     },
     async updateDNSTls({ commit, dispatch }, { tlsName, tls }) {
       commit("updateDNS", { tlsName, tls });
       if (tls == true && !tlsName) {
         return;
       }
-      dispatch("updateDNS");
+      await dispatch("updateDNS");
     },
     async addDashboardMessage({ state, commit }, message) {
       commit("updateDashboard", {
@@ -216,7 +204,6 @@ const store = new Vuex.Store({
       }
       commit("updateServer", server);
       await dispatch("updateServerConfig");
-      // only rebuild device configs if necessary parts of the server config changed
       await dispatch("updateDeviceConfigs");
     },
     async updateDeviceConfigs({ commit, state }) {
@@ -234,19 +221,23 @@ const store = new Vuex.Store({
     },
     async updateServerConfig({ commit, state, dispatch }) {
       const config = generateServerConfig(
-        state.server,
-        state.devices.filter((device) => device.ip && device.keys)
+        cloneDeep(state.server),
+        cloneDeep(state.devices.filter((device) => device.ip && device.keys))
       );
       commit("updateServerConfig", config);
       // Since the server config gets updated with every device change, this is a place to trigger remote updates
       // on the WirtBot
-      dispatch("sendConfigUpdatesToAPI");
-      dispatch("updateDNS");
+      await dispatch("sendConfigUpdatesToAPI");
+      await dispatch("updateDNS");
     },
     async updateDNS({ state, commit, dispatch }) {
       commit(
         "updateDNSConfig",
-        generateDNSFile(state.server, state.devices, state.network)
+        generateDNSFile(
+          cloneDeep(state.server),
+          cloneDeep(state.devices),
+          cloneDeep(state.network)
+        )
       );
       const success = await updateDNSConfigViaApi(
         state.network.dns.config,
@@ -288,12 +279,12 @@ const store = new Vuex.Store({
         await dispatch("updateServerConfig");
       } catch (error) {
         if (error.message === "No Server") {
-          dispatch(
+          await dispatch(
             "alerts/addWarning",
             `${i18n.t("warnings.deviceAdd")} ${i18n.t("warnings.noServer")}`
           );
         } else {
-          dispatch(
+          await dispatch(
             "alerts/addWarning",
             `${i18n.t("warnings.deviceAdd")} ${i18n.t(
               "warnings.documentation"
@@ -326,15 +317,15 @@ const store = new Vuex.Store({
         })
       );
       commit("updateDevices", devices);
-      dispatch("updateServerConfig", devices);
+      await dispatch("updateServerConfig", devices);
     },
     async removeDevice({ dispatch, commit }, { id }) {
       try {
         commit("removeDevice", id);
-        dispatch("alerts/addSuccess", i18n.t("success.deviceRemoved"));
-        dispatch("updateServerConfig");
+        await dispatch("alerts/addSuccess", i18n.t("success.deviceRemoved"));
+        await dispatch("updateServerConfig");
       } catch (error) {
-        dispatch(
+        await dispatch(
           "alerts/addWarning",
           `${i18n.t("warnings.deviceRemove")} ${i18n.t(
             "warnings.documentation"

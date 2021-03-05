@@ -152,6 +152,7 @@ import Select from "components/Inputs/Select";
 import { downloadText } from "../lib/download";
 import debounce from "lodash/debounce";
 import merge from "lodash/merge";
+import cloneDeep from "lodash/cloneDeep";
 
 export default {
   components: { NumberInput, TextInput, CheckBox, Select },
@@ -316,7 +317,7 @@ export default {
         device
       );
       const newDevice = merge(
-        this.device,
+        cloneDeep(this.device),
         this.internalDeviceCacheForNewDevices
       );
       this.$emit("saved", newDevice);
