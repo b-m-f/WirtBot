@@ -1,10 +1,13 @@
-export function generateDeviceConfig({ ip, keys, routed, additionalDNSServers, MTU }, server) {
+export function generateDeviceConfig(
+  { ip, keys, routed, additionalDNSServers, MTU },
+  server
+) {
   let allowedIps = "";
   if (routed) {
     allowedIps = "0.0.0.0/0,::/0";
   } else {
     if (ip.v4) {
-      allowedIps = `${server.subnet.v4}0/24`;
+      allowedIps = `${server.subnet.v4}.0/24`;
     }
     if (ip.v6) {
       if (ip.v4) {
@@ -35,11 +38,17 @@ export function generateDeviceConfig({ ip, keys, routed, additionalDNSServers, M
 
   if (ip.v4 && !ip.v6) {
     return `[Interface]
-Address = ${server.subnet.v4}${ip.v4}
+Address = ${server.subnet.v4}.${ip.v4}
 PrivateKey = ${keys.private}
-DNS = ${server.subnet.v4}1${additionalDNSServers ? `,${additionalDNSServers.join(',')}` : ``}
-${MTU ? `MTU = ${MTU}
-`: ``}
+DNS = ${server.subnet.v4}.1${
+      additionalDNSServers ? `,${additionalDNSServers.join(",")}` : ``
+    }
+${
+  MTU
+    ? `MTU = ${MTU}
+`
+    : ``
+}
 [Peer]
 Endpoint = ${endpoint}
 AllowedIPs = ${allowedIps}
@@ -50,11 +59,17 @@ PersistentKeepalive = 25`;
   }
   if (!ip.v4 && ip.v6) {
     return `[Interface]
-Address = ${server.subnet.v6}${ip.v6}
+Address = ${server.subnet.v6}:${ip.v6}
 PrivateKey = ${keys.private}
-DNS = ${server.subnet.v6}0001${additionalDNSServers ? `,${additionalDNSServers.join(',')}` : ``}
-${MTU ? `MTU = ${MTU}
-`: ``}
+DNS = ${server.subnet.v6}0001${
+      additionalDNSServers ? `,${additionalDNSServers.join(",")}` : ``
+    }
+${
+  MTU
+    ? `MTU = ${MTU}
+`
+    : ``
+}
 [Peer]
 Endpoint = ${endpoint}
 AllowedIPs = ${allowedIps}
@@ -65,11 +80,17 @@ PersistentKeepalive = 25`;
   }
   if (ip.v4 && ip.v6) {
     return `[Interface]
-Address = ${server.subnet.v4}${ip.v4},${server.subnet.v6}${ip.v6}
+Address = ${server.subnet.v4}.${ip.v4},${server.subnet.v6}:${ip.v6}
 PrivateKey = ${keys.private}
-DNS = ${server.subnet.v4}1${additionalDNSServers ? `,${additionalDNSServers.join(',')}` : ``}
-${MTU ? `MTU = ${MTU}
-`: ``}
+DNS = ${server.subnet.v4}1${
+      additionalDNSServers ? `,${additionalDNSServers.join(",")}` : ``
+    }
+${
+  MTU
+    ? `MTU = ${MTU}
+`
+    : ``
+}
 [Peer]
 Endpoint = ${endpoint}
 AllowedIPs = ${allowedIps}
@@ -95,7 +116,7 @@ export function generateServerConfig({ port, keys, subnet }, devices) {
     if (device.ip.v4 && !device.ip.v6) {
       configs = `${configs}
 [Peer]
-AllowedIPs = ${subnet.v4}${device.ip.v4}/32
+AllowedIPs = ${subnet.v4}.${device.ip.v4}/32
 PublicKey = ${device.keys.public}`;
     }
     if (!device.ip.v4 && device.ip.v6) {
@@ -107,38 +128,37 @@ PublicKey = ${device.keys.public}`;
     if (device.ip.v4 && device.ip.v6) {
       configs = `${configs}
 [Peer]
-AllowedIPs = ${subnet.v4}${device.ip.v4}/32,${subnet.v6}${device.ip.v6}::/128
+AllowedIPs = ${subnet.v4}.${device.ip.v4}/32,${subnet.v6}:${device.ip.v6}::/128
 PublicKey = ${device.keys.public}`;
     }
   }
 
   if (!devicesNeedV6 && !devicesNeedV4) {
     return `[Interface]
-Address = ${subnet.v4}1
+Address = ${subnet.v4}.1
 ListenPort = ${port}
 PrivateKey = ${keys.private}`;
   }
 
   if (!devicesNeedV6 && devicesNeedV4) {
     return `[Interface]
-Address = ${subnet.v4}1
+Address = ${subnet.v4}.1
 ListenPort = ${port}
 PrivateKey = ${keys.private}
 ${configs}`;
   }
   if (devicesNeedV6 && !devicesNeedV4) {
     return `[Interface]
-Address = ${subnet.v6}0001
+Address = ${subnet.v6}:0001
 ListenPort = ${port}
 PrivateKey = ${keys.private}
 ${configs}`;
   }
   if (devicesNeedV6 && devicesNeedV4) {
     return `[Interface]
-Address = ${subnet.v4}1,${subnet.v6}0001
+Address = ${subnet.v4}.1,${subnet.v6}:0001
 ListenPort = ${port}
 PrivateKey = ${keys.private}
 ${configs}`;
   }
 }
-
