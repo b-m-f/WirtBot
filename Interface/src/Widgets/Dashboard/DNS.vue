@@ -4,7 +4,7 @@
     <div class="row ip">
       <label>{{ $t("dashboard.widgets.dns.ip") }}</label>
       <IPInput
-        :ip="dns.ip.v4"
+        :ip="(dns.ip && dns.ip.v4) || undefined"
         @change="({ ip, valid }) => updateIp({ ip: { v4: ip }, valid })"
       />
     </div>
@@ -21,6 +21,21 @@
         :invalidMessage="$t('dashboard.widgets.dns.invalidTLSName')"
         :validate="validateDNSTLSName"
         @change="updateTlsName"
+      />
+    </div>
+    <div class="row">
+      <label for="ignored-zones">{{
+        $t("dashboard.widgets.dns.ignoredZones")
+      }}</label>
+      <TextInput
+        :value="ignoredZones"
+        name="ignoredZones"
+        required
+        :title="$t('dashboard.infos.commaList')"
+        multiline
+        :invalidMessage="$t('dashboard.widgets.dns.invalidZones')"
+        :validate="validIgnoredZones"
+        @change="updateIgnoredZones"
       />
     </div>
   </div>
@@ -43,6 +58,9 @@ export default {
     tlsName() {
       return this.dns.tlsName;
     },
+    ignoredZones() {
+      return this.dns.ignoredZones.join(",");
+    },
   },
   methods: {
     updateIp({ ip, valid }) {
@@ -55,6 +73,20 @@ export default {
     },
     updateTlsName(name) {
       this.$store.dispatch("updateDNSTls", { tlsName: name, tls: true });
+    },
+    updateIgnoredZones(zones) {
+      console.log(zones);
+      this.$store.dispatch("updateDNSIgnoredZones", {
+        ignoredZones: zones.split(",").filter((zones) => zones !== ""),
+      });
+    },
+    validIgnoredZones(zones) {
+      try {
+        zones.split(",");
+        return true;
+      } catch (error) {
+        return false;
+      }
     },
     validateDNSTLSName(name) {
       if (

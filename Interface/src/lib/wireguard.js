@@ -4,9 +4,8 @@ export function generateDeviceConfig(
   { ip, keys, routed, additionalDNSServers, MTU },
   server
 ) {
-  if (server.subnet.v6) {
-    server.subnet.v6 = expandIPv6(server.subnet.v6);
-  }
+  const subnetv6 = expandIPv6(server.subnet.v6);
+
   let allowedIps = "";
   if (routed) {
     allowedIps = "0.0.0.0/0,0001:0000:0000:0000:0000:0000:0000/0";
@@ -18,14 +17,14 @@ export function generateDeviceConfig(
       if (ip.v4) {
         allowedIps = `${allowedIps},`;
       }
-      allowedIps = `${allowedIps}${server.subnet.v6}/64`;
+      allowedIps = `${allowedIps}${subnetv6}/64`;
     }
   }
   if (
     !server.keys ||
     (!server.ip.v4 && !server.ip.v6) ||
     !server.port ||
-    (!server.subnet.v4 && !server.subnet.v6)
+    (!server.subnet.v4 && !subnetv6)
   ) {
     throw new Error("No Server");
   }
@@ -64,9 +63,9 @@ PersistentKeepalive = 25`;
   }
   if (!ip.v4 && ip.v6) {
     return `[Interface]
-Address = ${server.subnet.v6}:${ip.v6}
+Address = ${subnetv6}:${ip.v6}
 PrivateKey = ${keys.private}
-DNS = ${server.subnet.v6}:0001${
+DNS = ${subnetv6}:0001${
       additionalDNSServers ? `,${additionalDNSServers.join(",")}` : ``
     }
 ${
@@ -85,7 +84,7 @@ PersistentKeepalive = 25`;
   }
   if (ip.v4 && ip.v6) {
     return `[Interface]
-Address = ${server.subnet.v4}.${ip.v4},${server.subnet.v6}:${ip.v6}
+Address = ${server.subnet.v4}.${ip.v4},${subnetv6}:${ip.v6}
 PrivateKey = ${keys.private}
 DNS = ${server.subnet.v4}.1${
       additionalDNSServers ? `,${additionalDNSServers.join(",")}` : ``
@@ -111,9 +110,7 @@ export function generateServerConfig({ port, keys, subnet }, devices) {
   let devicesNeedV4 = false;
   let devicesNeedV6 = false;
 
-  if (subnet.v6) {
-    subnet.v6 = expandIPv6(subnet.v6);
-  }
+  const subnetv6 = expandIPv6(subnet.v6);
 
   for (let device of devices) {
     if (!devicesNeedV6 && device.ip.v6) {
@@ -131,13 +128,13 @@ PublicKey = ${device.keys.public}`;
     if (!device.ip.v4 && device.ip.v6) {
       configs = `${configs}
 [Peer]
-AllowedIPs = ${subnet.v6}:${device.ip.v6}/128
+AllowedIPs = ${subnetv6}:${device.ip.v6}/128
 PublicKey = ${device.keys.public}`;
     }
     if (device.ip.v4 && device.ip.v6) {
       configs = `${configs}
 [Peer]
-AllowedIPs = ${subnet.v4}.${device.ip.v4}/32,${subnet.v6}:${device.ip.v6}/128
+AllowedIPs = ${subnet.v4}.${device.ip.v4}/32,${subnetv6}:${device.ip.v6}/128
 PublicKey = ${device.keys.public}`;
     }
   }
@@ -158,14 +155,14 @@ ${configs}`;
   }
   if (devicesNeedV6 && !devicesNeedV4) {
     return `[Interface]
-Address = ${subnet.v6}:0001
+Address = ${subnetv6}:0001
 ListenPort = ${port}
 PrivateKey = ${keys.private}
 ${configs}`;
   }
   if (devicesNeedV6 && devicesNeedV4) {
     return `[Interface]
-Address = ${subnet.v4}.1,${subnet.v6}:0001
+Address = ${subnet.v4}.1,${subnetv6}:0001
 ListenPort = ${port}
 PrivateKey = ${keys.private}
 ${configs}`;

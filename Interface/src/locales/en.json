@@ -57,7 +57,8 @@
         "ip": "IP address of DNS server to use for resolving names",
         "tls": "Use DNSoverTLS ?",
         "tlsName": "Specify the hostname for the DNSoverTLS server",
-        "invalidTLSName": "Enter the name without any protocols"
+        "invalidTLSName": "Enter the name without any protocols",
+        "ignoredZones": "DNS zones that should not be forwarded"
       },
       "devices": {
         "title": "My devices",
@@ -156,10 +157,12 @@
     "serverPort": "Port must be between 1024 and 65636",
     "updateFailDNS": "Error when updating the DNS records on the WirtBot. Please check the browser console for more info",
     "updateFailConfig": "Error when updating the config on the WirtBot. Please check the browser console for more info",
-    "failedToParseInitialData": "Error parsing the provided data. Please make sure you copied it from your WirtBot Core correctly"
+    "failedToParseInitialData": "Error parsing the provided data. Please make sure you copied it from your WirtBot Core correctly",
+    "invalid": "Invalid"
   },
   "infos": {
-    "generatingKeys": "Keys are being generated"
+    "generatingKeys": "Keys are being generated",
+    "commaList": "Comma separated list"
   },
   "success": {
     "deviceRemoved": "Device removed",
