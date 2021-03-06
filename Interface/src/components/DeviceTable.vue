@@ -15,7 +15,7 @@
             :config="device.config"
             :additionalDNSServers="device.additionalDNSServers"
             :MTU="device.MTU"
-            @saved="save"
+            @saved="saveDevice"
             @cancel-new-device="cancelNewDevice"
             :class="{ even: index % 2 == 0 }"
           />
@@ -49,20 +49,6 @@ export default {
       } catch (error) {
         console.error(error);
         return false;
-      }
-    },
-    async save({ type, id, ip, name, routed, additionalDNSServers, MTU }) {
-      // Only save if all required attributes have been provided
-      if (type && (ip.v4 || ip.v6) && name) {
-        await this.saveDevice({
-          ip,
-          type,
-          name,
-          id,
-          routed,
-          additionalDNSServers,
-          MTU,
-        });
       }
     },
     reportValidity() {
@@ -99,6 +85,9 @@ export default {
         additionalDNSServers,
         MTU,
       };
+      if (!device.ip || !device.name || !device.type) {
+        return;
+      }
       await this.$store.dispatch("addDevice", device);
       this.$emit("device-saved");
       return true;
