@@ -12,6 +12,9 @@ import {
 } from "../api";
 
 import alerts from "./modules/alerts";
+import mergeWith from "lodash/mergeWith";
+import isArray from "lodash/isArray";
+import union from "lodash/union";
 
 async function addConfigToDevice(newDevice, server) {
   const config = generateDeviceConfig(newDevice, server);
@@ -75,6 +78,16 @@ const initialState = {
   },
 };
 
+function mergeWithArrayUnion(obj1, obj2) {
+  function customizer(objValue, srcValue) {
+    if (isArray(objValue) && isArray(srcValue)) {
+      return union(objValue, srcValue);
+    }
+  }
+
+  return mergeWith(obj1, obj2, customizer);
+}
+
 const store = new Vuex.Store({
   strict: true,
   modules: { alerts },
@@ -90,7 +103,7 @@ const store = new Vuex.Store({
       state.keys = keys;
     },
     updateServer(state, server) {
-      state.server = Object.assign({}, { ...state.server }, server);
+      state.server = mergeWithArrayUnion({ ...state.server }, server);
     },
     removeDevicesWithoutId(state) {
       state.devices = state.devices.filter((device) => device.id);
@@ -119,10 +132,10 @@ const store = new Vuex.Store({
       }
     },
     updateDNS(state, dns) {
-      state.network.dns = Object.assign({}, { ...state.network.dns }, dns);
+      state.network.dns = mergeWithArrayUnion({ ...state.network.dns }, dns);
     },
     updateAPI(state, api) {
-      state.network.api = Object.assign({}, { ...state.network.api }, api);
+      state.network.api = mergeWithArrayUnion({ ...state.network.api }, api);
     },
     updateDNSConfig(state, config) {
       state.network.dns.config = config;

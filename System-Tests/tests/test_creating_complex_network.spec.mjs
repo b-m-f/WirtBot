@@ -92,28 +92,16 @@ export default async (browser) => {
     assert.match(deviceConfigOne, /.*MTU = 1500/);
 
     assert.match(deviceConfigTwo, /.*Endpoint = test.test:1234/);
-    assert.match(
-      deviceConfigTwo,
-      /.*Address = 10.11.0.3,1001:0000:0000:0000:0000:0000:1000:fffe/
-    );
+    assert.match(deviceConfigTwo, /.*Address = 10.11.0.3,1001::1000:fffe/);
     assert.match(deviceConfigTwo, /.*DNS = 10.11.0.1,4.4.4.4,5.5.5.5/);
     assert.match(deviceConfigTwo, /.*MTU = 1320/);
 
     assert.match(deviceConfigThree, /.*Endpoint = test.test:1234/);
-    assert.match(
-      deviceConfigThree,
-      /.*Address = 1001:0000:0000:0000:0000:0000:1000:fffa/
-    );
-    assert.match(
-      deviceConfigThree,
-      /.*DNS = 1001:0000:0000:0000:0000:0000:1000:0001/
-    );
+    assert.match(deviceConfigThree, /.*Address = 1001::1000:fffa/);
+    assert.match(deviceConfigThree, /.*DNS = 1001::1000:0001/);
 
     assert.match(serverConfig, /.*ListenPort = 1234/);
-    assert.match(
-      serverConfig,
-      /.*Address = 10.11.0.1,1001:0000:0000:0000:0000:0000:1000:0001/
-    );
+    assert.match(serverConfig, /.*Address = 10.11.0.1,1001::1000:0001/);
     assert.strictEqual(serverConfig, serverConfigFromCore);
 
     assert.match(dnsConfigFromCore, /.*test-1.test/);

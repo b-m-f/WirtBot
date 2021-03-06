@@ -50,8 +50,8 @@ wirt.test {
 }
 wirt.test {
     hosts {
-        1001:0000:0000:0000:0000:0000:0000:1 wirtbot.wirt.test
-        1001:0000:0000:0000:0000:0000:0000:2 test.wirt.test
+        1001::1 wirtbot.wirt.test
+        1001::2 test.wirt.test
     }
 }`);
   });
@@ -81,11 +81,11 @@ wirt.test {
 wirt.test {
     hosts {
         10.10.10.1 wirtbot.wirt.test
-        1001:0000:0000:0000:0000:0000:0000:1 wirtbot.wirt.test
+        1001::1 wirtbot.wirt.test
         10.10.10.2 test.wirt.test
-        1001:0000:0000:0000:0000:0000:0000:2 test.wirt.test
+        1001::2 test.wirt.test
         10.10.10.3 test2.wirt.test
-        1001:0000:0000:0000:0000:0000:0000:3 test2.wirt.test
+        1001::3 test2.wirt.test
     }
 }`);
   });
@@ -115,9 +115,9 @@ wirt.test {
 wirt.test {
     hosts {
         10.10.10.1 wirtbot.wirt.test
-        1001:0000:0000:0000:0000:0000:0000:1 wirtbot.wirt.test
+        1001::1 wirtbot.wirt.test
         10.10.10.2 test.wirt.test
-        1001:0000:0000:0000:0000:0000:0000:3 test2.wirt.test
+        1001::3 test2.wirt.test
     }
 }`);
   });
