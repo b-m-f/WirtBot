@@ -58,7 +58,7 @@ export default async (browser) => {
         // remove trailing . and : that were present before 2.5.0
         json.server.subnet.v6.slice(0, -1);
         json.server.subnet.v4.slice(0, -1);
-        json.network.dns.ignoredZones = ["fritz.box", "home", "lan", "local"];
+        json.network.dns.ignoredZones = ["fritz.box", "lan", "local", "home"];
       }
 
       assert.strictEqual(dnsConfig.ip.v4, json.network.dns.ip.v4);
