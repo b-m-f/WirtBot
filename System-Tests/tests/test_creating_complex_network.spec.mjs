@@ -39,6 +39,7 @@ export default async (browser) => {
       subnet: { v4: "10.11.0", v6: "1001::1000" },
       name: "test",
     });
+
     await addNewDevice(page, {
       ip: { v4: 2 },
       name: "test-1",
@@ -53,6 +54,7 @@ export default async (browser) => {
       additionalDNSServers: "4.4.4.4,5.5.5.5",
       MTU: 1320,
     });
+
     await addNewDevice(page, {
       ip: { v6: "fffa" },
       name: "test-3",
