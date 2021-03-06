@@ -104,8 +104,6 @@ export const addNewDevice = async (
     let device = await widget.$(".device:last-child");
     await setType(device, type);
   }
-  // wait to propagate changes to the Core
-  await page.waitForTimeout(1000);
 };
 
 export const updateDevice = async (
@@ -139,8 +137,6 @@ export const updateDevice = async (
     let device = await getDeviceByName(page, oldName);
     await setMTU(device, MTU);
   }
-  // wait to propagate changes to the Core
-  await page.waitForTimeout(3000);
 };
 
 export const downloadConfig = async (page, name) => {
