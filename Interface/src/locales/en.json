@@ -58,7 +58,10 @@
         "tls": "Use DNSoverTLS ?",
         "tlsName": "Specify the hostname for the DNSoverTLS server",
         "invalidTLSName": "Enter the name without any protocols",
-        "ignoredZones": "DNS zones that should not be forwarded"
+        "ignoredZones": "DNS zones that should not be forwarded",
+        "adblock": "Enable Ad-Blocking",
+        "blockLists": "Additional Block Lists to be used",
+        "blockHosts": "Additional Hosts to be blocked"
       },
       "devices": {
         "title": "My devices",

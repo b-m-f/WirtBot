@@ -64,8 +64,31 @@ export function generateDNSFile(server, clients, network) {
     }`;
     }
   };
+  const adblock = () => {
+    const lists = () => {
+      let config = "    ";
+      for (let list of network.dns.blockLists) {
+        config = `${config}blacklist ${list}\n      `;
+      }
+      return config.trim();
+    };
+    const hosts = () => {
+      let config = "";
+      for (let host of network.dns.blockHosts) {
+        config = `${config}block ${host}\n      `;
+      }
+      return config.trim();
+    };
+    return `ads {
+      ${lists()}
+      default-lists
+      ${hosts()}
+      target 127.0.0.1
+      target-ipv6 ::1
+    }`;
+  };
 
-  const masterFile = `. {
+  let masterFile = `. {
     reload
     ${forwardConfig()}
     cache 30
@@ -76,5 +99,21 @@ ${network.dns.name} {
         ${deviceNames.join("\n        ")}
     }
 }`;
+
+  // File with adblocking
+  if (network.dns.adblock) {
+    masterFile = `. {
+    reload
+    ${adblock()}
+    ${forwardConfig()}
+    cache 30
+}
+${network.dns.name} {
+    hosts {
+        ${serverName()}
+        ${deviceNames.join("\n        ")}
+    }
+}`;
+  }
   return masterFile.trim();
 }
