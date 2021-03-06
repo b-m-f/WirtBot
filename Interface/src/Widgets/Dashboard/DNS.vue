@@ -31,9 +31,9 @@
         :value="ignoredZones"
         name="ignoredZones"
         required
-        :title="$t('dashboard.infos.commaList')"
+        :title="$t('infos.commaList')"
         multiline
-        :invalidMessage="$t('dashboard.widgets.dns.invalidZones')"
+        :invalidMessage="$t('warnings.invalid')"
         :validate="validIgnoredZones"
         @change="updateIgnoredZones"
       />
@@ -82,7 +82,11 @@ export default {
     },
     validIgnoredZones(zones) {
       try {
-        zones.split(",");
+        for (let zone of zones.split(",")) {
+          if (zone === "") {
+            return false;
+          }
+        }
         return true;
       } catch (error) {
         return false;
