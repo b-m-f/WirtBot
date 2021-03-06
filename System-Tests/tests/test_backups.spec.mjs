@@ -21,6 +21,7 @@ export default async (browser) => {
     let page = await browser.newPage();
     await page.goto(process.env.URL);
     await skipInitialConfig(page);
+    await page.close();
 
     let backups = [
       "./backups/1.4.5.json",
@@ -29,7 +30,7 @@ export default async (browser) => {
     ];
 
     for (const backup of backups) {
-      page = await browser.newPage();
+      let page = await browser.newPage();
       await page.goto(process.env.URL);
       await importBackup(page, backup);
 
@@ -57,12 +58,16 @@ export default async (browser) => {
         // remove trailing . and : that were present before 2.5.0
         json.server.subnet.v6.slice(0, -1);
         json.server.subnet.v4.slice(0, -1);
+        json.network.dns.ignoredZones = ["fritz.box", "home", "lan", "local"];
       }
 
       assert.strictEqual(dnsConfig.ip.v4, json.network.dns.ip.v4);
       assert.strictEqual(dnsConfig.tls, json.network.dns.tls);
       assert.strictEqual(dnsConfig.tlsName, json.network.dns.tlsName);
-
+      assert.deepStrictEqual(
+        dnsConfig.ignoredZones.split(","),
+        json.network.dns.ignoredZones
+      );
       assert.strictEqual(networkConfig.name, json.network.dns.name);
 
       assert.strictEqual(serverConfig.name, json.server.name);

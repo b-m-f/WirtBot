@@ -21,6 +21,12 @@ export function upgradeBackup(backupAsJSONString) {
   if (backupVersion < "2.5.0") {
     updatedBackup.server.subnet.v4.slice(0, -1);
     updatedBackup.server.subnet.v6.slice(0, -1);
+    updatedBackup.network.dns.ignoredZones = [
+      "fritz.box",
+      "home",
+      "lan",
+      "local",
+    ];
   }
 
   // Set to the current version of the app where it is now being imported in
