@@ -54,7 +54,7 @@ RUN cargo build --release --target-dir /builder/artifact
 FROM debian:buster-slim as wireguard
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt update && apt upgrade -yy
-RUN apt-get install make gcc xz-utils -yy
+RUN apt-get install make gcc xz-utils golang-go git -yy 
 
 WORKDIR /
 
@@ -63,6 +63,19 @@ ENV WG_TOOLS="wireguard-tools-1.0.20200827"
 COPY Build-Automation/WirtBot/$WG_TOOLS.tar.xz ./$WG_TOOLS.tar.xz
 RUN tar xf $WG_TOOLS.tar.xz
 RUN cd $WG_TOOLS/src && make && mv wg / && mv wg-quick/linux.bash /wg-quick && cd /
+
+
+# Compile CoreDNS with Ads plugin from https://github.com/c-mueller/ads
+FROM golang:buster as coredns
+
+RUN git clone https://github.com/coredns/coredns.git /go/src/github.com/coredns/coredns
+RUN git clone https://github.com/c-mueller/ads.git /go/src/github.com/c-mueller/ads && cd /go/src/github.com/c-mueller/ads && rm go.mod
+RUN cd /go/src/github.com/coredns/coredns && \
+ git checkout $(git describe --tags --abbrev=0) && \
+ sed -i "s|loadbalance:loadbalance|ads:ads\\\\nloadbalance:loadbalance|g" plugin.cfg && \
+ ln -s /go/src/github.com/c-mueller/ads /go/src/github.com/coredns/coredns/plugin/ads &&\
+ make
+RUN mv /go/src/github.com/coredns/coredns/coredns /coredns
 
 
 ### This is where the final image starts
@@ -108,7 +121,7 @@ COPY Build-Automation/WirtBot/service-files/Corefile /etc/coredns/Corefile
 RUN chmod 660 /etc/coredns/Corefile
 
 ## Copy the coredns binary from the official coredns docker image
-COPY --from=coredns/coredns /coredns /usr/bin/coredns
+COPY --from=coredns /coredns /usr/bin/coredns
 
 COPY Build-Automation/WirtBot/service-files/dns /etc/services.d/coredns/run
 COPY Build-Automation/WirtBot/service-files/finisher /etc/services.d/coredns/finish
