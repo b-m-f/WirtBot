@@ -1,21 +1,20 @@
 <template>
   <tr
     :class="{ 'table-row': true, device: true }"
-    :data-name="this.device.name"
+    :data-name="this.$props.name"
   >
     <td class="column-one">
       <label for="device-name">{{
         $t("dashboard.widgets.devices.labels.name")
       }}</label>
       <TextInput
-        :value="device.name"
+        :value="$props.name"
         name="device-name"
         class="name"
         required
         @change="updateName"
         :class="{
-          required:
-            !this.internalDeviceCacheForNewDevices.name && !this.$props.name,
+          required: !internalDeviceCacheForNewDevices.name && !$props.name,
         }"
       />
     </td>
@@ -28,8 +27,8 @@
           <p>{{ subnet.v4 }}</p>
           <NumberInput
             :name="'device-ipv4'"
-            :value="device.ip.v4"
-            @change="(ip) => updateIP({ v4: ip, v6: this.device.ip.v6 })"
+            :value="$props.ip.v4"
+            @change="(ip) => updateIP({ v4: ip })"
             :validate="validateIPv4"
             :placeholder="`${getNextHighestIPv4()}`"
             :invalidMessage="invalidIPv4Message"
@@ -38,7 +37,10 @@
             required
             :class="{
               required:
-                !this.internalDeviceCacheForNewDevices.ip.v4 && !this.$props.ip,
+                internalDeviceCacheForNewDevices.ip &&
+                !internalDeviceCacheForNewDevices.ip.v4 &&
+                $props.ip &&
+                !$props.ip.v4,
             }"
           />
         </div>
@@ -50,10 +52,10 @@
         <div class="value">
           <p :title="subnet.v6">{{ subnet.v6.substring(0, 4) }}::</p>
           <TextInput
-            :value="device.ip.v6"
+            :value="$props.ip.v6"
             name="device-ipv6"
             placeholder="0002-fffe"
-            @change="(ip) => updateIP({ v4: this.device.ip.v4, v6: ip })"
+            @change="(ip) => updateIP({ v6: ip })"
             :validate="validateIPv6"
             :invalidMessage="invalidIPv6Message"
           />
@@ -66,12 +68,11 @@
       }}</label>
       <Select
         :required="true"
-        :selected="device.type"
+        :selected="$props.type"
         :options="deviceTypes"
         class="device-type"
         :class="{
-          required:
-            !this.internalDeviceCacheForNewDevices.type && !this.$props.type,
+          required: !internalDeviceCacheForNewDevices.type && !$props.type,
         }"
         @change="updateType"
       />
@@ -83,7 +84,7 @@
         </label>
         <NumberInput
           name="MTU"
-          :value="device.MTU"
+          :value="$props.MTU"
           class="MTU"
           @change="updateMTU"
           :max="1800"
@@ -98,7 +99,7 @@
           {{ $t("dashboard.widgets.devices.labels.additionalDNSServers") }}
         </label>
         <TextInput
-          :value="device.additionalDNSServers.join(',')"
+          :value="$props.additionalDNSServers.join(',')"
           name="additionalDNSServers"
           class="additionalDNSServers"
           :placeholder="
@@ -117,8 +118,8 @@
         }}</label>
         <CheckBox
           name="routed"
-          :checked="device.routed"
-          @change="(bool) => save({ ...this.device, routed: bool })"
+          :checked="$props.routed"
+          @change="(bool) => save({ routed: bool })"
         />
       </div>
     </td>
@@ -134,7 +135,7 @@
       </button>
       <button
         type="button"
-        v-if="device.config"
+        v-if="$props.config"
         class="download"
         @click="downloadConfig"
       >
@@ -152,7 +153,6 @@ import Select from "components/Inputs/Select";
 import { downloadText } from "../lib/download";
 import debounce from "lodash/debounce";
 import merge from "lodash/merge";
-import cloneDeep from "lodash/cloneDeep";
 
 export default {
   components: { NumberInput, TextInput, CheckBox, Select },
@@ -173,14 +173,7 @@ export default {
       invalidIPv4Message: "",
       invalidIPv6Message: "",
       invalidAdditionalDNSServersMessage: "",
-      internalDeviceCacheForNewDevices: {
-        name: undefined,
-        ip: { v4: undefined, v6: undefined },
-        type: undefined,
-        routed: undefined,
-        additionalDNSServers: undefined,
-        MTU: undefined,
-      },
+      internalDeviceCacheForNewDevices: {},
     };
   },
   computed: {
@@ -193,27 +186,14 @@ export default {
     subnet() {
       return this.$store.state.server.subnet;
     },
-    device() {
-      return {
-        name: this.$props.name,
-        ip: this.$props.ip || { v4: undefined, v6: undefined },
-        type: this.$props.type,
-        id: this.$props.id,
-        qr: this.$props.qr,
-        routed: this.$props.routed,
-        additionalDNSServers: this.$props.additionalDNSServers || [],
-        MTU: this.$props.MTU,
-        config: this.$props.config,
-      };
-    },
   },
   mounted() {},
   methods: {
     downloadConfig() {
       const config = this.devices.find(
-        (device) => device.id === this.device.id
+        (device) => this.$props.id === device.id
       )["config"];
-      downloadText(config, `${this.device.name}.conf`);
+      downloadText(config, `${this.$props.name}.conf`);
     },
     getNextHighestIPv4() {
       let nextHighest = 2;
@@ -237,7 +217,14 @@ export default {
       this.save({ type });
     },
     updateIP({ v4, v6 }) {
-      this.save({ ip: { v4, v6 } });
+      const ip = {};
+      if (v4) {
+        ip.v4 = v4;
+      }
+      if (v6) {
+        ip.v6 = v6;
+      }
+      this.save(ip);
     },
     updateName(name) {
       this.save({ name });
@@ -284,7 +271,7 @@ export default {
         return false;
       }
       const isIpUsed = this.devices.reduce((prev, next) => {
-        return prev || (next.ip.v4 == ip && next.id !== this.device.id);
+        return prev || (next.ip.v4 == ip && next.id !== this.$props.id);
       }, false);
 
       if (isIpUsed) {
@@ -312,15 +299,13 @@ export default {
       }
     },
     async save(device) {
+      // this cache will slowly build up
       this.internalDeviceCacheForNewDevices = merge(
         this.internalDeviceCacheForNewDevices,
         device
       );
-      const newDevice = merge(
-        cloneDeep(this.device),
-        this.internalDeviceCacheForNewDevices
-      );
-      this.$emit("saved", newDevice);
+      console.log(this.internalDeviceCacheForNewDevices);
+      this.$emit("saved", this.internalDeviceCacheForNewDevices);
     },
   },
 };
