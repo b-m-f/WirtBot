@@ -58,5 +58,5 @@ export const setDNSIP = async (page, ip) => {
 export const setIgnoredZones = async (page, zones) => {
   const dns = await dnsWidget(page);
   const input = await dns.$("textarea[name='ignoredZones']");
-  await input.fill(zones.join(","));
+  await input.fill(zones);
 };

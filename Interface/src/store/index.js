@@ -14,7 +14,15 @@ import {
 import alerts from "./modules/alerts";
 import mergeWith from "lodash/mergeWith";
 import isArray from "lodash/isArray";
-import union from "lodash/union";
+
+function merge(object1, object2) {
+  function customizer(objValue, srcValue) {
+    if (isArray(objValue)) {
+      return srcValue;
+    }
+  }
+  return mergeWith(object1, object2, customizer);
+}
 
 async function addConfigToDevice(newDevice, server) {
   const config = generateDeviceConfig(newDevice, server);
@@ -78,16 +86,6 @@ const initialState = {
   },
 };
 
-function mergeWithArrayUnion(obj1, obj2) {
-  function customizer(objValue, srcValue) {
-    if (isArray(objValue) && isArray(srcValue)) {
-      return union(objValue, srcValue);
-    }
-  }
-
-  return mergeWith(obj1, obj2, customizer);
-}
-
 const store = new Vuex.Store({
   strict: true,
   modules: { alerts },
@@ -103,7 +101,7 @@ const store = new Vuex.Store({
       state.keys = keys;
     },
     updateServer(state, server) {
-      state.server = mergeWithArrayUnion({ ...state.server }, server);
+      state.server = merge({ ...state.server }, server);
     },
     removeDevicesWithoutId(state) {
       state.devices = state.devices.filter((device) => device.id);
@@ -132,10 +130,10 @@ const store = new Vuex.Store({
       }
     },
     updateDNS(state, dns) {
-      state.network.dns = mergeWithArrayUnion({ ...state.network.dns }, dns);
+      state.network.dns = merge({ ...state.network.dns }, dns);
     },
     updateAPI(state, api) {
-      state.network.api = mergeWithArrayUnion({ ...state.network.api }, api);
+      state.network.api = merge({ ...state.network.api }, api);
     },
     updateDNSConfig(state, config) {
       state.network.dns.config = config;
@@ -184,7 +182,7 @@ const store = new Vuex.Store({
       commit("updateDNS", { ip: { v4, v6 } });
       await dispatch("updateDNS");
     },
-    async updateDNSIgnoredZones({ commit, dispatch }, ignoredZones) {
+    async updateDNSIgnoredZones({ commit, dispatch }, { ignoredZones }) {
       commit("updateDNS", { ignoredZones });
       await dispatch("updateDNS");
     },
@@ -260,9 +258,7 @@ const store = new Vuex.Store({
     async updateDNS({ state, commit, dispatch }) {
       commit(
         "updateDNSConfig",
-        generateDNSFile(state.server, state.devices, {
-          ...state.network,
-        })
+        generateDNSFile(state.server, state.devices, state.network)
       );
       await dispatch("sendDNSUpdatesToApi");
     },

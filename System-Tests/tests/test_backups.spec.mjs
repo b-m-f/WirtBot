@@ -58,16 +58,15 @@ export default async (browser) => {
         // remove trailing . and : that were present before 2.5.0
         json.server.subnet.v6.slice(0, -1);
         json.server.subnet.v4.slice(0, -1);
-        json.network.dns.ignoredZones = ["fritz.box", "lan", "local", "home"];
+        json.network.dns.ignoredZones = ["fritz.box", "home", "lan", "local"];
       }
 
       assert.strictEqual(dnsConfig.ip.v4, json.network.dns.ip.v4);
       assert.strictEqual(dnsConfig.tls, json.network.dns.tls);
       assert.strictEqual(dnsConfig.tlsName, json.network.dns.tlsName);
-      assert.deepStrictEqual(
-        dnsConfig.ignoredZones.split(","),
-        json.network.dns.ignoredZones
-      );
+      for (let zone of json.network.dns.ignoredZones) {
+        assert(dnsConfig.ignoredZones.includes(zone));
+      }
       assert.strictEqual(networkConfig.name, json.network.dns.name);
 
       assert.strictEqual(serverConfig.name, json.server.name);
