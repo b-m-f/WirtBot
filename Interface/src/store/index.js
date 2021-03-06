@@ -76,6 +76,9 @@ const initialState = {
       tlsName: "cloudflare-dns.com",
       tls: true,
       ignoredZones: ["fritz.box", "lan", "local", "home"],
+      adblock: true,
+      blockLists: [],
+      blockHosts: [],
     },
     api: { host: `wirtbot.wirt.internal:3030` },
   },
@@ -192,6 +195,18 @@ const store = new Vuex.Store({
       if (tls == true && !tlsName) {
         return;
       }
+      await dispatch("updateDNS");
+    },
+    async updateDNSAdblock({ commit, dispatch }, { adblock }) {
+      commit("updateDNS", { adblock });
+      await dispatch("updateDNS");
+    },
+    async updateDNSBlockLists({ commit, dispatch }, { blockLists }) {
+      commit("updateDNS", { blockLists });
+      await dispatch("updateDNS");
+    },
+    async updateDNSBlockHosts({ commit, dispatch }, { blockHosts }) {
+      commit("updateDNS", { blockHosts });
       await dispatch("updateDNS");
     },
     async addDashboardMessage({ state, commit }, message) {

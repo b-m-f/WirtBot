@@ -11,6 +11,7 @@ describe("Correctly generates a valid DNS master file", () => {
       ip: { v4: "1.1.1.1" },
       tls: true,
       tlsName: "cloudflare-dns.com",
+      ignoredZones: ["lan", "local", "home", "fritz.box"],
     };
     expect(generateDNSFile(server, [device], { dns })).toBe(`. {
     reload
@@ -38,6 +39,7 @@ wirt.test {
       ip: { v4: "1.1.1.1" },
       tls: true,
       tlsName: "cloudflare-dns.com",
+      ignoredZones: ["lan", "local", "home", "fritz.box"],
     };
     expect(generateDNSFile(server, [device], { dns })).toBe(`. {
     reload
@@ -68,6 +70,7 @@ wirt.test {
       ip: { v4: "1.1.1.1" },
       tls: true,
       tlsName: "cloudflare-dns.com",
+      ignoredZones: ["lan", "local", "home", "fritz.box"],
     };
     expect(generateDNSFile(server, devices, { dns })).toBe(`. {
     reload
@@ -102,6 +105,7 @@ wirt.test {
       ip: { v4: "1.1.1.1" },
       tls: true,
       tlsName: "cloudflare-dns.com",
+      ignoredZones: ["lan", "local", "home", "fritz.box"],
     };
     expect(generateDNSFile(server, devices, { dns })).toBe(`. {
     reload
@@ -130,6 +134,7 @@ wirt.test {
       ip: { v4: "1.1.1.1" },
       tls: true,
       tlsName: "cloudflare-dns.com",
+      ignoredZones: ["lan", "local", "home", "fritz.box"],
     };
     const device = { ip: { v4: 2 }, name: "test me" };
     expect(generateDNSFile(server, [device], { dns })).toBe(`. {
@@ -152,12 +157,55 @@ wirt.test {
     const server = {
       subnet: { v4: "10.10.10" },
     };
-    const dns = { name: "wirt.test", ip: { v4: "1.1.1.1", tls: false } };
+    const dns = {
+      name: "wirt.test",
+      ip: { v4: "1.1.1.1", tls: false },
+      ignoredZones: ["lan", "local", "home", "fritz.box"],
+    };
     const device = { ip: { v4: 2 }, name: "test" };
     expect(generateDNSFile(server, [device], { dns })).toBe(`. {
     reload
     forward . 1.1.1.1 {
        except wirt.test lan local home fritz.box
+       health_check 5s
+    }
+    cache 30
+}
+wirt.test {
+    hosts {
+        10.10.10.1 wirtbot.wirt.test
+        10.10.10.2 test.wirt.test
+    }
+}`);
+  });
+  it("for AdBlocking", () => {
+    const server = {
+      subnet: { v4: "10.10.10" },
+    };
+    const device = { ip: { v4: 2 }, name: "test" };
+    const dns = {
+      name: "wirt.test",
+      ip: { v4: "1.1.1.1" },
+      tls: true,
+      tlsName: "cloudflare-dns.com",
+      ignoredZones: ["lan", "local", "home", "fritz.box"],
+      adblock: true,
+      blockLists: ["http://test.com/list.txt", "https://test2.com/list.txt"],
+      blockHosts: ["test.com"],
+    };
+    expect(generateDNSFile(server, [device], { dns })).toBe(`. {
+    reload
+    ads {
+      blacklist http://test.com/list.txt
+      blacklist https://test2.com/list.txt
+      default-lists
+      block test.com
+      target 127.0.0.1
+      target-ipv6 ::1
+    }
+    forward . tls://1.1.1.1 {
+       except wirt.test lan local home fritz.box
+       tls_servername cloudflare-dns.com
        health_check 5s
     }
     cache 30
