@@ -62,6 +62,7 @@ const initialState = {
     config: "",
     subnet: { v4: "10.10.0", v6: "1010:1010:1010:1010:0000:0000:0000" },
     hostname: "",
+    name: "wirtbot",
   },
   devices: [
     /* {ip: {v4, v6}, name, type, id}*/
