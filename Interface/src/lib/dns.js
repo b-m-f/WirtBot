@@ -4,6 +4,7 @@ export function generateDNSFile(server, clients, network) {
   const tlsName = network.dns.tlsName;
   const dnsV4 = network.dns.ip.v4 || "1.1.1.1";
   const dnsV6 = network.dns.ip.v6;
+  const ignoredZones = network.dns.ignoredZones;
 
   const subnetv4 =
     server.subnet.v4 && server.subnet.v4[server.subnet.v4.length - 1] === "."
@@ -52,13 +53,13 @@ export function generateDNSFile(server, clients, network) {
       return `forward . ${dnsV4 ? `tls://` + dnsV4 + " " : ""}${
         dnsV6 ? `tls://` + dnsV6 + "" : ""
       }{
-       except ${network.dns.name} lan local home fritz.box
+       except ${network.dns.name} ${ignoredZones.join(" ")}
        tls_servername ${tlsName}
        health_check 5s
     }`;
     } else {
       return `forward . ${dnsV4 ? dnsV4 + "" : ""}${dnsV6 ? dnsV6 : ""} {
-       except ${network.dns.name} lan local home fritz.box
+       except ${network.dns.name} ${ignoredZones.join(" ")}
        health_check 5s
     }`;
     }
