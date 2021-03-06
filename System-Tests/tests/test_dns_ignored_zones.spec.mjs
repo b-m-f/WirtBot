@@ -2,7 +2,6 @@ import * as assert from "assert";
 import { promises as fsPromises } from "fs";
 import process from "process";
 const { readFile } = fsPromises;
-import util from "util";
 
 import { setDNSName, setAPIHost } from "./widgets/network.mjs";
 import { setIgnoredZones } from "./widgets/dns.mjs";
@@ -18,13 +17,19 @@ export default async (browser) => {
     await skipInitialConfig(page);
 
     await setAPIHost(page, process.env.API);
+    let dnsUpdateResponse = page.waitForResponse(
+      /.*update-device-dns-entries.*/
+    );
     await setDNSName(page, "test");
     // The DNS name has to set to .test to work in CI where the wirtbot is in the .test zone
     // Check the Build-Automation directory for more info
+    // wait for state to be ready
+    await dnsUpdateResponse;
 
+    dnsUpdateResponse = page.waitForResponse(/.*update-device-dns-entries.*/);
     await setIgnoredZones(page, "test2,what,up.lan");
     // wait to propagate changes to backend
-    await page.waitForTimeout(1000);
+    await dnsUpdateResponse;
 
     const dnsConfigFromCore = await readFile(
       `${wirtBotFileDir}/Corefile`,
