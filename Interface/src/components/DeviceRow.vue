@@ -27,7 +27,7 @@
           <p>{{ subnet.v4 }}</p>
           <NumberInput
             :name="'device-ipv4'"
-            :value="$props.ip.v4"
+            :value="($props.ip && $props.ip.v4) || undefined"
             @change="(ip) => updateIP({ v4: ip })"
             :validate="validateIPv4"
             :placeholder="`${getNextHighestIPv4()}`"
@@ -52,7 +52,7 @@
         <div class="value">
           <p :title="subnet.v6">{{ subnet.v6.substring(0, 4) }}::</p>
           <TextInput
-            :value="$props.ip.v6"
+            :value="($props.ip && $props.ip.v6) || undefined"
             name="device-ipv6"
             placeholder="0002-fffe"
             @change="(ip) => updateIP({ v6: ip })"
@@ -99,7 +99,11 @@
           {{ $t("dashboard.widgets.devices.labels.additionalDNSServers") }}
         </label>
         <TextInput
-          :value="$props.additionalDNSServers.join(',')"
+          :value="
+            ($props.additionalDNSServers &&
+              $props.additionalDNSServers.join(',')) ||
+              ''
+          "
           name="additionalDNSServers"
           class="additionalDNSServers"
           :placeholder="
@@ -151,8 +155,8 @@ import TextInput from "components/Inputs/Text";
 import CheckBox from "components/Inputs/CheckBox";
 import Select from "components/Inputs/Select";
 import { downloadText } from "../lib/download";
-import debounce from "lodash/debounce";
 import merge from "lodash/merge";
+import cloneDeep from "lodash/cloneDeep";
 
 export default {
   components: { NumberInput, TextInput, CheckBox, Select },
@@ -224,7 +228,7 @@ export default {
       if (v6) {
         ip.v6 = v6;
       }
-      this.save(ip);
+      this.save({ ip });
     },
     updateName(name) {
       this.save({ name });
@@ -241,28 +245,16 @@ export default {
       return correct;
     },
     updateAdditionalDNSServers(serverString) {
-      if (this.updatingAdditionalDNSServers) {
-        this.updatingAdditionalDNSServers.cancel();
-      }
-      this.updatingAdditionalDNSServers = debounce(() => {
-        const servers = serverString.split(",").map((entry) => {
-          return entry.trim();
-        });
-        this.save({ additionalDNSServers: servers });
-      }, 1300);
-      this.updatingAdditionalDNSServers();
+      const servers = serverString.split(",").map((entry) => {
+        return entry.trim();
+      });
+      this.save({ additionalDNSServers: servers });
     },
     validateMTU(mtu) {
       return mtu >= 1320 && parseInt(mtu) < 1800;
     },
     updateMTU(mtu) {
-      if (this.updatingMTU) {
-        this.updatingMTU.cancel();
-      }
-      this.updatingMTU = debounce(() => {
-        this.save({ MTU: mtu });
-      }, 1000);
-      this.updatingMTU();
+      this.save({ MTU: mtu });
     },
     validateIPv4(ip) {
       this.invalidIPv4Message = "";
@@ -301,10 +293,10 @@ export default {
     async save(device) {
       // this cache will slowly build up
       this.internalDeviceCacheForNewDevices = merge(
+        cloneDeep(this.$props),
         this.internalDeviceCacheForNewDevices,
         device
       );
-      console.log(this.internalDeviceCacheForNewDevices);
       this.$emit("saved", this.internalDeviceCacheForNewDevices);
     },
   },
