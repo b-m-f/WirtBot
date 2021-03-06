@@ -15,7 +15,6 @@ export const getConfig = async (device) => {
   const additionalDNSServers = await additionalDNSServersInput.evaluate(
     (e) => e.value
   );
-
   const nameInput = await device.$("input[name='device-name']");
   const name = await nameInput.evaluate((e) => e.value);
 
@@ -58,7 +57,7 @@ const setAdditionalDNSServers = async (device, servers) => {
 
 const setMTU = async (device, MTU) => {
   const input = await device.$("input[name='MTU']");
-  await input.type(MTU.toString());
+  await input.fill(MTU.toString());
 };
 
 const setType = async (device, type) => {
@@ -93,10 +92,6 @@ export const addNewDevice = async (
     let device = await widget.$(".device:last-child");
     await setName(device, name);
   }
-  if (type) {
-    let device = await widget.$(".device:last-child");
-    await setType(device, type);
-  }
   if (additionalDNSServers) {
     let device = await widget.$(".device:last-child");
     await setAdditionalDNSServers(device, additionalDNSServers);
@@ -104,6 +99,10 @@ export const addNewDevice = async (
   if (MTU) {
     let device = await widget.$(".device:last-child");
     await setMTU(device, MTU);
+  }
+  if (type) {
+    let device = await widget.$(".device:last-child");
+    await setType(device, type);
   }
   // wait to propagate changes to the Core
   await page.waitForTimeout(1000);
