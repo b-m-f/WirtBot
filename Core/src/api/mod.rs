@@ -300,45 +300,6 @@ mod test {
         );
     }
     #[tokio::test]
-    async fn test_update_no_permissions() {
-        let mut csprng = OsRng {};
-        let keypair: Keypair = Keypair::generate(&mut csprng);
-        let allowed_origin = "http://test";
-        let config_path = "/root/test";
-
-        let filter = routes(keypair.public, &allowed_origin.into(), config_path, "");
-
-        let msg = "message";
-        let mut prehashed: Sha512 = Sha512::default();
-        prehashed.update(msg.as_bytes());
-
-        let signature = keypair
-            .sign_prehashed(prehashed, Some(b"wirtbot"))
-            .unwrap()
-            .to_bytes()
-            .to_vec();
-
-        let message = Message {
-            message: msg.to_string(),
-            signature: base64::encode(signature),
-        };
-
-        let payload = json!(message);
-        let response = warp::test::request()
-            .method("POST")
-            .body(payload.to_string())
-            .path("/update")
-            .reply(&filter)
-            .await;
-
-        assert_eq!(response.status(), 500);
-        assert_eq!(
-            response.body(),
-            "{\"code\":500,\"message\":\"Could not write config. Please check the server logs\"}"
-        );
-        env::remove_var(ALLOWED_ORIGIN);
-    }
-    #[tokio::test]
     async fn test_correct_update() {
         let mut csprng = OsRng {};
         let keypair: Keypair = Keypair::generate(&mut csprng);
@@ -402,45 +363,6 @@ mod test {
             response.body(),
             "{\"code\":401,\"message\":\"Not authorized to update configuration\"}"
         );
-    }
-    #[tokio::test]
-    async fn test_dns_no_permissions() {
-        let mut csprng = OsRng {};
-        let keypair: Keypair = Keypair::generate(&mut csprng);
-        let allowed_origin = "http://test";
-        let dns_path = "/root/test";
-
-        let filter = routes(keypair.public, &allowed_origin.into(), "", dns_path);
-
-        let msg = "message";
-        let mut prehashed: Sha512 = Sha512::default();
-        prehashed.update(msg.as_bytes());
-
-        let signature = keypair
-            .sign_prehashed(prehashed, Some(b"wirtbot"))
-            .unwrap()
-            .to_bytes()
-            .to_vec();
-
-        let message = Message {
-            message: msg.to_string(),
-            signature: base64::encode(signature),
-        };
-
-        let payload = json!(message);
-        let response = warp::test::request()
-            .method("POST")
-            .body(payload.to_string())
-            .path("/update-device-dns-entries")
-            .reply(&filter)
-            .await;
-
-        assert_eq!(response.status(), 500);
-        assert_eq!(
-            response.body(),
-            "{\"code\":500,\"message\":\"Could not write config. Please check the server logs\"}"
-        );
-        env::remove_var(ALLOWED_ORIGIN);
     }
     #[tokio::test]
     async fn test_dns_correct_update() {
