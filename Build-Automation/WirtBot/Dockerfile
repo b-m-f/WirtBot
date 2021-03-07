@@ -66,16 +66,19 @@ RUN cd $WG_TOOLS/src && make && mv wg / && mv wg-quick/linux.bash /wg-quick && c
 
 
 # Compile CoreDNS with Ads plugin from https://github.com/c-mueller/ads
-FROM golang:buster as coredns
+FROM golang:1.15.8-buster as coredns
 
 RUN git clone https://github.com/coredns/coredns.git /go/src/github.com/coredns/coredns
-RUN git clone https://github.com/c-mueller/ads.git /go/src/github.com/c-mueller/ads && cd /go/src/github.com/c-mueller/ads && rm go.mod
-RUN cd /go/src/github.com/coredns/coredns && \
- git checkout $(git describe --tags --abbrev=0) && \
- sed -i "s|loadbalance:loadbalance|ads:ads\\\\nloadbalance:loadbalance|g" plugin.cfg && \
- ln -s /go/src/github.com/c-mueller/ads /go/src/github.com/coredns/coredns/plugin/ads &&\
- make
-RUN mv /go/src/github.com/coredns/coredns/coredns /coredns
+RUN git clone https://github.com/c-mueller/ads.git /go/src/github.com/c-mueller/ads
+WORKDIR /go/src/github.com/c-mueller/ads
+RUN rm go.mod go.sum || true
+WORKDIR /go/src/github.com/coredns/coredns
+RUN  git checkout $(git describe --tags --abbrev=0)
+COPY Build-Automation/WirtBot/service-files/coredns-plugins plugin.cfg
+RUN ln -s /go/src/github.com/c-mueller/ads/ plugin/ads
+RUN make gen && make
+RUN mv coredns /coredns
+RUN /coredns -plugins
 
 
 ### This is where the final image starts
@@ -116,12 +119,13 @@ RUN addgroup --gid ${DNS_GID:-1003} coredns
 RUN useradd --gid ${DNS_GID:-1003} --uid ${DNS_UID:-1003} -r -s /bin/false coredns
 RUN mkdir -p /etc/coredns
 
+## Copy the coredns binary with ads plugin from the coredns build image
+COPY --from=coredns /coredns /usr/bin/coredns
+
 ## Make the Corefile writable by all members of the coredns group
 COPY Build-Automation/WirtBot/service-files/Corefile /etc/coredns/Corefile
 RUN chmod 660 /etc/coredns/Corefile
 
-## Copy the coredns binary from the official coredns docker image
-COPY --from=coredns /coredns /usr/bin/coredns
 
 COPY Build-Automation/WirtBot/service-files/dns /etc/services.d/coredns/run
 COPY Build-Automation/WirtBot/service-files/finisher /etc/services.d/coredns/finish
