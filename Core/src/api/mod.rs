@@ -1,24 +1,21 @@
-
-use serde::{Deserialize, Serialize};
-use warp::{reject, Filter, Rejection, Reply};
-use warp::http::StatusCode;
-use ed25519_dalek::{
-     PublicKey, Sha512, Digest
-};
-use std::convert::Infallible;
-use std::env;
 use super::crypto;
 use super::filesystem::managed_dns;
 use super::filesystem::wireguard_config;
+use ed25519_dalek::{Digest, PublicKey, Sha512};
+use serde::{Deserialize, Serialize};
+use std::convert::Infallible;
+use std::env;
+use std::error::Error;
+use warp::http::StatusCode;
+use warp::{reject, Filter, Rejection, Reply};
 
-const SSL_PEM_CERT :&str = "SSL_PEM_CERT";
-const SSL_KEY :&str = "SSL_KEY";
-const PORT :&str = "PORT";
-const DEFAULT_PORT :&str = "3030";
-const HOST :&str = "HOST";
-const DEFAULT_HOST :&str = "0.0.0.0";
-const ALLOWED_ORIGIN :&str = "ALLOWED_ORIGIN";
-
+const SSL_PEM_CERT: &str = "SSL_PEM_CERT";
+const SSL_KEY: &str = "SSL_KEY";
+const PORT: &str = "PORT";
+const DEFAULT_PORT: &str = "3030";
+const HOST: &str = "HOST";
+const DEFAULT_HOST: &str = "0.0.0.0";
+const ALLOWED_ORIGIN: &str = "ALLOWED_ORIGIN";
 
 #[derive(Debug)]
 struct IncorrectSignature;
@@ -44,8 +41,6 @@ struct ErrorMessage {
     message: String,
 }
 
-
-
 // This function receives a `Rejection` and tries to return a custom
 // value, otherwise simply passes the rejection along.
 async fn handle_rejection(err: Rejection) -> Result<impl Reply, Infallible> {
@@ -61,6 +56,12 @@ async fn handle_rejection(err: Rejection) -> Result<impl Reply, Infallible> {
     } else if let Some(FailWritingConfig) = err.find() {
         code = StatusCode::INTERNAL_SERVER_ERROR;
         message = "Could not write config. Please check the server logs";
+    } else if let Some(_) = err.find::<warp::filters::body::BodyDeserializeError>() {
+        code = StatusCode::BAD_REQUEST;
+        message = "Wrong Payload sent";
+    } else if let Some(_) = err.find::<warp::reject::MethodNotAllowed>() {
+        code = StatusCode::METHOD_NOT_ALLOWED;
+        message = "CORS Error";
     } else {
         // We should have expected this... Just log and say its a 500
         error!("Unhandled rejection: {:?}", err);
@@ -69,6 +70,8 @@ async fn handle_rejection(err: Rejection) -> Result<impl Reply, Infallible> {
     }
     info!("{}", message);
 
+    std::println!("{:?}", err);
+
     let json = warp::reply::json(&ErrorMessage {
         code: code.as_u16(),
         message: message.into(),
@@ -76,9 +79,6 @@ async fn handle_rejection(err: Rejection) -> Result<impl Reply, Infallible> {
     Ok(warp::reply::with_status(json, code))
 }
 
-fn ok() -> impl Filter<Extract = (String,), Error = warp::Rejection> + Copy {
-    warp::get().and(warp::path!("ok").map(|| format!("OK")))
-}
 fn update(
     public_key: PublicKey,
 ) -> impl Filter<Extract = (String,), Error = warp::Rejection> + Copy {
@@ -158,13 +158,14 @@ fn update_device_dns_entries(
         })
 }
 
-pub async fn start_api(){
+fn routes(
+    public_key: PublicKey,
+) -> impl warp::Filter<Extract = impl warp::Reply, Error = std::convert::Infallible> + Clone {
     let log = warp::log("wirt::api");
-    let public_key_base64 = crypto::get_key();
-    info!("Loaded public key: {}", public_key_base64);
-    let public_key = crypto::decode_public_key_base64(public_key_base64);
-
-    let allowed_origin: String = env::var(ALLOWED_ORIGIN).unwrap();
+    let allowed_origin: String = match env::var(ALLOWED_ORIGIN) {
+        Ok(env) => env,
+        Err(_) => panic!("Environment variable {} not specified", ALLOWED_ORIGIN),
+    };
     let cors = warp::cors()
         .allow_origin(&allowed_origin[..])
         .allow_methods(vec!["POST"])
@@ -175,14 +176,19 @@ pub async fn start_api(){
         .and(warp::path("update-device-dns-entries"))
         .map(warp::reply);
 
-    let routes = ok()
-        .or(update(public_key))
+    return update(public_key)
         .or(update_options)
         .or(update_device_dns_entries(public_key))
         .or(update_dns_options)
         .with(log)
         .with(cors)
         .recover(handle_rejection);
+}
+
+pub async fn start_api() {
+    let public_key_base64 = crypto::get_key();
+    info!("Loaded public key: {}", public_key_base64);
+    let public_key = crypto::decode_public_key_base64(public_key_base64);
 
     let port: String = env::var(PORT).unwrap_or(DEFAULT_PORT.into());
     let port: u16 = port.parse().unwrap();
@@ -194,6 +200,8 @@ pub async fn start_api(){
         .map(|value| value.to_string())
         .map(|value| value.parse().expect("Invalid Hostname specified"))
         .collect();
+
+    let routes = routes(public_key);
 
     let host: [u8; 4] = [host[0], host[1], host[2], host[3]];
 
@@ -219,5 +227,98 @@ pub async fn start_api(){
             warp::serve(routes).run((host, port)).await
         }
     }
+}
 
+#[cfg(test)]
+mod test {
+    use super::*;
+    use ed25519_dalek::Keypair;
+    use ed25519_dalek::Signature;
+    use ed25519_dalek::Signer;
+    use rand::rngs::OsRng;
+    use serde_json::json;
+
+    #[tokio::test]
+    async fn test_failures() {
+        let mut csprng = OsRng {};
+        let keypair: Keypair = Keypair::generate(&mut csprng);
+        env::set_var(ALLOWED_ORIGIN, "http://test");
+
+        let filter = routes(keypair.public);
+        let response = warp::test::request().path("/update").reply(&filter).await;
+        assert_eq!(response.status(), 405);
+        assert_eq!(response.body(), "{\"code\":405,\"message\":\"CORS Error\"}");
+        let response = warp::test::request()
+            .method("POST")
+            .path("/update")
+            .reply(&filter)
+            .await;
+        assert_eq!(response.status(), 400);
+        assert_eq!(
+            response.body(),
+            "{\"code\":400,\"message\":\"Wrong Payload sent\"}"
+        );
+    }
+    #[tokio::test]
+    async fn test_wrong_signature_fails() {
+        let mut csprng = OsRng {};
+        let keypair: Keypair = Keypair::generate(&mut csprng);
+        env::set_var(ALLOWED_ORIGIN, "http://test");
+
+        let filter = routes(keypair.public);
+        let msg = "message";
+
+        let message = Message {
+            message: msg.to_string(),
+            signature: "test".into(),
+        };
+
+        let payload = json!(message);
+        std::println!("{:?}", payload.to_string());
+        let response = warp::test::request()
+            .method("POST")
+            .body(payload.to_string())
+            .path("/update")
+            .reply(&filter)
+            .await;
+
+        assert_eq!(response.status(), 401);
+        assert_eq!(
+            response.body(),
+            "{\"code\":401,\"message\":\"Not authorized to update configuration\"}"
+        );
+    }
+    #[tokio::test]
+    async fn test_correct_update() {
+        let mut csprng = OsRng {};
+        let keypair: Keypair = Keypair::generate(&mut csprng);
+        env::set_var(ALLOWED_ORIGIN, "http://test");
+
+        let filter = routes(keypair.public);
+        let msg = "message";
+        let mut prehashed: Sha512 = Sha512::default();
+        prehashed.update(msg.as_bytes());
+
+        let signature = keypair
+            .sign_prehashed(prehashed, Some(b"wirtbot"))
+            .unwrap()
+            .to_bytes()
+            .to_vec();
+
+        let message = Message {
+            message: msg.to_string(),
+            signature: base64::encode(signature),
+        };
+
+        let payload = json!(message);
+        let response = warp::test::request()
+            .method("POST")
+            .body(payload.to_string())
+            .path("/update")
+            .reply(&filter)
+            .await;
+
+        assert_eq!(response.status(), 200);
+        assert_eq!(response.body(), "Config updated");
+    }
 }

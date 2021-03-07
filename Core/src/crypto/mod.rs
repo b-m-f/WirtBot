@@ -57,7 +57,8 @@ mod test {
     }
 
     #[test]
-    fn get_key_from_env_and_without_env() {
+    fn get_key_from_env_and_without_env_and_decoding() {
+        // These cant be seperate tests, as they both manipulate the environment
         env::set_var(PUBLIC_KEY, "test");
         assert_eq!(get_key(), "test");
         env::remove_var(PUBLIC_KEY);
@@ -65,10 +66,6 @@ mod test {
         let bytes = decode(&key).unwrap();
         assert_eq!(bytes.len(), PUBLIC_KEY_LENGTH);
         PublicKey::from_bytes(&bytes).unwrap();
-    }
-
-    #[test]
-    fn test_decoding() {
         let key = get_key();
         let pubkey = decode_public_key_base64(key);
         assert_eq!(type_of(pubkey), "ed25519_dalek::public::PublicKey");
