@@ -60,8 +60,6 @@ export default async (browser) => {
         json.server.subnet.v6.slice(0, -1);
         json.server.subnet.v4.slice(0, -1);
         json.network.dns.ignoredZones = ["fritz.box", "home", "lan", "local"];
-      }
-      if (json.version < "2.6.0") {
         json.network.dns.adblock = true;
       }
 
