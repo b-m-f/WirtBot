@@ -5,7 +5,6 @@ use ed25519_dalek::{Digest, PublicKey, Sha512};
 use serde::{Deserialize, Serialize};
 use std::convert::Infallible;
 use std::env;
-use std::error::Error;
 use warp::http::StatusCode;
 use warp::{reject, Filter, Rejection, Reply};
 
@@ -16,22 +15,11 @@ const DEFAULT_PORT: &str = "3030";
 const HOST: &str = "HOST";
 const DEFAULT_HOST: &str = "0.0.0.0";
 const ALLOWED_ORIGIN: &str = "ALLOWED_ORIGIN";
-const MANAGED_DNS_FEATURE_FLAG: &str = "MANAGED_DNS_ENABLED";
 const MANAGED_DNS_DEVICE_FILE_VAR: &str = "MANAGED_DNS_DEVICE_FILE";
 // CoreDNS is the DNS server that is being used
 const DEFAULT_DEVICES_FILE: &str = "/etc/coredns/Corefile";
 const CONFIG_PATH: &str = "CONFIG_PATH";
 const DEFAULT_CONFIG_PATH: &str = "/etc/wireguard/server.conf";
-
-fn dns_enabled() -> bool {
-    match env::var(MANAGED_DNS_FEATURE_FLAG) {
-        Ok(val) => match val.as_str() {
-            "1" | "true" => true,
-            _ => false,
-        },
-        _ => false,
-    }
-}
 
 fn get_config_file_path() -> &'static str {
     let s = String::from(env::var(CONFIG_PATH).unwrap_or(DEFAULT_CONFIG_PATH.into()));
@@ -109,7 +97,7 @@ async fn handle_rejection(err: Rejection) -> Result<impl Reply, Infallible> {
 fn verify_signature(message: Message, public_key: PublicKey) -> Result<String, warp::Rejection> {
     let signature = match crypto::decode_signature_base64(message.signature) {
         Ok(sig) => sig,
-        Err(e) => return Err(reject::custom(IncorrectSignature)),
+        Err(_) => return Err(reject::custom(IncorrectSignature)),
     };
     let message_as_bytes = message.message.as_bytes();
     let mut prehashed: Sha512 = Sha512::default();
@@ -124,7 +112,7 @@ fn verify_signature(message: Message, public_key: PublicKey) -> Result<String, w
     }
 }
 
-fn update<'a>(
+fn update(
     public_key: PublicKey,
     config_path: &'static str,
 ) -> impl Filter<Extract = (String,), Error = warp::Rejection> + Copy {
@@ -168,10 +156,10 @@ fn update_device_dns_entries(
                 }
             }
         })
-        .map(move |_| format!("Updated {} with new devices", dns_path))
+        .map(move |_| format!("Config updated"))
 }
 
-fn routes_with_dns(
+fn routes(
     public_key: PublicKey,
     allowed_origin: &String,
     config_path: &'static str,
@@ -192,25 +180,6 @@ fn routes_with_dns(
         .or(update_options)
         .or(update_device_dns_entries(public_key, dns_path))
         .or(update_dns_options)
-        .with(log)
-        .with(cors)
-        .recover(handle_rejection);
-}
-
-fn routes_without_dns(
-    public_key: PublicKey,
-    allowed_origin: &String,
-    config_path: &'static str,
-) -> impl warp::Filter<Extract = impl warp::Reply, Error = std::convert::Infallible> + Clone {
-    let log = warp::log("wirt::api");
-    let cors = warp::cors()
-        .allow_origin(&allowed_origin[..])
-        .allow_methods(vec!["POST"])
-        .allow_header("content-type");
-
-    let update_options = warp::options().and(warp::path("update")).map(warp::reply);
-    return update(public_key, config_path)
-        .or(update_options)
         .with(log)
         .with(cors)
         .recover(handle_rejection);
@@ -245,8 +214,7 @@ pub async fn start_api() {
     let config_path = get_config_file_path();
     let dns_path = get_dns_file_path();
 
-    let routes_with_dns = routes_with_dns(public_key, &allowed_origin, config_path, dns_path);
-    let routes_without_dns = routes_without_dns(public_key, &allowed_origin, config_path);
+    let routes = routes(public_key, &allowed_origin, config_path, dns_path);
 
     let host: [u8; 4] = [host[0], host[1], host[2], host[3]];
 
@@ -254,40 +222,22 @@ pub async fn start_api() {
         Ok(cert_path) => match env::var(SSL_KEY) {
             Ok(key_path) => {
                 info! {"Running server in HTTPS mode with certificate: {} and key: {}", cert_path, key_path};
-                match dns_enabled() {
-                    true => {
-                        warp::serve(routes_with_dns)
-                            .tls()
-                            .cert_path(cert_path)
-                            .key_path(key_path)
-                            .run((host, port))
-                            .await
-                    }
-                    false => {
-                        warp::serve(routes_without_dns)
-                            .tls()
-                            .cert_path(cert_path)
-                            .key_path(key_path)
-                            .run((host, port))
-                            .await
-                    }
-                }
+                warp::serve(routes)
+                    .tls()
+                    .cert_path(cert_path)
+                    .key_path(key_path)
+                    .run((host, port))
+                    .await;
             }
             Err(_e) => {
                 info! {"Running server in HTTP mode"};
-                match dns_enabled() {
-                    true => warp::serve(routes_with_dns).run((host, port)).await,
-                    false => warp::serve(routes_without_dns).run((host, port)).await,
-                }
+                warp::serve(routes).run((host, port)).await;
             }
         },
 
         Err(_e) => {
             info! {"Running server in HTTP mode"};
-            match dns_enabled() {
-                true => warp::serve(routes_with_dns).run((host, port)).await,
-                false => warp::serve(routes_without_dns).run((host, port)).await,
-            }
+            warp::serve(routes).run((host, port)).await;
         }
     }
 }
@@ -296,8 +246,6 @@ pub async fn start_api() {
 mod test {
     use super::*;
     use ed25519_dalek::Keypair;
-    use ed25519_dalek::Signature;
-    use ed25519_dalek::Signer;
     use rand::rngs::OsRng;
     use serde_json::json;
 
@@ -307,7 +255,7 @@ mod test {
         let keypair: Keypair = Keypair::generate(&mut csprng);
         let allowed_origin = "http://test";
 
-        let filter = routes(keypair.public, allowed_origin.into(), "", "");
+        let filter = routes(keypair.public, &allowed_origin.into(), "", "");
         let response = warp::test::request().path("/update").reply(&filter).await;
         assert_eq!(response.status(), 405);
         assert_eq!(response.body(), "{\"code\":405,\"message\":\"CORS Error\"}");
@@ -323,12 +271,12 @@ mod test {
         );
     }
     #[tokio::test]
-    async fn test_wrong_signature_fails() {
+    async fn test_update_wrong_signature_fails() {
         let mut csprng = OsRng {};
         let keypair: Keypair = Keypair::generate(&mut csprng);
         let allowed_origin = "http://test";
 
-        let filter = routes(keypair.public, allowed_origin.into(), "", "");
+        let filter = routes(keypair.public, &allowed_origin.into(), "", "");
         let msg = "message";
 
         let message = Message {
@@ -352,13 +300,13 @@ mod test {
         );
     }
     #[tokio::test]
-    async fn test_no_permissions() {
+    async fn test_update_no_permissions() {
         let mut csprng = OsRng {};
         let keypair: Keypair = Keypair::generate(&mut csprng);
         let allowed_origin = "http://test";
         let config_path = "/root/test";
 
-        let filter = routes(keypair.public, allowed_origin.into(), config_path, "");
+        let filter = routes(keypair.public, &allowed_origin.into(), config_path, "");
 
         let msg = "message";
         let mut prehashed: Sha512 = Sha512::default();
@@ -397,7 +345,7 @@ mod test {
         let allowed_origin = "http://test";
         let config_path = "./test-config";
 
-        let filter = routes(keypair.public, allowed_origin.into(), config_path, "");
+        let filter = routes(keypair.public, &allowed_origin.into(), config_path, "");
 
         let msg = "message";
         let mut prehashed: Sha512 = Sha512::default();
@@ -425,5 +373,109 @@ mod test {
         assert_eq!(response.status(), 200);
         assert_eq!(response.body(), "Config updated");
         std::fs::remove_file(config_path).unwrap();
+    }
+    #[tokio::test]
+    async fn test_dns_wrong_signature_fails() {
+        let mut csprng = OsRng {};
+        let keypair: Keypair = Keypair::generate(&mut csprng);
+        let allowed_origin = "http://test";
+
+        let filter = routes(keypair.public, &allowed_origin.into(), "", "");
+        let msg = "message";
+
+        let message = Message {
+            message: msg.to_string(),
+            signature: "test".into(),
+        };
+
+        let payload = json!(message);
+        std::println!("{:?}", payload.to_string());
+        let response = warp::test::request()
+            .method("POST")
+            .body(payload.to_string())
+            .path("/update-device-dns-entries")
+            .reply(&filter)
+            .await;
+
+        assert_eq!(response.status(), 401);
+        assert_eq!(
+            response.body(),
+            "{\"code\":401,\"message\":\"Not authorized to update configuration\"}"
+        );
+    }
+    #[tokio::test]
+    async fn test_dns_no_permissions() {
+        let mut csprng = OsRng {};
+        let keypair: Keypair = Keypair::generate(&mut csprng);
+        let allowed_origin = "http://test";
+        let dns_path = "/root/test";
+
+        let filter = routes(keypair.public, &allowed_origin.into(), "", dns_path);
+
+        let msg = "message";
+        let mut prehashed: Sha512 = Sha512::default();
+        prehashed.update(msg.as_bytes());
+
+        let signature = keypair
+            .sign_prehashed(prehashed, Some(b"wirtbot"))
+            .unwrap()
+            .to_bytes()
+            .to_vec();
+
+        let message = Message {
+            message: msg.to_string(),
+            signature: base64::encode(signature),
+        };
+
+        let payload = json!(message);
+        let response = warp::test::request()
+            .method("POST")
+            .body(payload.to_string())
+            .path("/update-device-dns-entries")
+            .reply(&filter)
+            .await;
+
+        assert_eq!(response.status(), 500);
+        assert_eq!(
+            response.body(),
+            "{\"code\":500,\"message\":\"Could not write config. Please check the server logs\"}"
+        );
+        env::remove_var(ALLOWED_ORIGIN);
+    }
+    #[tokio::test]
+    async fn test_dns_correct_update() {
+        let mut csprng = OsRng {};
+        let keypair: Keypair = Keypair::generate(&mut csprng);
+        let allowed_origin = "http://test";
+        let dns_path = "./test-config-dns";
+
+        let filter = routes(keypair.public, &allowed_origin.into(), "", dns_path);
+
+        let msg = "message";
+        let mut prehashed: Sha512 = Sha512::default();
+        prehashed.update(msg.as_bytes());
+
+        let signature = keypair
+            .sign_prehashed(prehashed, Some(b"wirtbot"))
+            .unwrap()
+            .to_bytes()
+            .to_vec();
+
+        let message = Message {
+            message: msg.to_string(),
+            signature: base64::encode(signature),
+        };
+
+        let payload = json!(message);
+        let response = warp::test::request()
+            .method("POST")
+            .body(payload.to_string())
+            .path("/update-device-dns-entries")
+            .reply(&filter)
+            .await;
+
+        assert_eq!(response.status(), 200);
+        assert_eq!(response.body(), "Config updated");
+        std::fs::remove_file(dns_path).unwrap();
     }
 }
