@@ -1,3 +1,8 @@
+## 2.6.0
+- Restructuring of Core code
+- Adds unit tests to Core and fixes a Bug where a wrong signature could have crashed the server
+- DNS is not optional anymore
+
 ## 2.5.0
 - Includes IPv6 subnet changing via UI
 - Possible to configure ignored DNS zones
