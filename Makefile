@@ -51,7 +51,8 @@ test-system:
 	sudo chown $$USER Build-Automation/System-Tests/compose/test-server.conf
 test-unit:
 	cd ./Website && npm run test && cd - && \
-	cd ./Interface && npm run test && cd -
+	cd ./Interface && npm run test && cd - && \
+	cd ./Core && cargo test
 
 test-unit-ci:
 	docker-compose -f Build-Automation/Unit-Tests/test.yml up --abort-on-container-exit --build --remove-orphans
