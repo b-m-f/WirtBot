@@ -25,6 +25,7 @@ pub fn write_device_file(devices: String) -> std::io::Result<()> {
     return std::fs::write(get_device_file_path(), devices.as_bytes())
 }
 
+
 #[cfg(test)]
 mod test {
     use super::*;
