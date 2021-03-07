@@ -107,22 +107,25 @@ export default {
       this.$store.dispatch("updateDNSTls", { tlsName: name, tls: true });
     },
     updateIgnoredZones(zones) {
-      this.$store.dispatch("updateDNSIgnoredZones", {
-        ignoredZones: zones.split(",").filter((zones) => zones !== ""),
-      });
+      this.$store.dispatch(
+        "updateDNSIgnoredZones",
+        zones.split(",").filter((zones) => zones !== "")
+      );
     },
     updateAdblock(active) {
-      this.$store.dispatch("updateDNSAdblock", { adblock: active });
+      this.$store.dispatch("updateDNSAdblock", active);
     },
     updateBlockLists(lists) {
-      this.$store.dispatch("updateDNSBlockLists", {
-        blockLists: lists.split(",").filter((list) => list !== ""),
-      });
+      this.$store.dispatch(
+        "updateDNSBlockLists",
+        lists.split(",").filter((list) => list !== "")
+      );
     },
     updateBlockHosts(hosts) {
-      this.$store.dispatch("updateDNSBlockHosts", {
-        blockHosts: hosts.split(",").filter((host) => host !== ""),
-      });
+      this.$store.dispatch(
+        "updateDNSBlockHosts",
+        hosts.split(",").filter((host) => host !== "")
+      );
     },
     validIgnoredZones(zones) {
       try {

@@ -186,7 +186,7 @@ const store = new Vuex.Store({
       commit("updateDNS", { ip: { v4, v6 } });
       await dispatch("updateDNS");
     },
-    async updateDNSIgnoredZones({ commit, dispatch }, { ignoredZones }) {
+    async updateDNSIgnoredZones({ commit, dispatch }, ignoredZones) {
       commit("updateDNS", { ignoredZones });
       await dispatch("updateDNS");
     },
@@ -197,15 +197,15 @@ const store = new Vuex.Store({
       }
       await dispatch("updateDNS");
     },
-    async updateDNSAdblock({ commit, dispatch }, { adblock }) {
+    async updateDNSAdblock({ commit, dispatch }, adblock) {
       commit("updateDNS", { adblock });
       await dispatch("updateDNS");
     },
-    async updateDNSBlockLists({ commit, dispatch }, { blockLists }) {
+    async updateDNSBlockLists({ commit, dispatch }, blockLists) {
       commit("updateDNS", { blockLists });
       await dispatch("updateDNS");
     },
-    async updateDNSBlockHosts({ commit, dispatch }, { blockHosts }) {
+    async updateDNSBlockHosts({ commit, dispatch }, blockHosts) {
       commit("updateDNS", { blockHosts });
       await dispatch("updateDNS");
     },
@@ -397,6 +397,9 @@ const store = new Vuex.Store({
       await dispatch("updateDNSName", newState.network.dns.name);
       await dispatch("updateDNSTls", newState.network.dns);
       await dispatch("updateDNSIp", newState.network.dns.ip);
+      await dispatch("updateDNSAdblock", newState.network.dns.adblock);
+      await dispatch("updateDNSBlockLists", newState.network.dns.blockLists);
+      await dispatch("updateDNSBlockHosts", newState.network.dns.blockHosts);
       await dispatch(
         "updateDNSIgnoredZones",
         newState.network.dns.ignoredZones
