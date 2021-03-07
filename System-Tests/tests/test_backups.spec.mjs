@@ -27,6 +27,7 @@ export default async (browser) => {
       "./backups/1.4.5.json",
       "./backups/2.3.3.json",
       "./backups/2.3.4.json",
+      "./backups/2.6.0.json",
     ];
 
     for (const backup of backups) {
