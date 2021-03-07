@@ -79,6 +79,24 @@ async fn handle_rejection(err: Rejection) -> Result<impl Reply, Infallible> {
     Ok(warp::reply::with_status(json, code))
 }
 
+fn verify_signature(message: Message, public_key: PublicKey) -> Result<String, warp::Rejection> {
+    let signature = match crypto::decode_signature_base64(message.signature) {
+        Ok(sig) => sig,
+        Err(e) => return Err(reject::custom(IncorrectSignature)),
+    };
+    let message_as_bytes = message.message.as_bytes();
+    let mut prehashed: Sha512 = Sha512::default();
+    prehashed.update(message_as_bytes);
+    if public_key
+        .verify_prehashed(prehashed, Some(b"wirtbot"), &signature)
+        .is_ok()
+    {
+        Ok(message.message)
+    } else {
+        Err(reject::custom(IncorrectSignature))
+    }
+}
+
 fn update(
     public_key: PublicKey,
 ) -> impl Filter<Extract = (String,), Error = warp::Rejection> + Copy {
@@ -87,18 +105,7 @@ fn update(
         .and(warp::body::json())
         .and(warp::any().map(move || public_key.clone()))
         .and_then(|message: Message, public_key: PublicKey| async move {
-            let signature = crypto::decode_signature_base64(message.signature);
-            let message_as_bytes = message.message.as_bytes();
-            let mut prehashed: Sha512 = Sha512::default();
-            prehashed.update(message_as_bytes);
-            if public_key
-                .verify_prehashed(prehashed, Some(b"wirtbot"), &signature)
-                .is_ok()
-            {
-                Ok(message.message)
-            } else {
-                Err(reject::custom(IncorrectSignature))
-            }
+            return verify_signature(message, public_key);
         })
         .and_then(|config: String| async {
             match wireguard_config::write_config_file(config) {
@@ -128,18 +135,7 @@ fn update_device_dns_entries(
         })
         .and(warp::any().map(move || public_key.clone()))
         .and_then(|message: Message, public_key: PublicKey| async move {
-            let signature = crypto::decode_signature_base64(message.signature);
-            let message_as_bytes = message.message.as_bytes();
-            let mut prehashed: Sha512 = Sha512::default();
-            prehashed.update(message_as_bytes);
-            if public_key
-                .verify_prehashed(prehashed, Some(b"wirtbot"), &signature)
-                .is_ok()
-            {
-                Ok(message.message)
-            } else {
-                Err(reject::custom(IncorrectSignature))
-            }
+            return verify_signature(message, public_key);
         })
         .and_then(|device_list: String| async {
             match managed_dns::write_device_file(device_list) {
@@ -188,10 +184,16 @@ fn routes(
 pub async fn start_api() {
     let public_key_base64 = crypto::get_key();
     info!("Loaded public key: {}", public_key_base64);
-    let public_key = crypto::decode_public_key_base64(public_key_base64);
+    let public_key = match crypto::decode_public_key_base64(public_key_base64) {
+        Ok(key) => key,
+        Err(e) => panic!(e),
+    };
 
     let port: String = env::var(PORT).unwrap_or(DEFAULT_PORT.into());
-    let port: u16 = port.parse().unwrap();
+    let port: u16 = match port.parse() {
+        Ok(port) => port,
+        Err(e) => panic!(e),
+    };
     let host: Vec<u8> = env::var(HOST)
         .unwrap_or(DEFAULT_HOST.into())
         .split(".")
