@@ -1,3 +1,10 @@
+## 2.5.0
+- Includes IPv6 subnet changing via UI
+- Possible to configure ignored DNS zones
+- Adds Optional Ad Blocking
+- Serves WireGuard and CoreDNS metrics
+- Adds testing and improvements on store logic
+
 ## 2.4.0
 - New Make task to spawn local setup, that is not dockerized to speed up writing tests
 - Removes all JS detection of mobile screen size and uses media-queries only
