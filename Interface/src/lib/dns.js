@@ -90,6 +90,7 @@ export function generateDNSFile(server, clients, network) {
 
   let masterFile = `. {
     reload
+    prometheus 0.0.0.0:9153
     ${forwardConfig()}
     cache 30
 }
@@ -104,6 +105,7 @@ ${network.dns.name} {
   if (network.dns.adblock) {
     masterFile = `. {
     reload
+    prometheus 0.0.0.0:9153
     ${adblock()}
     ${forwardConfig()}
     cache 30

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+prometheus_wireguard_exporter -n /etc/wireguard/server.conf -i server
+
+
