@@ -1,12 +1,10 @@
 use base64::{decode, encode};
-use ed25519_dalek::{
-     Keypair, PublicKey,  Signature, PUBLIC_KEY_LENGTH, SIGNATURE_LENGTH,
-};
+use ed25519_dalek::{Keypair, PublicKey, Signature, PUBLIC_KEY_LENGTH, SIGNATURE_LENGTH};
 use rand::rngs::OsRng;
-use std::env;
 use serde_json::json;
+use std::env;
 
-const PUBLIC_KEY :&str = "PUBLIC_KEY";
+const PUBLIC_KEY: &str = "PUBLIC_KEY";
 
 pub fn decode_public_key_base64(public_key_base64: String) -> PublicKey {
     let mut raw_public_key_buffer = [0; PUBLIC_KEY_LENGTH];
@@ -44,5 +42,46 @@ pub fn get_key() -> String {
             std::println!("{}", encode(new_conf.to_string()));
             return encode(keypair.public.to_bytes());
         }
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    use ed25519_dalek::Signer;
+    use std::any::type_name;
+
+    fn type_of<T>(_: T) -> &'static str {
+        type_name::<T>()
+    }
+
+    #[test]
+    fn get_key_from_env_and_without_env() {
+        env::set_var(PUBLIC_KEY, "test");
+        assert_eq!(get_key(), "test");
+        env::remove_var(PUBLIC_KEY);
+        let key = get_key();
+        let bytes = decode(&key).unwrap();
+        assert_eq!(bytes.len(), PUBLIC_KEY_LENGTH);
+        PublicKey::from_bytes(&bytes).unwrap();
+    }
+
+    #[test]
+    fn test_decoding() {
+        let key = get_key();
+        let pubkey = decode_public_key_base64(key);
+        assert_eq!(type_of(pubkey), "ed25519_dalek::public::PublicKey");
+    }
+
+    #[test]
+    fn test_write_devices_replaces_previous_content() {
+        let mut csprng = OsRng {};
+        let keypair: Keypair = Keypair::generate(&mut csprng);
+        let message: &[u8] = b"test";
+        let signature: Signature = keypair.sign(message);
+        let encoded_signature = encode(signature);
+        let decoded_signature = decode_signature_base64(encoded_signature);
+        assert_eq!(decoded_signature, signature);
     }
 }
