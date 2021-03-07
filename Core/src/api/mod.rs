@@ -16,6 +16,33 @@ const DEFAULT_PORT: &str = "3030";
 const HOST: &str = "HOST";
 const DEFAULT_HOST: &str = "0.0.0.0";
 const ALLOWED_ORIGIN: &str = "ALLOWED_ORIGIN";
+const MANAGED_DNS_FEATURE_FLAG: &str = "MANAGED_DNS_ENABLED";
+const MANAGED_DNS_DEVICE_FILE_VAR: &str = "MANAGED_DNS_DEVICE_FILE";
+// CoreDNS is the DNS server that is being used
+const DEFAULT_DEVICES_FILE: &str = "/etc/coredns/Corefile";
+const CONFIG_PATH: &str = "CONFIG_PATH";
+const DEFAULT_CONFIG_PATH: &str = "/etc/wireguard/server.conf";
+
+fn dns_enabled() -> bool {
+    match env::var(MANAGED_DNS_FEATURE_FLAG) {
+        Ok(val) => match val.as_str() {
+            "1" | "true" => true,
+            _ => false,
+        },
+        _ => false,
+    }
+}
+
+fn get_config_file_path() -> &'static str {
+    let s = String::from(env::var(CONFIG_PATH).unwrap_or(DEFAULT_CONFIG_PATH.into()));
+    Box::leak(s.into_boxed_str())
+}
+
+fn get_dns_file_path() -> &'static str {
+    let s =
+        String::from(env::var(MANAGED_DNS_DEVICE_FILE_VAR).unwrap_or(DEFAULT_DEVICES_FILE.into()));
+    Box::leak(s.into_boxed_str())
+}
 
 #[derive(Debug)]
 struct IncorrectSignature;
@@ -97,8 +124,9 @@ fn verify_signature(message: Message, public_key: PublicKey) -> Result<String, w
     }
 }
 
-fn update(
+fn update<'a>(
     public_key: PublicKey,
+    config_path: &'static str,
 ) -> impl Filter<Extract = (String,), Error = warp::Rejection> + Copy {
     warp::post()
         .and(warp::path("update"))
@@ -107,8 +135,8 @@ fn update(
         .and_then(|message: Message, public_key: PublicKey| async move {
             return verify_signature(message, public_key);
         })
-        .and_then(|config: String| async {
-            match wireguard_config::write_config_file(config) {
+        .and_then(move |config: String| async move {
+            match wireguard_config::write_config_file(config, config_path.to_string()) {
                 Ok(_) => return Ok(()),
                 Err(e) => {
                     error!("Error when writing config file: {}", e);
@@ -121,24 +149,18 @@ fn update(
 
 fn update_device_dns_entries(
     public_key: PublicKey,
+    dns_path: &'static str,
 ) -> impl Filter<Extract = (String,), Error = warp::Rejection> + Copy {
     warp::post()
         .and(warp::path("update-device-dns-entries"))
         .and(warp::body::json())
         // Drop out early if the MANAGED_DNS feature is not enabled
-        .and_then(|message: Message| async move {
-            if managed_dns::enabled() {
-                Ok(message)
-            } else {
-                Err(reject::custom(FeatureDisabled))
-            }
-        })
         .and(warp::any().map(move || public_key.clone()))
         .and_then(|message: Message, public_key: PublicKey| async move {
             return verify_signature(message, public_key);
         })
-        .and_then(|device_list: String| async {
-            match managed_dns::write_device_file(device_list) {
+        .and_then(move |device_list: String| async move {
+            match managed_dns::write_device_file(device_list, dns_path.to_string()) {
                 Ok(_) => return Ok(()),
                 Err(e) => {
                     error!("{}", e);
@@ -146,22 +168,16 @@ fn update_device_dns_entries(
                 }
             }
         })
-        .map(|_| {
-            format!(
-                "Updated {} with new devices",
-                managed_dns::get_device_file_path()
-            )
-        })
+        .map(move |_| format!("Updated {} with new devices", dns_path))
 }
 
 fn routes(
     public_key: PublicKey,
+    allowed_origin: String,
+    config_path: &'static str,
+    dns_path: &'static str,
 ) -> impl warp::Filter<Extract = impl warp::Reply, Error = std::convert::Infallible> + Clone {
     let log = warp::log("wirt::api");
-    let allowed_origin: String = match env::var(ALLOWED_ORIGIN) {
-        Ok(env) => env,
-        Err(_) => panic!("Environment variable {} not specified", ALLOWED_ORIGIN),
-    };
     let cors = warp::cors()
         .allow_origin(&allowed_origin[..])
         .allow_methods(vec!["POST"])
@@ -172,9 +188,9 @@ fn routes(
         .and(warp::path("update-device-dns-entries"))
         .map(warp::reply);
 
-    return update(public_key)
+    return update(public_key, config_path)
         .or(update_options)
-        .or(update_device_dns_entries(public_key))
+        .or(update_device_dns_entries(public_key, dns_path))
         .or(update_dns_options)
         .with(log)
         .with(cors)
@@ -202,8 +218,15 @@ pub async fn start_api() {
         .map(|value| value.to_string())
         .map(|value| value.parse().expect("Invalid Hostname specified"))
         .collect();
+    let allowed_origin: String = match env::var(ALLOWED_ORIGIN) {
+        Ok(env) => env,
+        Err(_) => panic!("Environment variable {} not specified", ALLOWED_ORIGIN),
+    };
 
-    let routes = routes(public_key);
+    let config_path = get_config_file_path();
+    let dns_path = get_dns_file_path();
+
+    let routes = routes(public_key, allowed_origin, config_path, dns_path);
 
     let host: [u8; 4] = [host[0], host[1], host[2], host[3]];
 
@@ -244,9 +267,9 @@ mod test {
     async fn test_failures() {
         let mut csprng = OsRng {};
         let keypair: Keypair = Keypair::generate(&mut csprng);
-        env::set_var(ALLOWED_ORIGIN, "http://test");
+        let allowed_origin = "http://test";
 
-        let filter = routes(keypair.public);
+        let filter = routes(keypair.public, allowed_origin.into(), "", "");
         let response = warp::test::request().path("/update").reply(&filter).await;
         assert_eq!(response.status(), 405);
         assert_eq!(response.body(), "{\"code\":405,\"message\":\"CORS Error\"}");
@@ -265,9 +288,9 @@ mod test {
     async fn test_wrong_signature_fails() {
         let mut csprng = OsRng {};
         let keypair: Keypair = Keypair::generate(&mut csprng);
-        env::set_var(ALLOWED_ORIGIN, "http://test");
+        let allowed_origin = "http://test";
 
-        let filter = routes(keypair.public);
+        let filter = routes(keypair.public, allowed_origin.into(), "", "");
         let msg = "message";
 
         let message = Message {
@@ -291,12 +314,53 @@ mod test {
         );
     }
     #[tokio::test]
+    async fn test_no_permissions() {
+        let mut csprng = OsRng {};
+        let keypair: Keypair = Keypair::generate(&mut csprng);
+        let allowed_origin = "http://test";
+        let config_path = "/root/test";
+
+        let filter = routes(keypair.public, allowed_origin.into(), config_path, "");
+
+        let msg = "message";
+        let mut prehashed: Sha512 = Sha512::default();
+        prehashed.update(msg.as_bytes());
+
+        let signature = keypair
+            .sign_prehashed(prehashed, Some(b"wirtbot"))
+            .unwrap()
+            .to_bytes()
+            .to_vec();
+
+        let message = Message {
+            message: msg.to_string(),
+            signature: base64::encode(signature),
+        };
+
+        let payload = json!(message);
+        let response = warp::test::request()
+            .method("POST")
+            .body(payload.to_string())
+            .path("/update")
+            .reply(&filter)
+            .await;
+
+        assert_eq!(response.status(), 500);
+        assert_eq!(
+            response.body(),
+            "{\"code\":500,\"message\":\"Could not write config. Please check the server logs\"}"
+        );
+        env::remove_var(ALLOWED_ORIGIN);
+    }
+    #[tokio::test]
     async fn test_correct_update() {
         let mut csprng = OsRng {};
         let keypair: Keypair = Keypair::generate(&mut csprng);
-        env::set_var(ALLOWED_ORIGIN, "http://test");
+        let allowed_origin = "http://test";
+        let config_path = "./test-config";
 
-        let filter = routes(keypair.public);
+        let filter = routes(keypair.public, allowed_origin.into(), config_path, "");
+
         let msg = "message";
         let mut prehashed: Sha512 = Sha512::default();
         prehashed.update(msg.as_bytes());
@@ -322,5 +386,6 @@ mod test {
 
         assert_eq!(response.status(), 200);
         assert_eq!(response.body(), "Config updated");
+        std::fs::remove_file(config_path).unwrap();
     }
 }
