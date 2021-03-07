@@ -144,7 +144,7 @@ export default {
           if (list === "") {
             return false;
           }
-          if (!list.contains("http")) {
+          if (!list.includes("http")) {
             return false;
           }
         }

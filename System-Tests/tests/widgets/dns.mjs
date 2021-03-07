@@ -79,12 +79,6 @@ export const setIgnoredZones = async (page, zones) => {
   await input.fill(zones);
 };
 
-export const setIgnoredZones = async (page, zones) => {
-  const dns = await dnsWidget(page);
-  const input = await dns.$("textarea[name='ignoredZones']");
-  await input.fill(zones);
-};
-
 export const setBlockLists = async (page, lists) => {
   const dns = await dnsWidget(page);
   const input = await dns.$("textarea[name='blockLists']");
