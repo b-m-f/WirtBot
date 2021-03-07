@@ -1,20 +1,14 @@
-use std::io::Result as IOResult;
-use std::io::prelude::*;
 use std::fs::OpenOptions;
-use std::env;
+use std::io::prelude::*;
+use std::io::Result as IOResult;
 
-const CONFIG_PATH :&str = "MANAGED_DNS_ENABLED";
-const DEFAULT_CONFIG_PATH :&str = "/etc/wireguard/server.conf";
-
-pub fn write_config_file(config: String) -> IOResult<()> {
-    let file_name: String = env::var(CONFIG_PATH).unwrap_or(DEFAULT_CONFIG_PATH.into());
-
+pub fn write_config_file(config: String, path: String) -> IOResult<()> {
     match OpenOptions::new()
         .read(true)
         .write(true)
         .truncate(true)
         .create(true)
-        .open(file_name)
+        .open(path)
     {
         Ok(mut file) => {
             file.write_all(config.as_bytes())?;
