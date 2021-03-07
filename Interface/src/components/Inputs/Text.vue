@@ -77,4 +77,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+textarea {
+  width: 13rem;
+  height: 5rem;
+}
 </style>
