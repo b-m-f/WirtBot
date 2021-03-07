@@ -17,6 +17,19 @@ use pretty_env_logger;
 
 mod managed_dns;
 
+const CONFIG_PATH :&str = "MANAGED_DNS_ENABLED";
+const DEFAULT_CONFIG_PATH :&str = "/etc/wireguard/server.conf";
+const PUBLIC_KEY :&str = "PUBLIC_KEY";
+const SSL_PEM_CERT :&str = "SSL_PEM_CERT";
+const SSL_KEY :&str = "SSL_KEY";
+const PORT :&str = "PORT";
+const DEFAULT_PORT :&str = "3030";
+const HOST :&str = "HOST";
+const DEFAULT_HOST :&str = "0.0.0.0";
+const ALLOWED_ORIGIN :&str = "ALLOWED_ORIGIN";
+
+
+
 #[macro_use]
 extern crate log;
 
@@ -115,8 +128,7 @@ fn decode_signature_base64(signature_base64: String) -> Signature {
 }
 
 fn get_key() -> String {
-    let key = "PUBLIC_KEY";
-    match env::var(key) {
+    match env::var(PUBLIC_KEY) {
         Ok(val) => return val,
         Err(_) => {
             let mut csprng = OsRng {};
@@ -141,7 +153,7 @@ fn ok() -> impl Filter<Extract = (String,), Error = warp::Rejection> + Copy {
 }
 
 fn write_config_file(config: String) -> IOResult<()> {
-    let file_name: String = env::var("CONFIG_PATH").unwrap_or("/etc/wireguard/server.conf".into());
+    let file_name: String = env::var(CONFIG_PATH).unwrap_or(DEFAULT_CONFIG_PATH.into());
 
     match OpenOptions::new()
         .read(true)
@@ -248,7 +260,7 @@ async fn main() {
     info!("Loaded public key: {}", public_key_base64);
     let public_key = decode_public_key_base64(public_key_base64);
 
-    let allowed_origin: String = env::var("ALLOWED_ORIGIN").unwrap();
+    let allowed_origin: String = env::var(ALLOWED_ORIGIN).unwrap();
     let cors = warp::cors()
         .allow_origin(&allowed_origin[..])
         .allow_methods(vec!["POST"])
@@ -268,10 +280,10 @@ async fn main() {
         .with(cors)
         .recover(handle_rejection);
 
-    let port: String = env::var("PORT").unwrap_or("3030".into());
+    let port: String = env::var(PORT).unwrap_or(DEFAULT_PORT.into());
     let port: u16 = port.parse().unwrap();
-    let host: Vec<u8> = env::var("HOST")
-        .unwrap_or("0.0.0.0".into())
+    let host: Vec<u8> = env::var(HOST)
+        .unwrap_or(DEFAULT_HOST.into())
         .split(".")
         .collect::<Vec<&str>>()
         .iter()
@@ -281,8 +293,8 @@ async fn main() {
 
     let host: [u8; 4] = [host[0], host[1], host[2], host[3]];
 
-    match env::var("SSL_PEM_CERT") {
-        Ok(cert_path) => match env::var("SSL_KEY") {
+    match env::var(SSL_PEM_CERT) {
+        Ok(cert_path) => match env::var(SSL_KEY) {
             Ok(key_path) => {
                 info! {"Running server in HTTPS mode with certificate: {} and key: {}", cert_path, key_path};
                 warp::serve(routes)
