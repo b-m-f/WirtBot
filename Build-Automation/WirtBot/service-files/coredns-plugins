@@ -1,0 +1,14 @@
+metadata:metadata
+cancel:cancel
+tls:tls
+reload:reload
+debug:debug
+ads:ads
+health:health
+prometheus:metrics
+errors:errors
+log:log
+cache:cache
+hosts:hosts
+forward:forward
+whoami:whoami
