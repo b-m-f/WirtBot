@@ -1,3 +1,4 @@
 . {
     reload 10s
+    prometheus
 }

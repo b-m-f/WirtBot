@@ -50,6 +50,9 @@ COPY Core/Cargo.lock Cargo.lock
 
 RUN cargo build --release --target-dir /builder/artifact
 
+RUN cargo install prometheus_wireguard_exporter
+RUN which prometheus_wireguard_exporter
+
 ### Build necessary tooling
 FROM debian:buster-slim as wireguard
 ENV DEBIAN_FRONTEND noninteractive
@@ -63,6 +66,8 @@ ENV WG_TOOLS="wireguard-tools-1.0.20200827"
 COPY Build-Automation/WirtBot/$WG_TOOLS.tar.xz ./$WG_TOOLS.tar.xz
 RUN tar xf $WG_TOOLS.tar.xz
 RUN cd $WG_TOOLS/src && make && mv wg / && mv wg-quick/linux.bash /wg-quick && cd /
+
+
 
 
 # Compile CoreDNS with Ads plugin from https://github.com/c-mueller/ads
@@ -157,11 +162,18 @@ COPY Core/wireguard-restarter.sh /usr/bin/wireguard-restarter
 RUN chmod +x /usr/bin/wireguard-restarter
 COPY Build-Automation/WirtBot/service-files/wireguard-restarter /etc/services.d/wireguard-restarter/run
 
+## WireGuard metrics
+COPY --from=builder /usr/local/cargo/bin/prometheus_wireguard_exporter .
+RUN chmod +x prometheus_wireguard_exporter && mv prometheus_wireguard_exporter /usr/bin
+COPY Build-Automation/WirtBot/service-files/wireguard-metrics /etc/services.d/wireguard-metrics/run
+
 
 # Clean up script to shut down WireGuard interface on container exit
 COPY Build-Automation/WirtBot/service-files/clean-up /etc/cont-finish.d/clean
 
 EXPOSE 3030
+EXPOSE 9586
+EXPOSE 9153
 EXPOSE 80
 EXPOSE 53
 
