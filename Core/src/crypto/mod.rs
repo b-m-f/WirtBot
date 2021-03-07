@@ -3,25 +3,70 @@ use ed25519_dalek::{Keypair, PublicKey, Signature, PUBLIC_KEY_LENGTH, SIGNATURE_
 use rand::rngs::OsRng;
 use serde_json::json;
 use std::env;
+use std::error::Error;
+use std::fmt;
 
 const PUBLIC_KEY: &str = "PUBLIC_KEY";
 
-pub fn decode_public_key_base64(public_key_base64: String) -> PublicKey {
-    let mut raw_public_key_buffer = [0; PUBLIC_KEY_LENGTH];
-    let raw_public_key_vector = decode(&public_key_base64).unwrap();
-    let raw_public_key_bytes = &raw_public_key_vector[..raw_public_key_buffer.len()];
-    raw_public_key_buffer.copy_from_slice(raw_public_key_bytes);
-    let decoded_public_key = PublicKey::from_bytes(&raw_public_key_buffer).unwrap();
-    decoded_public_key
+/// Errors that can occur while decoding.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub enum DecodeError {
+    NotAPublicKey(String),
+    NotASignature(String),
 }
 
-pub fn decode_signature_base64(signature_base64: String) -> Signature {
+impl fmt::Display for DecodeError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match &*self {
+            DecodeError::NotAPublicKey(string) => {
+                write!(f, "{}", string)
+            }
+            DecodeError::NotASignature(string) => {
+                write!(f, "{}", string)
+            }
+        }
+    }
+}
+
+pub fn decode_public_key_base64(public_key_base64: String) -> Result<PublicKey, DecodeError> {
+    let mut raw_public_key_buffer = [0; PUBLIC_KEY_LENGTH];
+    let raw_public_key_vector = match decode(&public_key_base64) {
+        Ok(vec) => vec,
+        Err(e) => {
+            return Err(DecodeError::NotAPublicKey(
+                "Data provided was not a base64 encoded public key".into(),
+            ))
+        }
+    };
+    let raw_public_key_bytes = &raw_public_key_vector[..raw_public_key_buffer.len()];
+    raw_public_key_buffer.copy_from_slice(raw_public_key_bytes);
+    match PublicKey::from_bytes(&raw_public_key_buffer) {
+        Ok(key) => Ok(key),
+        Err(e) => Err(DecodeError::NotAPublicKey(
+            "Data provided was not a base64 encoded public key".into(),
+        )),
+    }
+}
+
+pub fn decode_signature_base64(signature_base64: String) -> Result<Signature, DecodeError> {
     let mut raw_signature_buffer = [0; SIGNATURE_LENGTH];
-    let raw_signature_vector = decode(&signature_base64).unwrap();
+    let raw_signature_vector = match decode(&signature_base64) {
+        Ok(vec) => vec,
+        Err(_) => {
+            return Err(DecodeError::NotASignature(
+                "Data provided was not a base64 encoded signature".into(),
+            ))
+        }
+    };
+    if raw_signature_vector.len() != SIGNATURE_LENGTH {
+        return Err(DecodeError::NotASignature(
+            "Data provided was not a base64 encoded signature".into(),
+        ));
+    }
     let raw_signature_bytes = &raw_signature_vector[..raw_signature_buffer.len()];
     raw_signature_buffer.copy_from_slice(raw_signature_bytes);
     let decoded_signature = Signature::new(raw_signature_buffer);
-    decoded_signature
+    Ok(decoded_signature)
 }
 
 pub fn get_key() -> String {
@@ -67,7 +112,7 @@ mod test {
         assert_eq!(bytes.len(), PUBLIC_KEY_LENGTH);
         PublicKey::from_bytes(&bytes).unwrap();
         let key = get_key();
-        let pubkey = decode_public_key_base64(key);
+        let pubkey = decode_public_key_base64(key).unwrap();
         assert_eq!(type_of(pubkey), "ed25519_dalek::public::PublicKey");
     }
 
@@ -78,7 +123,7 @@ mod test {
         let message: &[u8] = b"test";
         let signature: Signature = keypair.sign(message);
         let encoded_signature = encode(signature);
-        let decoded_signature = decode_signature_base64(encoded_signature);
+        let decoded_signature = decode_signature_base64(encoded_signature).unwrap();
         assert_eq!(decoded_signature, signature);
     }
 }
