@@ -3,7 +3,6 @@ use ed25519_dalek::{Keypair, PublicKey, Signature, PUBLIC_KEY_LENGTH, SIGNATURE_
 use rand::rngs::OsRng;
 use serde_json::json;
 use std::env;
-use std::error::Error;
 use std::fmt;
 
 const PUBLIC_KEY: &str = "PUBLIC_KEY";
@@ -32,7 +31,7 @@ pub fn decode_public_key_base64(public_key_base64: String) -> Result<PublicKey, 
     let mut raw_public_key_buffer = [0; PUBLIC_KEY_LENGTH];
     let raw_public_key_vector = match decode(&public_key_base64) {
         Ok(vec) => vec,
-        Err(e) => {
+        Err(_) => {
             return Err(DecodeError::NotAPublicKey(
                 "Data provided was not a base64 encoded public key".into(),
             ))
@@ -42,7 +41,7 @@ pub fn decode_public_key_base64(public_key_base64: String) -> Result<PublicKey, 
     raw_public_key_buffer.copy_from_slice(raw_public_key_bytes);
     match PublicKey::from_bytes(&raw_public_key_buffer) {
         Ok(key) => Ok(key),
-        Err(e) => Err(DecodeError::NotAPublicKey(
+        Err(_) => Err(DecodeError::NotAPublicKey(
             "Data provided was not a base64 encoded public key".into(),
         )),
     }
