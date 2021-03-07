@@ -171,9 +171,9 @@ fn update_device_dns_entries(
         .map(move |_| format!("Updated {} with new devices", dns_path))
 }
 
-fn routes(
+fn routes_with_dns(
     public_key: PublicKey,
-    allowed_origin: String,
+    allowed_origin: &String,
     config_path: &'static str,
     dns_path: &'static str,
 ) -> impl warp::Filter<Extract = impl warp::Reply, Error = std::convert::Infallible> + Clone {
@@ -192,6 +192,25 @@ fn routes(
         .or(update_options)
         .or(update_device_dns_entries(public_key, dns_path))
         .or(update_dns_options)
+        .with(log)
+        .with(cors)
+        .recover(handle_rejection);
+}
+
+fn routes_without_dns(
+    public_key: PublicKey,
+    allowed_origin: &String,
+    config_path: &'static str,
+) -> impl warp::Filter<Extract = impl warp::Reply, Error = std::convert::Infallible> + Clone {
+    let log = warp::log("wirt::api");
+    let cors = warp::cors()
+        .allow_origin(&allowed_origin[..])
+        .allow_methods(vec!["POST"])
+        .allow_header("content-type");
+
+    let update_options = warp::options().and(warp::path("update")).map(warp::reply);
+    return update(public_key, config_path)
+        .or(update_options)
         .with(log)
         .with(cors)
         .recover(handle_rejection);
@@ -226,7 +245,8 @@ pub async fn start_api() {
     let config_path = get_config_file_path();
     let dns_path = get_dns_file_path();
 
-    let routes = routes(public_key, allowed_origin, config_path, dns_path);
+    let routes_with_dns = routes_with_dns(public_key, &allowed_origin, config_path, dns_path);
+    let routes_without_dns = routes_without_dns(public_key, &allowed_origin, config_path);
 
     let host: [u8; 4] = [host[0], host[1], host[2], host[3]];
 
@@ -234,22 +254,40 @@ pub async fn start_api() {
         Ok(cert_path) => match env::var(SSL_KEY) {
             Ok(key_path) => {
                 info! {"Running server in HTTPS mode with certificate: {} and key: {}", cert_path, key_path};
-                warp::serve(routes)
-                    .tls()
-                    .cert_path(cert_path)
-                    .key_path(key_path)
-                    .run((host, port))
-                    .await
+                match dns_enabled() {
+                    true => {
+                        warp::serve(routes_with_dns)
+                            .tls()
+                            .cert_path(cert_path)
+                            .key_path(key_path)
+                            .run((host, port))
+                            .await
+                    }
+                    false => {
+                        warp::serve(routes_without_dns)
+                            .tls()
+                            .cert_path(cert_path)
+                            .key_path(key_path)
+                            .run((host, port))
+                            .await
+                    }
+                }
             }
             Err(_e) => {
                 info! {"Running server in HTTP mode"};
-                warp::serve(routes).run((host, port)).await
+                match dns_enabled() {
+                    true => warp::serve(routes_with_dns).run((host, port)).await,
+                    false => warp::serve(routes_without_dns).run((host, port)).await,
+                }
             }
         },
 
         Err(_e) => {
             info! {"Running server in HTTP mode"};
-            warp::serve(routes).run((host, port)).await
+            match dns_enabled() {
+                true => warp::serve(routes_with_dns).run((host, port)).await,
+                false => warp::serve(routes_without_dns).run((host, port)).await,
+            }
         }
     }
 }
