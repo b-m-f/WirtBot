@@ -50,7 +50,6 @@
         :value="dns.blockLists.join(',')"
         name="blockLists"
         :title="$t('infos.commaList')"
-        required
         multiline
         :invalidMessage="$t('warnings.invalid')"
         :validate="validBlockLists"
@@ -65,7 +64,6 @@
         :value="dns.blockHosts.join(',')"
         name="blockHosts"
         :title="$t('infos.commaList')"
-        required
         multiline
         :invalidMessage="$t('warnings.invalid')"
         :validate="validBlockHosts"
