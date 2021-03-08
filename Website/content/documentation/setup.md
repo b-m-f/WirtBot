@@ -29,7 +29,6 @@ services:
       - NET_ADMIN
     environment:
       - "ALLOWED_ORIGIN=http://IP/HOSTNAME_OF_THE_WIRTBOT_HOST_MACHINE"
-      - "MANAGED_DNS_ENABLED=1"
       - "DNS_UID=1003"
       - "DNS_GID=1003"
       - "INTERFACE_UID=1002"
@@ -79,7 +78,6 @@ Do this by adding it to the environment variables in the `docker-compose` file l
 ```
 environment:
   - "PUBLIC_KEY=your_public_key_from_the_settings_section"
-  - "MANAGED_DNS_ENABLED=1"
 ```
 
 Run `docker-compose up -d` again to start the WirtBot with the given public key.

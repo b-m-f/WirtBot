@@ -25,7 +25,6 @@ The WirtBot is configured with environment variables:
 - **HOST**: the host address to listen on
 - **PORT**: the port to listen on
 - **CONFIG_PATH**: path to WireGuard configuration
-- **MANAGED_DNS_ENABLED**: Enable endpoint to configure DNS
 - **MANAGED_DNS_DEVICE_FILE**: File to write DNS entries to
 - **SSL_PEM_CERT**: SSL certificate
 - **SSL_KEY**: SSL private key for the certificate

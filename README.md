@@ -1,70 +1,65 @@
 ![WirtBot logo](Interface/public/logo.svg)
 
-# WirtBot®
+# What is a WirtBot?
 
-**A real VPN for the modern digitalist**
+WirtBot is a combination of software tools to manage small to medium sized private networks.
+It uses state of the art technologies of the Linux and Cloud-native world to provide great speed and security.
 
-<br/>
+Whether you would like to make your self-hosted services available to friends and family, or want to create an intranet for your company - WirtBot has your back.
 
-Welcome to the [WirtBot](https://wirtbot.com) repository.
+On top of all that the setup is straight forward and very simple if you have used Docker before.
 
-## What is this for?
+It is a real Virtual Private Network to serve as a base layer for whatever project you have.
 
-Think of it as your LAN extended over the whole internet, but only accessible to your devices.
+Oh, and it is completely free. My way of paying back to the OSS community for all the knowledge it shares with the world.
 
-- Do you want **replace your [GoogleDrive, AppleCloud etc.]** with [Nextcloud](https://nextcloud.com/)?
-- Want to **safely resolve DNS**?
-- Developing an App/Website on your machine and want to **show it off live on your phone via the internet**?
-- Have loads of **IOT devices** that you want to be able to **communicate safely** with each other?
+## What is included?
 
-A WirtBot got you covered.
+- Dashboard to create and manage WireGuard based networks
+- DNS zones for all connected devices
+- DNS forwarding, including DNSoverTLS
+- Optional AdBlocking with support for Block Lists and individual blocked Hosts
+- Real time metrics for DNS and WireGuard to be used with Prometheus
+- Backup functionality
+- Modern crypto-aware API to keep the WirtBot only under your control
+- Extensive testing of the System is done on each change to the code to ensure correctnes
 
-## Setup WirtBot with Docker
+## Setup
 
-Check out [this page](https://wirtbot.com/documentation/setup.html)
+Follow the instructions at [wirtbot.com](https://wirtbot.com/docs/setup).
 
-## Questions?
+## Screenshot
 
-Head over to the [subreddit](https://www.reddit.com/r/WirtBot/)
+![Dashboard Screenshort](dashboard.png)
 
-## How is the WirtBot built?
+## Projects that make this possible
 
-**WirtBot** is a system/robot that is designed after the UNIX philosophy.
-Many small parts that do a job and do it well. Putting special importance into correct configuration.
-Everything is controlled via a UI that focusses on **ease of use**.
-To round things off the whole WirtBot is running inside of one container, making setup easy and straightforward.
+These are some of the giants on whose shoulders the WirtBot is build
 
-Ready to get started?
+- [WireGuard® ](https://wireguard.com)
+- [coredns](https://coredns.io/)
+- [coredns ads plugin](https://github.com/c-mueller/ads/)
+- [VueJs](https://v3.vuejs.org/)
+- [VuePress](https://vuepress.vuejs.org/)
+- [docker](https://www.docker.com/)
+- [playwright](https://playwright.dev/)
+- [wasm-pack](https://rustwasm.github.io/docs/wasm-pack/)
+- [warp](https://github.com/seanmonstar/warp)
+- [ed25519-dalek](https://github.com/dalek-cryptography/ed25519-dalek)
 
-Read the setup documentation at [wirtbot.com/documentation/setup](https://wirtbot.com/documentation/setup.html) and get your own cloud network with **1 command on the terminal** and a **few clicks in your browser**!
+## Support
 
-## Features
+- [reddit](https://reddit.com/r/WirtBot)
 
-- Based on WireGuard for **security** and **speed**
-- Find all your devices by their name! **DNS** is included
-- Every configuration in the network is kept **up to date** on changes
-- **Export and Import** feature to keep track of multiple networks and generate Backups
-- **Absolutely no tracking** + everything is uniquely tied to your browser!
-- **Configuration over code**. Leverage existing tooling and provide a clean interface for configuring it correctly
+## Docs
 
-## Contributing
-
-![WirtBot System Tests](https://github.com/b-m-f/WirtBot/workflows/run%20WirtBot%20system%20tests/badge.svg)
-![WirtBot Unit Tests](https://github.com/b-m-f/WirtBot/workflows/run%20WirtBot%20unit%20tests/badge.svg)
-
-![Build multi arch docker images](https://github.com/b-m-f/WirtBot/workflows/Build%20multi%20arch%20docker%20images%20and%20push%20to%20dockerhub/badge.svg)
-![WirtBot Website Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/bmff/wirtbot-website?label=WirtBot%20Website%20build)
-
-You want to help out making WirtBot better? **AWESOME**!
-
-Please feel free to open up an issue here in Github to discuss what you would want to do, and what kind of help I can give you.
-
-Next check out [CONTRIBUTING.md](./CONTRIBUTING.md).
-
-For more information about the different parts that make up the WirtBot check out the READMEs in the folders of the project.
-Documentation is always ongoing. If you feel like things do not make sense just open a GitHub issue :)
+- [WirtBot docs](https://wirtbot.com/documentation)
+- [CONTRIBUTING.md](./CONTRIBUTING.md)
+- [ARCHITECTURE.md](./ARCHITECTURE.md)
 
 ## LICENSE
+
+The licenses were chosen to ensure that the project will stay free for everyone, and allows safer networks for people to build things on.
 
 The WirtBot and Interface are licensed with `GNU Affero General Public License v3.0`
 
@@ -72,6 +67,6 @@ The documentation and WirtBot logo are provided under `Attribution-ShareAlike 4.
 
 ## Donate
 
-Would you like to contribute a bit to the server costs? ~10$ a month.
+Would you like to contribute a bit to the server costs? Want to buy me a beer?
 
-You can easily do so to the Ethereum address: `0x39DF85776c626117B945afECF08C4DD262817522`
+Ethereum is the way: `0x39DF85776c626117B945afECF08C4DD262817522`
