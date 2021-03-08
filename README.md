@@ -30,7 +30,7 @@ Follow the instructions at [wirtbot.com](https://wirtbot.com/docs/setup).
 
 ## Screenshot
 
-![Dashboard Screenshort](dashboard.png)
+![Dashboard Screenshot](dashboard.jpg)
 
 ## Projects that make this possible
 
