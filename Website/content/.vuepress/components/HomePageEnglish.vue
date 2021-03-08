@@ -9,6 +9,11 @@
           private network into 3 steps. No registration, no accounts - Just a
           network that belongs to you.
         </p>
+        <h2>For free.</h2>
+        <p>
+          WirtBot was built completely in the open and will always be free. A
+          thank you to the Open Source community.
+        </p>
         <a href="/documentation/setup">
           <Button> Get started </Button>
         </a>
@@ -62,23 +67,29 @@
     </div>
     <div id="four">
       <h1>
-        Simple process, broken down in a few simple steps so you dont have to.
+        Batteries included
       </h1>
       <ul>
         <li>
-          <h2>1. Start a WirtBot with Docker</h2>
+          <h2>1. Completely dockerized</h2>
           <div>
             <p></p>
           </div>
         </li>
         <li>
-          <h2>2. Configure your WirtBot using its Browser Interfacer</h2>
+          <h2>2. Network internal DNS zones</h2>
           <div>
             <p></p>
           </div>
         </li>
         <li>
-          <h2>3. Configure and grow your network</h2>
+          <h2>3. DNS forwarding, including DNSoverTLS</h2>
+          <div>
+            <p></p>
+          </div>
+        </li>
+        <li>
+          <h2>4. Ad-Blocking</h2>
           <div>
             <p></p>
           </div>
@@ -91,8 +102,9 @@
         <Card padded>
           <h2>At home</h2>
           <p>
-            Build a Cloud or Video streaming service that you own or whatever
-            else you would like to bring online. From your home into your cloud.
+            Make your homelab available to friends and family, whereever they
+            might be. From your home into the World Wide Web, yet completely
+            secure and private.
           </p>
           <a href="/documentation/what-can-i-do-with-wirt"> Learn more </a>
         </Card>
