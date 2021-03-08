@@ -87,6 +87,17 @@ You should also make a Backup via the UI and keep it in safe place.
 
 ## Advanced
 
+### Monitoring
+
+Endpoints for Prometheus metrics are enabled in the Container:
+
+- 9153: CoreDNS metrics
+- 9586: WireGuard metrics
+
+If your prometheus instance is connected into the network you can simply get them from the default WirtBot address at `10.10.0.1` or `wirtbot.wirt.internal`.
+
+You can also choose to expose them via the `docker-compose.yml` file if you prefer. The Dockerfile specifies them as exposed ports.
+
 ### Securing the WirtBot after setup
 
 In order to make the WirtBot interace and API hidden on the Host machine simply **remove the port bindings** for port **80** and **3030**.
