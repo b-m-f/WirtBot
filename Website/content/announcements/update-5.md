@@ -50,7 +50,7 @@ Either expose them on the host or hook your monitoring solution into the network
 Well, there are of course some internal things that changed to accomodate all the new features.
 Here are the most important ones:
 
-- Store refactoring for clean reactivity system throught the Frontend
+- Store refactoring for clean reactivity system throughout the Frontend
 - Completely responsive Frontend using only media-queries, no more JS based detection
 - Core is completely refactored and has Unit-Tests. Caught a few possible panics and should now run safely. Thanks Rust.
 
