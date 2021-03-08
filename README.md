@@ -26,7 +26,7 @@ Oh, and it is completely free. My way of paying back to the OSS community for al
 
 ## Setup
 
-Follow the instructions at [wirtbot.com](https://wirtbot.com/docs/setup).
+Follow the instructions at [wirtbot.com](https://wirtbot.com/documentation/setup).
 
 ## Screenshot
 
