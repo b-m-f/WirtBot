@@ -2,19 +2,23 @@
   <footer>
     <div class="button-and-links">
       <div>
-        <Button @click.prevent="contact" empty>{{
-          $t("footer.contact")
-        }}</Button>
-      </div>
-      <div>
         <ul>
           <li>
-            <a href="/about">{{ $t("footer.about") }}</a>
+            <a
+              href="https://wirtbot.com/about"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {{ $t("footer.about") }}</a
+            >
           </li>
           <li>
-            <a href="/docs" target="_blank" rel="noopener noreferrer">{{
-              $t("footer.documentation")
-            }}</a>
+            <a
+              href="https://wirtbot.com/documentation"
+              target="_blank"
+              rel="noopener noreferrer"
+              >{{ $t("footer.documentation") }}</a
+            >
           </li>
         </ul>
       </div>
@@ -24,15 +28,9 @@
 </template>
 
 <script>
-import Button from "shared-components/Button";
-
 export default {
-  components: { Button },
-  methods: {
-    contact() {
-      window.location = "mailto:contact@wirt.network";
-    },
-  },
+  components: {},
+  methods: {},
 };
 </script>
 
