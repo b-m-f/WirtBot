@@ -33,6 +33,7 @@ module.exports = {
             ["issues", "New features & Bugs"],
           ],
           "/announcements/": [
+            ["update-5", "Update 5: Time to maintain"],
             ["update-4", "Update 4: WirtBot weight loss and a nasty bug"],
             ["update-3", "Update 3: With confidence into the unknown"],
             [
