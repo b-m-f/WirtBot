@@ -278,4 +278,34 @@ PublicKey = test
 PersistentKeepalive = 25`
     );
   });
+  it("works with routing", () => {
+    const server = {
+      ip: { v4: "1.1.1.1" },
+      port: 11111,
+      subnet: { v4: "10.10.10" },
+      keys: { private: "test", public: "test" },
+    };
+    const device = {
+      ip: { v4: 2 },
+      keys: { public: "test", private: "test" },
+      additionalDNSServers: ["1.1.1.1"],
+      MTU: "1320",
+      routed: true,
+    };
+    expect(generateDeviceConfig(device, server)).toBe(
+      `[Interface]
+Address = 10.10.10.2
+PrivateKey = test
+DNS = 10.10.10.1,1.1.1.1
+MTU = 1320
+
+[Peer]
+Endpoint = 1.1.1.1:11111
+AllowedIPs = 0.0.0.0/0,::/0
+PublicKey = test
+
+## keep connection alive behind NAT
+PersistentKeepalive = 25`
+    );
+  });
 });
