@@ -16,7 +16,7 @@ export function generateDeviceConfig(
 
   let allowedIps = "";
   if (routed) {
-    allowedIps = "0.0.0.0/0,0001:0000:0000:0000:0000:0000:0000/0";
+    allowedIps = "0.0.0.0/0,::/0";
   } else {
     if (ip.v4) {
       allowedIps = `${subnetv4}.0/24`;
