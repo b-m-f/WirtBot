@@ -167,9 +167,11 @@ COPY --from=builder /usr/local/cargo/bin/prometheus_wireguard_exporter .
 RUN chmod +x prometheus_wireguard_exporter && mv prometheus_wireguard_exporter /usr/bin
 COPY Build-Automation/WirtBot/service-files/wireguard-metrics /etc/services.d/wireguard-metrics/run
 
-## Firewall to allow traffic Masquerading
+## Add NFT firewall to allow traffic masquerading when using routed mode
+ARG environment=production
 RUN apt-get install -yy nftables
 COPY Build-Automation/WirtBot/service-files/firewall /firewall.sh
+RUN if [ "$environment" = "test" ] ; then rm /firewall.sh && touch /firewall.sh && echo "#! /bin/bash" >> /firewall.sh; fi
 RUN chmod +x /firewall.sh
 
 
