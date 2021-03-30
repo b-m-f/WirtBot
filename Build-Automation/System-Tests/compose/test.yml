@@ -18,8 +18,8 @@ services:
         - environment=test
     container_name: wirtbot.test
     volumes:
-      - ./test-server.conf:/etc/wireguard/server.conf
-      - ./test-Corefile:/etc/coredns/Corefile
+      - ./test-server.conf:/etc/wireguard/server.conf:z
+      - ./test-Corefile:/etc/coredns/Corefile:z
     ports:
       - 10101:10101/udp
     environment:
