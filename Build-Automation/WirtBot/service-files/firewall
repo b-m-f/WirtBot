@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -eou pipefail
+
+nft flush chain nat postrouting || true
+nft add table nat
+nft 'add chain nat postrouting { type nat hook postrouting priority 100 ; }'
+nft add rule nat postrouting iifname server oifname != server masquerade   
