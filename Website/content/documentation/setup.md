@@ -27,6 +27,8 @@ services:
     restart: "unless-stopped"
     cap_add:
       - NET_ADMIN
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=0
     environment:
       - "ALLOWED_ORIGIN=http://IP/HOSTNAME_OF_THE_WIRTBOT_HOST_MACHINE"
       - "DNS_UID=1003"
