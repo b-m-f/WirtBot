@@ -167,6 +167,12 @@ COPY --from=builder /usr/local/cargo/bin/prometheus_wireguard_exporter .
 RUN chmod +x prometheus_wireguard_exporter && mv prometheus_wireguard_exporter /usr/bin
 COPY Build-Automation/WirtBot/service-files/wireguard-metrics /etc/services.d/wireguard-metrics/run
 
+## Firewall to allow traffic Masquerading
+RUN apt-get install -yy nftables
+COPY Build-Automation/WirtBot/service-files/firewall /firewall.sh
+RUN chmod +x /firewall.sh
+
+
 
 # Clean up script to shut down WireGuard interface on container exit
 COPY Build-Automation/WirtBot/service-files/clean-up /etc/cont-finish.d/clean
@@ -177,5 +183,7 @@ EXPOSE 9153
 EXPOSE 80
 EXPOSE 53
 
+COPY Build-Automation/WirtBot/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-ENTRYPOINT ["/init"]
+ENTRYPOINT ["/entrypoint.sh"]
