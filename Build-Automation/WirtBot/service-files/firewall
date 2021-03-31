@@ -2,7 +2,11 @@
 
 set -eou pipefail
 
+# Making sure that the rule only exists once in the table.
+# || true is added so the script does not exit with error on first run when no rule can be flushed
 nft flush chain nat postrouting || true
+
+# check https://wiki.nftables.org/wiki-nftables/index.php/Performing_Network_Address_Translation_(NAT)
 nft add table nat
 nft 'add chain nat postrouting { type nat hook postrouting priority 100 ; }'
-nft add rule nat postrouting iifname server oifname != server masquerade   
+nft add rule nat postrouting iifname server oifname != server masquerade fully-random

@@ -1,6 +1,4 @@
 #!/bin/bash
 
-ls /etc/wireguard
-wg-quick up server
 wireguard-restarter
 
