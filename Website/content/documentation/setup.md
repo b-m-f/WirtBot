@@ -62,15 +62,15 @@ followed by a long string.
 To take control of the WirtBot via your browser you can now reach the Interface at the IP address of your machine in the browser.
 Simple paste the above mentioned string into the input box that should be shown to you and click on the `Connect` button.
 
-The last thing to do is to set the Hostname/IP Address of the machine that WirtBot is running on as the API endpoint. You can do this in the network part of the Dashboard.
+The last thing to do is to set the **Hostname/IP Address** of the machine that WirtBot is running on **as the API endpoint**. You can do this in the network part of the Dashboard.
 
 Done. You are now in control of the WirtBot via your browser.
 
 ## Setting up your network
 
-Now it is time to set up your network. Fill out the server section first, according to your needs. In the example configuration WireGuard will be listening at Port 10101.
+Now it is time to set up your network. Fill out the server section first, according to your needs. In the example configuration WireGuard will be listening at **Port 10101**.
 
-After adding the server go ahead and add as many devices as you want.
+After adding the server you can go ahead and add as many devices as you want.
 
 You should also take note of the **Public Key** that is shown to you in the **Settings** section of the Dasboard.
 In order to stay in control of the WirtBot when it restarts you **MUST** tell it to keep trusting this Key.
@@ -83,6 +83,8 @@ environment:
 ```
 
 Run `docker-compose up -d` again to start the WirtBot with the given public key.
+
+> Simply restarting the container is not enough! A new one needs to be started to consume the right environment variables
 
 Now that the network is established and the configuration persisted you might want to start closing down the Interface and WirtBot via Firewall rules.
 You should also make a Backup via the UI and keep it in safe place.
@@ -104,9 +106,21 @@ You can also choose to expose them via the `docker-compose.yml` file if you pref
 
 In order to make the WirtBot interace and API hidden on the Host machine simply **remove the port bindings** for port **80** and **3030**.
 
-Both will still be reachable via the network that was created with the WirtBot at `wirtbot.CHOSEN_INTERNAL_ZONE_NAME`
+Both will still be reachable via the private network that was created with the WirtBot at `wirtbot.wirt.internal`.
 
-**Make sure to update the api location in the Dashboard**.
+In order to use the internal zone update
+
+```
+ - "ALLOWED_ORIGIN=http://IP/HOSTNAME_OF_THE_WIRTBOT_HOST_MACHINE"
+```
+
+to
+
+```
+ - "ALLOWED_ORIGIN=wirtbot.wirt.internal"
+```
+
+and **change the API Endpoint** the Dashboard to `wirtbot.wirt.internal`
 
 ### Host mode for more speed
 
@@ -117,6 +131,8 @@ network_mode: host
 ```
 
 in your `docker-compose.yml` file. This will directly bind the Host ports to the container and in addition the WireGuard interface will be created directly on the host as well.
+
+**This also means that your host could talk to the network. But no routing is setup and this needs to be done manually if that is desired**
 
 ### Mounting the configuration files to the host
 
