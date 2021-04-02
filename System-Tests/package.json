@@ -1,6 +1,6 @@
 {
   "name": "@wirtbot/system-tests",
-  "version": "2.6.4",
+  "version": "2.6.5",
   "description": "This package is responsible for testing the WirtBot as a whole",
   "main": "index.js",
   "scripts": {
