@@ -1,5 +1,7 @@
 #! /bin/bash
 
+set -eou pipefail
+
 # Start wireguard interface
 wg-quick up server
 
