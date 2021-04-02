@@ -9,4 +9,4 @@ nft flush chain nat postrouting || true
 # check https://wiki.nftables.org/wiki-nftables/index.php/Performing_Network_Address_Translation_(NAT)
 nft add table nat
 nft 'add chain nat postrouting { type nat hook postrouting priority 100 ; }'
-nft add rule nat postrouting iifname server oifname != server masquerade fully-random
+nft add rule nat postrouting oifname eth0 masquerade fully-random
