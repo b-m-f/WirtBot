@@ -12,39 +12,40 @@ export default {
       }
     },
     remove(state, id) {
-      state.alerts = state.alerts.filter(alert => {
+      state.alerts = state.alerts.filter((alert) => {
         return alert.id !== id;
       });
-    }
+    },
   },
   actions: {
     add({ state, commit, dispatch }, { message, type }) {
       const id = new Date().getTime();
-      const existingAlert = state.alerts.find(item => item.message === message)
+      const existingAlert = state.alerts.find(
+        (item) => item.message === message
+      );
       if (existingAlert) {
         commit("remove", existingAlert.id);
-        dispatch("add", { message, type })
+        dispatch("add", { message, type });
       } else {
         commit("add", { message, type, id });
         window.setTimeout(() => {
           commit("remove", id);
         }, 2000);
-
       }
     },
     addInfo({ dispatch }, message) {
       dispatch("add", { type: "info", message });
     },
-    addWarning({ dispatch }, message) {
-      dispatch("add", { type: "warning", message });
+    addError({ dispatch }, message) {
+      dispatch("add", { type: "error", message });
     },
     addSuccess({ dispatch }, message) {
       dispatch("add", { type: "success", message });
-    }
+    },
   },
   getters: {
-    alerts: state => {
+    alerts: (state) => {
       return state.alerts;
-    }
-  }
+    },
+  },
 };

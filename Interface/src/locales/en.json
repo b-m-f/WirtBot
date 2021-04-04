@@ -136,7 +136,21 @@
     "noFileSelected": "No file was selected to import.",
     "serverHostname": "Server hostname"
   },
-  "warnings": {
+  "infos": {
+    "generatingKeys": "Keys are being generated",
+    "commaList": "Comma separated list"
+  },
+  "success": {
+    "deviceRemoved": "Device removed",
+    "keysGenerated": "Keys were generated successfully.",
+    "copyToClipBoard": "Copied",
+    "updateSuccessDNS": "DNS successfully updated",
+    "updateSuccessConfig": "Config successfully updated"
+  },
+  "errors": {
+    "backupNotCompatible": "The backup has a newer version than the app and is not comptaible",
+    "backupUpgradeTo1dot0": "Error when upgrading your backup from beta version to 1.0",
+    "copyFailed": "Could not copy, please do it manually.",
     "notANumber": "Not a valid number",
     "required": "This is required",
     "deviceRemove": "Error when removing device: ",
@@ -157,25 +171,10 @@
     "wrongIPv4Subnet": "Not a correct IPv4 subnet",
     "wrongIPv6Subnet": "Not a correct IPv6 subnet",
     "serverPort": "Port must be between 1024 and 65636",
-    "updateFailDNS": "Error when updating the DNS records on the WirtBot. Please check the browser console for more info",
-    "updateFailConfig": "Error when updating the config on the WirtBot. Please check the browser console for more info",
+    "updateFail": "Failed to talk to API. Are you sure that the API Endpoint is set correctly?",
     "failedToParseInitialData": "Error parsing the provided data. Please make sure you copied it from your WirtBot Core correctly",
-    "invalid": "Invalid"
-  },
-  "infos": {
-    "generatingKeys": "Keys are being generated",
-    "commaList": "Comma separated list"
-  },
-  "success": {
-    "deviceRemoved": "Device removed",
-    "keysGenerated": "Keys were generated successfully.",
-    "copyToClipBoard": "Copied",
-    "updateSuccessDNS": "DNS successfully updated",
-    "updateSuccessConfig": "Config successfully updated"
-  },
-  "errors": {
-    "backupNotCompatible": "The backup has a newer version than the app and is not comptaible",
-    "backupUpgradeTo1dot0": "Error when upgrading your backup from beta version to 1.0",
-    "copyFailed": "Could not copy, please do it manually."
+    "invalid": "Invalid",
+    "cors": "Could not update. Correct origin allowed in the Core?",
+    "signature": "Incorrect Signature. Did you persist your public key in the Core?"
   }
 }

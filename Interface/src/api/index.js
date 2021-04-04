@@ -1,5 +1,6 @@
 import { sign } from "../lib/crypto";
 import store from "../store";
+import i18n from "../i18n";
 
 // Loaded with https://cli.vuejs.org/guide/mode-and-env.html
 // const BASE_URL = process.env.VUE_APP_BASE_URL + "/api";
@@ -20,9 +21,23 @@ async function post(endpoint, data) {
     body: JSON.stringify(data),
   });
   if (response.status >= 400 && response.status < 600) {
-    throw new Error(`${response.status}: ${await response.text()}`);
+    const err = new Error("Error when talking to API");
+    err.status = response.status;
+    err.text = response.text;
+    throw err;
   }
-  return response;
+}
+
+function handleError(e) {
+  if (e.status === 401) {
+    store.dispatch("alerts/addError", `${i18n.t("errors.signature")}`);
+    return;
+  }
+  if (e.status === 405) {
+    store.dispatch("alerts/addError", `${i18n.t("errors.cors")}`);
+    return;
+  }
+  store.dispatch("alerts/addError", `${i18n.t("errors.updateFail")}`);
 }
 
 export async function updateServerConfig(config, host) {
@@ -34,10 +49,12 @@ export async function updateServerConfig(config, host) {
     }
     const messageWithSignature = await sign(config, keys);
     await post(`http://${host}/update`, messageWithSignature);
-    return true;
+    store.dispatch(
+      "alerts/addSuccess",
+      `${i18n.t("success.updateSuccessConfig")}`
+    );
   } catch (e) {
-    console.error(e);
-    return false;
+    handleError(e);
   }
 }
 
@@ -53,9 +70,11 @@ export async function updateDNSConfig(config, host) {
       `http://${host}/update-device-dns-entries`,
       messageWithSignature
     );
-    return true;
+    store.dispatch(
+      "alerts/addSuccess",
+      `${i18n.t("success.updateSuccessDNS")}`
+    );
   } catch (e) {
-    console.error(e);
-    return false;
+    handleError(e);
   }
 }

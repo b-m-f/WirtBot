@@ -5,10 +5,12 @@
       :key="index"
       :class="{
         success: alert.type === 'success',
-        warning: alert.type === 'warning',
-        info: alert.type === 'info'
+        error: alert.type === 'error',
+        info: alert.type === 'info',
       }"
-    >{{ alert.message }}</li>
+    >
+      {{ alert.message }}
+    </li>
   </ul>
 </template>
 
@@ -17,8 +19,8 @@ export default {
   computed: {
     alerts() {
       return this.$store.state.alerts.alerts;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -43,8 +45,8 @@ ul {
     &.success {
       background-color: $success;
     }
-    &.warning {
-      background-color: $warning;
+    &.error {
+      background-color: $error;
     }
   }
 }

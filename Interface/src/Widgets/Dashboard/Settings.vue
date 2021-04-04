@@ -62,7 +62,7 @@ export default {
     async importBackup() {
       if (!this.file) {
         this.$store.dispatch(
-          "alerts/addWarning",
+          "alerts/addError",
           this.$t("settings.noFileSelected")
         );
       }
@@ -82,9 +82,9 @@ export default {
           throw e;
         };
       } catch (error) {
-        this.$store.dispatch("alerts/addWarning", error);
+        this.$store.dispatch("alerts/addError", error);
 
-        // this.$store.dispatch( //   "alerts/addWarning",
+        // this.$store.dispatch( //   "alerts/addError",
         //   this.$t("settings.fileReaderApiNotSupported")
         // );
         console.error(error);

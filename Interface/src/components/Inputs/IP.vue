@@ -6,7 +6,7 @@
     :value="this.ip"
     :validate="validateIP"
     ref="input"
-    :invalidMessage="this.$t('warnings.wrongIPv4')"
+    :invalidMessage="this.$t('errors.wrongIPv4')"
   />
 </template>
 

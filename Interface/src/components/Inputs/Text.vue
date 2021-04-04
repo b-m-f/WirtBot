@@ -50,7 +50,7 @@ export default {
       try {
         if (!text) {
           if (this.$props.required) {
-            throw this.$t("warnings.required");
+            throw this.$t("errors.required");
           } else {
             this.$emit("change", text);
             return;

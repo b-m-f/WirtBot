@@ -43,7 +43,7 @@ export default {
       try {
         if (!number) {
           if (this.$props.required) {
-            throw this.$t("warnings.required");
+            throw this.$t("errors.required");
           } else {
             this.$emit("change", number);
             return;
@@ -53,7 +53,7 @@ export default {
           newValue = parseInt(number);
           this.internalNumber = newValue;
         } catch (error) {
-          throw this.$t("warnings.notANumber");
+          throw this.$t("errors.notANumber");
         }
         if (this.$props.validate) {
           const valid = this.$props.validate(newValue);

@@ -282,32 +282,16 @@ const store = new Vuex.Store({
       if (!state.keys || !state.keys.public || !state.keys.private) {
         await dispatch("generateSigningKeys");
       }
-      const success = await updateDNSConfigViaApi(
+      await updateDNSConfigViaApi(
         state.network.dns.config,
         state.network.api.host
       );
-      if (success) {
-        dispatch("alerts/addSuccess", `${i18n.t("success.updateSuccessDNS")}`);
-      } else {
-        dispatch("alerts/addWarning", `${i18n.t("warnings.updateFailDNS")}`);
-      }
     },
     async sendConfigUpdatesToAPI({ state, dispatch }) {
       if (!state.keys || !state.keys.public || !state.keys.private) {
         await dispatch("generateSigningKeys");
       }
-      const success = await updateServerViaApi(
-        state.server.config,
-        state.network.api.host
-      );
-      if (success) {
-        dispatch(
-          "alerts/addSuccess",
-          `${i18n.t("success.updateSuccessConfig")}`
-        );
-      } else {
-        dispatch("alerts/addWarning", `${i18n.t("warnings.updateFailConfig")}`);
-      }
+      await updateServerViaApi(state.server.config, state.network.api.host);
     },
     async addDevice(
       { commit, dispatch, state },
@@ -326,15 +310,13 @@ const store = new Vuex.Store({
       } catch (error) {
         if (error.message === "No Server") {
           await dispatch(
-            "alerts/addWarning",
-            `${i18n.t("warnings.deviceAdd")} ${i18n.t("warnings.noServer")}`
+            "alerts/addError",
+            `${i18n.t("errors.deviceAdd")} ${i18n.t("errors.noServer")}`
           );
         } else {
           await dispatch(
-            "alerts/addWarning",
-            `${i18n.t("warnings.deviceAdd")} ${i18n.t(
-              "warnings.documentation"
-            )}`
+            "alerts/addError",
+            `${i18n.t("errors.deviceAdd")} ${i18n.t("errors.documentation")}`
           );
           console.error(error);
         }
@@ -372,10 +354,8 @@ const store = new Vuex.Store({
         await dispatch("updateServerConfig");
       } catch (error) {
         await dispatch(
-          "alerts/addWarning",
-          `${i18n.t("warnings.deviceRemove")} ${i18n.t(
-            "warnings.documentation"
-          )}`
+          "alerts/addError",
+          `${i18n.t("errors.deviceRemove")} ${i18n.t("errors.documentation")}`
         );
         console.error(error);
       }
@@ -410,7 +390,7 @@ const store = new Vuex.Store({
   plugins: [
     createPersistedState({
       filter(stateChange) {
-        if (stateChange.type.includes("alerts/")) {
+        if (stateChange.type.includes("alerts")) {
           return false;
         } else {
           return true;

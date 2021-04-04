@@ -90,7 +90,7 @@
           :max="1800"
           :min="1320"
           :validate="validateMTU"
-          :invalidMessage="$t('warnings.deviceMTU')"
+          :invalidMessage="$t('errors.deviceMTU')"
           :placeholder="$t('dashboard.widgets.devices.placeholder.MTU')"
         />
       </div>
@@ -239,7 +239,7 @@ export default {
       );
       if (!correct) {
         this.invalidAdditionalDNSServersMessage = this.$t(
-          "warnings.deviceAdditionalDNSServers"
+          "errors.deviceAdditionalDNSServers"
         );
       }
       return correct;
@@ -259,7 +259,7 @@ export default {
     validateIPv4(ip) {
       this.invalidIPv4Message = "";
       if (ip == 1) {
-        this.invalidIPv4Message = this.$t("warnings.deviceIpServer");
+        this.invalidIPv4Message = this.$t("errors.deviceIpServer");
         return false;
       }
       const isIpUsed = this.devices.reduce((prev, next) => {
@@ -267,7 +267,7 @@ export default {
       }, false);
 
       if (isIpUsed) {
-        this.invalidIPv4Message = this.$t("warnings.deviceIpUsed");
+        this.invalidIPv4Message = this.$t("errors.deviceIpUsed");
         return false;
       }
       return true;
@@ -275,7 +275,7 @@ export default {
     validateIPv6(ip) {
       try {
         if (!/^[0-9a-fA-F]{3}[2-9a-eA-E]$/.test(ip)) {
-          this.invalidIPv6Message = this.$t("warnings.wrongIPv6");
+          this.invalidIPv6Message = this.$t("errors.wrongIPv6");
           throw "IPv6 has wrong format";
         }
         const parsedIPv6 = parseInt(ip, 16);
@@ -286,7 +286,7 @@ export default {
         }
         return true;
       } catch (error) {
-        this.invalidIPv6Message = this.$t("warnings.wrongIPv6");
+        this.invalidIPv6Message = this.$t("errors.wrongIPv6");
         return false;
       }
     },
