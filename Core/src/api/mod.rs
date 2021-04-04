@@ -83,9 +83,7 @@ async fn handle_rejection(err: Rejection) -> Result<impl Reply, Infallible> {
         code = StatusCode::INTERNAL_SERVER_ERROR;
         message = "UNHANDLED_REJECTION";
     }
-    info!("{}", message);
-
-    std::println!("{:?}", err);
+    info!("{}: {}", code, message);
 
     let json = warp::reply::json(&ErrorMessage {
         code: code.as_u16(),
@@ -165,7 +163,7 @@ fn routes(
     allowed_origin: &String,
     config_path: &'static str,
     dns_path: &'static str,
-) -> impl warp::Filter<Extract = impl warp::Reply, Error = std::convert::Infallible> + Clone {
+) -> impl warp::Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
     let log = warp::log("wirt::api");
     let cors = warp::cors()
         .allow_origin(&allowed_origin[..])
@@ -182,8 +180,8 @@ fn routes(
         .or(update_device_dns_entries(public_key, dns_path))
         .or(update_dns_options)
         .with(log)
-        .with(cors)
-        .recover(handle_rejection);
+        .recover(handle_rejection)
+        .with(cors);
 }
 
 pub async fn start_api() {
