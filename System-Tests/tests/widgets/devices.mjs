@@ -150,3 +150,9 @@ export const downloadConfig = async (page, name) => {
   await downloadButton.click();
   return downloadPath;
 };
+
+export const deleteDevice = async (page, name) => {
+  let device = await getDeviceByName(page, name);
+  const deleteButton = await device.$("button.delete");
+  await deleteButton.click();
+};
