@@ -16,6 +16,9 @@ export default {
         return alert.id !== id;
       });
     },
+    clean(state) {
+      state.alerts = [];
+    },
   },
   actions: {
     add({ state, commit, dispatch }, { message, type }) {
@@ -41,6 +44,9 @@ export default {
     },
     addSuccess({ dispatch }, message) {
       dispatch("add", { type: "success", message });
+    },
+    clean({ commit }) {
+      commit("clean");
     },
   },
   getters: {
