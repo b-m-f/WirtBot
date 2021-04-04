@@ -211,10 +211,10 @@ export default {
       return nextHighest;
     },
     deleteDevice() {
-      if (!this.device.id) {
+      if (!this.$props.id) {
         this.$emit("cancel-new-device");
       } else {
-        this.$store.dispatch("removeDevice", { id: this.device.id });
+        this.$store.dispatch("removeDevice", { id: this.$props.id });
       }
     },
     updateType(type) {
