@@ -1,4 +1,3 @@
-
 <template>
   <div id="page">
     <h1>{{ $t("firstUse.welcome") }}</h1>
@@ -38,8 +37,8 @@ export default {
         this.$store.dispatch("disableFirstUse");
       } catch (error) {
         this.$store.dispatch(
-          "alerts/addWarning",
-          `${this.$t("warnings.failedToParseInitialData")}`
+          "alerts/addError",
+          `${this.$t("errors.failedToParseInitialData")}`
         );
       }
     },

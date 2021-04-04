@@ -28,7 +28,7 @@
         :value="server.port"
         @change="updatePort"
         :validate="validatePort"
-        :invalidMessage="$t('warnings.serverPort')"
+        :invalidMessage="$t('errors.serverPort')"
         placeholder="1024-65636"
       />
     </div>
@@ -39,7 +39,7 @@
         name="server-subnet-v4"
         id="server-subnet-v4"
         @change="(subnet) => updateSubnet({ v4: subnet })"
-        :invalidMessage="$t('warnings.wrongIPv4Subnet')"
+        :invalidMessage="$t('errors.wrongIPv4Subnet')"
         :validate="validSubnetV4"
       />
     </div>
@@ -50,7 +50,7 @@
         name="server-subnet-v6"
         id="server-subnet-v6"
         @change="(subnet) => updateSubnet({ v6: subnet })"
-        :invalidMessage="$t('warnings.wrongIPv6Subnet')"
+        :invalidMessage="$t('errors.wrongIPv6Subnet')"
         :validate="validSubnetV6"
       />
     </div>

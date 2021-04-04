@@ -106,7 +106,7 @@
         "alerts": [
             {
                 "message": "Error when updating the DNS records on the WirtBot. Please check the browser console for more info",
-                "type": "warning",
+                "type": "error",
                 "id": 1615118384147
             }
         ]

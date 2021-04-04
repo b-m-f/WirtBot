@@ -33,7 +33,7 @@
         required
         :title="$t('infos.commaList')"
         multiline
-        :invalidMessage="$t('warnings.invalid')"
+        :invalidMessage="$t('errors.invalid')"
         :validate="validIgnoredZones"
         @change="updateIgnoredZones"
       />
@@ -51,7 +51,7 @@
         name="blockLists"
         :title="$t('infos.commaList')"
         multiline
-        :invalidMessage="$t('warnings.invalid')"
+        :invalidMessage="$t('errors.invalid')"
         :validate="validBlockLists"
         @change="updateBlockLists"
       />
@@ -65,7 +65,7 @@
         name="blockHosts"
         :title="$t('infos.commaList')"
         multiline
-        :invalidMessage="$t('warnings.invalid')"
+        :invalidMessage="$t('errors.invalid')"
         :validate="validBlockHosts"
         @change="updateBlockHosts"
       />
