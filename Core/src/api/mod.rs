@@ -124,6 +124,7 @@ fn update(
             return verify_signature(message, public_key);
         })
         .and_then(move |config: String| async move {
+            std::println!("{}", config);
             match wireguard_config::write_config_file(config, config_path.to_string()) {
                 Ok(_) => return Ok(()),
                 Err(e) => {
