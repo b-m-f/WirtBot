@@ -390,7 +390,7 @@ const store = new Vuex.Store({
   plugins: [
     createPersistedState({
       filter(stateChange) {
-        if (stateChange.type.includes("alerts")) {
+        if (stateChange.type.includes("alerts/")) {
           return false;
         } else {
           return true;

@@ -30,9 +30,12 @@ export default {
     alerts() {
       return this.$store.getters["alerts/alerts"];
     },
-    isConnectedToWirtBot(){
-      return !this.$store.state.dashboard.firstUse || this.$store.state.keys.private && this.$store.state.keys.public
-    }
+    isConnectedToWirtBot() {
+      return (
+        !this.$store.state.dashboard.firstUse ||
+        (this.$store.state.keys.private && this.$store.state.keys.public)
+      );
+    },
   },
   methods: {
     hideAlert(alert) {
@@ -40,6 +43,9 @@ export default {
     },
   },
   watch: {},
+  mounted() {
+    this.$store.dispatch("alerts/clean");
+  },
 };
 </script>
 
