@@ -350,8 +350,8 @@ export default {
 }
 
 .qr-code {
-  width: 100%;
-  max-width: 12rem;
+  width: 12rem;
+  height: 12rem;
   align-self: center;
   margin-bottom: $spacing-medium;
   margin-top: $spacing-medium;
