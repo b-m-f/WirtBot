@@ -507,7 +507,7 @@ dependencies = [
 
 [[package]]
 name = "wirtbot-crypto-rust-wasm"
-version = "2.6.5"
+version = "2.6.8"
 dependencies = [
  "base64",
  "bincode",
