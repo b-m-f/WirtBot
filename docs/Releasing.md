@@ -6,3 +6,17 @@
 - Run `git push --tags`
 
 Once the release is tagged the **CI** will take over and build images for ARM and AMD64 and push them to Dockerhub.
+
+## Manual release
+
+If the CI has issues there is a possibility to release manually.
+
+For now you need access credentials for Dockerhub => `docker login`
+
+Now make sure to have a docker builder set up:
+```
+docker buildx create --name multiarch --driver docker-container --use
+docker buildx inspect --bootstrap
+```
+
+Now its possible to build and push with `make build-and-release`

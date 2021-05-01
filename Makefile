@@ -63,3 +63,7 @@ update-versions:
 	./update_version.sh
 tag-release:
 	git tag v$$(cat .version)
+
+## Build and release
+build-and-release:
+	docker buildx build --platform linux/amd64,linux/arm64 -t bmff/wirtbot:$$(cat .version) -t bmff/wirtbot:latest --push -f Build-Automation/WirtBot/Dockerfile .
