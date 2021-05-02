@@ -68,7 +68,7 @@ update-dependencies:
 
 ## Build and release
 build-and-release:
-	docker buildx create --name multiarch --driver docker-container --use \
-	docker buildx build --platform linux/amd64,linux/arm64 -t bmff/wirtbot:$$(cat .version) -t bmff/wirtbot:latest --push -f Build-Automation/WirtBot/Dockerfile . \
+	docker buildx create --name multiarch --driver docker-container --use && \
+	docker buildx build --platform linux/amd64,linux/arm64 -t bmff/wirtbot:$$(cat .version) -t bmff/wirtbot:latest --push -f Build-Automation/WirtBot/Dockerfile . && \
 	docker buildx rm multiarch
 
