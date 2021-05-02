@@ -60,9 +60,11 @@ test-unit-ci:
 
 ## Maintenance
 update-versions:
-	./update_version.sh
+	./convenience-scripts/update-version.sh
 tag-release:
 	git tag v$$(cat .version)
+update-dependencies:
+	./convenience-scripts/update-dependencies.sh
 
 ## Build and release
 build-and-release:
