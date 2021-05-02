@@ -68,7 +68,8 @@ update-dependencies:
 
 ## Build and release
 build-and-release:
-	docker buildx create --name multiarch --driver docker-container --use && \
+	docker run --rm --privileged multiarch/qemu-user-static --reset -p yes && \
+	docker buildx create --name wirtbot --driver docker-container || docker buildx use wirtbot && \
 	docker buildx build --platform linux/amd64,linux/arm64 -t bmff/wirtbot:$$(cat .version) -t bmff/wirtbot:latest --push -f Build-Automation/WirtBot/Dockerfile . && \
-	docker buildx rm multiarch
+	docker buildx use default
 
