@@ -13,6 +13,7 @@
     "audit": "npm audit --production",
     "lint": "vue-cli-service lint",
     "dev": "vue-cli-service serve --mode=development",
+    "dev-test": "vue-cli-service serve --mode=localtest",
     "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'"
   },
   "dependencies": {

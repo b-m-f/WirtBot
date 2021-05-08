@@ -2,7 +2,7 @@ SHELL := /bin/bash
 
 ## Development
 dev: dev-client dev-server
-dev-tests: dev-client dev-tests-server
+dev-tests: dev-client-test dev-tests-server
 dev-server:
 	rm -rf /tmp/WirtBotTests && mkdir /tmp/WirtBotTests && \
 	touch /tmp/WirtBotTests/server.conf && \
@@ -24,6 +24,8 @@ dev-tests-server:
 	CONFIG_PATH=/tmp/WirtBotTests/server.conf cargo watch -x run || cd -
 dev-client: 
 	cd ./Interface && npm run dev
+dev-client-test: 
+	cd ./Interface && npm run dev-test
 dev-website: 
 	cd ./Website && npm run dev
 dev-setup:
