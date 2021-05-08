@@ -2,8 +2,9 @@ import assert from "assert";
 import { promises as fsPromises } from "fs";
 import process from "process";
 import { importBackup } from "./widgets/settings.mjs";
+import { setDNSName, setAPIHost } from "./widgets/network.mjs";
 import {
-  getConfig as getServerConfig,
+  addServer,
   downloadConfig as downloadServerConfig,
 } from "./widgets/server.mjs";
 import {
@@ -21,6 +22,15 @@ export default async (browser) => {
     let page = await browser.newPage();
     await page.goto(process.env.URL);
     await skipInitialConfig(page);
+    await addServer(page, { ip: "1.2.3.4", port: 1234 });
+    // make sure that server is saved into store before closing
+    // create config that should be overwritten
+    await setAPIHost(page, process.env.API);
+    // The DNS name has to set to .test to work in CI where the wirtbot is in the .test zone
+    // Check the Build-Automation directory for more info
+    await setDNSName(page, "test");
+
+    await page.waitForTimeout(500);
     await page.close();
 
     let backups = [
@@ -36,7 +46,6 @@ export default async (browser) => {
       await importBackup(page, backup);
 
       const json = JSON.parse(await readFile(backup));
-      const serverConfig = await getServerConfig(page);
 
       await page.waitForSelector(".device[data-name='test-1']");
       const deviceConfig1 = await getDeviceConfig(
@@ -53,12 +62,8 @@ export default async (browser) => {
 
       if (json.version < "2.3.4") {
         json.network.dns.ip.v4 = json.network.dns.ip.v4.join(".");
-        json.server.ip.v4 = json.server.ip.v4.join(".");
       }
       if (json.version < "2.5.0") {
-        // remove trailing . and : that were present before 2.5.0
-        json.server.subnet.v6.slice(0, -1);
-        json.server.subnet.v4.slice(0, -1);
         json.network.dns.ignoredZones = ["fritz.box", "home", "lan", "local"];
         json.network.dns.adblock = true;
       }
@@ -79,13 +84,6 @@ export default async (browser) => {
 
       assert.strictEqual(networkConfig.name, json.network.dns.name);
 
-      assert.strictEqual(serverConfig.name, json.server.name);
-      assert.deepStrictEqual(serverConfig.ip, json.server.ip);
-      assert.strictEqual(serverConfig.hostname, json.server.hostname);
-      assert.deepStrictEqual(serverConfig.subnet, json.server.subnet);
-      assert.strictEqual(serverConfig.port, json.server.port);
-
-      // How could the mapping from device in backup and from browser be more transparent
       assert.deepStrictEqual(deviceConfig1.ip, json.devices[1].ip);
       assert.strictEqual(deviceConfig1.name, json.devices[1].name);
       assert.strictEqual(deviceConfig1.MTU, json.devices[1].MTU);
@@ -120,18 +118,18 @@ export default async (browser) => {
       const devicePrivateKeyFromDownloadedConfig = downloadedDeviceConfig
         .match(/PrivateKey = .*/)[0]
         .replace("PrivateKey = ", "");
-      const serverPrivateKeyFromDownloadedConfig = downloadedServerConfig
-        .match(/PrivateKey = .*/)[0]
-        .replace("PrivateKey = ", "");
 
       assert.deepStrictEqual(
         devicePrivateKeyFromDownloadedConfig,
         json.devices[1].keys.private
       );
-      assert.deepStrictEqual(
-        serverPrivateKeyFromDownloadedConfig,
-        json.server.keys.private
-      );
+
+      for (let device of json.devices) {
+        assert.strictEqual(
+          downloadedServerConfig.includes(device.keys.public),
+          true
+        );
+      }
     }
   } catch (error) {
     console.error(error);
