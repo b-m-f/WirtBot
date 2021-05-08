@@ -366,11 +366,9 @@ const store = new Vuex.Store({
     async replaceState({ dispatch, commit }, newState) {
       // Clean the complete state first
       commit("resetDevices");
-      commit("resetServer");
       commit("resetDNS");
 
       commit("setKeys", newState.keys);
-      await dispatch("updateServer", newState.server);
       newState.devices.forEach(async (device) => {
         await dispatch("addDevice", device);
       });
