@@ -39,11 +39,14 @@ export default {
       this.file = event.target.files[0];
     },
     createBackup() {
+      let backup = JSON.parse(window.localStorage.getItem("vuex"));
+      // The server configuration is specific to a WirtBot and will not be backed up
+      delete backup["server"];
+      backup = JSON.stringify(backup);
       const element = document.createElement("a");
       element.setAttribute(
         "href",
-        "data:application/json;charset=utf-8," +
-          encodeURIComponent(window.localStorage.getItem("vuex"))
+        "data:application/json;charset=utf-8," + encodeURIComponent(backup)
       );
       element.setAttribute(
         "download",
