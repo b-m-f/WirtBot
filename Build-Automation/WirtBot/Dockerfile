@@ -61,7 +61,7 @@ RUN apt-get install make gcc xz-utils golang-go git -yy
 
 WORKDIR /
 
-ENV WG_TOOLS="wireguard-tools-1.0.20200827"
+ENV WG_TOOLS="wireguard-tools-1.0.20210424"
 
 COPY Build-Automation/WirtBot/$WG_TOOLS.tar.xz ./$WG_TOOLS.tar.xz
 RUN tar xf $WG_TOOLS.tar.xz
