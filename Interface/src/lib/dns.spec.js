@@ -205,6 +205,7 @@ wirt.test {
     ads {
       blacklist http://test.com/list.txt
       blacklist https://test2.com/list.txt
+      list-store /etc/coredns
       default-lists
       block test.com
       target 127.0.0.1

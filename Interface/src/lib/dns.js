@@ -81,6 +81,7 @@ export function generateDNSFile(server, clients, network) {
     };
     return `ads {
       ${lists()}
+      list-store /etc/coredns/blocklists
       default-lists
       ${hosts()}
       target 127.0.0.1
