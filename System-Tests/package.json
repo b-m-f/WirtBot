@@ -11,7 +11,7 @@
     "chromedriver": "90.0.0",
     "eslint": "7.26.0",
     "fibers": "5.0.0",
-    "playwright": "1.10.0",
+    "playwright": "1.11.0",
     "webpack-bundle-analyzer": "4.4.1"
   },
   "repository": {
