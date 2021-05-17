@@ -2,18 +2,37 @@
   <div id="server-widget">
     <h1>{{ $t("dashboard.widgets.server.title") }}</h1>
     <div class="row">
-      <label>{{ $t("dashboard.widgets.server.name") }}</label>
+      <label
+        >{{ $t("dashboard.widgets.server.name") }}{{ $t("optional") }}:</label
+      >
       <TextInput :value="server.name" name="server-name" @change="updateName" />
     </div>
     <div class="row">
-      <label>{{ $t("dashboard.widgets.server.ip") }}</label>
+      <label v-if="server.hostname"
+        >{{ $t("dashboard.widgets.server.ip") }}{{ $t("optional") }}:</label
+      >
+      <label v-else>{{ $t("dashboard.widgets.server.ip") }}</label>
       <IPInput
         :ip="server.ip.v4"
-        @change="({ ip, valid }) => updateIp({ ip: { v4: ip }, valid })"
+        @change="
+          ({ ip, valid }) =>
+            updateIp({
+              ip: {
+                v4: ip,
+              },
+              valid,
+            })
+        "
       />
     </div>
     <div class="row">
-      <label>{{ $t("dashboard.widgets.server.hostname") }}</label>
+      <label v-if="!server.ip.v4"
+        >{{ $t("dashboard.widgets.server.hostname") }}:</label
+      >
+      <label v-else
+        >{{ $t("dashboard.widgets.server.hostname")
+        }}{{ $t("optional") }}:</label
+      >
       <TextInput
         :value="server.hostname"
         name="server-hostname"
@@ -22,7 +41,7 @@
       />
     </div>
     <div class="row">
-      <label>{{ $t("dashboard.widgets.server.port") }}</label>
+      <label>{{ $t("dashboard.widgets.server.port") }}:</label>
       <NumberInput
         name="server-port"
         :value="server.port"
@@ -33,7 +52,7 @@
       />
     </div>
     <div class="row">
-      <label>{{ $t("dashboard.widgets.server.subnetv4") }}</label>
+      <label>{{ $t("dashboard.widgets.server.subnetv4") }}:</label>
       <TextInput
         :value="server.subnet.v4"
         name="server-subnet-v4"
@@ -44,7 +63,7 @@
       />
     </div>
     <div class="row">
-      <label>{{ $t("dashboard.widgets.server.subnetv6") }}</label>
+      <label>{{ $t("dashboard.widgets.server.subnetv6") }}:</label>
       <TextInput
         :value="server.subnet.v6"
         name="server-subnet-v6"
@@ -185,6 +204,9 @@ export default {
         this.$store.dispatch("updateServer", { ip });
         this.blocked = false;
       } else {
+        if (this.server.hostname) {
+          this.$store.dispatch("updateServer", { ip: "" });
+        }
         this.blocked = true;
       }
     },
