@@ -367,23 +367,31 @@ const store = new Vuex.Store({
       // Clean the complete state first
       commit("resetDevices");
       commit("resetDNS");
-
       commit("setKeys", newState.keys);
+
+      // None of these updates should trigger an update automatically!
+      // Otherwise the server config will be overwritten which might lead to the admin PC being locked out of the system
+      // That is why the commit functions are called directly
+
       // set the correct server keys
-      await dispatch("updateServer", newState.server);
+      commit("updateServer", newState.server);
       newState.devices.forEach(async (device) => {
-        await dispatch("addDevice", device);
+        commit("addDevice", device);
       });
-      await dispatch("updateDNSName", newState.network.dns.name);
-      await dispatch("updateDNSTls", newState.network.dns);
-      await dispatch("updateDNSIp", newState.network.dns.ip);
-      await dispatch("updateDNSAdblock", newState.network.dns.adblock);
-      await dispatch("updateDNSBlockLists", newState.network.dns.blockLists);
-      await dispatch("updateDNSBlockHosts", newState.network.dns.blockHosts);
-      await dispatch(
-        "updateDNSIgnoredZones",
-        newState.network.dns.ignoredZones
-      );
+      commit("updateDNS", {
+        tlsName: newState.network.dns.tlsName,
+        tls: newState.network.dns.tls,
+        name: newState.network.dns.name,
+        ip: newState.network.dns.ip,
+        adblock: newState.network.dns.adblock,
+        blockLists: newState.network.dns.blockLists,
+        blockHosts: newState.network.dns.blockHosts,
+        ignoredZones: newState.network.dns.ignoredZones,
+      });
+
+      // here we use a normal dispatch again to trigger config regeneration and API updates
+      await dispatch("updateServer");
+      await dispatch("updateDNS");
     },
   },
 
