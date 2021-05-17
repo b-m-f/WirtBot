@@ -40,8 +40,8 @@ export default {
     },
     createBackup() {
       let backup = JSON.parse(window.localStorage.getItem("vuex"));
-      // The server configuration is specific to a WirtBot and will not be backed up
-      delete backup["server"];
+      // The server configuration is specific to a WirtBot and will not be backed up except for the keys needed to keep configs valid
+      backup.server = { keys: backup.server.keys };
       backup = JSON.stringify(backup);
       const element = document.createElement("a");
       element.setAttribute(
