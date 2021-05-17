@@ -1,5 +1,6 @@
 {
   "learnMore": "Learn more",
+  "optional":  "(optional)",
   "app": {
     "name": "Wirt"
   },
@@ -37,18 +38,18 @@
         "title": "Settings",
         "import": "Import Backup",
         "export": "Create Backup",
-        "publicKey": "Public Key:",
+        "publicKey": "Public Key",
         "backup": "Backup",
         "updateUi": "Update the UI"
       },
       "server": {
         "title": "My server",
-        "name": "Server name (optional):",
-        "ip": "IP address:",
-        "port": "WireGuard is listening at Port:",
-        "hostname": "Hostname (optional):",
-        "subnetv4": "Subnet v4:",
-        "subnetv6": "Subnet v6:",
+        "name": "Server name",
+        "ip": "IP address",
+        "port": "WireGuard is listening at Port",
+        "hostname": "Hostname",
+        "subnetv4": "Subnet v4",
+        "subnetv6": "Subnet v6",
         "download": "Download config"
       },
       "dns": {
