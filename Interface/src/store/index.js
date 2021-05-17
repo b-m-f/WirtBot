@@ -369,6 +369,8 @@ const store = new Vuex.Store({
       commit("resetDNS");
 
       commit("setKeys", newState.keys);
+      // set the correct server keys
+      await dispatch("updateServer", newState.server);
       newState.devices.forEach(async (device) => {
         await dispatch("addDevice", device);
       });

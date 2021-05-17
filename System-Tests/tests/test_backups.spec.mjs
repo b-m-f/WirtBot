@@ -118,10 +118,17 @@ export default async (browser) => {
       const devicePrivateKeyFromDownloadedConfig = downloadedDeviceConfig
         .match(/PrivateKey = .*/)[0]
         .replace("PrivateKey = ", "");
+      const serverPublicKeyFromDownloadedConfig = downloadedDeviceConfig
+        .match(/PublicKey = .*/)[0]
+        .replace("PublicKey = ", "");
 
       assert.deepStrictEqual(
         devicePrivateKeyFromDownloadedConfig,
         json.devices[1].keys.private
+      );
+      assert.deepStrictEqual(
+        serverPublicKeyFromDownloadedConfig,
+        json.server.keys.public
       );
 
       for (let device of json.devices) {
