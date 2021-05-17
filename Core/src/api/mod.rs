@@ -189,13 +189,13 @@ pub async fn start_api() {
     info!("Loaded public key: {}", public_key_base64);
     let public_key = match crypto::decode_public_key_base64(public_key_base64) {
         Ok(key) => key,
-        Err(e) => panic!(e),
+        Err(e) => panic!("{}", e),
     };
 
     let port: String = env::var(PORT).unwrap_or(DEFAULT_PORT.into());
     let port: u16 = match port.parse() {
         Ok(port) => port,
-        Err(e) => panic!(e),
+        Err(e) => panic!("{}", e),
     };
     let host: Vec<u8> = env::var(HOST)
         .unwrap_or(DEFAULT_HOST.into())
