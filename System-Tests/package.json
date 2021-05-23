@@ -8,11 +8,11 @@
     "test:ci": "URL=http://wirtbot.test API=wirtbot.test:3030 ./run_all_tests.sh"
   },
   "dependencies": {
-    "chromedriver": "90.0.0",
-    "eslint": "7.26.0",
+    "chromedriver": "90.0.1",
+    "eslint": "7.27.0",
     "fibers": "5.0.0",
-    "playwright": "1.11.0",
-    "webpack-bundle-analyzer": "4.4.1"
+    "playwright": "1.11.1",
+    "webpack-bundle-analyzer": "4.4.2"
   },
   "repository": {
     "type": "git",
