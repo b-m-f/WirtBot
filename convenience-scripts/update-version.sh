@@ -10,6 +10,15 @@ cd Core
 cargo build
 cd ..
 
+
+mv CHANGELOG.md CHANGELOG.md.bkp
+git log $(git describe --tags --abbrev=0)..HEAD --pretty=tformat:"%h %s%n" > CHANGELOG.md
+cat CHANGELOG.md.bkp >> CHANGELOG.md
+mv CHANGELOG.md CHANGELOG.md.bkp
+echo "## $version" > CHANGELOG.md
+cat CHANGELOG.md.bkp >> CHANGELOG.md
+rm CHANGELOG.md.bkp
+
 git add .
 git commit -m "Updates to $version"
 echo "Finished updating. Update commit was added. Now create a Tag and push to release."
