@@ -50,7 +50,6 @@ module.exports = {
           { text: "Documentation", link: "/documentation/" },
           { text: "Screenshots", link: "/screenshots" },
           { text: "Announcements", link: "/announcements/" },
-          { text: "About", link: "/about" },
         ],
       },
       //   "/de/": {
