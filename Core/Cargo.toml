@@ -1,6 +1,6 @@
 [package]
 name = "wirtbot"
-version = "2.7.9"
+version = "2.7.10"
 authors = ["b-m-f <max@ehlers.berlin>"]
 edition = "2018"
 
