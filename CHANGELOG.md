@@ -1,3 +1,8 @@
+## 2.8.0
+9143ddf Remove old duplicate content from Changelog
+
+8323bec fix: run all tests script default values, add test for whitespace in dns blocklists. Removes whitespace before saving
+
 ## 2.7.10
 3f56d57 Updates dependencies
 
