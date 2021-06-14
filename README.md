@@ -51,11 +51,15 @@ These are some of the giants on whose shoulders the WirtBot is build
 
 - [reddit](https://reddit.com/r/WirtBot)
 
-## Docs
+## Documentation
 
-- [WirtBot docs](https://wirtbot.com/documentation)
-- [CONTRIBUTING.md](./CONTRIBUTING.md)
-- [ARCHITECTURE.md](./ARCHITECTURE.md)
+### Users 
+
+- [WirtBot Documentation](https://wirtbot.com/documentation)
+
+### Admins & Developers
+
+Check out the [Documentation](./Documentation) directory.
 
 ## LICENSE
 
