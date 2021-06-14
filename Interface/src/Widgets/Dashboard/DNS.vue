@@ -116,12 +116,14 @@ export default {
       this.$store.dispatch("updateDNSAdblock", active);
     },
     updateBlockLists(lists) {
+      lists = lists.replace(/\s/g, "");
       this.$store.dispatch(
         "updateDNSBlockLists",
         lists.split(",").filter((list) => list !== "")
       );
     },
     updateBlockHosts(hosts) {
+      hosts = hosts.replace(/\s/g, "");
       this.$store.dispatch(
         "updateDNSBlockHosts",
         hosts.split(",").filter((host) => host !== "")

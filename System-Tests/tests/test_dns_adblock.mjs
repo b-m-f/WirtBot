@@ -83,7 +83,7 @@ export default async (browser) => {
     dnsUpdateResponse = page.waitForResponse(/.*\/update-device-dns-entries/);
     await setBlockLists(
       page,
-      "http://test.com/list.txt,http://test2.com/list.txt"
+      "http://test.com/list.txt,http://test2       .com/list.txt"
     );
     await dnsUpdateResponse;
 
