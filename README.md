@@ -22,6 +22,7 @@ Oh, and it is completely free. My way of paying back to the OSS community for al
 - Backup functionality
 - Modern crypto-aware API to keep the WirtBot only under your control
 - Extensive testing of the System is done on each change to the code to ensure correctness
+- Works on ARM64 and X64
 
 ## Setup
 
