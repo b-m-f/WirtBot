@@ -1,3 +1,12 @@
+## 3.0.0
+bbecd64 feat(DNS): removes AdBlocking from WirtBot
+
+b9b2351 feature(Adblock): removes adblock from WirtBot. including block hosts and block lists as those are better suited for a downstream service
+
+714d6b8 fix(DNS): correctly parse IP addresses that include a 0
+
+e074c56 Create SECURITY.md
+
 ## 2.8.0
 9143ddf Remove old duplicate content from Changelog
 
