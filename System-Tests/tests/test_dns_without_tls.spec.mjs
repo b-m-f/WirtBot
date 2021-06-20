@@ -36,7 +36,7 @@ export default async (browser) => {
 
     dnsUpdateResponse = page.waitForResponse(/.*\/update-device-dns-entries/);
     await enableDNSTLS(page);
-    await setDNSIP(page, "1.2.3.4");
+    await setDNSIP(page, "1.0.3.4");
     await dnsUpdateResponse;
 
     await setDNSTlsName(page, "https://testdns.test");
@@ -75,7 +75,7 @@ export default async (browser) => {
       "utf-8"
     );
 
-    assert.match(dnsConfigFromCore, /.*tls:\/\/1.2.3.4/);
+    assert.match(dnsConfigFromCore, /.*tls:\/\/1.0.3.4/);
     assert.match(dnsConfigFromCore, /.*tls_servername testdns.test/);
 
     dnsUpdateResponse = page.waitForResponse(/.*\/update-device-dns-entries/);
@@ -86,7 +86,7 @@ export default async (browser) => {
     await page.waitForTimeout(100);
     dnsConfigFromCore = await readFile(`${wirtBotFileDir}/Corefile`, "utf-8");
 
-    assert.match(dnsConfigFromCore, /forward . 1.2.3.4/);
+    assert.match(dnsConfigFromCore, /forward . 1.0.3.4/);
     assert.doesNotMatch(dnsConfigFromCore, /.*tls_servername/);
   } catch (error) {
     console.error(error);

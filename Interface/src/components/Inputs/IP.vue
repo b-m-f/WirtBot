@@ -30,7 +30,7 @@ export default {
       try {
         newValue = ip.split(".").map((val, index) => {
           const number = parseInt(val);
-          if (!number) {
+          if (!number && number != 0) {
             valid = false;
             return 0;
           }
@@ -42,7 +42,7 @@ export default {
             valid = false;
             return number;
           }
-          if (newValue < 0) {
+          if (number < 0) {
             valid = false;
             return number;
           }
