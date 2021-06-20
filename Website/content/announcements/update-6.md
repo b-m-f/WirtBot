@@ -16,9 +16,9 @@ So here is the real update:
 The dependencies that made this possible were not mature enough and would need a lot of work to fit the WirtBot use-case.
 Deciding between helping the dependencies get their code fixed and removing AdBlocking from WirtBot was not easy.
 
-But in the end WirtBot is supposed to connect devices into a private network. While this private network needs a DNS, which is still included with request forwarding, DNSoverTLS etc. the job of blocking specific name resolutions is much better suited to be handled by project such as [pi-hole](https://pi-hole.net/).
+But in the end WirtBot is supposed to connect devices into a private network. While this private network needs a DNS (which is still included with request forwarding, DNSoverTLS etc.) the job of blocking specific name resolutions is much better suited to be handled by a project such as [pi-hole](https://pi-hole.net/).
 
-Simply forwarding DNS requests from the WirtBot network to your own **pi-hole** instance achieves the desired ad-blocking and WirtBot can retain its focus and a user can leverage the maturity of the **pi-hole** project.
+Simply forwarding DNS requests from the WirtBot network to your own **pi-hole** instance achieves the desired AdBlocking, WirtBot can retain its focus and a user can leverage the maturity of the **pi-hole** project.
 
 The change is rolled out in version **3.0.0**.
 
