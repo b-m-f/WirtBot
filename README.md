@@ -18,7 +18,6 @@ Oh, and it is completely free. My way of paying back to the OSS community for al
 - Dashboard to create and manage WireGuard based networks
 - DNS zones for all connected devices
 - DNS forwarding, including DNSoverTLS
-- Optional AdBlocking with support for Block Lists and individual blocked Hosts
 - Real time metrics for DNS and WireGuard to be used with Prometheus
 - Backup functionality
 - Modern crypto-aware API to keep the WirtBot only under your control
@@ -38,7 +37,6 @@ These are some of the giants on whose shoulders the WirtBot is build
 
 - [WireGuard® ](https://wireguard.com)
 - [coredns](https://coredns.io/)
-- [coredns ads plugin](https://github.com/c-mueller/ads/)
 - [VueJs](https://v3.vuejs.org/)
 - [VuePress](https://vuepress.vuejs.org/)
 - [docker](https://www.docker.com/)
@@ -53,7 +51,7 @@ These are some of the giants on whose shoulders the WirtBot is build
 
 ## Documentation
 
-### Users 
+### Users
 
 - [WirtBot Documentation](https://wirtbot.com/documentation)
 

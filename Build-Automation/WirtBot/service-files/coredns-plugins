@@ -3,7 +3,6 @@ cancel:cancel
 tls:tls
 reload:reload
 debug:debug
-ads:ads
 health:health
 prometheus:metrics
 errors:errors

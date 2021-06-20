@@ -1,13 +1,6 @@
 . {
     reload
     prometheus 0.0.0.0:9153
-    ads {
-      
-      default-lists
-      
-      target 127.0.0.1
-      target-ipv6 ::1
-    }
     forward . tls://1.1.1.1 {
        except test fritz.box lan local home
        tls_servername cloudflare-dns.com

@@ -70,17 +70,12 @@ RUN cd $WG_TOOLS/src && make && mv wg / && mv wg-quick/linux.bash /wg-quick && c
 
 
 
-# Compile CoreDNS with Ads plugin from https://github.com/c-mueller/ads
 FROM golang:1.15.8-buster as coredns
 
 RUN git clone https://github.com/coredns/coredns.git /go/src/github.com/coredns/coredns
-RUN git clone https://github.com/c-mueller/ads.git /go/src/github.com/c-mueller/ads
-WORKDIR /go/src/github.com/c-mueller/ads
-RUN rm go.mod go.sum || true
 WORKDIR /go/src/github.com/coredns/coredns
 RUN  git checkout $(git describe --tags --abbrev=0)
 COPY Build-Automation/WirtBot/service-files/coredns-plugins plugin.cfg
-RUN ln -s /go/src/github.com/c-mueller/ads/ plugin/ads
 RUN make gen && make
 RUN mv coredns /coredns
 RUN /coredns -plugins

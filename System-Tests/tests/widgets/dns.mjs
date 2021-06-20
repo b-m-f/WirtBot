@@ -18,9 +18,6 @@ export const getConfig = async (page) => {
   const dnsTLSCheckbox = await dns.$("input[name='tls']");
   const dnsIP = await dns.$("input[name='ip-input']");
   const dnsIgnoredZones = await dns.$("textarea[name='ignoredZones']");
-  const adblock = await dns.$("input[name='adblock']");
-  const blockLists = await dns.$("textarea[name='blockLists']");
-  const blockHosts = await dns.$("textarea[name='blockHosts']");
 
   const tlsEnabled = await dnsTLSCheckbox.evaluate((e) => e.checked);
 
@@ -31,9 +28,6 @@ export const getConfig = async (page) => {
       v4: await dnsIP.evaluate((e) => e.value),
     },
     ignoredZones: await dnsIgnoredZones.evaluate((e) => e.value),
-    adblock: await adblock.evaluate((e) => e.checked),
-    blockLists: await blockLists.evaluate((e) => e.value),
-    blockHosts: await blockHosts.evaluate((e) => e.value),
   };
 };
 
@@ -55,18 +49,6 @@ export const disableDNSTLS = async (page) => {
   await checkbox.uncheck();
 };
 
-export const enableAdblock = async (page) => {
-  const dns = await dnsWidget(page);
-  const checkbox = await dns.$("input[name='adblock']");
-  await checkbox.check();
-};
-
-export const disableAdblock = async (page) => {
-  const dns = await dnsWidget(page);
-  const checkbox = await dns.$("input[name='adblock']");
-  await checkbox.uncheck();
-};
-
 export const setDNSIP = async (page, ip) => {
   const dns = await dnsWidget(page);
   const input = await dns.$("input[name='ip-input']");
@@ -77,16 +59,4 @@ export const setIgnoredZones = async (page, zones) => {
   const dns = await dnsWidget(page);
   const input = await dns.$("textarea[name='ignoredZones']");
   await input.fill(zones);
-};
-
-export const setBlockLists = async (page, lists) => {
-  const dns = await dnsWidget(page);
-  const input = await dns.$("textarea[name='blockLists']");
-  await input.fill(lists);
-};
-
-export const setBlockHosts = async (page, hosts) => {
-  const dns = await dnsWidget(page);
-  const input = await dns.$("textarea[name='blockHosts']");
-  await input.fill(hosts);
 };

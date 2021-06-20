@@ -65,7 +65,6 @@ export default async (browser) => {
       }
       if (json.version < "2.5.0") {
         json.network.dns.ignoredZones = ["fritz.box", "home", "lan", "local"];
-        json.network.dns.adblock = true;
       }
 
       assert.strictEqual(dnsConfig.ip.v4, json.network.dns.ip.v4);
@@ -74,13 +73,6 @@ export default async (browser) => {
       for (let zone of json.network.dns.ignoredZones) {
         assert(dnsConfig.ignoredZones.includes(zone));
       }
-      for (let list of json.network.dns.blockLists || []) {
-        assert(dnsConfig.blockLists.includes(list));
-      }
-      for (let host of json.network.dns.blockHosts || []) {
-        assert(dnsConfig.blockHosts.includes(host));
-      }
-      assert.strictEqual(dnsConfig.adblock, json.network.dns.adblock);
 
       assert.strictEqual(networkConfig.name, json.network.dns.name);
 

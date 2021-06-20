@@ -64,30 +64,6 @@ export function generateDNSFile(server, clients, network) {
     }`;
     }
   };
-  const adblock = () => {
-    const lists = () => {
-      let config = "    ";
-      for (let list of network.dns.blockLists) {
-        config = `${config}blacklist ${list}\n      `;
-      }
-      return config.trim();
-    };
-    const hosts = () => {
-      let config = "";
-      for (let host of network.dns.blockHosts) {
-        config = `${config}block ${host}\n      `;
-      }
-      return config.trim();
-    };
-    return `ads {
-      ${lists()}
-      list-store /etc/coredns/blocklists
-      default-lists
-      ${hosts()}
-      target 127.0.0.1
-      target-ipv6 ::1
-    }`;
-  };
 
   let masterFile = `. {
     reload
@@ -101,22 +77,5 @@ ${network.dns.name} {
         ${deviceNames.join("\n        ")}
     }
 }`;
-
-  // File with adblocking
-  if (network.dns.adblock) {
-    masterFile = `. {
-    reload
-    prometheus 0.0.0.0:9153
-    ${adblock()}
-    ${forwardConfig()}
-    cache 30
-}
-${network.dns.name} {
-    hosts {
-        ${serverName()}
-        ${deviceNames.join("\n        ")}
-    }
-}`;
-  }
   return masterFile.trim();
 }
