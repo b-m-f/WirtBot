@@ -38,38 +38,6 @@
         @change="updateIgnoredZones"
       />
     </div>
-    <div class="row">
-      <label for="adblock">{{ $t("dashboard.widgets.dns.adblock") }}</label>
-      <CheckBox name="adblock" :checked="dns.adblock" @change="updateAdblock" />
-    </div>
-    <div class="row" v-if="dns.adblock">
-      <label for="blockLists">{{
-        $t("dashboard.widgets.dns.blockLists")
-      }}</label>
-      <TextInput
-        :value="dns.blockLists.join(',')"
-        name="blockLists"
-        :title="$t('infos.commaList')"
-        multiline
-        :invalidMessage="$t('errors.invalid')"
-        :validate="validBlockLists"
-        @change="updateBlockLists"
-      />
-    </div>
-    <div class="row" v-if="dns.adblock">
-      <label for="blockHosts">{{
-        $t("dashboard.widgets.dns.blockHosts")
-      }}</label>
-      <TextInput
-        :value="dns.blockHosts.join(',')"
-        name="blockHosts"
-        :title="$t('infos.commaList')"
-        multiline
-        :invalidMessage="$t('errors.invalid')"
-        :validate="validBlockHosts"
-        @change="updateBlockHosts"
-      />
-    </div>
   </div>
 </template>
 
@@ -112,54 +80,10 @@ export default {
         zones.split(",").filter((zones) => zones !== "")
       );
     },
-    updateAdblock(active) {
-      this.$store.dispatch("updateDNSAdblock", active);
-    },
-    updateBlockLists(lists) {
-      lists = lists.replace(/\s/g, "");
-      this.$store.dispatch(
-        "updateDNSBlockLists",
-        lists.split(",").filter((list) => list !== "")
-      );
-    },
-    updateBlockHosts(hosts) {
-      hosts = hosts.replace(/\s/g, "");
-      this.$store.dispatch(
-        "updateDNSBlockHosts",
-        hosts.split(",").filter((host) => host !== "")
-      );
-    },
     validIgnoredZones(zones) {
       try {
         for (let zone of zones.split(",")) {
           if (zone === "") {
-            return false;
-          }
-        }
-        return true;
-      } catch (error) {
-        return false;
-      }
-    },
-    validBlockLists(lists) {
-      try {
-        for (let list of lists.split(",")) {
-          if (list === "") {
-            return false;
-          }
-          if (!list.includes("http")) {
-            return false;
-          }
-        }
-        return true;
-      } catch (error) {
-        return false;
-      }
-    },
-    validBlockHosts(hosts) {
-      try {
-        for (let host of hosts.split(",")) {
-          if (host === "") {
             return false;
           }
         }
