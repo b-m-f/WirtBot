@@ -202,7 +202,9 @@ export default {
     getNextHighestIPv4() {
       let nextHighest = 2;
 
-      let dev = this.devices.map((device) => device.ip.v4).sort();
+      let dev = this.devices
+        .map((device) => device.ip.v4)
+        .sort((first, second) => first - second);
       dev.forEach((ip) => {
         if (ip === nextHighest) {
           nextHighest = ip + 1;
