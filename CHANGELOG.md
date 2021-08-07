@@ -1,3 +1,16 @@
+## 3.0.1
+809e8f1 fix(Interface): fix bug that always show 10 as next highst IP. Yup, a well known JavaScript trap of .sort()
+
+7a40565 chore(Build Automation): Upgrades Rust version for WASM compilation to 1.54.0
+
+696de66 chore: upgrades dependencies
+
+2330527 fix(wireguard config generation): Makes sure that configurations that use hostnames only work as expected
+
+10868a0 chore(Website): updates blogpost
+
+33439bd Update README.md
+
 ## 3.0.0
 bbecd64 feat(DNS): removes AdBlocking from WirtBot
 
