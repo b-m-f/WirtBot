@@ -34,7 +34,8 @@ export default async (browser) => {
     await setDNSTlsName(page, "testdns.test");
 
     await addServer(page, {
-      ip: "1.2.3.4",
+      // In contrast to the simple network this also tests that a server with a hostname and no IP can be used
+      hostname: "test.test",
       port: 1234,
       subnet: { v4: "10.11.0", v6: "1001::1000" },
       name: "test",
@@ -86,7 +87,7 @@ export default async (browser) => {
       "utf-8"
     );
 
-    assert.match(deviceConfigOne, /.*Endpoint = 1.2.3.4:1234/);
+    assert.match(deviceConfigOne, /.*Endpoint = test.test:1234/);
     assert.match(deviceConfigOne, /.*Address = 10.11.0.2/);
     assert.match(deviceConfigOne, /.*DNS = 10.11.0.1,2.2.2.2/);
     assert.match(deviceConfigOne, /.*MTU = 1500/);
