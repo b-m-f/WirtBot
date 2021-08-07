@@ -30,7 +30,7 @@ export function generateDeviceConfig(
   }
   if (
     !server.keys ||
-    (!server.ip.v4 && !server.ip.v6) ||
+    ((!server.ip || (!server.ip.v4 && !server.ip.v6)) && !server.hostname) ||
     !server.port ||
     (!subnetv4 && !subnetv6)
   ) {
