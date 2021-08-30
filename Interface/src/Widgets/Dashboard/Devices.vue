@@ -2,7 +2,7 @@
   <div id="device-widget">
     <h1>{{ $t("dashboard.widgets.devices.title") }}</h1>
     <DeviceTable
-      :devices="devices"
+      :devices="devicesToBeDisplayedByTable || this.devices"
       @device-saved="removeNewDevice"
       @cancel-new-device="removeNewDevice"
     />
@@ -21,26 +21,26 @@ export default {
   data() {
     return {
       newDevice: undefined,
+      // This will be undefined on first render as the store should be accessed via computed properties.
+      // With this knowledge in mind the :devices parameter to the DeviceTables has a fallback to the computed devices property.
+      // Only when a new device is to be added will this property become active on this component
+      devicesToBeDisplayedByTable: this.devices,
     };
   },
   computed: {
     devices() {
-      if (this.newDevice) {
-        return [...this.$store.state.devices, this.newDevice];
-      } else {
-        return [...this.$store.state.devices];
-      }
+      return this.$store.state.devices;
     },
   },
   methods: {
     addNewDevice() {
-      // this will update the newDevice on this component and trigger
-      // the computed to be evaluated again, thus creating a new empty device on top
-      // of the ones available in the store.
-      this.newDevice = Object.assign({}, this.newDevice);
+      this.devicesToBeDisplayedByTable = [
+        ...this.devices,
+        Object.assign({}, this.newDevice),
+      ];
     },
     removeNewDevice() {
-      this.newDevice = undefined;
+      this.devicesToBeDisplayedByTable = this.devices;
     },
   },
 };
