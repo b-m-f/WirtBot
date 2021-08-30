@@ -1,3 +1,6 @@
+## 3.0.2
+9600353 fix(Interface): hides blink bug (newly added device shows up from state and from internal component state for a short time\) when a new device was added
+
 ## 3.0.1
 809e8f1 fix(Interface): fix bug that always show 10 as next highst IP. Yup, a well known JavaScript trap of .sort()
 
