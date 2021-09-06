@@ -78,6 +78,9 @@ export const addNewDevice = async (
   const widget = await deviceWidget(page);
   const addDeviceButton = await widget.$("#add-device");
   await addDeviceButton.click();
+  let device = await widget.$(".device:last-child");
+  await expandDevice(device);
+
   // Vue might rerender and remove the old handle from the DOM
   // Because of this the device is refetched before every change
   if (v4) {
@@ -111,6 +114,8 @@ export const updateDevice = async (
   oldName,
   { ip: { v4, v6 }, name, type, additionalDNSServers, MTU }
 ) => {
+  let device = await getDeviceByName(page, oldName);
+  await expandDevice(device);
   // Vue might rerender and remove the old handle from the DOM
   // Because of this the device is refetched before every change
   if (v4) {
@@ -155,4 +160,14 @@ export const deleteDevice = async (page, name) => {
   let device = await getDeviceByName(page, name);
   const deleteButton = await device.$("button.delete");
   await deleteButton.click();
+};
+
+export const expandDevice = async (device) => {
+  const button = await device.$("button.show-more");
+  await button.click();
+};
+
+export const hideDevice = async (device) => {
+  const button = await device.$("button.show-less");
+  await button.click();
 };

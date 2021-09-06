@@ -1,11 +1,15 @@
 import * as assert from "assert";
 import { promises as fsPromises } from "fs";
-const { readFile } = fsPromises;
 import process from "process";
 
 import { setDNSName, setAPIHost } from "./widgets/network.mjs";
 import { addServer } from "./widgets/server.mjs";
-import { addNewDevice, setIPv6, setIPv4 } from "./widgets/devices.mjs";
+import {
+  addNewDevice,
+  setIPv6,
+  setIPv4,
+  expandDevice,
+} from "./widgets/devices.mjs";
 import { skipInitialConfig } from "./widgets/initial_setup.mjs";
 
 export default async (browser) => {
@@ -64,6 +68,7 @@ export default async (browser) => {
     );
     assert.strictEqual(valid, false);
 
+    await expandDevice(device);
     // IPv6 cant be 0001, where the server is
     await setIPv6(device, 256);
     valid = await page.$eval(

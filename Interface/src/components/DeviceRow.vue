@@ -45,7 +45,7 @@
           />
         </div>
       </div>
-      <div class="ip-v6">
+      <div class="ip-v6 extras" :class="{ hidden: !this.showMore }">
         <label for="device-ipv6">{{
           $t("dashboard.widgets.devices.labels.ipv6")
         }}</label>
@@ -77,7 +77,7 @@
         @change="updateType"
       />
     </td>
-    <td class="column-four">
+    <td class="column-four extras" :class="{ hidden: !this.showMore }">
       <div class="mtu">
         <label for="MTU">
           {{ $t("dashboard.widgets.devices.labels.MTU") }}
@@ -115,7 +115,7 @@
         />
       </div>
     </td>
-    <td class="column-five">
+    <td class="column-five extras" :class="{ hidden: !this.showMore }">
       <div class="routed">
         <label for="routed">{{
           $t("dashboard.widgets.devices.labels.routed")
@@ -128,9 +128,13 @@
       </div>
     </td>
     <td class="column-six">
+      <button v-if="qr" type="button" class="show-qr" @click="toggleQR">
+        {{ $t("dashboard.widgets.devices.labels.show-qr") }}
+      </button>
       <img
         v-if="qr"
         class="qr-code"
+        :class="{ hidden: this.showQR }"
         :src="qr"
         alt="QR Code for config of mobile devices"
       />
@@ -146,6 +150,12 @@
         {{ $t("dashboard.widgets.devices.labels.download") }}
       </button>
     </td>
+    <button v-if="!this.showMore" class="show-more" @click="toggleMore">
+      {{ $t("dashboard.widgets.devices.labels.more") }}
+    </button>
+    <button v-if="this.showMore" class="show-less" @click="toggleMore">
+      {{ $t("dashboard.widgets.devices.labels.less") }}
+    </button>
   </tr>
 </template>
 
@@ -178,6 +188,8 @@ export default {
       invalidIPv6Message: "",
       invalidAdditionalDNSServersMessage: "",
       internalDeviceCacheForNewDevices: {},
+      showMore: false,
+      showQR: true,
     };
   },
   computed: {
@@ -193,6 +205,12 @@ export default {
   },
   mounted() {},
   methods: {
+    toggleMore() {
+      this.showMore = !this.showMore;
+    },
+    toggleQR() {
+      this.showQR = !this.showQR;
+    },
     downloadConfig() {
       const config = this.devices.find(
         (device) => this.$props.id === device.id
@@ -343,11 +361,8 @@ export default {
   justify-content: space-between;
 }
 
-.delete {
-  margin-top: $spacing-small;
-}
-
-.stop {
+button {
+  max-height: 1.5rem;
   margin-top: $spacing-small;
 }
 
@@ -357,6 +372,10 @@ export default {
   align-self: center;
   margin-bottom: $spacing-medium;
   margin-top: $spacing-medium;
+}
+
+.hidden {
+  display: none !important;
 }
 
 .required {

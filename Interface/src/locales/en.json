@@ -74,7 +74,11 @@
           "name": "Name",
           "type": "Device",
           "download": "Download",
-          "delete": "Delete"
+          "delete": "Delete",
+          "show-qr": "Show QR Code",
+          "more": "Expand",
+          "less": "Hide"
+
         },
         "placeholder": {
           "additionalDNSServers": "Comma seperated",
