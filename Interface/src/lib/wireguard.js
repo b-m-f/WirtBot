@@ -1,5 +1,5 @@
 export function generateDeviceConfig(
-  { ip, keys, routed, additionalDNSServers, MTU },
+  { ip, keys, routed, additionalDNSServers, MTU, port },
   server
 ) {
   const subnetv4 =
@@ -49,67 +49,64 @@ export function generateDeviceConfig(
   }
 
   if (ip.v4 && !ip.v6) {
-    return `[Interface]
-Address = ${subnetv4}.${ip.v4}
-PrivateKey = ${keys.private}
-DNS = ${subnetv4}.1${
-      additionalDNSServers ? `,${additionalDNSServers.join(",")}` : ``
-    }
-${
-  MTU
-    ? `MTU = ${MTU}
-`
-    : ``
-}
+    return (
+      `[Interface]\n` +
+      `Address = ${subnetv4}.${ip.v4}\n` +
+      `PrivateKey = ${keys.private}\n` +
+      `DNS = ${subnetv4}.1${
+        additionalDNSServers ? `,${additionalDNSServers.join(",")}` : ``
+      }\n` +
+      `${port ? `ListenPort = ${port}\n` : ``}` +
+      `${MTU ? `MTU = ${MTU}\n` : ``}` +
+      `
 [Peer]
 Endpoint = ${endpoint}
 AllowedIPs = ${allowedIps}
 PublicKey = ${server.keys.public}
 
 ## keep connection alive behind NAT
-PersistentKeepalive = 25`;
+PersistentKeepalive = 25`
+    );
   }
   if (!ip.v4 && ip.v6) {
-    return `[Interface]
-Address = ${subnetv6}:${ip.v6}
-PrivateKey = ${keys.private}
-DNS = ${subnetv6}:0001${
-      additionalDNSServers ? `,${additionalDNSServers.join(",")}` : ``
-    }
-${
-  MTU
-    ? `MTU = ${MTU}
-`
-    : ``
-}
+    return (
+      `[Interface]\n` +
+      `Address = ${subnetv6}:${ip.v6}\n` +
+      `PrivateKey = ${keys.private}\n` +
+      `DNS = ${subnetv6}:0001${
+        additionalDNSServers ? `,${additionalDNSServers.join(",")}` : ``
+      }\n` +
+      `${port ? `ListenPort = ${port}\n` : ``}` +
+      `${MTU ? `MTU = ${MTU}\n` : ``}` +
+      `
 [Peer]
 Endpoint = ${endpoint}
 AllowedIPs = ${allowedIps}
 PublicKey = ${server.keys.public}
 
 ## keep connection alive behind NAT
-PersistentKeepalive = 25`;
+PersistentKeepalive = 25`
+    );
   }
   if (ip.v4 && ip.v6) {
-    return `[Interface]
-Address = ${subnetv4}.${ip.v4},${subnetv6}:${ip.v6}
-PrivateKey = ${keys.private}
-DNS = ${subnetv4}.1${
-      additionalDNSServers ? `,${additionalDNSServers.join(",")}` : ``
-    }
-${
-  MTU
-    ? `MTU = ${MTU}
-`
-    : ``
-}
+    return (
+      `[Interface]\n` +
+      `Address = ${subnetv4}.${ip.v4},${subnetv6}:${ip.v6}\n` +
+      `PrivateKey = ${keys.private}\n` +
+      `DNS = ${subnetv4}.1${
+        additionalDNSServers ? `,${additionalDNSServers.join(",")}` : ``
+      }\n` +
+      `${port ? `ListenPort = ${port}\n` : ``}` +
+      `${MTU ? `MTU = ${MTU}\n` : ""}` +
+      `
 [Peer]
 Endpoint = ${endpoint}
 AllowedIPs = ${allowedIps}
 PublicKey = ${server.keys.public}
 
 ## keep connection alive behind NAT
-PersistentKeepalive = 25`;
+PersistentKeepalive = 25`
+    );
   }
 }
 

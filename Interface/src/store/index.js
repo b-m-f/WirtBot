@@ -64,9 +64,7 @@ const initialState = {
     hostname: "",
     name: "wirtbot",
   },
-  devices: [
-    /* {ip: {v4, v6}, name, type, id}*/
-  ],
+  devices: [],
   deviceTypes: ["Android", "Windows", "MacOS", "iOS", "Linux", "FreeBSD"],
   network: {
     dns: {
@@ -280,14 +278,14 @@ const store = new Vuex.Store({
     },
     async addDevice(
       { commit, dispatch, state },
-      { id, name, ip, type, routed, additionalDNSServers, MTU, keys }
+      { id, name, ip, type, routed, additionalDNSServers, MTU, keys, port }
     ) {
       try {
         if (!keys) {
           keys = await getKeys();
         }
         const newDevice = await addConfigToDevice(
-          { id, keys, name, ip, type, routed, additionalDNSServers, MTU },
+          { id, keys, name, ip, type, routed, additionalDNSServers, MTU, port },
           state.server
         );
         commit("addDevice", newDevice);

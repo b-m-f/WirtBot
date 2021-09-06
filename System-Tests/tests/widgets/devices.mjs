@@ -66,6 +66,11 @@ const setType = async (device, type) => {
   await select.selectOption(type);
 };
 
+const setPort = async (device, port) => {
+  const input = await device.$("input[name='device-port']");
+  await input.fill(port.toString());
+};
+
 const getDeviceByName = async (page, name) => {
   const widget = await deviceWidget(page);
   return await widget.$(`.device[data-name=${name}]`);
@@ -73,11 +78,12 @@ const getDeviceByName = async (page, name) => {
 
 export const addNewDevice = async (
   page,
-  { ip: { v4, v6 }, name, type, additionalDNSServers, MTU }
+  { ip: { v4, v6 }, name, type, additionalDNSServers, MTU, port }
 ) => {
   const widget = await deviceWidget(page);
   const addDeviceButton = await widget.$("#add-device");
   await addDeviceButton.click();
+
   let device = await widget.$(".device:last-child");
   await expandDevice(device);
 
@@ -103,6 +109,11 @@ export const addNewDevice = async (
     let device = await widget.$(".device:last-child");
     await setMTU(device, MTU);
   }
+  if (port) {
+    let device = await widget.$(".device:last-child");
+    await setPort(device, port);
+  }
+  // This is set last as it is the last necessary item to trigger an auto save on the device
   if (type) {
     let device = await widget.$(".device:last-child");
     await setType(device, type);
@@ -112,7 +123,7 @@ export const addNewDevice = async (
 export const updateDevice = async (
   page,
   oldName,
-  { ip: { v4, v6 }, name, type, additionalDNSServers, MTU }
+  { ip: { v4, v6 }, name, type, additionalDNSServers, MTU, port }
 ) => {
   let device = await getDeviceByName(page, oldName);
   await expandDevice(device);
@@ -141,6 +152,10 @@ export const updateDevice = async (
   if (MTU) {
     let device = await getDeviceByName(page, oldName);
     await setMTU(device, MTU);
+  }
+  if (port) {
+    let device = await getDeviceByName(page, oldName);
+    await setPort(device, port);
   }
 };
 

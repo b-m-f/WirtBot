@@ -61,6 +61,23 @@
           />
         </div>
       </div>
+      <div class="port extras" :class="{ hidden: !this.showMore }">
+        <label for="device-port">{{
+          $t("dashboard.widgets.devices.labels.port")
+        }}</label>
+        <div class="value">
+          <NumberInput
+            :name="'device-port'"
+            :value="$props.port || undefined"
+            @change="(port) => updatePort(port)"
+            placeholder="1-65535"
+            :min="1"
+            :max="65535"
+            :validate="validatePort"
+            :invalidMessage="$t('errors.devicePort')"
+          />
+        </div>
+      </div>
     </td>
     <td class="column-three">
       <label for="device-type">{{
@@ -271,10 +288,16 @@ export default {
       this.save({ additionalDNSServers: servers });
     },
     validateMTU(mtu) {
-      return mtu >= 1320 && parseInt(mtu) < 1800;
+      return parseInt(mtu) >= 1320 && parseInt(mtu) < 1800;
     },
     updateMTU(mtu) {
       this.save({ MTU: mtu });
+    },
+    validatePort(port) {
+      return parseInt(port) >= 1 && parseInt(port) <= 65535;
+    },
+    updatePort(port) {
+      this.save({ port: port });
     },
     validateIPv4(ip) {
       this.invalidIPv4Message = "";
@@ -330,11 +353,9 @@ export default {
   margin-bottom: $spacing-small;
 }
 .ip-input {
-  & .ip-v4 {
-    margin-bottom: $spacing-small;
-  }
   & .ip-v6,
   .ip-v4 {
+    margin-bottom: $spacing-small;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -352,6 +373,12 @@ export default {
       width: 4rem;
     }
   }
+}
+
+.port {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .additionalDNSServers,

@@ -8,12 +8,17 @@ describe("WireGuard device generation", () => {
       subnet: { v4: "10.10.10" },
       keys: { private: "test", public: "test" },
     };
-    const device = { ip: { v4: 2 }, keys: { public: "test", private: "test" } };
+    const device = {
+      ip: { v4: 2 },
+      port: 2222,
+      keys: { public: "test", private: "test" },
+    };
     expect(generateDeviceConfig(device, server)).toBe(
       `[Interface]
 Address = 10.10.10.2
 PrivateKey = test
 DNS = 10.10.10.1
+ListenPort = 2222
 
 [Peer]
 Endpoint = 1.1.1.1:11111

@@ -11,6 +11,7 @@
             :type="device.type"
             :name="device.name"
             :routed="device.routed"
+            :port="device.port"
             :qr="device.qr"
             :config="device.config"
             :additionalDNSServers="device.additionalDNSServers"
@@ -62,6 +63,7 @@ export default {
       routed,
       additionalDNSServers,
       MTU,
+      port,
     }) {
       if (id) {
         return await this.updateDevice({
@@ -72,6 +74,7 @@ export default {
           routed,
           additionalDNSServers,
           MTU,
+          port,
         });
       }
 
@@ -84,6 +87,7 @@ export default {
         routed,
         additionalDNSServers,
         MTU,
+        port,
       };
       if (!device.ip || !device.name || !device.type) {
         return;

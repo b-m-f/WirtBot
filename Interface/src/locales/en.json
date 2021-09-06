@@ -77,7 +77,8 @@
           "delete": "Delete",
           "show-qr": "Show QR Code",
           "more": "Expand",
-          "less": "Hide"
+          "less": "Hide",
+          "port": "Port"
 
         },
         "placeholder": {
@@ -163,6 +164,7 @@
     "deviceIpUsed": "Error when adding Device: The IP is already used in the network. Please choose another one.",
     "deviceIpServer": "Error when adding Device: IP number 1 belongs to the server",
     "deviceMTU": "Please add an MTU between 1320 and 1800",
+    "devicePort": "Please add a port between 1 and 65535",
     "deviceAdditionalDNSServers": "Please enter a comma separated list of DNS server IPs",
     "serverUpdate": "Error when updating the server.",
     "documentation": "Please check the documentation or contact us to find a solution.",
