@@ -12,6 +12,7 @@ import {
 } from "./widgets/server.mjs";
 import {
   addNewDevice,
+  expandDevice,
   downloadConfig as downloadDeviceConfig,
 } from "./widgets/devices.mjs";
 import { skipInitialConfig } from "./widgets/initial_setup.mjs";
