@@ -48,6 +48,7 @@ export default async (browser) => {
       type: "Android",
       additionalDNSServers: "2.2.2.2",
       MTU: 1500,
+      port: 2222,
     });
     await addNewDevice(page, {
       ip: { v4: 3, v6: "fffe" },
@@ -92,6 +93,7 @@ export default async (browser) => {
     assert.match(deviceConfigOne, /.*Address = 10.11.0.2/);
     assert.match(deviceConfigOne, /.*DNS = 10.11.0.1,2.2.2.2/);
     assert.match(deviceConfigOne, /.*MTU = 1500/);
+    assert.match(deviceConfigOne, /.*ListenPort = 2222/);
 
     assert.match(deviceConfigTwo, /.*Endpoint = test.test:1234/);
     assert.match(deviceConfigTwo, /.*Address = 10.11.0.3,1001::1000:fffe/);
