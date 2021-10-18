@@ -72,7 +72,7 @@ export default {
           this.$store.dispatch("updateDNSIp", ip);
         }
         if (hostname) {
-          this.$store.dispatch("updateDNSHostname", hostname);
+          this.$store.dispatch("updateDNSHostname", { hostname });
         }
       }
     },
