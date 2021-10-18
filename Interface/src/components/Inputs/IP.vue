@@ -12,6 +12,7 @@
 
 <script>
 import TextInput from "components/Inputs/Text";
+import { validateIPv4 } from "../../lib/helpers";
 
 export default {
   components: { TextInput },
@@ -25,37 +26,7 @@ export default {
   },
   methods: {
     validateIP(ip) {
-      let newValue;
-      let valid = true;
-      try {
-        newValue = ip.split(".").map((val, index) => {
-          const number = parseInt(val);
-          if (!number && number != 0) {
-            valid = false;
-            return 0;
-          }
-          if (number > 255) {
-            valid = false;
-            return number;
-          }
-          if ((index == 3 || index == 0) && number < 1) {
-            valid = false;
-            return number;
-          }
-          if (number < 0) {
-            valid = false;
-            return number;
-          }
-          return number;
-        });
-
-        if (newValue.length < 4) {
-          valid = false;
-        }
-        return valid;
-      } catch (error) {
-        return false;
-      }
+      return validateIPv4(ip);
     },
     updateIp(ip) {
       const valid = this.validateIP(ip);
@@ -66,7 +37,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#ip-inputs {
+#ip-input {
   max-width: 100%;
 
   & input {

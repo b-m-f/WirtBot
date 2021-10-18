@@ -171,7 +171,34 @@ wirt.test {
     expect(generateDNSFile(server, [device], { dns })).toBe(`. {
     reload
     prometheus 0.0.0.0:9153
-    forward . 1.1.1.1 {
+    forward . 1.1.1.1  {
+       except wirt.test lan local home fritz.box
+       health_check 5s
+    }
+    cache 30
+}
+wirt.test {
+    hosts {
+        10.10.10.1 wirtbot.wirt.test
+        10.10.10.2 test.wirt.test
+    }
+}`);
+  });
+  it("without tls and with hostname", () => {
+    const server = {
+      subnet: { v4: "10.10.10" },
+    };
+    const dns = {
+      name: "wirt.test",
+      ip: { v4: "1.1.1.1", tls: false },
+      hostname: 'test',
+      ignoredZones: ["lan", "local", "home", "fritz.box"],
+    };
+    const device = { ip: { v4: 2 }, name: "test" };
+    expect(generateDNSFile(server, [device], { dns })).toBe(`. {
+    reload
+    prometheus 0.0.0.0:9153
+    forward . 1.1.1.1 test {
        except wirt.test lan local home fritz.box
        health_check 5s
     }

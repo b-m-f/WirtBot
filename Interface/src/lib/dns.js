@@ -5,6 +5,7 @@ export function generateDNSFile(server, clients, network) {
   const dnsV4 = network.dns.ip.v4 || "1.1.1.1";
   const dnsV6 = network.dns.ip.v6;
   const ignoredZones = network.dns.ignoredZones;
+  const dnsHostname = network.dns.hostname
 
   const subnetv4 =
     server.subnet.v4 && server.subnet.v4[server.subnet.v4.length - 1] === "."
@@ -58,7 +59,7 @@ export function generateDNSFile(server, clients, network) {
        health_check 5s
     }`;
     } else {
-      return `forward . ${dnsV4 ? dnsV4 + "" : ""}${dnsV6 ? dnsV6 : ""} {
+      return `forward . ${dnsV4 ? dnsV4 + " " : ""}${dnsV6 ? dnsV6 + " " : ""}${dnsHostname ? dnsHostname : ""} {
        except ${network.dns.name} ${ignoredZones.join(" ")}
        health_check 5s
     }`;
