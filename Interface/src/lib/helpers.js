@@ -20,3 +20,38 @@ export function guidGenerator() {
     S4()
   );
 }
+
+export function validateIPv4(ip){
+      let newValue;
+      let valid = true;
+      try {
+        newValue = ip.split(".").map((val, index) => {
+          const number = parseInt(val);
+          if (!number && number != 0) {
+            valid = false;
+            return 0;
+          }
+          if (number > 255) {
+            valid = false;
+            return number;
+          }
+          if ((index == 3 || index == 0) && number < 1) {
+            valid = false;
+            return number;
+          }
+          if (number < 0) {
+            valid = false;
+            return number;
+          }
+          return number;
+        });
+
+        if (newValue.length < 4) {
+          valid = false;
+        }
+        return valid;
+      } catch (error) {
+        return false;
+      }
+
+}

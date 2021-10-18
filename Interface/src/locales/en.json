@@ -1,6 +1,6 @@
 {
   "learnMore": "Learn more",
-  "optional":  "(optional)",
+  "optional": "(optional)",
   "app": {
     "name": "Wirt"
   },
@@ -60,7 +60,8 @@
         "invalidTLSName": "Enter the name without any protocols",
         "ignoredZones": "DNS zones that should not be forwarded",
         "blockLists": "Additional Block Lists to be used",
-        "blockHosts": "Additional Hosts to be blocked"
+        "blockHosts": "Additional Hosts to be blocked",
+        "ipOrHostname": "IPv4 or Hostname"
       },
       "devices": {
         "title": "My devices",
@@ -79,7 +80,6 @@
           "more": "Expand",
           "less": "Hide",
           "port": "Port"
-
         },
         "placeholder": {
           "additionalDNSServers": "Comma seperated",
@@ -176,6 +176,7 @@
     "wrongIPv6": "Not a correct IPv6 address",
     "wrongIPv4Subnet": "Not a correct IPv4 subnet",
     "wrongIPv6Subnet": "Not a correct IPv6 subnet",
+    "wrongIPv4OrHostname": "Not a correct IPv4 address or Hostname",
     "serverPort": "Port must be between 1024 and 65636",
     "updateFail": "Failed to talk to API. Are you sure that the API Endpoint is set correctly?",
     "failedToParseInitialData": "Error parsing the provided data. Please make sure you copied it from your WirtBot Core correctly",
