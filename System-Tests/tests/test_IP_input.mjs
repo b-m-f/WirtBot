@@ -60,7 +60,7 @@ export default async (browser) => {
     );
 
     assert.strictEqual(dnsConfigOnpage.ip.v4, "1.1.1");
-    valid = await page.$eval("#dns-widget input[name='ip-input']", (e) => {
+    valid = await page.$eval("#dns-widget input[name='ip-hostname-input']", (e) => {
       return e.validity.valid;
     });
     assert.strictEqual(valid, false);
