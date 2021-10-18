@@ -1,3 +1,14 @@
+## 3.2.0
+bb904d9 Updates to 3.2.0
+
+3324645 chore: updates dependencies && adds npm audit fix to convenience script
+
+a112c56 fix(Interface): fixes a few bugs discovered during testing and updates tests to use the new input field
+
+a34b0fa fix(Interface): makes sure that DNS IP and hostname do not coexist
+
+b935ec2 feature(Interface): Adds the possibility to specify a hostname for DNS resolution without TLS
+
 ## 3.0.2
 9600353 fix(Interface): hides blink bug (newly added device shows up from state and from internal component state for a short time\) when a new device was added
 
