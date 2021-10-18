@@ -32,7 +32,7 @@ export default {
       return validateIPv4(value);
     },
     validateHostname(value) {
-      const hostnameRegex = new RegExp("^[a-z0-9]?[.][a-z]?$");
+      const hostnameRegex = new RegExp("^[a-z0-9]+[.]{1}[a-z]+$");
       return hostnameRegex.test(value);
     },
     update(value) {
