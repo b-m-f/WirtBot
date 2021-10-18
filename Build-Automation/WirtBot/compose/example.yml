@@ -2,6 +2,7 @@ version: "3"
 
 services:
   wirtbot:
+    user: "${UID}:${GID}"
     build: 
       context: ../../..
       dockerfile: Build-Automation/WirtBot/Dockerfile

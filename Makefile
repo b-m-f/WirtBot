@@ -34,9 +34,7 @@ dev-setup:
 
 ## Run complete WirtBot
 run-test-wirtbot: 
-	sudo chown $$USER Build-Automation/WirtBot/compose/test-server.conf && \
-	docker-compose -f Build-Automation/WirtBot/compose/example.yml up --abort-on-container-exit --build --remove-orphans && \
-	sudo chown $$USER Build-Automation/WirtBot/compose/test-server.conf
+	env UID=${UID} GID=${GID} docker-compose -f Build-Automation/WirtBot/compose/example.yml up --abort-on-container-exit --build --remove-orphans && \
 connect-test-wirtbot:
 	cp testwirtbot.conf.example testwirtbot.conf && \
 	sed -i  "s@Endpoint = development_wirtbot:10101@Endpoint = $(shell docker inspect development_wirtbot | grep -e "IPAddress\": \"[0-9].*\"" | cut -d '"' -f 4):10101@" testwirtbot.conf && \
