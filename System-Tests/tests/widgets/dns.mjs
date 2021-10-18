@@ -16,19 +16,20 @@ export const getConfig = async (page) => {
   const dns = await dnsWidget(page);
   const dnsTLSNameInput = await dns.$("input[name='tlsname']");
   const dnsTLSCheckbox = await dns.$("input[name='tls']");
-  const dnsIP = await dns.$("input[name='ip-input']");
+  const dnsIPOrHostname = await dns.$("input[name='ip-hostname-input']");
   const dnsIgnoredZones = await dns.$("textarea[name='ignoredZones']");
 
   const tlsEnabled = await dnsTLSCheckbox.evaluate((e) => e.checked);
 
+  // This returns the value in IPorHostname for both those attributes
   return {
     tlsName: await dnsTLSNameInput.evaluate((e) => e.value),
     tls: tlsEnabled,
-    ip: {
-      v4: await dnsIP.evaluate((e) => e.value),
-    },
+    hostname: await dnsIPOrHostname.evaluate((e) => e.value),
     ignoredZones: await dnsIgnoredZones.evaluate((e) => e.value),
+    ip: { v4: await dnsIPOrHostname.evaluate((e) => e.value) }
   };
+
 };
 
 export const setDNSTlsName = async (page, name) => {
@@ -51,8 +52,14 @@ export const disableDNSTLS = async (page) => {
 
 export const setDNSIP = async (page, ip) => {
   const dns = await dnsWidget(page);
-  const input = await dns.$("input[name='ip-input']");
+  const input = await dns.$("input[name='ip-hostname-input']");
   await input.fill(ip);
+};
+
+export const setDNSHostname = async (page, hostname) => {
+  const dns = await dnsWidget(page);
+  const input = await dns.$("input[name='ip-hostname-input']");
+  await input.fill(hostname);
 };
 
 export const setIgnoredZones = async (page, zones) => {

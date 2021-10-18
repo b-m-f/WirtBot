@@ -9,7 +9,7 @@ import {
   setDNSTlsName,
   enableDNSTLS,
   setDNSIP,
-  disableDNSTLS,
+  setDNSHostname,
   getValidity as getDNSValidity,
 } from "./widgets/dns.mjs";
 import { addServer } from "./widgets/server.mjs";
@@ -78,16 +78,33 @@ export default async (browser) => {
     assert.match(dnsConfigFromCore, /.*tls:\/\/1.0.3.4/);
     assert.match(dnsConfigFromCore, /.*tls_servername testdns.test/);
 
+    // Test with Hostname
     dnsUpdateResponse = page.waitForResponse(/.*\/update-device-dns-entries/);
-    await disableDNSTLS(page);
+
+    await setDNSHostname(page, "test.test");
     await dnsUpdateResponse;
 
     // wait for changes to be flushed to backend
     await page.waitForTimeout(100);
     dnsConfigFromCore = await readFile(`${wirtBotFileDir}/Corefile`, "utf-8");
 
-    assert.match(dnsConfigFromCore, /forward . 1.0.3.4/);
+    assert.match(dnsConfigFromCore, /forward . test.test/);
     assert.doesNotMatch(dnsConfigFromCore, /.*tls_servername/);
+
+    // Test with IP without TLS which should have been removed by setting a hostname
+    dnsUpdateResponse = page.waitForResponse(/.*\/update-device-dns-entries/);
+
+    await setDNSIP(page, "1.2.3.4");
+    await dnsUpdateResponse;
+
+    // wait for changes to be flushed to backend
+    await page.waitForTimeout(100);
+    dnsConfigFromCore = await readFile(`${wirtBotFileDir}/Corefile`, "utf-8");
+
+    assert.match(dnsConfigFromCore, /forward . 1.2.3.4/);
+    assert.doesNotMatch(dnsConfigFromCore, /.*tls_servername/);
+
+
   } catch (error) {
     console.error(error);
     throw error;

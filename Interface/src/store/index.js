@@ -74,7 +74,7 @@ const initialState = {
       tlsName: "cloudflare-dns.com",
       tls: true,
       ignoredZones: ["fritz.box", "lan", "local", "home"],
-      hostname: undefined 
+      hostname: ""
     },
     api: { host: `wirtbot.wirt.internal:3030` },
   },
@@ -131,17 +131,14 @@ const store = new Vuex.Store({
     },
     updateDNS(state, dns) {
       let newState = {}
-      if(dns.ip && (dns.ip.v4 ||dns.ip.v6)){
-        newState =  merge({ ...state.network.dns }, dns);
+      newState = merge({ ...state.network.dns }, dns);
+      if (dns.ip && (dns.ip.v4 || dns.ip.v6)) {
         newState.hostname = undefined
       }
-      if(dns.hostname){
-        newState =  merge({ ...state.network.dns }, dns);
+      if (dns.hostname) {
         newState.ip = undefined
       }
-
-    state.network.dns = newState
-
+      state.network.dns = newState
     },
     updateAPI(state, api) {
       state.network.api = merge({ ...state.network.api }, api);
@@ -190,11 +187,11 @@ const store = new Vuex.Store({
       commit("updateAPI", { host });
     },
     async updateDNSIp({ commit, dispatch }, { v4, v6 }) {
-      commit("updateDNS", { ip: { v4, v6 }});
+      commit("updateDNS", { ip: { v4, v6 } });
       await dispatch("updateDNS");
     },
     async updateDNSHostname({ commit, dispatch }, { hostname }) {
-      commit("updateDNS", { hostname, tls: false});
+      commit("updateDNS", { hostname, tls: false });
       await dispatch("updateDNS");
     },
     async updateDNSIgnoredZones({ commit, dispatch }, ignoredZones) {
