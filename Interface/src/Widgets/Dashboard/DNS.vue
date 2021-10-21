@@ -2,16 +2,13 @@
   <div id="dns-widget">
     <h1>{{ $t("dashboard.widgets.dns.title") }}</h1>
     <div class="row ip">
-      <label>{{ $t("dashboard.widgets.dns.ipOrHostname") }}</label>
-      <IpOrHostnameInput
-        :value="(dns.ip && dns.ip.v4) || dns.hostname || undefined"
-        @change="
-          ({ ip, hostname, valid }) =>
-            updateIpOrHostname({ ip: { v4: ip }, hostname, valid })
-        "
+      <label>{{ $t("dashboard.widgets.dns.ipv4") }}</label>
+      <IpInput
+        :value="(dns.ip && dns.ip.v4) || dns || undefined"
+        @change="({ ip, valid }) => updateIp({ ip: { v4: ip }, valid })"
       />
     </div>
-    <div class="row" v-if="!dns.hostname">
+    <div class="row">
       <label for="tls">{{ $t("dashboard.widgets.dns.tls") }}</label>
       <CheckBox name="tls" :checked="dns.tls" @change="updateTls" />
     </div>
@@ -45,12 +42,12 @@
 </template>
 
 <script>
-import IpOrHostnameInput from "components/Inputs/IpOrHostname";
+import IpInput from "components/Inputs/IP";
 import CheckBox from "components/Inputs/CheckBox";
 import TextInput from "components/Inputs/Text";
 
 export default {
-  components: { CheckBox, TextInput, IpOrHostnameInput },
+  components: { CheckBox, TextInput, IpInput },
   computed: {
     dns() {
       return this.$store.state.network.dns;
@@ -66,13 +63,10 @@ export default {
     },
   },
   methods: {
-    updateIpOrHostname({ ip, hostname, valid }) {
+    updateIp({ ip, valid }) {
       if (valid) {
         if (ip && ip.v4) {
           this.$store.dispatch("updateDNSIp", ip);
-        }
-        if (hostname) {
-          this.$store.dispatch("updateDNSHostname", { hostname });
         }
       }
     },
