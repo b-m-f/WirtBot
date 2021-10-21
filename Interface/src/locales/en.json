@@ -61,7 +61,7 @@
         "ignoredZones": "DNS zones that should not be forwarded",
         "blockLists": "Additional Block Lists to be used",
         "blockHosts": "Additional Hosts to be blocked",
-        "ipOrHostname": "IPv4 or Hostname"
+        "ipv4": "IPv4"
       },
       "devices": {
         "title": "My devices",

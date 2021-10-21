@@ -1,12 +1,11 @@
 // This function creates an RFC 1035 DNS master file
 export function generateDNSFile(server, clients, network) {
-  console.log(network.dns)
   const tls = network.dns.tls;
   const tlsName = network.dns.tlsName;
   const dnsV4 = network.dns.ip && network.dns.ip.v4;
   const dnsV6 = network.dns.ip && network.dns.ip.v6;
   const ignoredZones = network.dns.ignoredZones;
-  const dnsHostname = network.dns.hostname
+  const dnsHostname = network.dns.hostname;
 
   const subnetv4 =
     server.subnet.v4 && server.subnet.v4[server.subnet.v4.length - 1] === "."
@@ -15,8 +14,8 @@ export function generateDNSFile(server, clients, network) {
 
   const subnetv6 =
     server.subnet.v6 &&
-      server.subnet.v6[server.subnet.v6.length - 1] === ":" &&
-      server.subnet.v6[server.subnet.v6.length - 2] === ":"
+    server.subnet.v6[server.subnet.v6.length - 1] === ":" &&
+    server.subnet.v6[server.subnet.v6.length - 2] === ":"
       ? `${server.subnet.v6}`.slice(0, -1)
       : server.subnet.v6;
 
@@ -52,14 +51,17 @@ export function generateDNSFile(server, clients, network) {
 
   const forwardConfig = () => {
     if (tls) {
-      return `forward . ${dnsV4 ? `tls://` + dnsV4 + " " : ""}${dnsV6 ? `tls://` + dnsV6 + "" : ""
-        }{
+      return `forward . ${dnsV4 ? `tls://` + dnsV4 + " " : ""}${
+        dnsV6 ? `tls://` + dnsV6 + "" : ""
+      }{
        except ${network.dns.name} ${ignoredZones.join(" ")}
        tls_servername ${tlsName}
        health_check 5s
     }`;
     } else {
-      return `forward . ${dnsV4 ? dnsV4 + " " : ""}${dnsV6 ? dnsV6 + " " : ""}${dnsHostname ? dnsHostname : ""} {
+      return `forward . ${dnsV4 ? dnsV4 + " " : ""}${dnsV6 ? dnsV6 + " " : ""}${
+        dnsHostname ? dnsHostname : ""
+      } {
        except ${network.dns.name} ${ignoredZones.join(" ")}
        health_check 5s
     }`;
