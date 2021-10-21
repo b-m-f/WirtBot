@@ -1,3 +1,9 @@
+## 3.3.0
+e8477c7 fix(Interface):Removes DNS hostname again, as the coredns forward plugin does not support it
+
+## 3.3.0
+e8477c7 fix(Interface):Removes DNS hostname again, as the coredns forward plugin does not support it
+
 ## 3.2.0
 bb904d9 Updates to 3.2.0
 
