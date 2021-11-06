@@ -1,6 +1,6 @@
 {
   "name": "@wirtbot/system-tests",
-  "version": "3.3.0",
+  "version": "3.3.1",
   "description": "This package is responsible for testing the WirtBot as a whole",
   "main": "index.js",
   "scripts": {
@@ -8,10 +8,10 @@
     "test:ci": "URL=http://wirtbot.test API=wirtbot.test:3030 ./run_all_tests.sh"
   },
   "dependencies": {
-    "chromedriver": "94.0.0",
-    "eslint": "8.0.1",
+    "chromedriver": "95.0.0",
+    "eslint": "8.2.0",
     "fibers": "5.0.0",
-    "playwright": "1.15.2",
+    "playwright": "1.16.3",
     "webpack-bundle-analyzer": "4.5.0"
   },
   "repository": {

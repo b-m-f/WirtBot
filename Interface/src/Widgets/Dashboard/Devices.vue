@@ -24,7 +24,7 @@ export default {
       // This will be undefined on first render as the store should be accessed via computed properties.
       // With this knowledge in mind the :devices parameter to the DeviceTables has a fallback to the computed devices property.
       // Only when a new device is to be added will this property become active on this component
-      devicesToBeDisplayedByTable: this.devices,
+      devicesToBeDisplayedByTable: undefined,
     };
   },
   computed: {

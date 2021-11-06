@@ -1,5 +1,5 @@
 ### Image to build the Interface
-FROM node:buster as interface
+FROM node:lts-buster as interface
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -28,7 +28,7 @@ COPY Interface/.env Interface/.env
 COPY Interface/.env.localtest Interface/.env.localtest
 
 # Compile and package wasm
-RUN cargo install wasm-pack
+RUN cargo install wasm-pack --vers 0.9.1
 # Build interface
 WORKDIR '/wirtbot/Interface'
 ## Inject keys into the test interface by doing this, that way the Interface can talk to the WirtBot Core
