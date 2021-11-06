@@ -1,3 +1,12 @@
+## 3.5.0
+fcf88e2 feat(core): enables IPv4 forwarding in the container
+
+8b6ad1c Updates to 3.4.0
+
+1735bee Updates README with ports for metrics
+
+7fc173d feat(Interface): adds friendly name to config for prometheus_wireguard_exporter
+
 ## 3.4.0
 e34a477 Updates README with ports for metrics
 
