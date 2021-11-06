@@ -136,18 +136,21 @@ export function generateServerConfig({ port, keys, subnet }, devices) {
     if (device.ip.v4 && !device.ip.v6) {
       configs = `${configs}
 [Peer]
+# friendly_name = ${device.name}
 AllowedIPs = ${subnetv4}.${device.ip.v4}/32
 PublicKey = ${device.keys.public}`;
     }
     if (!device.ip.v4 && device.ip.v6) {
       configs = `${configs}
 [Peer]
+# friendly_name = ${device.name}
 AllowedIPs = ${subnetv6}:${device.ip.v6}/128
 PublicKey = ${device.keys.public}`;
     }
     if (device.ip.v4 && device.ip.v6) {
       configs = `${configs}
 [Peer]
+# friendly_name = ${device.name}
 AllowedIPs = ${subnetv4}.${device.ip.v4}/32,${subnetv6}:${device.ip.v6}/128
 PublicKey = ${device.keys.public}`;
     }

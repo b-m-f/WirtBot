@@ -165,7 +165,11 @@ describe("WireGuard server generation", () => {
       subnet: { v4: "10.10.10", v6: "1010:1010:1010:1010::" },
       keys: { private: "test", public: "test" },
     };
-    const device = { ip: { v4: 2 }, keys: { public: "test", private: "test" } };
+    const device = {
+      ip: { v4: 2 },
+      keys: { public: "test", private: "test" },
+      name: "test",
+    };
     expect(generateServerConfig(server, [device])).toBe(
       `[Interface]
 Address = 10.10.10.1
@@ -173,6 +177,7 @@ ListenPort = 11111
 PrivateKey = test
 
 [Peer]
+# friendly_name = test
 AllowedIPs = 10.10.10.2/32
 PublicKey = test`
     );
@@ -187,6 +192,7 @@ PublicKey = test`
     const device = {
       ip: { v6: "0002" },
       keys: { public: "test", private: "test" },
+      name: "test",
     };
 
     expect(generateServerConfig(server, [device])).toBe(
@@ -196,6 +202,7 @@ ListenPort = 11111
 PrivateKey = test
 
 [Peer]
+# friendly_name = test
 AllowedIPs = 1010:1010:1010:1010::0002/128
 PublicKey = test`
     );
@@ -211,6 +218,7 @@ PublicKey = test`
     const device = {
       ip: { v4: 2, v6: "0002" },
       keys: { public: "test", private: "test" },
+      name: "test",
     };
     expect(generateServerConfig(server, [device])).toBe(
       `[Interface]
@@ -219,6 +227,7 @@ ListenPort = 11111
 PrivateKey = test
 
 [Peer]
+# friendly_name = test
 AllowedIPs = 10.10.10.2/32,1010:1010:1010:1010::0002/128
 PublicKey = test`
     );
