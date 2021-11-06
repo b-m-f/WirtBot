@@ -151,6 +151,8 @@ COPY --from=wireguard /wg .
 COPY --from=wireguard /wg-quick .
 RUN chmod +x wg wg-quick && mv wg wg-quick /usr/bin
 
+# enable IPv4 forwarding
+RUN echo 'net.ipv4.ip_forward = 1' | tee -a /etc/sysctl.conf
 
 # WireGuard restarter script
 COPY Core/wireguard-restarter.sh /usr/bin/wireguard-restarter
