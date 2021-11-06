@@ -5,6 +5,7 @@ import router from "./routes";
 import store from "./store";
 import i18n from "./i18n";
 import icons from "./icons";
+import './assets/tailwind.css'
 
 Vue.component("font-awesome-icon", icons);
 
