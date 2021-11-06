@@ -1,3 +1,21 @@
+## 3.3.1
+9a85900 Updates dependencies
+
+3a69172 fix(CI): fixes lint error and makes sure to use wasm-pack 0.9.1 as 0.10.1 seems to cause errors inside of docker
+
+b6aa7c0 fix(CI): use node:lts-buster container image to build WirtBot
+
+8cb2ad2 Updates to 3.3.1
+
+68b82f8 Updates dependencies
+
+a2f1708 fix(Interface): readds the whole server config into the backip
+
+## 3.3.1
+68b82f8 Updates dependencies
+
+a2f1708 fix(Interface): readds the whole server config into the backip
+
 ## 3.3.0
 e8477c7 fix(Interface):Removes DNS hostname again, as the coredns forward plugin does not support it
 
