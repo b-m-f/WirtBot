@@ -83,7 +83,7 @@ aaa
 import NumberInput from "components/Inputs/Number";
 import TextInput from "components/Inputs/Text";
 import IPInput from "components/Inputs/IP";
-import Button from "shared-components/Button";
+import Button from "components/Button";
 import { downloadText } from "../../lib/download";
 
 export default {

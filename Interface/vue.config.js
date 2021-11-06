@@ -10,7 +10,7 @@ module.exports = {
   css: {
     loaderOptions: {
       scss: {
-        additionalData: `@import "shared-styles/variables.scss";`,
+        additionalData: `@import "~@/styles/variables.scss";`,
       },
     },
   },
@@ -65,12 +65,9 @@ module.exports = {
         raw: true,
       });
 
-    config.resolve.alias
-      .set("shared-styles", path.join(__dirname, "../Shared-Libs/styles"))
-      .set(
-        "shared-components",
-        path.join(__dirname, "../Shared-Libs/components")
-      )
-      .set("components", path.join(__dirname, "src/components"));
+    config.resolve.alias.set(
+      "components",
+      path.join(__dirname, "src/components")
+    );
   },
 };

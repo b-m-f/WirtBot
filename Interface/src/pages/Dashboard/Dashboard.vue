@@ -34,8 +34,8 @@
 
 <script>
 import { downloadText } from "../../lib/download";
-import AccentedCard from "shared-components/AccentedCard";
-import Card from "shared-components/Card";
+import AccentedCard from "components/AccentedCard";
+import Card from "components/Card";
 import NetworkWidget from "../../Widgets/Dashboard/Network";
 import ServerWidget from "../../Widgets/Dashboard/Server";
 import DeviceWidget from "../../Widgets/Dashboard/Devices";
