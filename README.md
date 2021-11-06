@@ -18,7 +18,9 @@ Oh, and it is completely free. My way of paying back to the OSS community for al
 - Dashboard to create and manage WireGuard based networks
 - DNS zones for all connected devices
 - DNS forwarding, including DNSoverTLS
-- Real time metrics for DNS and WireGuard to be used with Prometheus
+- Real time metrics to be used with Prometheus
+	- Port **9586**: [WireGuard](https://github.com/MindFlavor/prometheus_wireguard_exporter)
+	- Port **9153**: [CoreDNS](https://coredns.io/plugins/metrics/)
 - Backup functionality
 - Modern crypto-aware API to keep the WirtBot only under your control
 - Extensive testing of the System is done on each change to the code to ensure correctness
