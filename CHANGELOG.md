@@ -1,3 +1,8 @@
+## 3.4.0
+e34a477 Updates README with ports for metrics
+
+3d83e77 feat(Interface): adds friendly name to config for prometheus_wireguard_exporter
+
 ## 3.3.1
 9a85900 Updates dependencies
 
