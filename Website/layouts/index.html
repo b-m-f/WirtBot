@@ -1,0 +1,26 @@
+{{ define "main" }}
+<section class="section container-fluid mt-n3 pb-3">
+  <div class="row justify-content-center">
+    <div class="col-lg-12 text-center">
+      <h1 class="mt-0">{{ .Title }}</h1>
+    </div>
+    <div class="col-lg-9 col-xl-8 text-center">
+      <p class="lead">{{ .Params.lead | safeHTML }}</p>
+      <a
+        class="btn btn-primary btn-lg px-4 mb-2"
+        href="/docs/overview/whats-a-wirtbot/"
+        role="button"
+        >Get started</a
+      >
+    </div>
+  </div>
+</section>
+{{ end }} {{ define "sidebar-prefooter" }}
+<section class="section section-sm"></section>
+{{ end }} {{ define "sidebar-footer" }}
+<section class="section section-sm container-fluid">
+  <div class="row justify-content-center text-center">
+    <div class="col-lg-9">{{- .Content -}}</div>
+  </div>
+</section>
+{{ end }}
