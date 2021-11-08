@@ -1,2 +1,6 @@
 node_modules
-content/.vuepress/dist
+public
+resources
+# Local Netlify folder
+.netlify
+TODO
