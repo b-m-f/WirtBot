@@ -1,50 +1,33 @@
 ---
 title: "FAQ"
-description: "Answers to frequently asked questions."
-lead: "Answers to frequently asked questions."
-date: 2020-10-06T08:49:31+00:00
-lastmod: 2020-10-06T08:49:31+00:00
+description: "Frequently asked questions"
+lead: "Collection of FAQs"
+date: 2020-10-06t08:48:45+00:00
+lastmod: 2020-10-06t08:48:45+00:00
 draft: false
 images: []
 menu:
   docs:
     parent: "help"
-weight: 630
+weight: 10
 toc: true
 ---
 
-## Hyas?
+## Is my WirtBot secure when exposed?
 
-Doks is a [Hyas theme](https://gethyas.com/themes/) build by the creator of Hyas.
+By design yes. The WirtBot only accepts payloads from the Interface that are signed with the trusted public key.
 
-## Footer notice?
+But there might always be Bugs in the Source Code, so if you want to make sure that you are as secure as possible follow the setup guide for achieving extra security.
 
-Please keep it in place.
+## I need a new feature in WirtBot
 
-## Keyboard shortcuts for search?
+New features can be discussed on [Github](https://github.com/b-m-f/WirtBot).
+Please note that WirtBot is in maintenance mode and will only include features that fit the core project scope of easily maintaining a WireGuard network.
 
-- focus: `Ctrl + /`
-- select: `↓` and `↑`
-- open: `Enter`
-- close: `Esc`
+### OK feature request
 
-## Other documentation?
+WireGuard gets a new feature and WirtBot does not yet support it
 
-- [Netlify](https://docs.netlify.com/)
-- [Hugo](https://gohugo.io/documentation/)
+### Not Ok
 
-## Can I get support?
-
-Create a topic:
-
-- [Netlify Community](https://community.netlify.com/)
-- [Hugo Forums](https://discourse.gohugo.io/)
-- [Doks Discussions](https://github.com/h-enk/doks/discussions)
-
-## Contact the creator?
-
-Send `h-enk` a message:
-
-- [Netlify Community](https://community.netlify.com/)
-- [Hugo Forums](https://discourse.gohugo.io/)
-- [Doks Discussions](https://github.com/h-enk/doks/discussions)
+OpenVPN support in WirtBot
