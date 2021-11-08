@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Build and Deploy website
 on:
   push:
     branches:
@@ -13,7 +13,7 @@ jobs:
       - name: Install and Build 🔧
         run: |
           cd Website && npm install
-          cd Website && npm run build
+          npm run build
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.5
