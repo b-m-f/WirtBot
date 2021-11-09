@@ -80,14 +80,11 @@ module.exports = {
     // }
   },
   scss: {
-    additionalData: `@import "shared-styles/variables.scss";`,
+    additionalData: `@import "styles/variables.scss";`,
   },
   chainWebpack: (config, isServer) => {
     config.resolve.alias
-      .set("shared-styles", path.join(__dirname, "../../../Shared-Libs/styles"))
-      .set(
-        "shared-components",
-        path.join(__dirname, "../../../Shared-Libs/components")
-      );
+      .set("styles", path.join(__dirname, "./styles"))
+      .set("components", path.join(__dirname, "./components"))
   },
 };

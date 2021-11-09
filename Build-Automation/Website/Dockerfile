@@ -1,11 +1,6 @@
 # APP
 FROM node:buster as app
 
-WORKDIR '/Shared-Libs'
-COPY Shared-Libs/styles styles
-COPY Shared-Libs/components components
-
-
 
 # build the app
 WORKDIR '/website'
@@ -14,7 +9,8 @@ COPY Website/package-lock.json .
 ENV NODE_ENV production
 RUN npm ci
 
-COPY Website/content content
+COPY Website/styles content
+COPY Website/components content
 RUN npm run build
 
 

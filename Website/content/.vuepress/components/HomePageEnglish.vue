@@ -24,8 +24,8 @@
 </template>
 
 <script>
-import Button from "shared-components/Button";
-import Card from "shared-components/Card";
+import Button from "./Button";
+import Card from "./Card";
 
 export default {
   components: { Button, Card },
