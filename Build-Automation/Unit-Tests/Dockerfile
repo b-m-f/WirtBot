@@ -52,7 +52,6 @@ RUN touch /etc/coredns/Corefile
 COPY Core/ Core/
 COPY Website/ Website/
 COPY Interface Interface
-COPY Shared-Libs Shared-Libs
 COPY Makefile .
 
 RUN npm i -g wasm-pack

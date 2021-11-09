@@ -14,7 +14,7 @@
 
 <script>
 import DeviceTable from "components/DeviceTable";
-import Button from "shared-components/Button";
+import Button from "components/Button";
 
 export default {
   components: { DeviceTable, Button },

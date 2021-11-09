@@ -16,8 +16,6 @@ WORKDIR '/wirtbot'
 ENV NODE_ENV production
 
 # Install all dependecies via workspaces first
-COPY Shared-Libs/components Shared-Libs/components
-COPY Shared-Libs/styles Shared-Libs/styles
 COPY Interface/package.json  Interface/package.json
 COPY Interface/package-lock.json  Interface/package-lock.json
 COPY Interface/src Interface/src 
