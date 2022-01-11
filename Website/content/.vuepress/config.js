@@ -8,13 +8,13 @@ module.exports = {
     [
       "noscript",
       {},
-      `<img src="https://analytics.ehlers.berlin/ingress/20d1e856-e29d-477c-a9a8-3f60fbe6907e/pixel.gif">`,
+      `<img src="https://analytics.ehlers.berlin/ingress/2affb9fa-2347-4525-b6ff-080466adb639/pixel.gif">`,
     ],
     [
       "script",
       {
         src:
-          "https://analytics.ehlers.berlin/ingress/20d1e856-e29d-477c-a9a8-3f60fbe6907e/script.js",
+          "https://analytics.ehlers.berlin/ingress/2affb9fa-2347-4525-b6ff-080466adb639/script.js",
       },
     ],
   ],
