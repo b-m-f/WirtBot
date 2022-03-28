@@ -1,7 +1,7 @@
 const path = require("path");
 
 module.exports = {
-  base: "/",
+  base: "/WirtBot/",
   port: 9090,
   title: "WirtBot, your LAN in the cloud",
   head: [
