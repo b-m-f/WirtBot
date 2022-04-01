@@ -1,3 +1,32 @@
+## 3.6.0
+3350a4c Update website
+
+f928fc1 fix: update analytics script
+
+1e5d7b4 Updates analytics script on website
+
+5f3e628 Updates to 3.5.1
+
+2cc47e4 feat(ci): updates path of CI to point to vuepress output directory to deply website
+
+7f6908d feat(Website): moves shared components into website as well and removes the shared-libs
+
+5d72c5b feat(Interface): moves shared-components into the Interface for better encapsulation
+
+268fe6a feat(website): reverts to vuepress website as it fits the theming better
+
+5d2efdf fix(ci): gives website deploy job a better name and fixes wrong path traversal on npm run build
+
+36112f4 feat(ci): adds github page release job for the new website
+
+1401f3d feat(website): removes old website and uses new hugo+doks based one
+
+cd0afb1 feat(website): Converts docs to hugo+doks website
+
+7ef4496 feat(website): Updates the pages that were already there with correct information
+
+1cd0864 feat(website): includes https://github.com/h-enk/doks to be the base for the new website and migrates over all the blog posts
+
 ## 3.5.1
 c317188 feat(ci): updates path of CI to point to vuepress output directory to deply website
 
