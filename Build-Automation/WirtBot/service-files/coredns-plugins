@@ -11,3 +11,4 @@ cache:cache
 hosts:hosts
 forward:forward
 whoami:whoami
+local:local

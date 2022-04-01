@@ -68,7 +68,7 @@ RUN cd $WG_TOOLS/src && make && mv wg / && mv wg-quick/linux.bash /wg-quick && c
 
 
 
-FROM golang:1.15.8-buster as coredns
+FROM golang:1.17.8-buster as coredns
 
 RUN git clone https://github.com/coredns/coredns.git /go/src/github.com/coredns/coredns
 WORKDIR /go/src/github.com/coredns/coredns
