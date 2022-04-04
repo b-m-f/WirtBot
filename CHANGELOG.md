@@ -1,3 +1,10 @@
+## 3.6.2
+1fbab6a feat: Activates the coredns local plugin by default
+
+17d4808 CI: adds wireguard-tools from debian upstream. Adds buildah based build multi-arch task
+
+fcba4b1 WIP: change from docker buildx to buildah
+
 ## 3.6.1
 44061cb Upgrades final image to run in bullseye
 
