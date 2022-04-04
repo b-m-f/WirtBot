@@ -70,6 +70,7 @@ export function generateDNSFile(server, clients, network) {
 
   let masterFile = `. {
     reload
+    local
     prometheus 0.0.0.0:9153
     ${forwardConfig()}
     cache 30
