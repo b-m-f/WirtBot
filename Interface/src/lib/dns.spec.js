@@ -15,7 +15,7 @@ describe("Correctly generates a valid DNS master file", () => {
     };
     expect(generateDNSFile(server, [device], { dns })).toBe(`. {
     reload
-    prometheus 0.0.0.0:9153
+    local
     forward . tls://1.1.1.1 {
        except wirt.test lan local home fritz.box
        tls_servername cloudflare-dns.com
@@ -44,6 +44,7 @@ wirt.test {
     };
     expect(generateDNSFile(server, [device], { dns })).toBe(`. {
     reload
+    local
     prometheus 0.0.0.0:9153
     forward . tls://1.1.1.1 {
        except wirt.test lan local home fritz.box
@@ -76,6 +77,7 @@ wirt.test {
     };
     expect(generateDNSFile(server, devices, { dns })).toBe(`. {
     reload
+    local
     prometheus 0.0.0.0:9153
     forward . tls://1.1.1.1 {
        except wirt.test lan local home fritz.box
@@ -112,6 +114,7 @@ wirt.test {
     };
     expect(generateDNSFile(server, devices, { dns })).toBe(`. {
     reload
+    local
     prometheus 0.0.0.0:9153
     forward . tls://1.1.1.1 {
        except wirt.test lan local home fritz.box
@@ -143,6 +146,7 @@ wirt.test {
     const device = { ip: { v4: 2 }, name: "test me" };
     expect(generateDNSFile(server, [device], { dns })).toBe(`. {
     reload
+    local
     prometheus 0.0.0.0:9153
     forward . tls://1.1.1.1 {
        except wirt.test lan local home fritz.box
@@ -170,6 +174,7 @@ wirt.test {
     const device = { ip: { v4: 2 }, name: "test" };
     expect(generateDNSFile(server, [device], { dns })).toBe(`. {
     reload
+    local
     prometheus 0.0.0.0:9153
     forward . 1.1.1.1  {
        except wirt.test lan local home fritz.box
@@ -197,6 +202,7 @@ wirt.test {
     const device = { ip: { v4: 2 }, name: "test" };
     expect(generateDNSFile(server, [device], { dns })).toBe(`. {
     reload
+    local
     prometheus 0.0.0.0:9153
     forward . 1.1.1.1 test {
        except wirt.test lan local home fritz.box
