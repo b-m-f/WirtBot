@@ -1,3 +1,6 @@
+## 3.6.1
+44061cb Upgrades final image to run in bullseye
+
 ## 3.6.0
 3350a4c Update website
 
