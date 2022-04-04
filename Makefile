@@ -74,7 +74,7 @@ build-and-release:
 	docker buildx create --name wirtbot --driver docker-container || docker buildx use wirtbot && \
 	docker buildx build --platform linux/amd64,linux/arm64 -t bmff/wirtbot:$$(cat .version) -t bmff/wirtbot:latest --push -f Build-Automation/WirtBot/Dockerfile . && \
 	docker buildx use default
-buildah:
+build-test:
 	## Require buildah and qemu-user-static
-	buildah bud --manifest wirtbot:$$(cat .version) --platform=linux/amd64 --platform=linux/arm64 -t bmff/wirtbot:$$(cat .version) -t bmff/wirtbot:latest -f Build-Automation/WirtBot/Dockerfile . && \
+	buildah bud --manifest wirtbot:$$(cat .version) --platform=linux/amd64 --platform=linux/arm64 -t bmff/wirtbot:$$(cat .version)-test -t bmff/wirtbot:test -f Build-Automation/WirtBot/Dockerfile . && \
 	buildah manifest push  wirtbot:$$(cat .version) "docker://bmff/wirtbot:$$(cat .version)"
