@@ -75,6 +75,5 @@ build-and-release:
 	docker buildx build --platform linux/amd64,linux/arm64 -t bmff/wirtbot:$$(cat .version) -t bmff/wirtbot:latest --push -f Build-Automation/WirtBot/Dockerfile . && \
 	docker buildx use default
 buildah:
-	buildah bud --manifest wirtbot:$$(cat .version) --arch linux/amd64 -t bmff/wirtbot:$$(cat .version) -t bmff/wirtbot:latest -f Build-Automation/WirtBot/Dockerfile . && \
-	buildah bud --manifest wirtbot:$$(cat .version) --arch linux/arm64 -t bmff/wirtbot:$$(cat .version) -t bmff/wirtbot:latest -f Build-Automation/WirtBot/Dockerfile .
+	buildah bud --manifest wirtbot:$$(cat .version) --platform=linux/amd64 --platform=linux/arm64 -t bmff/wirtbot:$$(cat .version) -t bmff/wirtbot:latest -f Build-Automation/WirtBot/Dockerfile .
 
