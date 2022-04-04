@@ -1,5 +1,5 @@
 ### Image to build the Interface
-FROM node:lts-buster as interface
+FROM docker.io/library/node:lts-buster as interface
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -37,7 +37,7 @@ RUN npm ci && npm run build
 
 
 ### Image to build WirtBot
-FROM rust:slim as builder
+FROM docker.io/library/rust:slim as builder
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -51,24 +51,9 @@ RUN cargo build --release --target-dir /builder/artifact
 RUN cargo install prometheus_wireguard_exporter
 RUN which prometheus_wireguard_exporter
 
-### Build necessary tooling
-FROM debian:buster-slim as wireguard
-ENV DEBIAN_FRONTEND noninteractive
-RUN apt update && apt upgrade -yy
-RUN apt-get install make gcc xz-utils golang-go git -yy 
-
-WORKDIR /
-
-ENV WG_TOOLS="wireguard-tools-1.0.20210424"
-
-COPY Build-Automation/WirtBot/$WG_TOOLS.tar.xz ./$WG_TOOLS.tar.xz
-RUN tar xf $WG_TOOLS.tar.xz
-RUN cd $WG_TOOLS/src && make && mv wg / && mv wg-quick/linux.bash /wg-quick && cd /
 
 
-
-
-FROM golang:1.17.8-buster as coredns
+FROM docker.io/library/golang:1.17.8-buster as coredns
 
 RUN git clone https://github.com/coredns/coredns.git /go/src/github.com/coredns/coredns
 WORKDIR /go/src/github.com/coredns/coredns
@@ -144,11 +129,6 @@ COPY Build-Automation/WirtBot/service-files/finisher /etc/services.d/core/finish
 ## Set permissions after container spawn, this ensures that even if files are mounted in, they will still be writable
 COPY Build-Automation/WirtBot/service-files/fix-wireguard-permissions /etc/fix-attrs.d/02-fix-wireguard-permissions
 
-
-# WireGuard
-COPY --from=wireguard /wg .
-COPY --from=wireguard /wg-quick .
-RUN chmod +x wg wg-quick && mv wg wg-quick /usr/bin
 
 # enable IPv4 forwarding
 RUN echo 'net.ipv4.ip_forward = 1' | tee -a /etc/sysctl.conf
