@@ -80,7 +80,7 @@ RUN /coredns -plugins
 
 
 ### This is where the final image starts
-FROM debian:buster-slim
+FROM debian:bullseye-slim
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get upgrade -y
 RUN apt-get install -yy nginx inotify-tools iproute2 
