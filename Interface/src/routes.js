@@ -1,5 +1,4 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
+import {createRouter, createWebHashHistory} from "vue-router";
 
 import Dashboard from "./pages/Dashboard/Dashboard";
 
@@ -7,10 +6,9 @@ const routes = [
   { path: "/", component: Dashboard, name: "dashboard" },
 ];
 
-const router = new VueRouter({
-  mode: "hash",
+const router = new createRouter({
+  history: createWebHashHistory(),
   routes,
 });
-Vue.use(VueRouter);
 
 export default router;

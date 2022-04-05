@@ -1,4 +1,3 @@
-import Vue from "vue";
 import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
 import QRCode from "qrcode";
@@ -52,7 +51,6 @@ const versionFromAppPlugin = (store) => {
   });
 };
 
-Vue.use(Vuex);
 const initialState = {
   version: version,
   keys: { public: undefined, private: undefined },
