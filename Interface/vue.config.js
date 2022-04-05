@@ -23,6 +23,12 @@ module.exports = {
       enableInSFC: true,
     },
   },
+	configureWebpack: config => {
+		config.experiments = {
+			asyncWebAssembly: true
+		}
+
+	 },
   chainWebpack: (config) => {
     config
       // TODO: 16.3 check if still needed for Edge browser https://rustwasm.github.io/docs/wasm-bindgen/examples/hello-world.html
