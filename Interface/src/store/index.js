@@ -23,6 +23,7 @@ function merge(object1, object2) {
   return mergeWith(object1, object2, customizer);
 }
 
+
 async function addConfigToDevice(newDevice, server) {
   const config = generateDeviceConfig(newDevice, server);
   if (newDevice.type === "Android" || newDevice.type === "iOS") {
@@ -294,12 +295,12 @@ const store = new Vuex.Store({
         if (error.message === "No Server") {
           await dispatch(
             "alerts/addError",
-            `${i18n.t("errors.deviceAdd")} ${i18n.t("errors.noServer")}`
+            `${i18n.global.t("errors.deviceAdd")} ${i18n.global.t("errors.noServer")}`
           );
         } else {
           await dispatch(
             "alerts/addError",
-            `${i18n.t("errors.deviceAdd")} ${i18n.t("errors.documentation")}`
+            `${i18n.global.t("errors.deviceAdd")} ${i18n.global.t("errors.documentation")}`
           );
           console.error(error);
         }
@@ -333,12 +334,12 @@ const store = new Vuex.Store({
     async removeDevice({ dispatch, commit }, { id }) {
       try {
         commit("removeDevice", id);
-        await dispatch("alerts/addSuccess", i18n.t("success.deviceRemoved"));
+        await dispatch("alerts/addSuccess", i18n.global.t("success.deviceRemoved"));
         await dispatch("updateServerConfig");
       } catch (error) {
         await dispatch(
           "alerts/addError",
-          `${i18n.t("errors.deviceRemove")} ${i18n.t("errors.documentation")}`
+          `${i18n.global.t("errors.deviceRemove")} ${i18n.global.t("errors.documentation")}`
         );
         console.error(error);
       }
