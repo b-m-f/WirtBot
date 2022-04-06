@@ -10,6 +10,7 @@
 
 <script>
 export default {
+  emits: ["change"],
   props: {
     checked: Boolean,
     name: String,
