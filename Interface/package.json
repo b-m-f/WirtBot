@@ -38,7 +38,7 @@
     "sass-loader": "^10",
     "text-encoding": "0.7.0",
     "vue": "3.2.31",
-    "vue-cli-plugin-i18n": "2.3.1",
+    "vue-cli-plugin-i18n": "^0.6.1",
     "vue-i18n": "^9.1.9",
     "vue-loader": "17.0.0",
     "vue-markdown-loader": "2.5.0",
