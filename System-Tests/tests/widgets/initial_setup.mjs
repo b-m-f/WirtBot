@@ -10,8 +10,8 @@ export const skipInitialConfig = async (page) => {
             public: "1lLU3VhXsrSGMxESmqfY4m2oEVkpfEHyKlCQU6MMPsI="
         }
     })).toString('base64');
-    const button = await page.$("css=.submit");
-    const configInput = await page.$("css=#input");
+    const button = await page.locator("css=.submit");
+    const configInput = await page.locator("css=#input");
 
     await configInput.fill(simulatedPayloadFromCore);
     await button.click();

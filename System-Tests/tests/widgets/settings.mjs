@@ -1,5 +1,5 @@
 export const settingsWidget = async (page) => {
-  return await page.$("css=#settings-widget");
+  return await page.locator("css=#settings-widget");
 };
 
 export const downloadBackup = async (page) => {
@@ -9,15 +9,15 @@ export const downloadBackup = async (page) => {
       dl.path().then(res);
     });
   });
-  const downloadButton = await widget.$("#export");
+  const downloadButton = await widget.locator("#export");
   await downloadButton.click();
   return downloadPath;
 };
 
 export const importBackup = async (page, backupPath) => {
   const widget = await settingsWidget(page);
-  const input = await widget.$("#import input");
-  const importButton = await widget.$("#import button");
+  const input = await widget.locator("#import input");
+  const importButton = await widget.locator("#import button");
 
   await input.setInputFiles(backupPath);
   await importButton.click();
