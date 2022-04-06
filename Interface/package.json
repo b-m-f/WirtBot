@@ -17,10 +17,10 @@
     "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'"
   },
   "dependencies": {
-    "@babel/eslint-parser": "^7.5.4",
+    "@babel/eslint-parser": "^7.17.0",
     "@fortawesome/fontawesome-svg-core": "6.1.1",
     "@fortawesome/free-solid-svg-icons": "6.1.1",
-    "@fortawesome/vue-fontawesome": "2.0.6",
+    "@fortawesome/vue-fontawesome": "^3.0.0-5",
     "@kazupon/vue-i18n-loader": "0.5.0",
     "@vue/cli-plugin-babel": "5.0.4",
     "@vue/cli-plugin-eslint": "5.0.4",
@@ -29,16 +29,16 @@
     "@wasm-tool/wasm-pack-plugin": "1.6.0",
     "core-js": "3.21.1",
     "eslint": "8.12.0",
-    "eslint-plugin-vue": "8.5.0",
+    "eslint-plugin-vue": "8.6.0",
     "html-webpack-plugin": "5.5.0",
-    "jszip": "3.8.0",
+    "jszip": "3.9.1",
     "lodash-es": "4.17.21",
     "qrcode": "1.5.0",
     "sass": "1.49.11",
-    "sass-loader": "^10",
+    "sass-loader": "^12",
     "text-encoding": "0.7.0",
     "vue": "3.2.31",
-    "vue-cli-plugin-i18n": "^0.6.1",
+    "vue-cli-plugin-i18n": "^2.3.1",
     "vue-i18n": "^9.1.9",
     "vue-loader": "17.0.0",
     "vue-markdown-loader": "2.5.0",
@@ -49,7 +49,7 @@
   },
   "devDependencies": {
     "@intlify/vue-i18n-loader": "^4.2.0",
-    "@vue/test-utils": "1.3.0"
+    "@vue/test-utils": "2.0.0-rc.19"
   },
   "eslintConfig": {
     "root": true,
