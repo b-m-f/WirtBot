@@ -11,8 +11,6 @@ function loadLocaleMessages () {
       messages[locale] = locales(key).default
     }
   })
-  for (let key in messages.en) {
-  console.log(key)} 
   return messages
 
 }
