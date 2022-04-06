@@ -30,14 +30,14 @@ async function post(endpoint, data) {
 
 function handleError(e) {
   if (e.status === 401) {
-    store.dispatch("alerts/addError", `${i18n.t("errors.signature")}`);
+    store.dispatch("alerts/addError", `${i18n.global.t("errors.signature")}`);
     return;
   }
   if (e.status === 405) {
-    store.dispatch("alerts/addError", `${i18n.t("errors.cors")}`);
+    store.dispatch("alerts/addError", `${i18n.global.t("errors.cors")}`);
     return;
   }
-  store.dispatch("alerts/addError", `${i18n.t("errors.updateFail")}`);
+  store.dispatch("alerts/addError", `${i18n.global.t("errors.updateFail")}`);
 }
 
 export async function updateServerConfig(config, host) {
@@ -51,7 +51,7 @@ export async function updateServerConfig(config, host) {
     await post(`http://${host}/update`, messageWithSignature);
     store.dispatch(
       "alerts/addSuccess",
-      `${i18n.t("success.updateSuccessConfig")}`
+      `${i18n.global.t("success.updateSuccessConfig")}`
     );
   } catch (e) {
     handleError(e);
@@ -72,7 +72,7 @@ export async function updateDNSConfig(config, host) {
     );
     store.dispatch(
       "alerts/addSuccess",
-      `${i18n.t("success.updateSuccessDNS")}`
+      `${i18n.global.t("success.updateSuccessDNS")}`
     );
   } catch (e) {
     handleError(e);
