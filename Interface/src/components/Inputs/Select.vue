@@ -21,6 +21,7 @@
 
 <script>
 export default {
+  emits: ['change'],
   props: {
     name: String,
     options: Array,

@@ -186,6 +186,7 @@ import merge from "lodash/merge";
 import cloneDeep from "lodash/cloneDeep";
 
 export default {
+  emits: ['cancel-new-device', 'saved'],
   components: { NumberInput, TextInput, CheckBox, Select },
   props: {
     controls: Boolean,
