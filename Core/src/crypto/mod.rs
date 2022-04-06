@@ -12,6 +12,7 @@ const PUBLIC_KEY: &str = "PUBLIC_KEY";
 pub enum DecodeError {
     NotAPublicKey(String),
     NotASignature(String),
+    Decode(String)
 }
 
 impl fmt::Display for DecodeError {
@@ -21,6 +22,9 @@ impl fmt::Display for DecodeError {
                 write!(f, "{}", string)
             }
             DecodeError::NotASignature(string) => {
+                write!(f, "{}", string)
+            }
+            DecodeError::Decode(string) => {
                 write!(f, "{}", string)
             }
         }
@@ -48,7 +52,6 @@ pub fn decode_public_key_base64(public_key_base64: String) -> Result<PublicKey, 
 }
 
 pub fn decode_signature_base64(signature_base64: String) -> Result<Signature, DecodeError> {
-    let mut raw_signature_buffer = [0; SIGNATURE_LENGTH];
     let raw_signature_vector = match decode(&signature_base64) {
         Ok(vec) => vec,
         Err(_) => {
@@ -62,10 +65,14 @@ pub fn decode_signature_base64(signature_base64: String) -> Result<Signature, De
             "Data provided was not a base64 encoded signature".into(),
         ));
     }
-    let raw_signature_bytes = &raw_signature_vector[..raw_signature_buffer.len()];
-    raw_signature_buffer.copy_from_slice(raw_signature_bytes);
-    let decoded_signature = Signature::new(raw_signature_buffer);
-    Ok(decoded_signature)
+    match Signature::from_bytes(&raw_signature_vector){
+        Ok(val) => return Ok(val),
+        Err(e) => {
+         return Err(DecodeError::Decode(
+            e.to_string(),
+        ));
+        }
+    }
 }
 
 pub fn get_key() -> String {
