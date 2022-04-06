@@ -13,3 +13,9 @@ This way it is possible to change the configuration on the Interface and then te
 ## Linking Interface and WirtBot Core
 
 Interface and WirtBot are linked together in the same way as during the development - by spawning them both with predefined keys to enable communcation.
+
+
+## Local testing
+Make sure to install `firefox` and `chromium`. 
+Now set `headless: false` in  `tests.mjs`. This will make it easy to use the available `run_all_tests.sh` and inspect tests while they run.
+**Make sure to enable headless mode again when you are done testing!**
