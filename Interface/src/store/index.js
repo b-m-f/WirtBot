@@ -1,4 +1,4 @@
-import Vuex from "vuex";
+import { createStore } from 'vuex'
 import createPersistedState from "vuex-persistedstate";
 import QRCode from "qrcode";
 import i18n from "../i18n";
@@ -84,7 +84,7 @@ const initialState = {
   },
 };
 
-const store = new Vuex.Store({
+const store = createStore({
   strict: true,
   modules: { alerts },
   state: initialState,

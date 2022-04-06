@@ -22,6 +22,7 @@
 
 <script>
 export default {
+  emits: ['change'],
   props: {
     placeholder: String,
     value: String,
