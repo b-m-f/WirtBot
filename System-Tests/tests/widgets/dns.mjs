@@ -3,7 +3,7 @@ export const dnsWidget = async (page) => {
 };
 
 export const getValidity = async (page) => {
-  const validName = await page.locatoreval(
+  const validName = await page.$eval(
     "#dns-widget input[name='tlsname']",
     (e) => e.validity.valid
   );
