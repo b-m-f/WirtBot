@@ -1,3 +1,42 @@
+## 3.7.1
+ad1221e fix: Adds wireguard-tools into container, adds i18n loader from devdependencies to normal deps
+
+69049b3 fix: Duplicate version
+
+4989dc9 fix: Use new version to create signature from bytes
+
+3805f13 fix: access locales via their default export
+
+7aae101 chore: Upgrades all dependencies
+
+15c9e04 fix: Uses latest npm to install packages and audit fix --force them. Makes i18n work with the versions installed with it
+
+5a077cf fix: Declares event that checkbox emits
+
+ac9c902 fix: fixes typo introduced by previous search and replace
+
+9e4e039 chore: adds info on how to execute tests locally
+
+eb48fd5 fix: Uses new store creation via function and correctly declares event emissions
+
+de1863c fix: uses i18n.global object for API alerts.
+
+25a21a5 fix: uses new locator syntax of playwright
+
+e786721 fix: Accesses t function for translation off of global object inside i18n
+
+1db1d4d fix: updates rust for interface build to 1.58
+
+1bbf30d fix: Upgrades depencies that moved to new repos, removes unnecessary linting configuration
+
+790cc90 fix: Updates main app components to work with new Vue3 style
+
+4672289 fix: enable asyncWebAssembly experiment via webpack config for webpack 5
+
+6e2a6d3 fix: renames buildah task to build-test for quickly building test images
+
+4104c2c chore: Updates dependencies
+
 ## 3.6.2
 1fbab6a feat: Activates the coredns local plugin by default
 
