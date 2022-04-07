@@ -56,7 +56,7 @@ These are some of the giants on whose shoulders the WirtBot is build
 
 ### Users
 
-- [WirtBot Documentation](https://wirtbot.com/documentation)
+- [WirtBot Documentation](https://b-m-f.github.io/wirtbot)
 
 ### Admins & Developers
 
@@ -69,9 +69,3 @@ The licenses were chosen to ensure that the project will stay free for everyone,
 The WirtBot and Interface are licensed with `GNU Affero General Public License v3.0`
 
 The documentation and WirtBot logo are provided under `Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)`
-
-## Donate
-
-Would you like to contribute a bit to the server costs? Want to buy me a beer?
-
-Ethereum is the way: `0x39DF85776c626117B945afECF08C4DD262817522`
