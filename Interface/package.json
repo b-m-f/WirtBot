@@ -21,6 +21,7 @@
     "@fortawesome/fontawesome-svg-core": "6.1.1",
     "@fortawesome/free-solid-svg-icons": "6.1.1",
     "@fortawesome/vue-fontawesome": "^3.0.0-5",
+    "@intlify/vue-i18n-loader": "^4.2.0",
     "@kazupon/vue-i18n-loader": "0.5.0",
     "@vue/cli-plugin-babel": "5.0.4",
     "@vue/cli-plugin-eslint": "5.0.4",
@@ -48,7 +49,6 @@
     "vuex-persistedstate": "4.1.0"
   },
   "devDependencies": {
-    "@intlify/vue-i18n-loader": "^4.2.0",
     "@vue/test-utils": "2.0.0-rc.19"
   },
   "eslintConfig": {

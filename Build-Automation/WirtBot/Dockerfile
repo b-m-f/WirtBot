@@ -69,7 +69,7 @@ FROM docker.io/library/debian:bullseye-slim
 
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get upgrade -y
-RUN apt-get install -yy nginx inotify-tools iproute2 
+RUN apt-get install -yy nginx inotify-tools iproute2 wireguard-tools
 
 # Set up the s6 overlay init system
 COPY Build-Automation/WirtBot/s6-overlay-amd64-installer-2.1.0.2 /tmp/s6-overlay-amd64-installer
