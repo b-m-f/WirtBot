@@ -28,7 +28,7 @@ Oh, and it is completely free. My way of paying back to the OSS community for al
 
 ## Setup
 
-Follow the instructions on the [websire](https://b-m-f.github.io/wirtbot).
+Follow the instructions on the [websire](https://b-m-f.github.io/WirtBot/).
 
 ## Screenshot
 
@@ -56,7 +56,7 @@ These are some of the giants on whose shoulders the WirtBot is build
 
 ### Users
 
-- [WirtBot Documentation](https://b-m-f.github.io/wirtbot/documentation)
+- [WirtBot Documentation](https://b-m-f.github.io/WirtBot/documentation/)
 
 ### Admins & Developers
 
