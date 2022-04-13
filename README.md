@@ -28,11 +28,11 @@ Oh, and it is completely free. My way of paying back to the OSS community for al
 
 ## Setup
 
-Follow the instructions on the [websire](https://b-m-f.github.io/WirtBot/).
+Follow the instructions on the [website](https://b-m-f.github.io/WirtBot/).
 
 ## Screenshot
 
-![Dashboard Screenshot](Website/content/images/dashboard.jpg)
+![Dashboard Screenshot](dashboard.jpg)
 
 ## Projects that make this possible
 
