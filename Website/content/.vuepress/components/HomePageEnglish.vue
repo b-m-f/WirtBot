@@ -14,7 +14,7 @@
           WirtBot was built completely in the open and will always be free. A
           thank you to the Open Source community.
         </p>
-        <a href="/documentation/setup">
+        <a href="documentation/setup">
           <Button> Get started </Button>
         </a>
       </div>
