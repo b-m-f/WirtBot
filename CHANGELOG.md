@@ -1,3 +1,28 @@
+## 3.8.0
+4390120 Adds ssl distinction between interface and core
+
+df4f1f1 chore(deps): bump eventsource from 1.1.0 to 1.1.1 in /Website
+
+6db7c06 Update README.md
+
+3df0c7b Add files via upload
+
+88dd2bb Add files via upload
+
+6a229b8 Update HomePageEnglish.vue
+
+d66f378 chore: Adds screenshot of new version
+
+283a23b Fixes website build
+
+5666315 fix: website build fixed by staying on webpack 4
+
+2b0973d Update README.md
+
+2ade4d0 Update README.md
+
+f0758bd Update README.md
+
 ## 3.7.1
 ad1221e fix: Adds wireguard-tools into container, adds i18n loader from devdependencies to normal deps
 
