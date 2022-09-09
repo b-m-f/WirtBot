@@ -1,3 +1,8 @@
+## 3.8.1
+93df7d1 Run CI on external Buildjet runnre
+
+63ab138 Fixes buildah task to run inside toolboxes
+
 ## 3.8.0
 4390120 Adds ssl distinction between interface and core
 
