@@ -1,3 +1,6 @@
+## 3.8.2
+8ea91f1 Updates Rust version
+
 ## 3.8.1
 93df7d1 Run CI on external Buildjet runnre
 
