@@ -1,0 +1,42 @@
+user interface interface;
+daemon off;
+worker_processes  1;
+worker_rlimit_nofile 8192;
+
+events {
+  worker_connections  1024;
+}
+
+
+http {
+
+    server {
+        # https://ssl-config.mozilla.org/#server=nginx&version=1.17.7&config=modern&openssl=1.1.1k&guideline=5.6
+        listen 443 ssl http2;
+        server_name _;
+
+        ssl_certificate     /public_key;
+        ssl_certificate_key /private_key;
+
+        ssl_protocols TLSv1.2 TLSv1.3;
+        ssl_prefer_server_ciphers on;
+        ssl_session_timeout 1d;
+        ssl_session_cache shared:MozSSL:10m;  # about 40000 sessions
+        ssl_session_tickets off;
+
+        add_header Strict-Transport-Security "max-age=63072000" always;
+        add_header X-Frame-Options DENY;
+        add_header X-Content-Type-Options nosniff;
+        add_header X-XSS-Protection "1; mode=block";
+        include /etc/nginx/mime.types;
+        types {
+          application/wasm    wasm;
+        }
+
+        root /interface;
+
+        location / {
+          try_files $uri $uri/ /index.html;
+        }
+    }
+}
