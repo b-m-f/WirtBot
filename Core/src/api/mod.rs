@@ -8,8 +8,8 @@ use std::env;
 use warp::http::StatusCode;
 use warp::{reject, Filter, Rejection, Reply};
 
-const SSL_PEM_CERT: &str = "SSL_PEM_CERT";
-const SSL_KEY: &str = "SSL_KEY";
+const SSL_PEM_CERT: &str = "SSL_PEM_CERT_CORE";
+const SSL_KEY: &str = "SSL_KEY_CORE";
 const PORT: &str = "PORT";
 const DEFAULT_PORT: &str = "3030";
 const HOST: &str = "HOST";

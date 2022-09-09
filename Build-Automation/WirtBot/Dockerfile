@@ -88,7 +88,8 @@ WORKDIR /
 RUN addgroup --gid ${INTERFACE_GID:-1002} interface
 RUN useradd --gid ${INTERFACE_GID:-1002} --uid ${INTERFACE_UID:-1002} -r -s /bin/false interface
 RUN ln -sf /dev/stdout /var/log/nginx/access.log && ln -sf /dev/stderr /var/log/nginx/error.log
-COPY Build-Automation/WirtBot/nginx/nginx.conf /etc/nginx/nginx.conf
+COPY Build-Automation/WirtBot/nginx/nginx.http /etc/nginx/nginx.http
+COPY Build-Automation/WirtBot/nginx/nginx.https /etc/nginx/nginx.https
 COPY --from=interface /wirtbot/Interface/dist /interface
 
 RUN chown -R interface:interface /var/log/nginx
