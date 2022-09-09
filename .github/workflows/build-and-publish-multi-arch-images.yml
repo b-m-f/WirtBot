@@ -7,6 +7,9 @@ on:
 
 jobs:
   multi:
+    strategy:
+      matrix:
+        runs-on: [buildjet-16vcpu-ubuntu-2204]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
