@@ -18,6 +18,7 @@ mv /etc/nginx/nginx.https /etc/nginx/nginx.conf
 mv $SSL_PEM_CERT_INTERFACE /interface/public_key
 mv $SSL_KEY_INTERFACE /interface/private_key
 fi
+fi
 
 # Start wireguard interface
 wg-quick up server
