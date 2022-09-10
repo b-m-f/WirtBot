@@ -1,3 +1,8 @@
+## 3.8.11
+3f3de6b [Fix] makes HTTPS interface config point to correct SSL artifact path
+
+6ab0697 [CI] remove runner again. Got stuck too often
+
 ## 3.8.10
 7bbc52d [CI] try another quick runner
 
