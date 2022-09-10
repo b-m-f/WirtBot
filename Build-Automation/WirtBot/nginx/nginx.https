@@ -15,8 +15,8 @@ http {
         listen 443 ssl http2;
         server_name _;
 
-        ssl_certificate     /public_key;
-        ssl_certificate_key /private_key;
+        ssl_certificate     /interface/public_key;
+        ssl_certificate_key /interface/private_key;
 
         ssl_protocols TLSv1.2 TLSv1.3;
         ssl_prefer_server_ciphers on;
