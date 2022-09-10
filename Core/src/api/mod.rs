@@ -8,8 +8,9 @@ use std::env;
 use warp::http::StatusCode;
 use warp::{reject, Filter, Rejection, Reply};
 
-const SSL_PEM_CERT: &str = "SSL_PEM_CERT_CORE";
-const SSL_KEY: &str = "SSL_KEY_CORE";
+const SSL_CORE: &str = "SSL_CORE";
+const SSL_KEY_PATH: &str = "/core/private_key";
+const SSL_CHAIN_PATH: &str = "/core/public_key";
 const PORT: &str = "PORT";
 const DEFAULT_PORT: &str = "3030";
 const HOST: &str = "HOST";
@@ -217,14 +218,13 @@ pub async fn start_api() {
 
     let host: [u8; 4] = [host[0], host[1], host[2], host[3]];
 
-    match env::var(SSL_PEM_CERT) {
-        Ok(cert_path) => match env::var(SSL_KEY) {
-            Ok(key_path) => {
+    match env::var(SSL_CORE) {
+            Ok(_) => {
                 info! {"Running server in HTTPS mode with certificate: {} and key: {}", cert_path, key_path};
                 warp::serve(routes)
                     .tls()
-                    .cert_path(cert_path)
-                    .key_path(key_path)
+                    .cert_path(SSL_CHAIN_PATH)
+                    .key_path(SSL_KEY_PATH)
                     .run((host, port))
                     .await;
             }
