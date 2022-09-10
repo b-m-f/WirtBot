@@ -1,4 +1,9 @@
 ## 3.8.4
+d120c84 Try out Buildjet runner once more
+
+aa50746 Updates WirtBot entrypoint script
+
+## 3.8.4
 4eca939 Restores default runner
 
 ## 3.8.3
