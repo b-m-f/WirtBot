@@ -1,3 +1,10 @@
+## 3.8.5
+d22de90 Updates to 3.8.4
+
+d120c84 Try out Buildjet runner once more
+
+aa50746 Updates WirtBot entrypoint script
+
 ## 3.8.4
 d120c84 Try out Buildjet runner once more
 
