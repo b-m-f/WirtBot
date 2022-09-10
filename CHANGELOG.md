@@ -1,4 +1,7 @@
 ## 3.8.6
+051b8fc [Bug] Fixes closing fi
+
+## 3.8.6
 b0ed46c [Bug]: Fixes typo in entrypoiny
 
 ## 3.8.5
