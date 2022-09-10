@@ -1,3 +1,6 @@
+## 3.8.8
+2693d88 [CI] switches to buildah for local release task. Switch back to standard runner
+
 ## 3.8.7
 93b19ba Updates to 3.8.7
 
