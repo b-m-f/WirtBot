@@ -1,3 +1,6 @@
+## 3.8.6
+b0ed46c [Bug]: Fixes typo in entrypoiny
+
 ## 3.8.5
 d22de90 Updates to 3.8.4
 
