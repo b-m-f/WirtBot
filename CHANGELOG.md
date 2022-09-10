@@ -1,3 +1,8 @@
+## 3.8.7
+efa04d2 Updates to 3.8.6
+
+051b8fc [Bug] Fixes closing fi
+
 ## 3.8.6
 051b8fc [Bug] Fixes closing fi
 
