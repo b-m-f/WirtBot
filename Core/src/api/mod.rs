@@ -219,21 +219,15 @@ pub async fn start_api() {
     let host: [u8; 4] = [host[0], host[1], host[2], host[3]];
 
     match env::var(SSL_CORE) {
-            Ok(_) => {
-                info! {"Running server in HTTPS mode with certificate: {} and key: {}", cert_path, key_path};
-                warp::serve(routes)
-                    .tls()
-                    .cert_path(SSL_CHAIN_PATH)
-                    .key_path(SSL_KEY_PATH)
-                    .run((host, port))
-                    .await;
-            }
-            Err(_e) => {
-                info! {"Running server in HTTP mode"};
-                warp::serve(routes).run((host, port)).await;
-            }
-        },
-
+        Ok(_) => {
+            info! {"Running server in HTTPS mode with certificate: {} and key: {}", SSL_CHAIN_PATH, SSL_KEY_PATH};
+            warp::serve(routes)
+                .tls()
+                .cert_path(SSL_CHAIN_PATH)
+                .key_path(SSL_KEY_PATH)
+                .run((host, port))
+                .await;
+        }
         Err(_e) => {
             info! {"Running server in HTTP mode"};
             warp::serve(routes).run((host, port)).await;

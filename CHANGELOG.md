@@ -1,3 +1,6 @@
+## 3.8.9
+a0ca577 [Fix] Changes Variables and adds hardcoded expected SSL KEY and Chain locations for interface and core
+
 ## 3.8.8
 2693d88 [CI] switches to buildah for local release task. Switch back to standard runner
 
