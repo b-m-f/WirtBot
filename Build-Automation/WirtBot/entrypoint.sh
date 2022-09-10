@@ -1,6 +1,6 @@
 #! /bin/bash
 
-set -eo upipefail
+set -eo pipefail
 
 if [[ -z "${SSL_PEM_CERT_INTERFACE}" ]]; then
 # Env variable is not defined
