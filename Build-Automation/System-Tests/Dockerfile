@@ -1,7 +1,8 @@
 FROM mcr.microsoft.com/playwright:jammy
 
 # install node gyp deps
-RUN apt-get install g++ build-essentials
+RUN apt-get update
+RUN apt-get install g++ build-essential
 
 # build the app
 WORKDIR '/app'
