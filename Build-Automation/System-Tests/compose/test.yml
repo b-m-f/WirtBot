@@ -11,7 +11,7 @@ services:
       - ./test-Corefile:/tmp/WirtBotTests/Corefile
       - ./test-server.conf:/tmp/WirtBotTests/server.conf
   test-wirtbot:
-    entrypoint: "/init"
+    entrypoint: ["/bin/bash", "/test-entrypoint.sh"]
     build:
       dockerfile: Build-Automation/WirtBot/Dockerfile
       context: ../../..
@@ -21,6 +21,7 @@ services:
     volumes:
       - ./test-server.conf:/etc/wireguard/server.conf:z
       - ./test-Corefile:/etc/coredns/Corefile:z
+      - ./entrypoint.sh:/test-entrypoint.sh:z
     ports:
       - 10101:10101/udp
     environment:
