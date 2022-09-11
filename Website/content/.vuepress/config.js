@@ -5,18 +5,6 @@ module.exports = {
   port: 9090,
   title: "WirtBot, your LAN in the cloud",
   head: [
-    [
-      "noscript",
-      {},
-      `<img src="https://analytics.ehlers.berlin/ingress/2affb9fa-2347-4525-b6ff-080466adb639/pixel.gif">`,
-    ],
-    [
-      "script",
-      {
-        src:
-          "https://analytics.ehlers.berlin/ingress/2affb9fa-2347-4525-b6ff-080466adb639/script.js",
-      },
-    ],
   ],
   themeConfig: {
     logo: "/logo.svg",
