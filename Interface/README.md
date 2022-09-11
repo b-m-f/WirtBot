@@ -4,6 +4,12 @@
 
 The architecture of the Interface is intended to give clear roles to different parts. Responsibility for tasks should be easy to attribute to certain ares of the code.
 
+## Configuration
+
+You can set the following environment variables:
+
+- **SSL_INTERFACE**: set to true to enable SSL for the interface. Keys are expected at `/interface/public_key` and `/interface/private_key`
+
 ## State
 
 All the state that this application uses is defined and stored in the `src/store` directory.
