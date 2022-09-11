@@ -1,3 +1,34 @@
+## 3.8.13
+184d8b3 [Fix] sets correct API endpoint inside the test backup
+
+0cf432b [System-Tests] Uses custom entrypoint script to correctly set up NGINX and stop WireGuard interface spawn and generation of Firewall rules
+
+5933a1d [Interface] Makes it possible to restore correct API host setting from a backup
+
+d5cf202 [CI] Readds entrypoint. Changes call to s6-setuidgid
+
+c8716a5 [Testing] removes entrypoint overwrite from system-test setup
+
+8966161 [Fix] make sure that dependency install works without user input
+
+25a2b25 [Fix] updates apt cache before installing build-essential package on system-tests dockerfile
+
+7751ccc [Docs] updates setup document to include SSL setup
+
+90152ec [Docs] updates README's
+
+6a3af73 [Chore] Remove deprecated analytics
+
+0a0bad6 [CI] upgrade Playwright image for system-tests and include build dependencies for node gyp
+
+b6b898f [Fix] set reserved component name to throw a warning instead of an error
+
+de9ba72 [Chore] upgrades dependencies
+
+a98baca Updates to 3.8.12
+
+f4b4684 [Fix] Adds dynamic API call protocol upgrade depending on how the page is served to not have mixed security content
+
 ## 3.8.12
 f4b4684 [Fix] Adds dynamic API call protocol upgrade depending on how the page is served to not have mixed security content
 
