@@ -1,3 +1,6 @@
+## 3.8.12
+f4b4684 [Fix] Adds dynamic API call protocol upgrade depending on how the page is served to not have mixed security content
+
 ## 3.8.11
 3f3de6b [Fix] makes HTTPS interface config point to correct SSL artifact path
 
