@@ -48,7 +48,11 @@ export async function updateServerConfig(config, host) {
       keys.private = process.env.VUE_APP_PRIVATE_KEY;
     }
     const messageWithSignature = await sign(config, keys);
-    await post(`http://${host}/update`, messageWithSignature);
+    if (location.protocol === 'https:') {
+      await post(`https://${host}/update`, messageWithSignature);
+    } else {
+      await post(`http://${host}/update`, messageWithSignature);
+    }
     store.dispatch(
       "alerts/addSuccess",
       `${i18n.global.t("success.updateSuccessConfig")}`
@@ -66,10 +70,17 @@ export async function updateDNSConfig(config, host) {
       keys.private = process.env.VUE_APP_PRIVATE_KEY;
     }
     const messageWithSignature = await sign(config, keys);
-    await post(
-      `http://${host}/update-device-dns-entries`,
-      messageWithSignature
-    );
+    if (location.protocol === 'https:') {
+      await post(
+        `https://${host}/update-device-dns-entries`,
+        messageWithSignature
+      );
+    } else {
+      await post(
+        `http://${host}/update-device-dns-entries`,
+        messageWithSignature
+      );
+    }
     store.dispatch(
       "alerts/addSuccess",
       `${i18n.global.t("success.updateSuccessDNS")}`
