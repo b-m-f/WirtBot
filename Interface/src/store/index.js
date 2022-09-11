@@ -369,6 +369,10 @@ const store = createStore({
         ip: newState.network.dns.ip,
         ignoredZones: newState.network.dns.ignoredZones,
       });
+      
+      commit("updateAPI", {
+        host: newState.network.api.host
+      });
 
       // here we use a normal dispatch again to trigger config regeneration and API updates
       await dispatch("updateServer");
