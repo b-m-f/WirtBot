@@ -10,7 +10,7 @@ To set up a WirtBot you must first make sure that your machine has the following
 
 ## Initial setup
 
-Here is an example `docker-compose.yml` for a WirtBot with DNS:
+Here is an example `docker-compose.yml` for a WirtBot with DNS and SSL enabled:
 
 ```
 version: "3.4"
@@ -31,12 +31,6 @@ services:
       - net.ipv6.conf.all.disable_ipv6=0
     environment:
       - "ALLOWED_ORIGIN=http://IP/HOSTNAME_OF_THE_WIRTBOT_HOST_MACHINE"
-      - "DNS_UID=1003"
-      - "DNS_GID=1003"
-      - "INTERFACE_UID=1002"
-      - "INTERFACE_GID=1002"
-      - "CORE_UID=1001"
-      - "CORE_GID=1001"
     volumes:
       - wireguard-data:/etc/wireguard
       - coredns-data:/etc/coredns
@@ -90,6 +84,27 @@ Now that the network is established and the configuration persisted you might wa
 You should also make a Backup via the UI and keep it in safe place.
 
 ## Advanced
+
+
+### SSL encryption
+
+In order to activate SSL for both the Core and Interface you can set the following environment variables:
+
+```
+- "SSL_INTERFACE=true"
+- "SSL_CORE=true"
+
+```
+When set you must ensure that the keys are mounted into the container in the correct locations.
+Here is an example: 
+```
+- /etc/ssl/keys/public.key:/core/public_key
+- /etc/ssl/keys/private.key:/core/private_key
+- /etc/ssl/keys/public.key:/interface/public_key
+- /etc/ssl/keys/private.key:/interface/private_key
+```
+The Keypair can be the same for the core and interface but must be mounted to different locations in the container. This is due to both core and interface running with different users and permissions.
+
 
 ### Monitoring
 
