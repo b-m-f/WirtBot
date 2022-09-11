@@ -39,7 +39,7 @@ async function addConfigToDevice(newDevice, server) {
   });
 }
 
-const version = "3.8.11";
+const version = "3.8.12";
 
 const versionFromAppPlugin = (store) => {
   store.subscribe((mutation, state) => {
