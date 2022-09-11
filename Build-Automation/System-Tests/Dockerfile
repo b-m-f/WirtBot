@@ -2,7 +2,7 @@ FROM mcr.microsoft.com/playwright:jammy
 
 # install node gyp deps
 RUN apt-get update
-RUN apt-get install g++ build-essential
+RUN apt-get install -yy g++ build-essential
 
 # build the app
 WORKDIR '/app'
