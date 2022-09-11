@@ -1,3 +1,2 @@
 #!/usr/bin/with-contenv sh
-s6-setuidgid coredns
-coredns -conf /etc/coredns/Corefile
+s6-setuidgid coredns coredns -conf /etc/coredns/Corefile

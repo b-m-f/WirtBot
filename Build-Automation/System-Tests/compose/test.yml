@@ -11,6 +11,7 @@ services:
       - ./test-Corefile:/tmp/WirtBotTests/Corefile
       - ./test-server.conf:/tmp/WirtBotTests/server.conf
   test-wirtbot:
+    entrypoint: "/init"
     build:
       dockerfile: Build-Automation/WirtBot/Dockerfile
       context: ../../..
