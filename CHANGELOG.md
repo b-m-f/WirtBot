@@ -1,3 +1,6 @@
+## 3.8.14
+6c91095 [Fix] Runs coreDNS as root inside the container to be able to bind to Port 53 if given the correct capabilities
+
 ## 3.8.13
 184d8b3 [Fix] sets correct API endpoint inside the test backup
 
