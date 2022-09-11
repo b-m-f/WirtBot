@@ -1,5 +1,7 @@
-FROM mcr.microsoft.com/playwright:focal
-# fails when installing from package.json
+FROM mcr.microsoft.com/playwright:jammy
+
+# install node gyp deps
+RUN apt-get install g++ build-essentials
 
 # build the app
 WORKDIR '/app'
