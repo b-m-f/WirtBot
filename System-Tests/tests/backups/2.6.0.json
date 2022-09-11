@@ -94,7 +94,7 @@
             ]
         },
         "api": {
-            "host": "wirtbot.wirt.internal:3030"
+            "host": "wirtbot.test:3030"
         }
     },
     "dashboard": {
