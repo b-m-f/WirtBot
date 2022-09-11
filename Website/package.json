@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/b-m-f/WirtBot#readme",
   "dependencies": {
-    "node-sass": "^6.0.1",
+    "node-sass": "^7.0.3",
     "sass-loader": "^10",
     "vuepress": "1.9.7",
     "webpack": "^4.42.0"
