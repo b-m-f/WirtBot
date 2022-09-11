@@ -100,8 +100,6 @@ COPY Build-Automation/WirtBot/service-files/finisher /etc/services.d/interface/f
 # Core DNS
 ## CA-certificates are needed for correct DNSoverTLS forwarding of DNS requests
 RUN apt-get install -yy ca-certificates
-RUN addgroup --gid ${DNS_GID:-1003} coredns
-RUN useradd --gid ${DNS_GID:-1003} --uid ${DNS_UID:-1003} -r -s /bin/false coredns
 RUN mkdir -p /etc/coredns
 
 ## Copy the coredns binary with ads plugin from the coredns build image
