@@ -1,3 +1,6 @@
+## 3.8.16
+848b44d [Feature] wg synnconf has lead to the server loosing the connections. A complete restart of the interface is more reliable and therefore chosen as the approach for now
+
 ## 3.8.15
 6dad010 [Fix] Keeps coreDNS group but simply executes coredns bonery as root for now
 
