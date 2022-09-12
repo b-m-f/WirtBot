@@ -1,3 +1,6 @@
+## 3.8.17
+a6c4b19 [Website|Scripts] adds announcement for changes and adds convenience script for key generation to make preseeding a backup file easier
+
 ## 3.8.16
 848b44d [Feature] wg synnconf has lead to the server loosing the connections. A complete restart of the interface is more reliable and therefore chosen as the approach for now
 
