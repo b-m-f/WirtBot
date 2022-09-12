@@ -1,3 +1,6 @@
+## 3.8.15
+6dad010 [Fix] Keeps coreDNS group but simply executes coredns bonery as root for now
+
 ## 3.8.14
 6c91095 [Fix] Runs coreDNS as root inside the container to be able to bind to Port 53 if given the correct capabilities
 
