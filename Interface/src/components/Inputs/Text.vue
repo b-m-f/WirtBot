@@ -46,6 +46,9 @@ export default {
   },
   methods: {
     debounce(func, timeout = 800) {
+      if (process.env.VUE_NO_DEBOUNCE) {
+        return (...args) => func.apply(this, args);
+      }
       return (...args) => {
         console.log(this._timer);
         clearTimeout(this._timer);
