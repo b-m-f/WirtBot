@@ -1,3 +1,6 @@
+## 3.8.18
+8bbd354 [Feature] Ignores the internal zone via the state instead of hardcoding it into the DNS config generation
+
 ## 3.8.17
 a6c4b19 [Website|Scripts] adds announcement for changes and adds convenience script for key generation to make preseeding a backup file easier
 
