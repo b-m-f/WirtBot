@@ -17,7 +17,7 @@ describe("Correctly generates a valid DNS master file", () => {
     reload
     local
     forward . tls://1.1.1.1 {
-       except wirt.test lan local home fritz.box
+       except lan local home fritz.box
        tls_servername cloudflare-dns.com
        health_check 5s
     }
@@ -47,7 +47,7 @@ wirt.test {
     local
     prometheus 0.0.0.0:9153
     forward . tls://1.1.1.1 {
-       except wirt.test lan local home fritz.box
+       except lan local home fritz.box
        tls_servername cloudflare-dns.com
        health_check 5s
     }
@@ -80,7 +80,7 @@ wirt.test {
     local
     prometheus 0.0.0.0:9153
     forward . tls://1.1.1.1 {
-       except wirt.test lan local home fritz.box
+       except lan local home fritz.box
        tls_servername cloudflare-dns.com
        health_check 5s
     }
@@ -117,7 +117,7 @@ wirt.test {
     local
     prometheus 0.0.0.0:9153
     forward . tls://1.1.1.1 {
-       except wirt.test lan local home fritz.box
+       except lan local home fritz.box
        tls_servername cloudflare-dns.com
        health_check 5s
     }
@@ -149,7 +149,7 @@ wirt.test {
     local
     prometheus 0.0.0.0:9153
     forward . tls://1.1.1.1 {
-       except wirt.test lan local home fritz.box
+       except lan local home fritz.box
        tls_servername cloudflare-dns.com
        health_check 5s
     }
@@ -177,7 +177,7 @@ wirt.test {
     local
     prometheus 0.0.0.0:9153
     forward . 1.1.1.1  {
-       except wirt.test lan local home fritz.box
+       except lan local home fritz.box
        health_check 5s
     }
     cache 30
@@ -205,7 +205,7 @@ wirt.test {
     local
     prometheus 0.0.0.0:9153
     forward . 1.1.1.1 test {
-       except wirt.test lan local home fritz.box
+       except lan local home fritz.box
        health_check 5s
     }
     cache 30
