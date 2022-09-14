@@ -15,6 +15,7 @@
             :qr="device.qr"
             :config="device.config"
             :additionalDNSServers="device.additionalDNSServers"
+            :additionalNames="device.additionalNames"
             :MTU="device.MTU"
             @saved="saveDevice"
             @cancel-new-device="cancelNewDevice"
@@ -62,6 +63,7 @@ export default {
       id,
       routed,
       additionalDNSServers,
+      additionalNames,
       MTU,
       port,
     }) {
@@ -73,6 +75,7 @@ export default {
           id,
           routed,
           additionalDNSServers,
+          additionalNames,
           MTU,
           port,
         });
@@ -86,6 +89,7 @@ export default {
         type,
         routed,
         additionalDNSServers,
+        additionalNames,
         MTU,
         port,
       };

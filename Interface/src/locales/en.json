@@ -69,6 +69,7 @@
         "labels": {
           "routed": "Routed",
           "additionalDNSServers": "Additional DNS Servers",
+          "additionalNames": "Additional Names",
           "MTU": "MTU",
           "ipv4": "IPv4",
           "ipv6": "IPv6",
@@ -83,8 +84,12 @@
         },
         "placeholder": {
           "additionalDNSServers": "Comma seperated",
+          "additionalNames": "Comma seperated",
           "MTU": "1320-1800",
           "selectType": "Select device type"
+        },
+        "info": {
+          "additionalNames": "Additional names this device should be reachable at"
         }
       }
     },
@@ -166,6 +171,7 @@
     "deviceMTU": "Please add an MTU between 1320 and 1800",
     "devicePort": "Please add a port between 1 and 65535",
     "deviceAdditionalDNSServers": "Please enter a comma separated list of DNS server IPs",
+    "deviceAdditionalNames": "Name is already in use",
     "serverUpdate": "Error when updating the server.",
     "documentation": "Please check the documentation or contact us to find a solution.",
     "keysGeneration": "Error when generating keys:",

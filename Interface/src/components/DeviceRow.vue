@@ -4,19 +4,39 @@
     :data-name="this.$props.name"
   >
     <td class="column-one">
-      <label for="device-name">{{
-        $t("dashboard.widgets.devices.labels.name")
-      }}</label>
-      <TextInput
-        :value="$props.name"
-        name="device-name"
-        class="name"
-        required
-        @change="updateName"
-        :class="{
-          required: !internalDeviceCacheForNewDevices.name && !$props.name,
-        }"
-      />
+      <div>
+        <label for="device-name">{{
+          $t("dashboard.widgets.devices.labels.name")
+        }}</label>
+        <TextInput
+          :value="$props.name"
+          name="device-name"
+          class="name"
+          required
+          @validated="updateName"
+          :class="{
+            required: !internalDeviceCacheForNewDevices.name && !$props.name,
+          }"
+        />
+      </div>
+      <div class="additionalNames extras" :class="{ hidden: !this.showMore }">
+        <label for="additionalNames">
+          {{ $t("dashboard.widgets.devices.labels.additionalNames") }}
+        </label>
+        <TextInput
+          :value="
+            ($props.additionalNames && $props.additionalNames.join(',')) || ''
+          "
+          name="additionalNames"
+          class="additionalNames"
+          :placeholder="
+            $t('dashboard.widgets.devices.placeholder.additionalNames')
+          "
+          :validate="validateAdditionalNames"
+          :invalidMessage="invalidAdditionalNames"
+          @validated="updateAdditionalNames"
+        />
+      </div>
     </td>
     <td class="column-two ip-input">
       <div class="ip-v4">
@@ -119,7 +139,7 @@
           :value="
             ($props.additionalDNSServers &&
               $props.additionalDNSServers.join(',')) ||
-              ''
+            ''
           "
           name="additionalDNSServers"
           class="additionalDNSServers"
@@ -186,7 +206,7 @@ import merge from "lodash/merge";
 import cloneDeep from "lodash/cloneDeep";
 
 export default {
-  emits: ['cancel-new-device', 'saved'],
+  emits: ["cancel-new-device", "saved"],
   components: { NumberInput, TextInput, CheckBox, Select },
   props: {
     controls: Boolean,
@@ -197,6 +217,7 @@ export default {
     qr: String,
     routed: Boolean,
     additionalDNSServers: Array,
+    additionalNames: Array,
     MTU: Number,
     config: String,
   },
@@ -205,6 +226,7 @@ export default {
       invalidIPv4Message: "",
       invalidIPv6Message: "",
       invalidAdditionalDNSServersMessage: "",
+      invalidAdditionalNames: "",
       internalDeviceCacheForNewDevices: {},
       showMore: false,
       showQR: true,
@@ -271,10 +293,24 @@ export default {
     updateName(name) {
       this.save({ name });
     },
+    updateAdditionalDNSServers(serverString) {
+      const servers = serverString.split(",").map((entry) => {
+        return entry.trim();
+      });
+      this.save({ additionalDNSServers: servers });
+    },
+    updateAdditionalNames(nameString) {
+      console.log("updating");
+      const names = nameString.split(",").map((entry) => {
+        return entry.trim();
+      });
+      this.save({ additionalNames: names });
+    },
     validateAdditionalDNSServers(serverString) {
-      const correct = /^([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3},?)+$/.test(
-        serverString
-      );
+      const correct =
+        /^([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3},?)+$/.test(
+          serverString
+        );
       if (!correct) {
         this.invalidAdditionalDNSServersMessage = this.$t(
           "errors.deviceAdditionalDNSServers"
@@ -282,11 +318,31 @@ export default {
       }
       return correct;
     },
-    updateAdditionalDNSServers(serverString) {
-      const servers = serverString.split(",").map((entry) => {
+    validateAdditionalNames(nameString) {
+      const names = nameString.split(",").map((entry) => {
         return entry.trim();
       });
-      this.save({ additionalDNSServers: servers });
+      let correct = true;
+      outerloop: for (let device of this.devices) {
+        for (let newName of names) {
+          if (device.name === newName) {
+            correct = false;
+            break outerloop;
+          }
+          if (device.additionalNames) {
+            for (let name of device.additionalNames) {
+              if (name === newName) {
+                correct = false;
+                break outerloop;
+              }
+            }
+          }
+        }
+      }
+      if (!correct) {
+        this.invalidAdditionalNames = this.$t("errors.deviceAdditionalNames");
+      }
+      return correct;
     },
     validateMTU(mtu) {
       return parseInt(mtu) >= 1320 && parseInt(mtu) < 1800;

@@ -7,7 +7,7 @@
     :name="$props.name"
     :placeholder="$props.placeholder"
     :required="$props.required"
-    @change="(e) => update(e.target.value)"
+    @input="(e) => update(e.target.value)"
   />
   <textarea
     v-else
@@ -16,13 +16,13 @@
     :value="internalText || $props.value"
     :placeholder="$props.placeholder"
     :required="$props.required"
-    @change="(e) => update(e.target.value)"
+    @input="(e) => update(e.target.value)"
   ></textarea>
 </template>
 
 <script>
 export default {
-  emits: ["change"],
+  emits: ["validated"],
   props: {
     placeholder: String,
     value: String,
@@ -45,15 +45,25 @@ export default {
     },
   },
   methods: {
+    debounce(func, timeout = 800) {
+      return (...args) => {
+        console.log(this._timer);
+        clearTimeout(this._timer);
+        this._timer = setTimeout(() => {
+          func.apply(this, args);
+        }, timeout);
+      };
+    },
     update(text) {
       this.$refs["input"].setCustomValidity("");
       this.internalText = text;
+      const debouncedEmit = this.debounce(() => this.$emit("validated", text));
       try {
         if (!text) {
           if (this.$props.required) {
             throw this.$t("errors.required");
           } else {
-            this.$emit("change", text);
+            debouncedEmit();
             return;
           }
         }
@@ -62,11 +72,11 @@ export default {
           if (!valid) {
             throw this.$props.invalidMessage;
           } else {
-            this.$emit("change", text);
+            debouncedEmit();
             return;
           }
         }
-        this.$emit("change", text);
+        debouncedEmit();
       } catch (error) {
         this.$refs["input"].setCustomValidity(error);
         this.$refs["input"].reportValidity();

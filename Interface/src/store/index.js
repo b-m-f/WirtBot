@@ -279,14 +279,14 @@ const store = createStore({
     },
     async addDevice(
       { commit, dispatch, state },
-      { id, name, ip, type, routed, additionalDNSServers, MTU, keys, port }
+      { id, name, ip, type, routed, additionalDNSServers, additionalNames, MTU, keys, port }
     ) {
       try {
         if (!keys) {
           keys = await getKeys();
         }
         const newDevice = await addConfigToDevice(
-          { id, keys, name, ip, type, routed, additionalDNSServers, MTU, port },
+          { id, keys, name, ip, type, routed, additionalDNSServers, additionalNames, MTU, port },
           state.server
         );
         commit("addDevice", newDevice);
