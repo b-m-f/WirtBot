@@ -35,10 +35,9 @@ export default {
     updateDNSName(name) {
       this.$store.dispatch("updateDNSName", name);
     },
-    updateAPIHost(name){
+    updateAPIHost(name) {
       this.$store.dispatch("updateAPIHost", name);
-
-    }
+    },
   },
 };
 </script>

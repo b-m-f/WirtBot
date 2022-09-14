@@ -13,7 +13,7 @@
           name="device-name"
           class="name"
           required
-          @validated="updateName"
+          @change="updateName"
           :class="{
             required: !internalDeviceCacheForNewDevices.name && !$props.name,
           }"
@@ -34,7 +34,7 @@
           "
           :validate="validateAdditionalNames"
           :invalidMessage="invalidAdditionalNames"
-          @validated="updateAdditionalNames"
+          @change="updateAdditionalNames"
         />
       </div>
     </td>
@@ -300,7 +300,6 @@ export default {
       this.save({ additionalDNSServers: servers });
     },
     updateAdditionalNames(nameString) {
-      console.log("updating");
       const names = nameString.split(",").map((entry) => {
         return entry.trim();
       });

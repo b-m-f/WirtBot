@@ -22,7 +22,7 @@
 
 <script>
 export default {
-  emits: ["validated"],
+  emits: ["change"],
   props: {
     placeholder: String,
     value: String,
@@ -50,7 +50,6 @@ export default {
         return (...args) => func.apply(this, args);
       }
       return (...args) => {
-        console.log(this._timer);
         clearTimeout(this._timer);
         this._timer = setTimeout(() => {
           func.apply(this, args);
@@ -60,7 +59,7 @@ export default {
     update(text) {
       this.$refs["input"].setCustomValidity("");
       this.internalText = text;
-      const debouncedEmit = this.debounce(() => this.$emit("validated", text));
+      const debouncedEmit = this.debounce(() => this.$emit("change", text));
       try {
         if (!text) {
           if (this.$props.required) {
