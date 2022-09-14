@@ -72,7 +72,7 @@ const initialState = {
       ip: { v4: "1.1.1.1" },
       tlsName: "cloudflare-dns.com",
       tls: true,
-      ignoredZones: ["fritz.box", "lan", "local", "home"],
+      ignoredZones: ["wirt.internal","fritz.box", "lan", "local", "home"],
     },
     api: { host: `wirtbot.wirt.internal:3030` },
   },
@@ -171,9 +171,9 @@ const store = createStore({
     async disableFirstUse({ commit }) {
       commit("disableFirstUse");
     },
-    async updateDNSName({ commit, dispatch }, name) {
+    async updateDNSName({ state, commit, dispatch }, name) {
       commit("updateDNS", { name });
-      await dispatch("updateDNS");
+      await dispatch("updateDNSIgnoredZones", [...state.network.dns.ignoredZones, name]);
     },
     async updateAPIHost({ commit }, host) {
       commit("updateAPI", { host });

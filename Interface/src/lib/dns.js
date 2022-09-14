@@ -54,7 +54,7 @@ export function generateDNSFile(server, clients, network) {
       return `forward . ${dnsV4 ? `tls://` + dnsV4 + " " : ""}${
         dnsV6 ? `tls://` + dnsV6 + "" : ""
       }{
-       except ${network.dns.name} ${ignoredZones.join(" ")}
+       except ${ignoredZones.join(" ")}
        tls_servername ${tlsName}
        health_check 5s
     }`;
@@ -62,7 +62,7 @@ export function generateDNSFile(server, clients, network) {
       return `forward . ${dnsV4 ? dnsV4 + " " : ""}${dnsV6 ? dnsV6 + " " : ""}${
         dnsHostname ? dnsHostname : ""
       } {
-       except ${network.dns.name} ${ignoredZones.join(" ")}
+       except ${ignoredZones.join(" ")}
        health_check 5s
     }`;
     }
