@@ -7,7 +7,7 @@
     :name="$props.name"
     :placeholder="$props.placeholder"
     :required="$props.required"
-    @input="(e) => update(e.target.value)"
+    @change="(e) => update(e.target.value)"
   />
   <textarea
     v-else
@@ -16,13 +16,13 @@
     :value="internalText || $props.value"
     :placeholder="$props.placeholder"
     :required="$props.required"
-    @input="(e) => update(e.target.value)"
+    @change="(e) => update(e.target.value)"
   ></textarea>
 </template>
 
 <script>
 export default {
-  emits: ['change'],
+  emits: ["change"],
   props: {
     placeholder: String,
     value: String,
