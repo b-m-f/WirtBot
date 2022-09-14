@@ -55,6 +55,11 @@ const setAdditionalDNSServers = async (device, servers) => {
   await input.fill(servers);
 };
 
+const setAdditionalNames= async (device, names) => {
+  const input = await device.$("input[name='additionalNames']");
+  await input.fill(names);
+};
+
 const setMTU = async (device, MTU) => {
   const input = await device.$("input[name='MTU']");
   await input.fill(MTU.toString());
@@ -148,7 +153,10 @@ export const updateDevice = async (
   if (additionalDNSServers) {
     let device = await getDeviceByName(page, oldName);
     await setAdditionalDNSServers(device, additionalDNSServers);
-  }
+   if (additionalNames) {
+    let device = await getDeviceByName(page, oldName);
+    await setAdditionalNames(device, additionalNames);
+  }}
   if (MTU) {
     let device = await getDeviceByName(page, oldName);
     await setMTU(device, MTU);

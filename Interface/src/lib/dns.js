@@ -26,16 +26,30 @@ export function generateDNSFile(server, clients, network) {
     }
 
     if (client.ip.v6 && client.ip.v4) {
+      let names = ``
+      for (let name in client.additionalNames){
+        names = names + `\n${subnetv6}.${client.ip.v6} ${name}.${network.dns.name}\n${subnetv4}.${client.ip.v4} ${name}.${network.dns.name}`
+      }
       return `${subnetv4}.${client.ip.v4} ${client.name}.${network.dns.name}
-        ${subnetv6}:${client.ip.v6} ${client.name}.${network.dns.name}`;
+        ${subnetv6}:${client.ip.v6} ${client.name}.${network.dns.name}` + names;
     }
     if (client.ip.v6 && !client.ip.v4) {
-      return `${subnetv6}:${client.ip.v6} ${client.name}.${network.dns.name}`;
+      let names = ``
+      for (let name in client.additionalNames){
+        names = names + `\n${subnetv6}.${client.ip.v6} ${name}.${network.dns.name}`
+      }
+      return `${subnetv6}:${client.ip.v6} ${client.name}.${network.dns.name}` + names;
     }
     if (!client.ip.v6 && client.ip.v4) {
-      return `${subnetv4}.${client.ip.v4} ${client.name}.${network.dns.name}`;
+      let names = ``
+      for (let name in client.additionalNames){
+        names = names + `\n${subnetv4}.${client.ip.v4} ${name}.${network.dns.name}`
+      }
+      return `${subnetv4}.${client.ip.v4} ${client.name}.${network.dns.name}` + names;
+      
     }
   });
+
   const serverName = () => {
     if (subnetv6 && subnetv4) {
       return `${subnetv4}.1 ${server.name}.${network.dns.name}

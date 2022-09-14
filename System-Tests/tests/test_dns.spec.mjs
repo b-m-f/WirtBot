@@ -64,6 +64,7 @@ export default async (browser) => {
       name: "test-1",
       type: "Android",
       additionalDNSServers: "2.2.2.2",
+      additionalNames: "test2",
       MTU: 1500,
     });
     await dnsUpdateResponse;
@@ -77,6 +78,8 @@ export default async (browser) => {
 
     assert.match(dnsConfigFromCore, /.*tls:\/\/1.0.3.4/);
     assert.match(dnsConfigFromCore, /.*tls_servername testdns.test/);
+    assert.match(dnsConfigFromCore, /.*10.11.0.2 test2.test/);
+    assert.match(dnsConfigFromCore, /.*10.11.0.2 test-1.test/);
 
 
     // Test with IP without TLS
