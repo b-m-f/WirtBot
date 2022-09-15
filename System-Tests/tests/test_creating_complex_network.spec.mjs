@@ -50,6 +50,7 @@ export default async (browser) => {
       MTU: 1500,
       port: 2222,
     });
+    await page.waitForRequest(request => request.postData().includes('test-1'))
     await addNewDevice(page, {
       ip: { v4: 3, v6: "fffe" },
       name: "test-2",
@@ -57,12 +58,14 @@ export default async (browser) => {
       additionalDNSServers: "4.4.4.4,5.5.5.5",
       MTU: 1320,
     });
+    await page.waitForRequest(request => request.postData().includes('test-2'))
 
     await addNewDevice(page, {
       ip: { v6: "fffa" },
       name: "test-3",
       type: "Linux",
     });
+    await page.waitForRequest(request => request.postData().includes('test-3'))
 
     const deviceConfigPathOne = await downloadDeviceConfig(page, "test-1");
 
