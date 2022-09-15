@@ -56,6 +56,7 @@ export default async (browser) => {
       name: "test-2",
       type: "Linux",
       additionalDNSServers: "4.4.4.4,5.5.5.5",
+      additionalNames: "test2",
       MTU: 1320,
     });
     await page.waitForRequest(request => request.postData().includes('test-2'))
@@ -113,6 +114,7 @@ export default async (browser) => {
 
     assert.match(dnsConfigFromCore, /.*test-1.test/);
     assert.match(dnsConfigFromCore, /.*test-2.test/);
+    assert.match(dnsConfigFromCore, /.*test2.test/);
     assert.match(dnsConfigFromCore, /.*tls:\/\/1.2.3.4/);
     assert.match(dnsConfigFromCore, /.*tls_servername testdns.test/);
   } catch (error) {
