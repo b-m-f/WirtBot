@@ -16,6 +16,7 @@ describe("Correctly generates a valid DNS master file", () => {
     expect(generateDNSFile(server, [device], { dns })).toBe(`. {
     reload
     local
+    prometheus 0.0.0.0:9153
     forward . tls://1.1.1.1 {
        except lan local home fritz.box
        tls_servername cloudflare-dns.com
@@ -219,9 +220,11 @@ wirt.test {
   });
   it("with additionalNames", () => {
     const server = {
-      subnet: { v4: "10.10.10" },
+      subnet: { v4: "10.10.10", v6: "1000::" },
     };
-    const device = { ip: { v4: 2 }, name: "test", additionalNames: ['test2'] };
+    const device = { ip: { v4: 2, v6: "11" }, name: "test", additionalNames: ['test4'] };
+    const device2 = { ip: { v6: "12" }, name: "test2", additionalNames: ['test5'] };
+    const device3 = { ip: { v4: 3}, name: "test3", additionalNames: ['test6'] };
     const dns = {
       name: "wirt.test",
       ip: { v4: "1.1.1.1" },
@@ -229,9 +232,10 @@ wirt.test {
       tlsName: "cloudflare-dns.com",
       ignoredZones: ["lan", "local", "home", "fritz.box"],
     };
-    expect(generateDNSFile(server, [device], { dns })).toBe(`. {
+    expect(generateDNSFile(server, [device, device2, device3], { dns })).toBe(`. {
     reload
     local
+    prometheus 0.0.0.0:9153
     forward . tls://1.1.1.1 {
        except lan local home fritz.box
        tls_servername cloudflare-dns.com
@@ -242,8 +246,15 @@ wirt.test {
 wirt.test {
     hosts {
         10.10.10.1 wirtbot.wirt.test
+        1000::1 wirtbot.wirt.test
         10.10.10.2 test.wirt.test
-        10.10.10.2 test2.wirt.test
+        1000::11 test.wirt.test
+        10.10.10.2 test4.wirt.test
+        1000::11 test4.wirt.test
+        1000::12 test2.wirt.test
+        1000::12 test5.wirt.test
+        10.10.10.3 test3.wirt.test
+        10.10.10.3 test6.wirt.test
     }
 }`);
   });
