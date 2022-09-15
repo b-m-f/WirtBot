@@ -34,33 +34,15 @@ export default async (browser) => {
       )]
     )
 
-    await Promise.all([
-       page.waitForResponse(/.*\/update/),
-       page.waitForResponse(
-        /.*\/update-device-dns-entries/
-      ),
-       addServer(page, { ip: "1.2.3.4", port: 1234 })
-    ]
-    )
-    await Promise.all([
-       page.waitForResponse(/.*\/update/),
-       page.waitForResponse(
-        /.*\/update-device-dns-entries/
-      ),
-    ]
-    )
+    await addServer(page, { ip: "1.2.3.4", port: 1234 });
 
-    await Promise.all([
-       page.waitForResponse(/.*\/update/),
-       page.waitForResponse(
-        /.*\/update-device-dns-entries/
-      ),
-      addNewDevice(page, {
+    await  addNewDevice(page, {
         ip: { v4: 255 },
         name: "test-initial",
         type: "Android",
-      })]
-    )
+    });
+
+    await page.waitForResponse(response => response.request().postData().includes('10.10.0.255'))
 
     let serverConfigFromCore = await readFile(
       `${wirtBotFileDir}/server.conf`,
