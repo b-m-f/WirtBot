@@ -19,6 +19,7 @@
             :MTU="device.MTU"
             @saved="saveDevice"
             @cancel-new-device="cancelNewDevice"
+            @removed="$emit('device-removed')"
             :class="{ even: index % 2 == 0 }"
           />
         </tbody>
@@ -32,6 +33,7 @@ import DeviceRow from "./DeviceRow";
 import { guidGenerator } from "../lib/helpers";
 
 export default {
+  emits: ["cancel-new-device", "device-saved", "device-removed"],
   components: { DeviceRow },
   props: { devices: Array },
   data() {

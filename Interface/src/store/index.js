@@ -228,8 +228,11 @@ const store = createStore({
       } else {
         commit("updateServer", server);
       }
-      await dispatch("updateServerConfig");
-      await dispatch("updateDeviceConfigs");
+      const serverPreview = merge({...state.server}, server)
+      if (serverPreview.port && (serverPreview.hostname || (serverPreview.ip && (serverPreview.ip.v4 || serverPreview.ip.v6)))){
+        await dispatch("updateDeviceConfigs");
+        await dispatch("updateServerConfig");
+      }
     },
     async updateDeviceConfigs({ commit, state }) {
       let devices = await Promise.all(

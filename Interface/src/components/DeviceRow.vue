@@ -206,7 +206,7 @@ import merge from "lodash/merge";
 import cloneDeep from "lodash/cloneDeep";
 
 export default {
-  emits: ["cancel-new-device", "saved"],
+  emits: ["cancel-new-device", "saved", "removed"],
   components: { NumberInput, TextInput, CheckBox, Select },
   props: {
     controls: Boolean,
@@ -275,6 +275,7 @@ export default {
         this.$emit("cancel-new-device");
       } else {
         this.$store.dispatch("removeDevice", { id: this.$props.id });
+        this.$emit("removed");
       }
     },
     updateType(type) {
