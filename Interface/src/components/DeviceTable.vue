@@ -45,7 +45,7 @@ export default {
     },
     async updateDevice(device) {
       const old = this.devices.find((dvc) => dvc.id === device.id);
-      const updatedDevice = Object.assign({}, old, device);
+      const updatedDevice = Object.assign({}, { ...old }, device);
       try {
         await this.$store.dispatch("updateDevice", updatedDevice);
 

@@ -45,27 +45,16 @@ export default {
     },
   },
   methods: {
-    debounce(func, timeout = 800) {
-      if (process.env.VUE_NO_DEBOUNCE) {
-        return (...args) => func.apply(this, args);
-      }
-      return (...args) => {
-        clearTimeout(this._timer);
-        this._timer = setTimeout(() => {
-          func.apply(this, args);
-        }, timeout);
-      };
-    },
     update(text) {
       this.$refs["input"].setCustomValidity("");
       this.internalText = text;
-      const debouncedEmit = this.debounce(() => this.$emit("change", text));
+      const emit = () => this.$emit("change", text);
       try {
         if (!text) {
           if (this.$props.required) {
             throw this.$t("errors.required");
           } else {
-            debouncedEmit();
+            emit();
             return;
           }
         }
@@ -74,11 +63,11 @@ export default {
           if (!valid) {
             throw this.$props.invalidMessage;
           } else {
-            debouncedEmit();
+            emit();
             return;
           }
         }
-        debouncedEmit();
+        emit();
       } catch (error) {
         this.$refs["input"].setCustomValidity(error);
         this.$refs["input"].reportValidity();

@@ -1,9 +1,20 @@
 import { sign } from "../lib/crypto";
 import store from "../store";
 import i18n from "../i18n";
+import debounce from "lodash/debounce";
 
 // Loaded with https://cli.vuejs.org/guide/mode-and-env.html
 // const BASE_URL = process.env.VUE_APP_BASE_URL + "/api";
+
+function asyncDebounce(func, wait) {
+  const debounced = debounce((resolve, reject, args) => {
+    func(...args).then(resolve).catch(reject);
+  }, wait);
+  return (...args) =>
+    new Promise((resolve, reject) => {
+      debounced(resolve, reject, args);
+    });
+}
 
 // Check the MDN docs for more info on how the API is implemented:
 // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
@@ -28,6 +39,8 @@ async function post(endpoint, data) {
   }
 }
 
+const debouncedPost = asyncDebounce(post);
+
 function handleError(e) {
   if (e.status === 401) {
     store.dispatch("alerts/addError", `${i18n.global.t("errors.signature")}`);
@@ -49,9 +62,9 @@ export async function updateServerConfig(config, host) {
     }
     const messageWithSignature = await sign(config, keys);
     if (location.protocol === 'https:') {
-      await post(`https://${host}/update`, messageWithSignature);
+      await debouncedPost(`https://${host}/update`, messageWithSignature);
     } else {
-      await post(`http://${host}/update`, messageWithSignature);
+      await debouncedPost(`http://${host}/update`, messageWithSignature);
     }
     store.dispatch(
       "alerts/addSuccess",
@@ -71,12 +84,12 @@ export async function updateDNSConfig(config, host) {
     }
     const messageWithSignature = await sign(config, keys);
     if (location.protocol === 'https:') {
-      await post(
+      await debouncedPost(
         `https://${host}/update-device-dns-entries`,
         messageWithSignature
       );
     } else {
-      await post(
+      await debouncedPost(
         `http://${host}/update-device-dns-entries`,
         messageWithSignature
       );
