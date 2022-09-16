@@ -24,18 +24,52 @@ export function generateDNSFile(server, clients, network) {
     if (!server.name) {
       server.name = "wirtbot";
     }
+    const additionalNames = client.additionalNames ? client.additionalNames : [];
+    console.log(additionalNames) 
 
     if (client.ip.v6 && client.ip.v4) {
-      return `${subnetv4}.${client.ip.v4} ${client.name}.${network.dns.name}
+      let names = ``
+      for (let name of additionalNames){
+        names = names + `${subnetv4}.${client.ip.v4} ${name}.${network.dns.name}
+        ${subnetv6}:${client.ip.v6} ${name}.${network.dns.name}`
+      }
+      if (names !== ""){
+        return `${subnetv4}.${client.ip.v4} ${client.name}.${network.dns.name}
+        ${subnetv6}:${client.ip.v6} ${client.name}.${network.dns.name}
+        ${names}`;
+      } else {
+        return `${subnetv4}.${client.ip.v4} ${client.name}.${network.dns.name}
         ${subnetv6}:${client.ip.v6} ${client.name}.${network.dns.name}`;
+      }
     }
     if (client.ip.v6 && !client.ip.v4) {
+      let names = ``
+      for (let name of additionalNames){
+        names = names + `${subnetv6}:${client.ip.v6} ${name}.${network.dns.name}`
+      }
+      if (names !== ""){
+        return `${subnetv6}:${client.ip.v6} ${client.name}.${network.dns.name}
+        ${names}`;
+      } else {
       return `${subnetv6}:${client.ip.v6} ${client.name}.${network.dns.name}`;
+      }
     }
     if (!client.ip.v6 && client.ip.v4) {
-      return `${subnetv4}.${client.ip.v4} ${client.name}.${network.dns.name}`;
+      let names = ``
+      for (let name of additionalNames){
+        names = names + `${subnetv4}.${client.ip.v4} ${name}.${network.dns.name}`
+      }
+      if (names !== ""){
+        return `${subnetv4}.${client.ip.v4} ${client.name}.${network.dns.name}
+        ${names}`;
+      }
+      else {
+        return `${subnetv4}.${client.ip.v4} ${client.name}.${network.dns.name}`;
+      }
+      
     }
   });
+
   const serverName = () => {
     if (subnetv6 && subnetv4) {
       return `${subnetv4}.1 ${server.name}.${network.dns.name}

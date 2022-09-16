@@ -27,21 +27,17 @@ export default async (browser) => {
     await setAPIHost(page, process.env.API);
     // The DNS name has to set to .test to work in CI where the wirtbot is in the .test zone
     // Check the Build-Automation directory for more info
-    await setDNSName(page, "test");
+    await setDNSName(page, "test"),
 
-    let updateResponse = page.waitForResponse(/.*\/update/);
-    let dnsUpdateResponse = page.waitForResponse(
-      /.*\/update-device-dns-entries/
-    );
     await addServer(page, { ip: "1.2.3.4", port: 1234 });
-    await addNewDevice(page, {
-      ip: { v4: 255 },
-      name: "test-initial",
-      type: "Android",
+
+    await  addNewDevice(page, {
+        ip: { v4: 255 },
+        name: "test-initial",
+        type: "Android",
     });
 
-    await updateResponse;
-    await dnsUpdateResponse;
+    await page.waitForResponse(response => response.request().postData().includes('10.10.0.255'))
 
     let serverConfigFromCore = await readFile(
       `${wirtBotFileDir}/server.conf`,
@@ -51,12 +47,7 @@ export default async (browser) => {
 
     // Overwrite config with backup
 
-    updateResponse = page.waitForResponse(/.*\/update/);
-    dnsUpdateResponse = page.waitForResponse(/.*\/update-device-dns-entries/);
-    await importBackup(page, backup);
-
-    await updateResponse;
-    await dnsUpdateResponse;
+    await  importBackup(page, backup);
 
     // Make sure initially setup device is removed
     serverConfigFromCore = await readFile(

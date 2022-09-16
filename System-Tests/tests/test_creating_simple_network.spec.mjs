@@ -28,10 +28,10 @@ export default async (browser) => {
     // Check the Build-Automation directory for more info
     await setDNSName(page, "test");
 
-    const updateResponse = page.waitForResponse(/.*\/update/);
     const dnsUpdateResponse = page.waitForResponse(
       /.*\/update-device-dns-entries/
     );
+    let req = page.waitForResponse(response => response.request().postData() ? response.request().postData().includes('test-1') : false)
     await addServer(page, { ip: "1.2.3.4", port: 1234 });
     await addNewDevice(page, {
       ip: { v4: 2 },
@@ -39,8 +39,11 @@ export default async (browser) => {
       type: "Android",
     });
 
-    await updateResponse;
-    await dnsUpdateResponse;
+    await Promise.all([
+
+    await dnsUpdateResponse,
+    await req
+    ])
 
     // Wait for alerts to pop up
     await page.waitForTimeout(200);

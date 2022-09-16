@@ -1,0 +1,4 @@
+[Interface]
+Address = 10.10.0.1
+ListenPort = 1234
+PrivateKey = uFOce8aMDBCJyIIAXE9bLrCmKu1DdNo58KzGQzE+/kk=

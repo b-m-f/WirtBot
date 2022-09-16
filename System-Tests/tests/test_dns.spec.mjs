@@ -50,13 +50,20 @@ export default async (browser) => {
     await dnsUpdateResponse;
 
     dnsUpdateResponse = page.waitForResponse(/.*\/update-device-dns-entries/);
+    let req = page.waitForResponse(response => response.request().postData() ? response.request().postData().includes('10.11.0.1') : false)
     await addServer(page, {
       ip: "1.2.3.4",
       port: 1234,
-      subnet: "10.11.0.",
+      subnet: {v4: "10.11.0"},
       name: "test",
     });
-    await dnsUpdateResponse;
+    await Promise.all(
+      [
+        req,
+        dnsUpdateResponse
+      ]
+    )
+
 
     dnsUpdateResponse = page.waitForResponse(/.*\/update-device-dns-entries/);
     await addNewDevice(page, {
@@ -64,6 +71,7 @@ export default async (browser) => {
       name: "test-1",
       type: "Android",
       additionalDNSServers: "2.2.2.2",
+      additionalNames: "test2",
       MTU: 1500,
     });
     await dnsUpdateResponse;
@@ -77,14 +85,16 @@ export default async (browser) => {
 
     assert.match(dnsConfigFromCore, /.*tls:\/\/1.0.3.4/);
     assert.match(dnsConfigFromCore, /.*tls_servername testdns.test/);
+    assert.match(dnsConfigFromCore, /.*10.11.0.2 test2.test/);
+    assert.match(dnsConfigFromCore, /.*10.11.0.2 test-1.test/);
 
 
     // Test with IP without TLS
-    dnsUpdateResponse = page.waitForResponse(/.*\/update-device-dns-entries/);
 
+    req = page.waitForResponse(response => response.request().postData() ? response.request().postData().includes('1.2.3.4') : false)
     await disableDNSTLS(page);
     await setDNSIP(page, "1.2.3.4");
-    await dnsUpdateResponse;
+    await req;
 
     // wait for changes to be flushed to backend
     await page.waitForTimeout(100);

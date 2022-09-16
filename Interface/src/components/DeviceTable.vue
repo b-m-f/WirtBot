@@ -15,9 +15,11 @@
             :qr="device.qr"
             :config="device.config"
             :additionalDNSServers="device.additionalDNSServers"
+            :additionalNames="device.additionalNames"
             :MTU="device.MTU"
             @saved="saveDevice"
             @cancel-new-device="cancelNewDevice"
+            @removed="$emit('device-removed')"
             :class="{ even: index % 2 == 0 }"
           />
         </tbody>
@@ -31,6 +33,7 @@ import DeviceRow from "./DeviceRow";
 import { guidGenerator } from "../lib/helpers";
 
 export default {
+  emits: ["cancel-new-device", "device-saved", "device-removed"],
   components: { DeviceRow },
   props: { devices: Array },
   data() {
@@ -42,7 +45,7 @@ export default {
     },
     async updateDevice(device) {
       const old = this.devices.find((dvc) => dvc.id === device.id);
-      const updatedDevice = Object.assign({}, old, device);
+      const updatedDevice = Object.assign({}, { ...old }, device);
       try {
         await this.$store.dispatch("updateDevice", updatedDevice);
 
@@ -62,6 +65,7 @@ export default {
       id,
       routed,
       additionalDNSServers,
+      additionalNames,
       MTU,
       port,
     }) {
@@ -73,6 +77,7 @@ export default {
           id,
           routed,
           additionalDNSServers,
+          additionalNames,
           MTU,
           port,
         });
@@ -86,14 +91,15 @@ export default {
         type,
         routed,
         additionalDNSServers,
+        additionalNames,
         MTU,
         port,
       };
       if (!device.ip || !device.name || !device.type) {
         return;
       }
-      await this.$store.dispatch("addDevice", device);
       this.$emit("device-saved");
+      await this.$store.dispatch("addDevice", device);
       return true;
     },
   },

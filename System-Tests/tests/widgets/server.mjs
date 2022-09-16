@@ -65,22 +65,23 @@ export const addServer = async (page, { ip, port, hostname, subnet, name }) => {
     const widget = await serverWidget(page);
     await setIP(widget, ip);
   }
-  if (port) {
-    const widget = await serverWidget(page);
-    await setPort(widget, port);
-  }
   if (hostname) {
     const widget = await serverWidget(page);
     await setHostname(widget, hostname);
-  }
-  if (name) {
-    const widget = await serverWidget(page);
-    await setName(widget, name);
   }
   if (subnet) {
     const widget = await serverWidget(page);
     await setSubnet(widget, subnet);
   }
+  if (name) {
+    const widget = await serverWidget(page);
+    await setName(widget, name);
+  }
+  if (port) {
+    const widget = await serverWidget(page);
+    await setPort(widget, port);
+  }
+  
 };
 export const updateServer = async (page, server) => {
   await addServer(page, server);

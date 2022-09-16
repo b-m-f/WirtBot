@@ -39,7 +39,7 @@ async function addConfigToDevice(newDevice, server) {
   });
 }
 
-const version = "3.8.17";
+const version = "3.8.18";
 
 const versionFromAppPlugin = (store) => {
   store.subscribe((mutation, state) => {
@@ -72,7 +72,7 @@ const initialState = {
       ip: { v4: "1.1.1.1" },
       tlsName: "cloudflare-dns.com",
       tls: true,
-      ignoredZones: ["fritz.box", "lan", "local", "home"],
+      ignoredZones: ["wirt.internal","fritz.box", "lan", "local", "home"],
     },
     api: { host: `wirtbot.wirt.internal:3030` },
   },
@@ -171,9 +171,9 @@ const store = createStore({
     async disableFirstUse({ commit }) {
       commit("disableFirstUse");
     },
-    async updateDNSName({ commit, dispatch }, name) {
+    async updateDNSName({ state, commit, dispatch }, name) {
       commit("updateDNS", { name });
-      await dispatch("updateDNS");
+      await dispatch("updateDNSIgnoredZones", [...state.network.dns.ignoredZones, name]);
     },
     async updateAPIHost({ commit }, host) {
       commit("updateAPI", { host });
@@ -228,8 +228,11 @@ const store = createStore({
       } else {
         commit("updateServer", server);
       }
-      await dispatch("updateServerConfig");
-      await dispatch("updateDeviceConfigs");
+      const serverPreview = merge({...state.server}, server)
+      if (serverPreview.port && (serverPreview.hostname || (serverPreview.ip && (serverPreview.ip.v4 || serverPreview.ip.v6)))){
+        await dispatch("updateDeviceConfigs");
+        await dispatch("updateServerConfig");
+      }
     },
     async updateDeviceConfigs({ commit, state }) {
       let devices = await Promise.all(
@@ -279,14 +282,14 @@ const store = createStore({
     },
     async addDevice(
       { commit, dispatch, state },
-      { id, name, ip, type, routed, additionalDNSServers, MTU, keys, port }
+      { id, name, ip, type, routed, additionalDNSServers, additionalNames, MTU, keys, port }
     ) {
       try {
         if (!keys) {
           keys = await getKeys();
         }
         const newDevice = await addConfigToDevice(
-          { id, keys, name, ip, type, routed, additionalDNSServers, MTU, port },
+          { id, keys, name, ip, type, routed, additionalDNSServers, additionalNames, MTU, port },
           state.server
         );
         commit("addDevice", newDevice);

@@ -33,6 +33,10 @@ The WirtBot is configured with environment variables:
 To enable logging run the program with the wanted environment variable.
 Check [env-logger](https://docs.rs/env_logger/0.7.1/env_logger/) for more information.
 
+## Payloads
+`LOG_PAYLOADS=true`
+
+
 ### Server logs
 
 `RUST_LOG=wirt::api`. For example `RUST_LOG=wirt::api cargo run`

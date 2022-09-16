@@ -22,17 +22,23 @@ export default async (browser) => {
     await skipInitialConfig(page);
 
     await setAPIHost(page, process.env.API);
+
+    
     await setDNSName(page, "test");
     // The DNS name has to set to .test to work in CI where the wirtbot is in the .test zone
     // Check the Build-Automation directory for more info
 
     // Test that the server IP wont update for the devices on incorrect input
     await addServer(page, { ip: "1.2.3.4", port: 1234 });
+    let req = page.waitForResponse(response => response.request().postData() ? response.request().postData().includes('1.1.1.1') : false)
     await addNewDevice(page, {
       ip: { v4: 2 },
       name: "test-1",
       type: "Android",
     });
+
+    await req;
+
     await page.waitForSelector(".device[data-name='test-1']");
     await page.reload();
     await addServer(page, { ip: "1.2.3", port: 1234 });
@@ -48,6 +54,7 @@ export default async (browser) => {
         return e.validity.valid;
       }
     );
+
     assert.strictEqual(valid, false);
     assert.match(deviceConfig, /.*Endpoint = 1.2.3.4/);
 

@@ -22,7 +22,7 @@
 
 <script>
 export default {
-  emits: ['change'],
+  emits: ["change"],
   props: {
     placeholder: String,
     value: String,
@@ -45,28 +45,39 @@ export default {
     },
   },
   methods: {
+    debounce(func, timeout = 800) {
+      return (...args) => {
+        clearTimeout(this._timer);
+        this._timer = setTimeout(() => {
+          func.apply(this, args);
+        }, timeout);
+      };
+    },
     update(text) {
       this.$refs["input"].setCustomValidity("");
       this.internalText = text;
+      const emit = this.debounce(() => this.$emit("change", text));
       try {
         if (!text) {
           if (this.$props.required) {
+            clearTimeout(this._timer);
             throw this.$t("errors.required");
           } else {
-            this.$emit("change", text);
+            emit();
             return;
           }
         }
         if (this.$props.validate) {
           const valid = this.$props.validate(text);
           if (!valid) {
+            clearTimeout(this._timer);
             throw this.$props.invalidMessage;
           } else {
-            this.$emit("change", text);
+            emit();
             return;
           }
         }
-        this.$emit("change", text);
+        emit();
       } catch (error) {
         this.$refs["input"].setCustomValidity(error);
         this.$refs["input"].reportValidity();

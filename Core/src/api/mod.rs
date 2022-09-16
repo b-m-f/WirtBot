@@ -12,6 +12,7 @@ const SSL_CORE: &str = "SSL_CORE";
 const SSL_KEY_PATH: &str = "/core/private_key";
 const SSL_CHAIN_PATH: &str = "/core/public_key";
 const PORT: &str = "PORT";
+const LOGS: &str = "LOG_PAYLOADS";
 const DEFAULT_PORT: &str = "3030";
 const HOST: &str = "HOST";
 const DEFAULT_HOST: &str = "0.0.0.0";
@@ -123,7 +124,10 @@ fn update(
             return verify_signature(message, public_key);
         })
         .and_then(move |config: String| async move {
-            std::println!("{}", config);
+            match env::var(LOGS) {
+                Ok(_) => std::println!("Received new WireGuard config: {}", config),
+                Err(_) => ()
+            };
             match wireguard_config::write_config_file(config, config_path.to_string()) {
                 Ok(_) => return Ok(()),
                 Err(e) => {
@@ -148,6 +152,10 @@ fn update_device_dns_entries(
             return verify_signature(message, public_key);
         })
         .and_then(move |device_list: String| async move {
+            match env::var(LOGS) {
+                Ok(_) => std::println!("Received new coreDNS config: {}", device_list),
+                Err(_) => ()
+            };
             match managed_dns::write_device_file(device_list, dns_path.to_string()) {
                 Ok(_) => return Ok(()),
                 Err(e) => {

@@ -5,6 +5,7 @@
       :devices="devicesToBeDisplayedByTable || this.devices"
       @device-saved="removeNewDevice"
       @cancel-new-device="removeNewDevice"
+      @device-removed="removeNewDevice"
     />
     <Button id="add-device" uppercase @click="addNewDevice">{{
       $t("dashboard.widgets.devices.addDevice")
@@ -30,6 +31,11 @@ export default {
   computed: {
     devices() {
       return this.$store.state.devices;
+    },
+  },
+  watch: {
+    devices(newDevices) {
+      this.devicesToBeDisplayedByTable = [...newDevices];
     },
   },
   methods: {
