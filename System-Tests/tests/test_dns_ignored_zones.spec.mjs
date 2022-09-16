@@ -26,17 +26,18 @@ export default async (browser) => {
     // wait for state to be ready
     await dnsUpdateResponse;
 
-    dnsUpdateResponse = page.waitForResponse(/.*update-device-dns-entries.*/);
+    let req = page.waitForResponse(response => response.request().postData() ? response.request().postData().includes('test2 what up.lan') : false)
     await setIgnoredZones(page, "test2,what,up.lan");
     // wait to propagate changes to backend
-    await dnsUpdateResponse;
+    await req;
+    
 
     const dnsConfigFromCore = await readFile(
       `${wirtBotFileDir}/Corefile`,
       "utf-8"
     );
 
-    assert.match(dnsConfigFromCore, /.* except test test2 what up.lan/);
+    assert.match(dnsConfigFromCore, /.* except test2 what up.lan/);
   } catch (error) {
     console.error(error);
     throw error;

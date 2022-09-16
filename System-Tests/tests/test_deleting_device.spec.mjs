@@ -25,11 +25,13 @@ export default async (browser) => {
     // Check the Build-Automation directory for more info
     await setDNSName(page, "test");
 
+    await addServer(page, { ip: "1.2.3.4", port: 1234 });
+    
+    
     let updateResponse = page.waitForResponse(/.*\/update/);
     let dnsUpdateResponse = page.waitForResponse(
       /.*\/update-device-dns-entries/
     );
-    await addServer(page, { ip: "1.2.3.4", port: 1234 });
     await addNewDevice(page, {
       ip: { v4: 2 },
       name: "test-1",

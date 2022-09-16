@@ -15,6 +15,12 @@ export const getConfig = async (device) => {
   const additionalDNSServers = await additionalDNSServersInput.evaluate(
     (e) => e.value
   );
+  const additionalNamesInput = await device.$(
+    "input[name='additionalNames']"
+  );
+  const additionalNames = await additionalNamesInput.evaluate(
+    (e) => e.value
+  );
   const nameInput = await device.$("input[name='device-name']");
   const name = await nameInput.evaluate((e) => e.value);
 
@@ -30,6 +36,9 @@ export const getConfig = async (device) => {
     MTU: parseInt(MTU) || undefined,
     additionalDNSServers: additionalDNSServers
       ? additionalDNSServers.split(",")
+      : [],
+    additionalNames: additionalNames
+      ? additionalNames.split(",")
       : [],
     ip: { v4: parseInt(v4), v6 },
   };
@@ -83,7 +92,7 @@ const getDeviceByName = async (page, name) => {
 
 export const addNewDevice = async (
   page,
-  { ip: { v4, v6 }, name, type, additionalDNSServers, MTU, port }
+  { ip: { v4, v6 }, name, type, additionalDNSServers, additionalNames, MTU, port }
 ) => {
   const widget = await deviceWidget(page);
   const addDeviceButton = await widget.$("#add-device");
@@ -102,9 +111,9 @@ export const addNewDevice = async (
     let device = await widget.$(".device:last-child");
     await setIPv6(device, v6);
   }
-  if (name) {
+  if (additionalNames) {
     let device = await widget.$(".device:last-child");
-    await setName(device, name);
+    await setAdditionalNames(device, additionalNames);
   }
   if (additionalDNSServers) {
     let device = await widget.$(".device:last-child");
@@ -118,17 +127,21 @@ export const addNewDevice = async (
     let device = await widget.$(".device:last-child");
     await setPort(device, port);
   }
-  // This is set last as it is the last necessary item to trigger an auto save on the device
   if (type) {
     let device = await widget.$(".device:last-child");
     await setType(device, type);
+  }
+  // This is set last as it is the last necessary item to trigger an auto save on the device
+  if (name) {
+    let device = await widget.$(".device:last-child");
+    await setName(device, name);
   }
 };
 
 export const updateDevice = async (
   page,
   oldName,
-  { ip: { v4, v6 }, name, type, additionalDNSServers, MTU, port }
+  { ip: { v4, v6 }, name, type, additionalDNSServers, additionalNames, MTU, port }
 ) => {
   let device = await getDeviceByName(page, oldName);
   await expandDevice(device);
@@ -153,10 +166,11 @@ export const updateDevice = async (
   if (additionalDNSServers) {
     let device = await getDeviceByName(page, oldName);
     await setAdditionalDNSServers(device, additionalDNSServers);
-   if (additionalNames) {
+  }
+  if (additionalNames) {
     let device = await getDeviceByName(page, oldName);
     await setAdditionalNames(device, additionalNames);
-  }}
+  }
   if (MTU) {
     let device = await getDeviceByName(page, oldName);
     await setMTU(device, MTU);
