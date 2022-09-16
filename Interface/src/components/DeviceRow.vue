@@ -322,54 +322,71 @@ export default {
       return correct;
     },
     validateAdditionalNames(nameString) {
+      const correct = /^[0-9A-Za-z-.]+$/.test(nameString);
+      if (!correct) {
+        this.invalidAdditionalNames = this.$t(
+          "errors.deviceAdditionalNamesWrong"
+        );
+        return false;
+      }
       const names = nameString.split(",").map((entry) => {
         return entry.trim();
       });
-      let correct = true;
+      let taken = false;
       outerloop: for (let device of this.devices) {
         for (let newName of names) {
           if (device.name === newName) {
-            correct = false;
+            taken = true;
             break outerloop;
           }
           if (device.additionalNames) {
             for (let name of device.additionalNames) {
               if (name === newName) {
-                correct = false;
+                taken = true;
                 break outerloop;
               }
             }
           }
         }
       }
-      if (!correct) {
-        this.invalidAdditionalNames = this.$t("errors.deviceAdditionalNames");
+      if (taken) {
+        this.invalidAdditionalNames = this.$t(
+          "errors.deviceAdditionalNamesTaken"
+        );
+        return false;
       }
-      return correct;
+      return true;
     },
     validateMTU(mtu) {
       return parseInt(mtu) >= 1320 && parseInt(mtu) < 1800;
     },
     validateName(name) {
-      let correct = true;
+      const correct = /^[0-9A-Za-z-]+$/.test(name);
+      if (!correct) {
+        this.invalidName = this.$t("errors.deviceNameWrong");
+        return false;
+      }
+
+      let taken = false;
       outerloop: for (let device of this.devices) {
         if (device.name === name) {
-          correct = false;
+          taken = true;
           break outerloop;
         }
         if (device.additionalNames) {
           for (let additionalName of device.additionalNames) {
             if (additionalName === name) {
-              correct = false;
+              taken = true;
               break outerloop;
             }
           }
         }
       }
-      if (!correct) {
-        this.invalidName = this.$t("errors.deviceName");
+      if (taken) {
+        this.invalidName = this.$t("errors.deviceNameTaken");
+        return false;
       }
-      return correct;
+      return true;
     },
     updateMTU(mtu) {
       this.save({ MTU: mtu });
