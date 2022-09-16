@@ -1,3 +1,52 @@
+## 3.9.0
+7241c84 Merge branch 'dns-ignore-update'
+
+a60301c [Interface] add new name validation to make sure the names are correctly reachable when used in DNS lookups
+
+e5a78e8 [System-Tests] Updates the system-tests with request waiting technique so they work with debouncing and make them aware of the new additionalNames feature
+
+e5c4b36 [Interface] updates logic on adding a new device so that it does not appear twice
+
+b2a7c35 [Interface] validates that name isnt used twice
+
+b53af6a [Interfaces] also debounces Text with component local debounce method to have the time attached to the component correctly
+
+980927c [Interfaces] debounces API calls instead of on text component
+
+bfea933 [Interface] Fixes state mutation outside of handler issue
+
+cb09501 [System-Tests] also tests additionalNames functionality in complex network test
+
+94971cd [Interface] adds all tests for additionalNames and fixes up unit tests
+
+d43e41e [Interface] updates DNS config generation. Used wrong loop
+
+9b9d070 [Core] adds functionality to log payloads via ENV variable
+
+c8037a6 [System-Tests] waits for the correct reponse for backup overwrite test as well
+
+5035bb8 [Interface] add new emit event to properly remove a device from the table once it is added to the store to avoid a double display of the same device
+
+adf93a4 [System-Tests] fix complex network test by waiting for the correct requests to fire
+
+6623fbd [System-Tests] fix up reponse awaiting for backup overwrite tests
+
+bf66fb6 [Fix] Roll back emitted event to be change instead of validated
+
+34860ca [Interface] remove debounce timeout on test execution
+
+f6acae6 [Interface] Generates Corefile with the additional names included and adds tests
+
+43eedbc [Interface] add additionalNames to Interface and add debounce on TextInput
+
+7e61c00 [Interface] change input to change on network settings to stop it from spamming the API
+
+080bae2 Updates to 3.8.18
+
+8bbd354 [Feature] Ignores the internal zone via the state instead of hardcoding it into the DNS config generation
+
+97840d5 [Feature] Ignores the internal zone via the state instead of hardcoding it into the DNS config generation
+
 ## 3.8.18
 8bbd354 [Feature] Ignores the internal zone via the state instead of hardcoding it into the DNS config generation
 
