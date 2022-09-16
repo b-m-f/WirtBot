@@ -24,13 +24,11 @@ export function generateDNSFile(server, clients, network) {
     if (!server.name) {
       server.name = "wirtbot";
     }
-    if (!client.additionalNames){
-      client.additionalNames = [];
-    }
+    const additionalNames = client.additionalNames ? client.additionalNames : [];
 
     if (client.ip.v6 && client.ip.v4) {
       let names = ``
-      for (let name of client.additionalNames){
+      for (let name of additionalNames){
         names = names + `${subnetv4}.${client.ip.v4} ${name}.${network.dns.name}
         ${subnetv6}:${client.ip.v6} ${name}.${network.dns.name}`
       }
@@ -45,7 +43,7 @@ export function generateDNSFile(server, clients, network) {
     }
     if (client.ip.v6 && !client.ip.v4) {
       let names = ``
-      for (let name of client.additionalNames){
+      for (let name of additionalNames){
         names = names + `${subnetv6}:${client.ip.v6} ${name}.${network.dns.name}`
       }
       if (names !== ""){
@@ -57,7 +55,7 @@ export function generateDNSFile(server, clients, network) {
     }
     if (!client.ip.v6 && client.ip.v4) {
       let names = ``
-      for (let name of client.additionalNames){
+      for (let name of additionalNames){
         names = names + `${subnetv4}.${client.ip.v4} ${name}.${network.dns.name}`
       }
       if (names !== ""){
