@@ -45,7 +45,7 @@ export default {
     },
   },
   methods: {
-    debounce(func, timeout = 500) {
+    debounce(func, timeout = 800) {
       return (...args) => {
         clearTimeout(this._timer);
         this._timer = setTimeout(() => {
@@ -60,6 +60,7 @@ export default {
       try {
         if (!text) {
           if (this.$props.required) {
+            clearTimeout(this._timer);
             throw this.$t("errors.required");
           } else {
             emit();
@@ -69,6 +70,7 @@ export default {
         if (this.$props.validate) {
           const valid = this.$props.validate(text);
           if (!valid) {
+            clearTimeout(this._timer);
             throw this.$props.invalidMessage;
           } else {
             emit();

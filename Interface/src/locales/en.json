@@ -172,6 +172,7 @@
     "devicePort": "Please add a port between 1 and 65535",
     "deviceAdditionalDNSServers": "Please enter a comma separated list of DNS server IPs",
     "deviceAdditionalNames": "Name is already in use",
+    "deviceName": "Name is already in use",
     "serverUpdate": "Error when updating the server.",
     "documentation": "Please check the documentation or contact us to find a solution.",
     "keysGeneration": "Error when generating keys:",

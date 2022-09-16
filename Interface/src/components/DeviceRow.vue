@@ -17,6 +17,8 @@
           :class="{
             required: !internalDeviceCacheForNewDevices.name && !$props.name,
           }"
+          :validate="validateName"
+          :invalidMessage="invalidName"
         />
       </div>
       <div class="additionalNames extras" :class="{ hidden: !this.showMore }">
@@ -227,6 +229,7 @@ export default {
       invalidIPv6Message: "",
       invalidAdditionalDNSServersMessage: "",
       invalidAdditionalNames: "",
+      invalidName: "",
       internalDeviceCacheForNewDevices: {},
       showMore: false,
       showQR: true,
@@ -346,6 +349,27 @@ export default {
     },
     validateMTU(mtu) {
       return parseInt(mtu) >= 1320 && parseInt(mtu) < 1800;
+    },
+    validateName(name) {
+      let correct = true;
+      outerloop: for (let device of this.devices) {
+        if (device.name === name) {
+          correct = false;
+          break outerloop;
+        }
+        if (device.additionalNames) {
+          for (let additionalName of device.additionalNames) {
+            if (additionalName === name) {
+              correct = false;
+              break outerloop;
+            }
+          }
+        }
+      }
+      if (!correct) {
+        this.invalidName = this.$t("errors.deviceName");
+      }
+      return correct;
     },
     updateMTU(mtu) {
       this.save({ MTU: mtu });
