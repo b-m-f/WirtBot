@@ -45,10 +45,18 @@ export default {
     },
   },
   methods: {
+    debounce(func, timeout = 500) {
+      return (...args) => {
+        clearTimeout(this._timer);
+        this._timer = setTimeout(() => {
+          func.apply(this, args);
+        }, timeout);
+      };
+    },
     update(text) {
       this.$refs["input"].setCustomValidity("");
       this.internalText = text;
-      const emit = () => this.$emit("change", text);
+      const emit = this.debounce(() => this.$emit("change", text));
       try {
         if (!text) {
           if (this.$props.required) {

@@ -39,7 +39,7 @@ async function post(endpoint, data) {
   }
 }
 
-const debouncedPost = asyncDebounce(post);
+const debouncedPost = asyncDebounce(post, 300);
 
 function handleError(e) {
   if (e.status === 401) {
