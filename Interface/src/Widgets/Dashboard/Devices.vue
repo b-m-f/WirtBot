@@ -35,7 +35,7 @@ export default {
   },
   watch: {
     devices(newDevices) {
-      this.devicesToBeDisplayedByTable = newDevices;
+      this.devicesToBeDisplayedByTable = [...newDevices];
     },
   },
   methods: {

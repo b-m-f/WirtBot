@@ -98,8 +98,8 @@ export default {
       if (!device.ip || !device.name || !device.type) {
         return;
       }
-      await this.$store.dispatch("addDevice", device);
       this.$emit("device-saved");
+      await this.$store.dispatch("addDevice", device);
       return true;
     },
   },
