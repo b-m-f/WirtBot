@@ -25,7 +25,6 @@ export function generateDNSFile(server, clients, network) {
       server.name = "wirtbot";
     }
     const additionalNames = client.additionalNames ? client.additionalNames : [];
-    console.log(additionalNames) 
 
     if (client.ip.v6 && client.ip.v4) {
       let names = ``
