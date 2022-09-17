@@ -155,7 +155,7 @@
     "keysGenerated": "Keys were generated successfully.",
     "copyToClipBoard": "Copied",
     "updateSuccessDNS": "DNS successfully updated",
-    "updateSuccessConfig": "Config successfully updated"
+    "updateSuccessConfig": "Config successfully updated. Reconnecting to WirtBot..."
   },
   "errors": {
     "backupNotCompatible": "The backup has a newer version than the app and is not comptaible",

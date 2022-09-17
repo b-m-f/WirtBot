@@ -255,8 +255,8 @@ const store = createStore({
       commit("updateServerConfig", config);
       // Since the server config gets updated with every device change, this is a place to trigger remote updates
       // on the WirtBot
-      await dispatch("sendConfigUpdatesToAPI");
       await dispatch("updateDNS");
+      await dispatch("sendConfigUpdatesToAPI");
     },
     async updateDNS({ state, commit, dispatch }) {
       commit(
