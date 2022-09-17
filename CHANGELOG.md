@@ -1,3 +1,8 @@
+## 3.9.1
+ee49fc7 [Interface] send config update for DNS before server config to get an answer before the interface restarts. Updates message on update response to indicate that the interface is restarting
+
+a02c226 [Interface] removes unused Google fonts, removes console log in DNS file generation
+
 ## 3.9.0
 7241c84 Merge branch 'dns-ignore-update'
 
