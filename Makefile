@@ -70,9 +70,9 @@ update-dependencies:
 
 ## Build and release
 build-and-release:
-	buildah bud --dns=none --network=host  --platform linux/arm64,linux/amd64 --manifest docker.io/bmff/wirtbot -f Build-Automation/WirtBot/Dockerfile . && \
-	buildah manifest push --all docker.io/bmff/wirtbot docker://docker.io/bmff/wirtbot:latest && \
-	buildah manifest push --all docker.io/bmff/wirtbot docker://docker.io/bmff/wirtbot:$$(cat .version)
+	buildah bud --dns=none --network=host  --platform linux/arm64,linux/amd64 --manifest docker.io/bmff/wirtbot-$$(cat .version) -f Build-Automation/WirtBot/Dockerfile . && \
+	buildah manifest push --all docker.io/bmff/wirtbot-$$(cat .version) docker://docker.io/bmff/wirtbot:latest && \
+	buildah manifest push --all docker.io/bmff/wirtbot-$$(cat .version) docker://docker.io/bmff/wirtbot:$$(cat .version)
 
 ## DNS is included since rootless networking inside a toolbox on Fedora seemed to kill DNS resolution
 buildah-and-release-test:
