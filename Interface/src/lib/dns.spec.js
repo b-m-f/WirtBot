@@ -224,7 +224,7 @@ wirt.test {
     };
     const device = { ip: { v4: 2, v6: "11" }, name: "test", additionalNames: ['test4'] };
     const device2 = { ip: { v6: "12" }, name: "test2", additionalNames: ['test5'] };
-    const device3 = { ip: { v4: 3}, name: "test3", additionalNames: ['test6'] };
+    const device3 = { ip: { v4: 3}, name: "test3", additionalNames: ['test6', 'test7'] };
     const dns = {
       name: "wirt.test",
       ip: { v4: "1.1.1.1" },
@@ -255,6 +255,7 @@ wirt.test {
         1000::12 test5.wirt.test
         10.10.10.3 test3.wirt.test
         10.10.10.3 test6.wirt.test
+        10.10.10.3 test7.wirt.test
     }
 }`);
   });

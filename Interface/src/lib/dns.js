@@ -29,9 +29,11 @@ export function generateDNSFile(server, clients, network) {
     if (client.ip.v6 && client.ip.v4) {
       let names = ``
       for (let name of additionalNames){
-        names = names + `${subnetv4}.${client.ip.v4} ${name}.${network.dns.name}
-        ${subnetv6}:${client.ip.v6} ${name}.${network.dns.name}`
+        names = names + `
+        ${subnetv4}.${client.ip.v4} ${name}.${network.dns.name}
+        ${subnetv6}:${client.ip.v6} ${name}.${network.dns.name}\n`
       }
+      names = names.trim()
       if (names !== ""){
         return `${subnetv4}.${client.ip.v4} ${client.name}.${network.dns.name}
         ${subnetv6}:${client.ip.v6} ${client.name}.${network.dns.name}
@@ -44,8 +46,10 @@ export function generateDNSFile(server, clients, network) {
     if (client.ip.v6 && !client.ip.v4) {
       let names = ``
       for (let name of additionalNames){
-        names = names + `${subnetv6}:${client.ip.v6} ${name}.${network.dns.name}`
+        names = names + `
+        ${subnetv6}:${client.ip.v6} ${name}.${network.dns.name}\n`
       }
+      names = names.trim()
       if (names !== ""){
         return `${subnetv6}:${client.ip.v6} ${client.name}.${network.dns.name}
         ${names}`;
@@ -56,8 +60,10 @@ export function generateDNSFile(server, clients, network) {
     if (!client.ip.v6 && client.ip.v4) {
       let names = ``
       for (let name of additionalNames){
-        names = names + `${subnetv4}.${client.ip.v4} ${name}.${network.dns.name}`
+        names = names + `
+        ${subnetv4}.${client.ip.v4} ${name}.${network.dns.name}`
       }
+      names = names.trim()
       if (names !== ""){
         return `${subnetv4}.${client.ip.v4} ${client.name}.${network.dns.name}
         ${names}`;
