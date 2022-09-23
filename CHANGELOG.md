@@ -1,3 +1,6 @@
+## 3.9.2
+1ee2dfa [Interface](Bug) Fix validation to allow commas to pass, as the list is comma seperated
+
 ## 3.9.1
 ee49fc7 [Interface] send config update for DNS before server config to get an answer before the interface restarts. Updates message on update response to indicate that the interface is restarting
 
