@@ -1,3 +1,14 @@
+## 3.9.4
+14074fd [Interface](Bug) fixes Corefile generation to have multiple additional names on separate lines
+
+f9e2a51 Fixes build-and-release task to use a fresh manifest for each build as it does not get overwritten
+
+7db3f15 Updates to 3.9.3
+
+d5960d2 [Interface](Bug) Another fix for the additional name validation, so it a device does not validate against its own additional names
+
+7f4651e [CI] Makes build task run on buildah
+
 ## 3.9.3
 eac6d43 [Interface](Bug) Another fix for the additional name validation, so it a device does not validate against its own additional names
 
