@@ -1419,7 +1419,7 @@ checksum = "c811ca4a8c853ef420abd8592ba53ddbbac90410fab6903b3e79972a631f7680"
 
 [[package]]
 name = "wirtbot"
-version = "3.9.2"
+version = "3.9.3"
 dependencies = [
  "base64",
  "ed25519-dalek",

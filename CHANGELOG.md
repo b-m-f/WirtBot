@@ -1,3 +1,6 @@
+## 3.9.3
+eac6d43 [Interface](Bug) Another fix for the additional name validation, so it a device does not validate against its own additional names
+
 ## 3.9.2
 1ee2dfa [Interface](Bug) Fix validation to allow commas to pass, as the list is comma seperated
 

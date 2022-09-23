@@ -13,10 +13,14 @@ If the CI has issues there is a possibility to release manually.
 
 For now you need access credentials for Dockerhub => `docker login`
 
-Now make sure to have a docker builder set up:
+Now install the dependencies for multiarch builds:
+
 ```
-docker buildx create --name multiarch --driver docker-container --use
-docker buildx inspect --bootstrap
+# Fedora
+qemu-user-static
+qemu
+buildah
 ```
+
 
 Now its possible to build and push with `make build-and-release`
