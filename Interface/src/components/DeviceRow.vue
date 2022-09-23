@@ -322,7 +322,7 @@ export default {
       return correct;
     },
     validateAdditionalNames(nameString) {
-      const correct = /^[0-9A-Za-z-.]+$/.test(nameString);
+      const correct = /^[0-9A-Za-z-.,]+$/.test(nameString);
       if (!correct) {
         this.invalidAdditionalNames = this.$t(
           "errors.deviceAdditionalNamesWrong"
