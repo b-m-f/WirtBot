@@ -334,6 +334,9 @@ export default {
       });
       let taken = false;
       outerloop: for (let device of this.devices) {
+        if (device.id === this.$props.id) {
+          continue;
+        }
         for (let newName of names) {
           if (device.name === newName) {
             taken = true;
