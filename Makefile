@@ -70,11 +70,12 @@ update-dependencies:
 
 ## Build and release
 build-and-release:
-	buildah bud --dns=none --network=host  --platform linux/amd64,linux/arm64 -t bmff/wirtbot:$$(cat .version) -t bmff/wirtbot:latest -f Build-Automation/WirtBot/Dockerfile . && \
-	buildah manifest push  wirtbot:$$(cat .version) "docker://bmff/wirtbot:$$(cat .version)"
+	buildah bud --dns=none --network=host  --platform linux/arm64,linux/amd64 --manifest docker.io/bmff/wirtbot -f Build-Automation/WirtBot/Dockerfile . && \
+	buildah manifest push --all docker.io/bmff/wirtbot docker://docker.io/bmff/wirtbot:latest && \
+	buildah manifest push --all docker.io/bmff/wirtbot docker://docker.io/bmff/wirtbot:$$(cat .version)
 
 ## DNS is included since rootless networking inside a toolbox on Fedora seemed to kill DNS resolution
 buildah-and-release-test:
 	## Require buildah and qemu-user-static
-	buildah bud -m=12G --dns=none --network=host  --manifest wirtbot:$$(cat .version) --platform=linux/amd64 --platform=linux/arm64 -t bmff/wirtbot:$$(cat .version)-test -t bmff/wirtbot:test -f Build-Automation/WirtBot/Dockerfile . && \
+	buildah bud -m=12G --dns=none --network=host  --manifest wirtbot:$$(cat .version) --platform=linux/amd64  -f Build-Automation/WirtBot/Dockerfile . && \
 	buildah manifest push  wirtbot:$$(cat .version)-test "docker://bmff/wirtbot:$$(cat .version)-test"
