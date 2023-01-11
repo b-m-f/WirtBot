@@ -21,6 +21,7 @@ module.exports = {
             ["issues", "New features & Bugs"],
           ],
           "/announcements/": [
+            ["11-01-23", "Update 7: Time to say goodbye"],
             ["update-6", "Update 6: More focus, less bugs"],
             ["update-5", "Update 5: Time to maintain"],
             ["update-4", "Update 4: WirtBot weight loss and a nasty bug"],
@@ -32,7 +33,7 @@ module.exports = {
             ["8-11-20", "8.11.20: New name for installer binary"],
             ["31-10-20", "31.10.20: All aboard the container"],
             ["21-10-20", "21.10.20: Please update your installer"],
-            ["11-01-23", "Update 7: Time to say goodbye"],
+            
           ],
         },
         nav: [
