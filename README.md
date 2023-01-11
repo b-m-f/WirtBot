@@ -1,5 +1,11 @@
 ![WirtBot logo](Interface/public/logo.svg)
 
+# ARCHIVED
+
+WirtBot is feature complete and can be used without problems on properly secure networks, such as a home network behind a router.
+
+It is archived as it is feature complete. If anyone wants to take it back from the archives and maintain it contact me via the website linked in my profile.
+
 # What is a WirtBot?
 
 WirtBot is a combination of software tools to manage small to medium sized private networks.
